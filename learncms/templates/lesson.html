@@ -1,0 +1,11 @@
+{% extends "_base.html" %}
+{% load staticfiles %}
+{% block extrahead %}
+<script src="{% static 'webcomponentsjs/webcomponents-lite.min.js' %}">
+</script>
+<link rel="import" href="{% static 'webcomponents.html' %}">
+    
+{% endblock extrahead %}
+{% block content %}
+{{ content|safe }}
+{% endblock content %}
