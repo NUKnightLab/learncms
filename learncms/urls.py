@@ -14,10 +14,18 @@ Including another URLconf
     2. Add a URL to urlpatterns:  url(r'^blog/', include(blog_urls))
 """
 from django.conf.urls import include, url
+from django.conf.urls.static import static
 from django.contrib import admin
-from .views import LessonView
+from django.conf import settings
+from .views import LessonDetailView
 
 urlpatterns = [
     url(r'^admin/', include(admin.site.urls)),
-    url(r'^lesson/(?P<slug>[a-z\-]+)/$', LessonView.as_view()),
-]
+    url(r'^lesson/(?P<slug>[a-z\-]+)/$', LessonDetailView.as_view(), name='lesson-detail'),
+] 
+
+# these only work if the URL does not have a protocol (i.e. local)
+# otherwise, Django will save us
+urlpatterns += static(settings.STATIC_URL, document_root=settings.STATIC_ROOT) 
+urlpatterns += static(settings.MEDIA_URL, document_root=settings.MEDIA_ROOT)
+

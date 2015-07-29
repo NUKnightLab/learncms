@@ -47,5 +47,6 @@ DATABASES = {
 
 
 # Static files (CSS, JavaScript, Images)
+STATICFILES_STORAGE = 'storages.backends.s3boto.S3BotoStorage'
 
 STATIC_URL = '//media.knilab.com/learncms/'

@@ -7,30 +7,27 @@ https://docs.djangoproject.com/en/1.8/topics/settings/
 For the full list of settings and their values, see
 https://docs.djangoproject.com/en/1.8/ref/settings/
 """
-from os.path import abspath, dirname, join
+from os.path import abspath, dirname, join, normpath
 
 
 CORE_ROOT = dirname(dirname(abspath(__file__)))
 
 PROJECT_ROOT = dirname(CORE_ROOT)
 
-LANGUAGE_CODE = 'en-us'
-
-TIME_ZONE = 'America/Chicago'
-
-USE_I18N = True
-
-USE_L10N = True
-
-USE_TZ = True
-
 # Application definition
+# See also per-deployment target settings for
+# STATIC_URL
+# STATICFILES_STORAGE
 
 STATIC_ROOT = '/tmp/learncms-static'
 
 STATICFILES_DIRS = (
     join(PROJECT_ROOT, 'static'),
 )
+
+MEDIA_ROOT = normpath(join(PROJECT_ROOT, 'uploads'))
+
+MEDIA_URL = '/uploads/'
 
 TEMPLATE_DIRS = (
     join(PROJECT_ROOT, 'templates'),
@@ -80,7 +77,21 @@ TEMPLATES = [
                 'django.template.context_processors.request',
                 'django.contrib.auth.context_processors.auth',
                 'django.contrib.messages.context_processors.messages',
+                'django.template.context_processors.media'
             ],
         },
     },
 ]
+
+# boring standard stuff
+LANGUAGE_CODE = 'en-us'
+
+TIME_ZONE = 'America/Chicago'
+
+USE_I18N = True
+
+USE_L10N = True
+
+USE_TZ = True
+
+DJANGO_SERVES_STATIC = False # change for local

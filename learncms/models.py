@@ -3,6 +3,7 @@ from django.db import models
 class Lesson(models.Model):
     title = models.CharField(max_length=200)
     slug = models.SlugField()
+    banner_image = models.ImageField(upload_to='lessons')
     content = models.TextField(blank=True)
 
 class Block(models.Model):

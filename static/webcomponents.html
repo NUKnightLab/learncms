@@ -10024,6 +10024,17 @@ styles. All other styles should exist as single lines."
 
 </script>
 
+<style is="custom-style" type="text/css">
+    /* Custom properties that inherit down the document tree may be defined */
+    /* https://www.polymer-project.org/1.0/docs/devguide/styling.html */
+    :root {
+        --learn-primary-color: var(--paper-teal-200);
+        --learn-secondary-color: #FFF7E8;
+        --learn-primary-font: "Roboto";
+        --info-icon-url: url("/images/learn/info-icon.png");
+    }
+
+</style>
 <script type="text/javascript">
     window.Learn = window.Learn || {}
     Learn.HelloWorldBehavior = {
@@ -11989,7 +12000,7 @@ styles. All other styles should exist as single lines."
 <dom-module id="lesson-block" assetpath="learn/">
   <style>
   ::content paper-material.lesson-block {
-    background-color: #FFF7E8;
+    background-color: var(--learn-secondary-color);
 
 
   }
@@ -12386,11 +12397,14 @@ styles. All other styles should exist as single lines."
 <dom-module id="learn-nav" assetpath="learn/">
     <style>
 
+        ::content {
+        }
+
         #navigation {
             background-color: #263238;
             padding: 10px;
-            color: #80CBC4;
-            font-family: Roboto;
+            color: var(--learn-primary-color);
+            font-family: var(--learn-primary-font);
             font-weight: 500;
             font-style: italic;
             font-size: 24px;
@@ -12408,22 +12422,29 @@ styles. All other styles should exist as single lines."
             <div id="navigation">
             
             Learn
-            <a id="kl-link" href="http://knightlab.northwestern.edu"><img src="/images/learn/banner-logo-white.png"></a>
+            <a id="kl-link" href="http://knightlab.northwestern.edu"><img src="{{ logo }}"></a>
         </div>
     
     </template>
 </dom-module>
 <script type="text/javascript">
     Polymer({
-        is: "learn-nav"
+        is: "learn-nav",
+        properties: {
+            logo: {
+                type: String,
+                value: '/images/learn/banner-logo-white.png'
+            }
+
+        }
     })
 </script>
 <dom-module id="capsule-unit" assetpath="learn/">
   <style>
     .capsule-unit-wrapper {
-      height: 300px;
+/*      height: 300px;
       width: 300px;
-      padding-right: 100px;
+      padding-right: 100px;*/
     }
   </style>
   <template>
@@ -12585,46 +12606,56 @@ Polymer({
 
 <dom-module id="capsule-card" assetpath="learn/">
 
-<style>
-#card {
+	<style>
+		#card {
+			width:700px;
+			height:700px;
+			position:absolute;
+			left:300px;
+			top:100px;
+			margin: 25px;
+			z-index: 999;
+		};
 
-  width:700px;
-  height:700px;
-  position:absolute;
-  left:300px;
-  top:100px;
-  margin: 25px;
-    z-index: 999;
-},
+		#card h2 {
+			position: absolute;
+			padding-top: 20px;
+			padding-left: 20px;
+			font-color: #338D83;
+		};
 
-#card h2 {
-  position: absolute;
-  padding-top: 20px;
-  padding-left: 20px;
-  font-color: #338D83;
-  }
-paper-material {
-  background-color: white;
+		paper-material {
+			background-color: white;
 
-}
+		};
 
-paper-icon-button {
-  position: absolute;
-  top: 0px;
-  right: 0px;
-}
+		paper-icon-button {
+			position: absolute;
+			top: 0px;
+			right: 0px;
+		};
 
-  </style>
+		::content .card-content {
+			padding:25px;
+			padding-top:50px;
+		};
 
-  <template>
-  <div id="card">
-  <paper-material elevation="1" class="wrapper paper-font-body2">
-      <h2>{{ title }}</h2>
-      <paper-icon-button icon="clear" on-click="doClose"></paper-icon-button>
-      <content></content>
-    </paper-material>
-  </div>
-  </template>
+
+
+	</style>
+
+	<template>
+		<div id="card">
+			<paper-material elevation="1" class="wrapper paper-font-body2">
+				<div class="card-content">
+					<h2>{{ title }}</h2>
+					<paper-icon-button icon="clear" on-click="doClose"></paper-icon-button>
+					<content></content>
+				</div>
+			</paper-material>
+		</div>
+	</template>
+
 </dom-module>
 
 
@@ -12703,6 +12734,11 @@ properties: {
     align-items: center;
     justify-content: center;
     margin-bottom:50px;
+    background-image: var(--info-icon-url);
+    background-repeat: no-repeat;
+    background-position: center;
+    width: 112px;
+    height: 112px;
   }
 
 
@@ -12711,7 +12747,7 @@ properties: {
   <paper-material elevation="0" class="paper-font-body2">
     <div id="info-block-wrapper" class="layout horizontal">
       <div id="info-block-img" class="flex">
-        <img src="{{ image }}">
+        
       </div>
       <div id="info-block-content" class="flex-3">
         <content></content>
@@ -12895,7 +12931,7 @@ Polymer({
 <dom-module id="code-block" assetpath="learn/">
   <style>
   ::content paper-material.code-block {
-    background-color: #FFF7E8;
+    background-color: var(--learn-secondary-color);
 
 
 
@@ -12936,4 +12972,146 @@ Polymer({
 		}
 	});
 </script>
-</div></body></html>
+<dom-module id="z-capsule" assetpath="learn/">
+	<style>
+		::content #capsule-container {
+/*			height: 300px;
+			width: 300px;
+			padding-right: 100px;*/
+			margin-right:50px;
+			position:relative;
+			background-color:#FFF;
+			cursor:pointer;
+		}
+		::content #capsule-image {
+
+		};
+
+		::content #capsule-title {
+			margin:0;
+			padding:20px;
+			padding-top:12px;
+			color:#5C5C5C;
+			font-weight: 500;
+ 			line-height: 24px;
+ 			font-size: 24px;
+		};
+
+		::content #capsule-content {
+			display:none;
+		};
+		paper-fab {
+			color: #80CBC4;
+			background-color: #273238;
+			right: 25px;
+			bottom: 80px;
+			position: absolute;
+			z-index: 10;
+		}
+		.material-shadow {
+		  transition:box-shadow 0.28s cubic-bezier(0.4, 0, 0.2, 1);
+		}
+
+		.material-shadow[elevation="1"] {
+		  box-shadow:0 2px 2px 0 rgba(0, 0, 0, 0.14),
+		                  0 1px 5px 0 rgba(0, 0, 0, 0.12),
+		                  0 3px 1px -2px rgba(0, 0, 0, 0.2);
+		}
+
+		.material-shadow[elevation="2"] {
+		  box-shadow:0 4px 5px 0 rgba(0, 0, 0, 0.14),
+		                  0 1px 10px 0 rgba(0, 0, 0, 0.12),
+		                  0 2px 4px -1px rgba(0, 0, 0, 0.4);
+		}
+
+		.material-shadow[elevation="3"] {
+		  box-shadow:0 6px 10px 0 rgba(0, 0, 0, 0.14),
+		                  0 1px 18px 0 rgba(0, 0, 0, 0.12),
+		                  0 3px 5px -1px rgba(0, 0, 0, 0.4);
+		}
+
+		.material-shadow[elevation="4"] {
+		  box-shadow:0 8px 10px 1px rgba(0, 0, 0, 0.14),
+		                  0 3px 14px 2px rgba(0, 0, 0, 0.12),
+		                  0 5px 5px -3px rgba(0, 0, 0, 0.4);
+		}
+
+		.material-shadow[elevation="5"] {
+		  box-shadow:0 16px 24px 2px rgba(0, 0, 0, 0.14),
+		                  0  6px 30px 5px rgba(0, 0, 0, 0.12),
+		                  0  8px 10px -5px rgba(0, 0, 0, 0.4);
+		}
+	</style>
+	<template>
+		<div id="capsule-container" class="material-shadow" elevation="1">
+			<img id="capsule-image" src="{{ image }}">
+			<h2 id="capsule-title">{{ title }}</h2>
+			<div id="capsule-content">
+				<content></content>
+			</div>
+
+			<paper-fab icon="content-copy"></paper-fab>
+		</div>
+	</template>
+</dom-module>
+
+<script type="text/javascript">
+	Polymer({
+		is: 'z-capsule',
+
+		behaviors: [Polymer.IronA11yKeysBehavior],
+		keyBindings: {
+			'esc': '_handleEscapeKey'
+		},
+		listeners: {
+			"click": "_clickListener"
+		},
+		properties: {
+			image: {
+				type: String,
+				value: ""
+			},
+			title: {
+				type: String,
+				value: "See also"
+			},
+			keyEventTarget: { // IronA11yKeysBehavior
+				type: Object,
+				value: function() {
+					return document.body;
+				}
+			}
+			
+		},
+
+		ready: function() {
+			// DOM OBJECTS
+			this.capsule_image = this.$['capsule-image'];
+			this.capsule_title = this.$['capsule-title'];
+			this.capsule_content = this.$['capsule-content'];
+			this.default_width = 0;
+		},
+
+		/* Using IronA11yKeysBehavior, listen for 'esc' key pressed
+		 * anywhere on the page (see keyEventTarget property). 
+		 * escape will close an open capsule.
+		 */
+		_handleEscapeKey: function(e) {
+			this.$$('neon-animated-pages').select(0);
+		},
+
+		_handlePaperButtonClick: function(e) {
+
+		},
+
+		
+		
+
+		_clickListener: function(e) {
+			console.log("CLICK");
+			this.capsule_content.style.display = "block";
+		},
+
+	});
+
+</script></div></body></html>

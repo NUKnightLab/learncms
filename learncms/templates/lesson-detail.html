@@ -1,0 +1,22 @@
+{% extends "_base.html" %}
+{% load staticfiles %}
+{% block extrahead %}
+<script src="{% static 'webcomponentsjs/webcomponents-lite.min.js' %}">
+</script>
+<link rel="import" href="{% static 'webcomponents.html' %}">
+<style is="custom-style" type="text/css">
+
+:root {
+    --info-icon-url: url("{% static 'img/info-icon.png' %}");
+}
+
+</style>
+    
+{% endblock extrahead %}
+{% block content %}
+        <learn-nav logo="{% static 'img/banner-logo-white.png' %}"></learn-nav>
+        <lesson-banner image="{{ MEDIA_URL }}{{ lesson.banner_image }}" title="{{ lesson.title }}"></lesson-banner>
+
+        {{ lesson.content|safe }}
+
+{% endblock content %}

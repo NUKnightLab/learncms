@@ -49,3 +49,5 @@ DATABASES = {
 # Static files (CSS, JavaScript, Images)
 
 STATIC_URL = '/static/'
+
+DJANGO_SERVES_STATIC = True # only true for local
