@@ -1,0 +1,60 @@
+<!--
+
+`code-block` is a container that shows general lesson information, typically at the beginning or end of a lesson. It is similar to, but distinct from a 'step-block.' It generally can contain any HTML and has no custom properties.
+
+Example:
+
+	<code-block>
+	  ... content ...
+	</code-block>
+
+@group Learn Elements
+@class code-block
+-->
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/prettify/r298/prettify.css" media="screen" title="Prettify" charset="utf-8">
+<script src="//cdnjs.cloudflare.com/ajax/libs/prettify/r298/prettify.min.js"></script>
+<dom-module id="code-block">
+  <style>
+  ::content paper-material.code-block {
+    background-color: var(--learn-secondary-color);
+
+
+
+  }
+
+  ::content .code-block-wrapper {
+    padding: 5px;
+    margin-left: 50px;
+    margin-right: 50px;
+
+  };
+
+  ::content .code-block-wrapper h2 { /* Free floating for any h2 inside */
+    color: #E3B052;
+
+  }
+  </style>
+  <template>
+  <paper-material elevation="-1" class="code-block paper-font-body2">
+    <div class="code-block-wrapper">
+      <pre class="prettyprint">
+        <content></content>
+      </pre>
+    </div>
+  </paper-material>
+  </template>
+</dom-module>
+<script>
+	Polymer({
+		is: 'code-block',
+
+    attached: function() {
+  	  this.async(function() {
+        prettyPrint()
+      })
+    },
+
+		properties: {
+		}
+	});
+</script>

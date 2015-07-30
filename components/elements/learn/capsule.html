@@ -1,0 +1,159 @@
+<!--
+
+`capsule-unit` is a labeled image which triggers to a modal "capsule" explanation of a concept. In our prototype example, capsule-references appear in the "what you'll need" block and explain more about text editors and FTP programs. The element is intended to be empty, and all necessary variable data is specified in attributes.
+
+`capsule-unit` is a polymer component made up of two other polymer components, `capsule-ref` and `capsule-card`. It acts as a container for these two sub components and handles the hero-animation transition between the two sub components.
+Example:
+
+	<capsule-unit img="path/to/image.png" title="Title for both the reference and the card">
+	  Put the conent of your card here in regular text.
+	</capsule-unit>
+
+@group Learn Elements
+@class capsule-unit
+-->
+
+<!-- **********  CAPSULE  ********** -->
+<dom-module id="z-capsule">
+	<style>
+		::content #capsule-container {
+/*			height: 300px;
+			width: 300px;
+			padding-right: 100px;*/
+			margin-right:50px;
+			position:relative;
+			background-color:#FFF;
+			cursor:pointer;
+		}
+		::content #capsule-image {
+
+		};
+
+		::content #capsule-title {
+			margin:0;
+			padding:20px;
+			padding-top:12px;
+			color:#5C5C5C;
+			font-weight: 500;
+ 			line-height: 24px;
+ 			font-size: 24px;
+		};
+
+		::content #capsule-content {
+			display:none;
+		};
+		paper-fab {
+			color: #80CBC4;
+			background-color: #273238;
+			right: 25px;
+			bottom: 80px;
+			position: absolute;
+			z-index: 10;
+		}
+		.material-shadow {
+		  transition:box-shadow 0.28s cubic-bezier(0.4, 0, 0.2, 1);
+		}
+
+		.material-shadow[elevation="1"] {
+		  box-shadow:0 2px 2px 0 rgba(0, 0, 0, 0.14),
+		                  0 1px 5px 0 rgba(0, 0, 0, 0.12),
+		                  0 3px 1px -2px rgba(0, 0, 0, 0.2);
+		}
+
+		.material-shadow[elevation="2"] {
+		  box-shadow:0 4px 5px 0 rgba(0, 0, 0, 0.14),
+		                  0 1px 10px 0 rgba(0, 0, 0, 0.12),
+		                  0 2px 4px -1px rgba(0, 0, 0, 0.4);
+		}
+
+		.material-shadow[elevation="3"] {
+		  box-shadow:0 6px 10px 0 rgba(0, 0, 0, 0.14),
+		                  0 1px 18px 0 rgba(0, 0, 0, 0.12),
+		                  0 3px 5px -1px rgba(0, 0, 0, 0.4);
+		}
+
+		.material-shadow[elevation="4"] {
+		  box-shadow:0 8px 10px 1px rgba(0, 0, 0, 0.14),
+		                  0 3px 14px 2px rgba(0, 0, 0, 0.12),
+		                  0 5px 5px -3px rgba(0, 0, 0, 0.4);
+		}
+
+		.material-shadow[elevation="5"] {
+		  box-shadow:0 16px 24px 2px rgba(0, 0, 0, 0.14),
+		                  0  6px 30px 5px rgba(0, 0, 0, 0.12),
+		                  0  8px 10px -5px rgba(0, 0, 0, 0.4);
+		}
+	</style>
+	<template>
+		<div id="capsule-container" class="material-shadow" elevation="1">
+			<img id="capsule-image" src="{{ image }}">
+			<h2 id="capsule-title">{{ title }}</h2>
+			<div id="capsule-content">
+				<content></content>
+			</div>
+
+			<paper-fab icon="content-copy"></paper-fab>
+		</div>
+	</template>
+</dom-module>
+
+<script type="text/javascript">
+	Polymer({
+		is: 'z-capsule',
+
+		behaviors: [Polymer.IronA11yKeysBehavior],
+		keyBindings: {
+			'esc': '_handleEscapeKey'
+		},
+		listeners: {
+			"click": "_clickListener"
+		},
+		properties: {
+			image: {
+				type: String,
+				value: ""
+			},
+			title: {
+				type: String,
+				value: "See also"
+			},
+			keyEventTarget: { // IronA11yKeysBehavior
+				type: Object,
+				value: function() {
+					return document.body;
+				}
+			}
+			
+		},
+
+		ready: function() {
+			// DOM OBJECTS
+			this.capsule_image = this.$['capsule-image'];
+			this.capsule_title = this.$['capsule-title'];
+			this.capsule_content = this.$['capsule-content'];
+			this.default_width = 0;
+		},
+
+		/* Using IronA11yKeysBehavior, listen for 'esc' key pressed
+		 * anywhere on the page (see keyEventTarget property). 
+		 * escape will close an open capsule.
+		 */
+		_handleEscapeKey: function(e) {
+			console.log("when available, implement close-capsule here");
+		},
+
+		_handlePaperButtonClick: function(e) {
+
+		},
+
+		
+		
+
+		_clickListener: function(e) {
+			console.log("CLICK");
+			this.capsule_content.style.display = "block";
+		},
+
+	});
+
+</script>

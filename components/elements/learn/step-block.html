@@ -1,0 +1,132 @@
+<!--
+
+<<<<<<< HEAD
+`step-block` is a container that shows one of several steps in a typical lesson. It generally
+can contain any HTML. Each `step-block` should have a `title` attribute. Step blocks also
+have step numbers which are computed based on the number of `step-block` elements with the same parent before the current. This seems better than building upon an `ol` because it will support other components like `lesson-block` mixed among steps.
+=======
+`step-block` is a container that shows one of several steps in a typical lesson. It generally
+can contain any HTML. Each `step-block` should have a `title` attribute. Step blocks also
+have step numbers-at this time, the goal is to have the numbers automatically applied. It
+might make sense to build them around `ol` (ordered list) tags, but if there are any elements
+that interrupt the steps, maintaining numbering continuity could be a hassle. Thinking about
+making something count them and apply numbering at page load time.
+>>>>>>> 2b65ee9ab18a0423a4d1172d7d1d9b08a468475d
+
+Example:
+
+	<lesson-block>
+	  ... content ...
+	</lesson-block>
+
+@group Learn Elements
+@class lesson-block
+-->
+<dom-module id="step-block">
+	<style>
+
+		}
+
+		h2 {
+			color: #338D83;
+			font-family: Roboto;
+			font-weight: bold;
+
+		}
+
+		paper-material {
+			padding: 10px;
+			width: 50%;
+			/*margin: 0 auto;*/
+			padding-top: 30px;
+		}
+
+		step-number {
+			color: #ffffff;
+			background-color: #80CBC4;
+			padding: 45px 50px;
+			border-radius: 50%;
+			font-family: Roboto;
+			font-weight: 500;
+			margin-right:20px;
+		}
+
+		content-wrapper {
+			display: flex;
+			align-items: center;
+			justify-content: center;
+			margin-bottom:50px;
+		}
+
+		.question {
+			top: 0px;
+			left: 25px;
+			position: relative;
+			margin-right: -20px;
+		}
+
+
+	</style>
+	<template>
+		<content-wrapper>
+			<step-number>{{ stepnum }}</step-number>
+			<paper-material class="paper-font-body2">
+				<h2>{{ title }}</h2>
+				<content></content>
+
+			</paper-material>
+			<!-- Put questions here! -->
+		</content-wrapper>
+	</template>
+</dom-module>
+
+<script>
+  Polymer({
+	is: 'step-block',
+
+	attached: function() {
+	  this.async(function() {
+		var steps = 0;
+		var kids = this.parentNode.children;
+		for (var i = 0; i < kids.length; i++) {
+		  if (kids[i].nodeName == this.nodeName) {
+			steps += 1;
+			if (kids[i] === this) {
+			  this.stepnum = steps;
+			  break;
+			}
+		  }
+		};
+	  })
+	},
+
+	properties: {
+		/**
+		 * The primary label for this step.
+		 *
+		 * @attribute title
+		 * @type String
+		 * @default ""
+		 */
+		title: {
+			type: String,
+			value: ""
+		},
+
+		/**
+		 * The position of this step among all steps. Not meant to be set by users,
+		 * at the moment it gets set at page load time by analyzing all other steps
+		 * with the same parent.
+		 *
+		 * @attribute title
+		 * @type String
+		 * @default ""
+		 */
+		stepnum: {
+			type: Number,
+			value: 0
+		}
+
+	}
+  });
+</script>

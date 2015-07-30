@@ -1,0 +1,66 @@
+<!--
+
+a `lesson-banner` is the top part of the page. The element is intended to be empty, and all necessary variable data is specified in attributes. 
+
+For now, trying to implement it as an extension of <paper-header-panel> https://elements.polymer-project.org/elements/paper-header-panel but that's not deeply founded.
+
+TK: 
+	* a hamburger menu for the top left. 
+	* less amateur positioning of the h1#title
+	* the teal filter (#80CBC4)
+
+Example:
+
+		<lesson-banner img="path/to/image.png" label="Label for component">
+		</lesson-banner>
+
+@group Learn Elements
+@class lesson-banner
+-->
+
+<dom-module id="lesson-banner">
+	<style>
+		#container {
+			width: 100%;
+			height: 200px;
+			overflow:hidden;
+			position:relative;
+		}
+		#image {
+			position: absolute;
+			left: 0;
+			top: 0;
+		}
+		#title {
+			font-family: Roboto, sans-serif;
+			color: black;
+			font-size: 24px;
+			font-weight: bold;
+			width: 100%;
+			text-align: center;
+			position:absolute;
+			bottom:0;
+		}
+	</style>
+	<template>
+		<div id="container" class="">
+			<img id='image' src="{{ image }}">
+			<h1 id="title">{{title}}</h1>
+		</div>
+	</template>
+</dom-module>
+<script>
+	Polymer({
+		is: 'lesson-banner',
+		properties: {
+				image: {
+						type: String,
+						value: ""
+				},
+				title: {
+						type: String,
+						value: "Lesson Title"
+				}
+		}
+	});
+</script>

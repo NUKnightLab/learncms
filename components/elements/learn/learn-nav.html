@@ -1,0 +1,60 @@
+<!--
+
+`learn-nav` is the consistent navigation bar at the top of every page. The element is intended to be empty and no attributes are needed.. 
+
+TK: 
+    * a hamburger menu for the top left. 
+
+Example:
+
+        <learn-nav></learn-nav>
+
+@group Learn Elements
+@class learn-nav
+-->
+
+<dom-module id="learn-nav">
+    <style>
+
+        ::content {
+        }
+
+        #navigation {
+            background-color: #263238;
+            padding: 10px;
+            color: var(--learn-primary-color);
+            font-family: var(--learn-primary-font);
+            font-weight: 500;
+            font-style: italic;
+            font-size: 24px;
+            width: 100%;
+            text-align: center;
+            position: relative;
+        }
+
+        #kl-link {
+            position: absolute;
+            right: 40px;
+        }
+    </style>
+    <template>
+            <div id="navigation">
+            <!-- TK: hamburger menu? -->
+            Learn
+            <a id="kl-link" href="http://knightlab.northwestern.edu"><img src="{{ logo }}"></a>
+        </div>
+    
+    </template>
+</dom-module>
+<script type="text/javascript">
+    Polymer({
+        is: "learn-nav",
+        properties: {
+            logo: {
+                type: String,
+                value: '/images/learn/banner-logo-white.png'
+            }
+
+        }
+    })
+</script>

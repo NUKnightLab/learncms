@@ -1,0 +1,84 @@
+<!--
+
+`lesson-ref` is a unit intended for use inside a `lesson-block` which provides a path to a separate stand-alone lesson. A `lesson-ref` has an `href` attribute pointing to the referenced lesson and an `image`attr
+
+Example:
+
+    <lesson-ref>
+      ... content ...
+    </lesson-ref>
+
+@group Learn Elements
+@class lesson-ref
+-->
+<dom-module id="lesson-ref">
+  <style>
+
+  ::content #lesson-ref-container {
+    position: relative;
+    right: -40px;
+    background-color: #fff;
+    margin-bottom: 20px;
+  };
+
+  div.ref-image-wrapper {
+    position: relative;
+  }
+
+  div.ref-image-wrapper img {
+    width: 100%;
+  }
+
+  div.ref-image-wrapper h2 {
+    position: absolute;
+    bottom: 0;
+    left: 0;
+    margin-left: 10px;
+    color: #ffffff;
+  }
+
+  div.ref-image-wrapper paper-fab {
+    position: absolute;
+    right: -30px;
+    bottom: -20px;
+    background-color: #fff;
+    color: #000;
+  }
+
+  div.ref-copy-wrapper {
+    padding: 5px;
+  };
+
+  </style>
+  <template>
+  <paper-material id="lesson-ref-container" elevation="2" class="paper-font-body2">
+  <div class="ref-image-wrapper">
+    <img src="{{ image }}">
+    <h2>{{ title }}</h2>
+    <paper-fab icon="arrow-forward" on-click="loadReference"></paper-fab>
+  </div>
+  <div class="ref-copy-wrapper">
+    <content>
+    </content>
+  </div>
+  </paper-material>
+  </template>
+</dom-module>
+<script>
+  Polymer({
+    is: 'lesson-ref',
+    loadReference: function() {
+      console.log('clicky');
+    },
+    properties: {
+      title: {
+        type: String,
+        value: "Lesson Title"
+      },
+      image: {
+        type: String,
+        value: ""
+      }
+    }
+  });
+</script>

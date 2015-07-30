@@ -1,0 +1,69 @@
+<dom-module id="link-ref">
+  <style>
+  ::content .link-ref-wrapper {
+    width: 344px;
+    background-color: white;
+
+  }
+
+  ::content .link-ref-wrapper p {
+    color: #5C5C5C;
+    background-color: white;
+    font-size: 24px;
+    margin: 15px;
+    padding-bottom: 20px;
+  }
+
+  paper-fab {
+    color: #80CBC4;
+    background-color: #9B59B6;
+    right: 25px;
+    bottom: 38px;
+    position: absolute;
+    z-index: 998;
+  }
+  </style>
+
+  <template>
+  <paper-material elevation="1" class="wrapper paper-font-body2">
+    <div class="link-ref-wrapper" style="position:relative">
+      <img src="{{ image }}">
+      <paper-fab icon="link" on-click="doLink"></paper-fab>
+      <p>{{ title }}</p>
+    </div>
+  </paper-material>
+  </template>
+</dom-module>
+
+<script>
+
+Polymer({
+  is: 'link-ref',
+
+  behaviors: [
+
+  ],
+
+  doLink: function() {
+  window.open(this.link)
+  },
+  properties: {
+
+    image: {
+      type: String,
+      value: ""
+    },
+
+    title: {
+      type: String,
+      value: "See also"
+    },
+
+    link: {
+      type: String,
+      value: ""
+    },
+  }
+});
+
+</script>

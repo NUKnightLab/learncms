@@ -1,0 +1,13 @@
+<script type="text/javascript">
+    window.Learn = window.Learn || {}
+    Learn.HelloWorldBehavior = {
+        ready: function() {
+            console.log("Hello, World", this);
+        },
+        sayHello: function(who) {
+            who = who || 'anonymous';
+            console.log("Hello, " + who);
+        }
+    }
+
+</script>
