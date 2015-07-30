@@ -4,6 +4,8 @@ from django.shortcuts import render
 from django.views.generic.detail import DetailView
 from django.http import Http404
 
+from django.template import Template, Context
+
 from .models import Lesson
 
 import os.path
@@ -16,11 +18,10 @@ class LessonDetailView(DetailView):
 
     def get_context_data(self, **kwargs):
         context = super(LessonDetailView, self).get_context_data(**kwargs)
-        context['title'] = self.object.title
-        context['lesson'] = self.object
-        try:
-            path = os.path.join(settings.PROJECT_ROOT,'lessons',"{}.html".format(self.object.slug))
-            context['content'] = open(path).read()
-        except FileNotFoundError:
-            raise Http404("No lesson {}".format(slug))
+        lesson = self.object
+        context['title'] = lesson.title
+        context['lesson'] = lesson
+        context['zimages'] = dict((z.slug, z) for z in lesson.zimages.all())
+        t = Template(lesson.content)
+        context['evaluated_content'] = t.render(Context(context))
         return context

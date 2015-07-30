@@ -17,6 +17,6 @@
         <learn-nav logo="{% static 'img/banner-logo-white.png' %}"></learn-nav>
         <lesson-banner image="{{ MEDIA_URL }}{{ lesson.banner_image }}" title="{{ lesson.title }}"></lesson-banner>
 
-        {{ lesson.content|safe }}
+        {{ evaluated_content|safe }}
 
 {% endblock content %}
