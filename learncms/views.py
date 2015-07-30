@@ -30,17 +30,29 @@ class LessonDetailView(DetailView):
         """
         content = self.object.content
         element = fromstring(content)
-        self._resolve_zooming_images(element)
+        self._resolve_zooming_image_refs(element)
+        self._resolve_lesson_refs(element)
         return tostring(element,encoding='unicode')
 
-    def _resolve_zooming_images(self, element):
-        for i,zi in enumerate(element.findall('.//zooming-image')):
-            if zi.attrib.has_key('ref'):
-                matches = ZoomingImage.objects.filter(slug=zi.attrib['ref'])
+    def _resolve_zooming_image_refs(self, element):
+        for i,elem in enumerate(element.findall('.//zooming-image')):
+            if elem.attrib.has_key('ref'):
+                matches = ZoomingImage.objects.filter(slug=elem.attrib['ref'])
                 if len(matches) == 0:
-                    zi.getparent().append(Comment("Invalid slug ref for zooming-image #{}".format(i)))
-                    zi.getparent().remove(zi)
+                    elem.getparent().append(Comment("Invalid slug ref for zooming-image #{}".format(i)))
+                    elem.getparent().remove(elem)
                 else:
-                    zi.attrib['src'] = matches[0].thumbnail.url
-                    zi.attrib['fullSrc'] = matches[0].image.url
+                    elem.attrib['src'] = matches[0].thumbnail.url
+                    elem.attrib['fullSrc'] = matches[0].image.url
 
+    def _resolve_lesson_refs(self, element):
+        for i,elem in enumerate(element.findall('.//lesson-ref')):
+            if elem.attrib.has_key('ref'):
+                matches = Lesson.objects.filter(slug=elem.attrib['ref'])
+                if len(matches) == 0:
+                    elem.getparent().append(Comment("Invalid slug ref for lesson-ref #{}".format(i)))
+                    elem.getparent().remove(elem)
+                else:
+                    elem.attrib['image'] = matches[0].banner_image.url
+                    elem.attrib['title'] = matches[0].title
+                    elem.text = matches[0].reference_blurb
