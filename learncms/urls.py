@@ -20,7 +20,7 @@ from django.conf import settings
 from django.views.generic.list import ListView
 
 from .models import Lesson
-from .views import LessonDetailView
+from .views import LessonDetailView, handler404, handler500
 
 urlpatterns = [
     url(r'^admin/', include(admin.site.urls)),
