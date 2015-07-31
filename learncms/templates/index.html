@@ -1,0 +1,16 @@
+{% extends "_base.html" %}
+{% block extrahead %}
+<style type="text/css">
+    body {
+        font-family: Roboto
+    }
+</style>    
+{% endblock %}
+{% block content %}
+<h1>Learn.Knightlab.com</h1>     
+<ul>
+{% for lesson in object_list %}
+<li><a href="{{lesson.get_absolute_url}}">{{ lesson.title }}</a></li>    
+{% endfor %}
+</ul>
+ {% endblock %} 

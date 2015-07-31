@@ -17,11 +17,15 @@ from django.conf.urls import include, url
 from django.conf.urls.static import static
 from django.contrib import admin
 from django.conf import settings
+from django.views.generic.list import ListView
+
+from .models import Lesson
 from .views import LessonDetailView
 
 urlpatterns = [
     url(r'^admin/', include(admin.site.urls)),
     url(r'^lesson/(?P<slug>[a-z\-]+)/$', LessonDetailView.as_view(), name='lesson-detail'),
+    url(r'^/?$', ListView.as_view(template_name="index.html",model=Lesson), name='homepage'),
 ] 
 
 # these only work if the URL does not have a protocol (i.e. local)
