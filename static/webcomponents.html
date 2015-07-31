@@ -12802,7 +12802,7 @@ properties: {
     color: #000;
   }
 
-  div.ref-copy-wrapper {
+  p.ref-copy-wrapper {
     padding: 5px;
   };
 
@@ -12814,10 +12814,9 @@ properties: {
     <h2>{{ title }}</h2>
     <paper-fab icon="arrow-forward" on-click="loadReference"></paper-fab>
   </div>
-  <div class="ref-copy-wrapper">
-    <content>
-    </content>
-  </div>
+  <p class="ref-copy-wrapper">
+    <content></content>
+  </p>
   </paper-material>
   </template>
 </dom-module>
@@ -13097,7 +13096,7 @@ Polymer({
 		 * escape will close an open capsule.
 		 */
 		_handleEscapeKey: function(e) {
-			this.$$('neon-animated-pages').select(0);
+			console.log("when available, implement close-capsule here");
 		},
 
 		_handlePaperButtonClick: function(e) {
