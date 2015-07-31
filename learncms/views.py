@@ -10,6 +10,24 @@ from lxml.html import fromstring, tostring
 from .models import Lesson, ZoomingImage
 import os.path
 
+# boilerplate
+from django.shortcuts import render_to_response
+from django.template import RequestContext
+
+
+def handler404(request):
+    response = render_to_response('404.html', {},
+                                  context_instance=RequestContext(request))
+    response.status_code = 404
+    return response
+
+
+def handler500(request):
+    response = render_to_response('500.html', {},
+                                  context_instance=RequestContext(request))
+    response.status_code = 500
+    return response
+
 # Create your views here.
 class LessonDetailView(DetailView):
 
@@ -19,10 +37,15 @@ class LessonDetailView(DetailView):
     def get_context_data(self, **kwargs):
         context = super(LessonDetailView, self).get_context_data(**kwargs)
         lesson = self.object
+        print("hi")
+        print(lesson.status)
+        if (lesson.status != Lesson.PUBLISHED and not self.request.user.is_authenticated()):
+            raise Http404
         context['title'] = lesson.title
         context['lesson'] = lesson
         context['evaluated_content'] = self.evaluate_content()
         return context
+
 
     def evaluate_content(self):
         """Convert any convenience markup (such as object references) into the ideal markup
