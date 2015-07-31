@@ -12824,6 +12824,9 @@ properties: {
   Polymer({
     is: 'lesson-ref',
     loadReference: function() {
+      if (this.url) {
+        window.open(this.url,"_blank");
+      }
       console.log('clicky');
     },
     properties: {
@@ -12832,6 +12835,10 @@ properties: {
         value: "Lesson Title"
       },
       image: {
+        type: String,
+        value: ""
+      },
+      url: {
         type: String,
         value: ""
       }

@@ -55,4 +55,5 @@ class LessonDetailView(DetailView):
                 else:
                     elem.attrib['image'] = matches[0].banner_image.url
                     elem.attrib['title'] = matches[0].title
+                    elem.attrib['url'] = matches[0].get_absolute_url()
                     elem.text = matches[0].reference_blurb
