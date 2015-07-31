@@ -1,5 +1,6 @@
 from django.db import models
 from django.core.urlresolvers import reverse
+from django.contrib.contenttypes.models import ContentType
 
 from imagekit.models import ImageSpecField
 from imagekit.processors import ResizeToFill
@@ -20,6 +21,11 @@ class Lesson(models.Model):
 
     def get_absolute_url(self):
         return reverse('lesson-detail', args=(self.slug,))
+
+    def get_admin_url(self):
+        content_type = ContentType.objects.get_for_model(self.__class__)
+        return reverse("admin:%s_%s_change" % (content_type.app_label, content_type.model), args=(self.id,))
+
 
     def __str__(self):
         return self.title
