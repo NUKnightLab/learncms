@@ -1,4 +1,5 @@
 from django.db import models
+from django.contrib.auth.models import User
 from django.core.urlresolvers import reverse
 from django.contrib.contenttypes.models import ContentType
 
@@ -18,6 +19,11 @@ class Lesson(models.Model):
     status = models.CharField(choices=LESSON_STATUS_CHOICES, default=DRAFT, max_length=50)
     reference_blurb = models.CharField(max_length=500, blank=True, help_text="The text which appears when a reference to this lesson is included in some other. Don't use markup.")
     content = models.TextField(blank=True,help_text="The body of the lesson, marked up with web component magic.")
+    created_at = models.DateTimeField(auto_now_add=True)
+    updated_at = models.DateTimeField(auto_now=True)
+    created_by = models.ForeignKey(User, null=True, blank=True, related_name='creator')
+    updated_by = models.ForeignKey(User, null=True, blank=True, related_name='updater')
+
 
     def get_absolute_url(self):
         return reverse('lesson-detail', args=(self.slug,))

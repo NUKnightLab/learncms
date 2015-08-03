@@ -52,6 +52,7 @@ INSTALLED_APPS = (
     'django.contrib.staticfiles',
     'learncms',
     'imagekit',
+    'reversion'
 )
 
 MIDDLEWARE_CLASSES = (
