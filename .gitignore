@@ -61,3 +61,5 @@ target/
 
 # Mac
 .DS_Store
+
+db.sqlite3
