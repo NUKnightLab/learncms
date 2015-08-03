@@ -1,7 +1,8 @@
 from django.contrib import admin
+import reversion
 from learncms.models import Lesson, ZoomingImage
 
-class LessonAdmin(admin.ModelAdmin):
+class LessonAdmin(reversion.VersionAdmin):
     list_display = ('title', 'slug', 'updated_at', 'updated_by')
     exclude = ('created_at', 'updated_at', 'created_by', 'updated_by')
     prepopulated_fields = {"slug": ("title",)}

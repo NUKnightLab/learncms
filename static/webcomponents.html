@@ -12184,7 +12184,7 @@ styles. All other styles should exist as single lines."
 <script>
 	Polymer({
 		is: 'zooming-image',
-		behaviors: [Polymer.IronA11yKeysBehavior, Learn.HelloWorldBehavior ],
+		behaviors: [Polymer.IronA11yKeysBehavior ],
 		listeners: {
 			"click": "_clickListener"
 		},
@@ -12241,8 +12241,6 @@ styles. All other styles should exist as single lines."
 			and the big one to hide it and go back to the small one.
 		================================================== */
 		_clickListener: function(e) {
-			this.sayHello('bob');
-			// Set zoomed state to true or false
 			this.zoomed = (e.target.id == 'thumbnail');
 
 		},
