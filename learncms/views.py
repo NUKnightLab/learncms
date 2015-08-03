@@ -7,7 +7,7 @@ from django.http import Http404
 from lxml.etree import Comment
 from lxml.html import fromstring, tostring
 
-from .models import Lesson, ZoomingImage
+from .models import Lesson, ZoomingImage, CapsuleUnit
 import os.path
 
 # boilerplate
@@ -55,6 +55,7 @@ class LessonDetailView(DetailView):
         element = fromstring(content)
         self._resolve_zooming_image_refs(element)
         self._resolve_lesson_refs(element)
+        self._resolve_capsule_units(element)
         return tostring(element,encoding='unicode')
 
     def _resolve_zooming_image_refs(self, element):
@@ -80,3 +81,15 @@ class LessonDetailView(DetailView):
                     elem.attrib['title'] = matches[0].title
                     elem.attrib['url'] = matches[0].get_absolute_url()
                     elem.text = matches[0].reference_blurb
+
+    def _resolve_capsule_units(self, element):
+        for i,elem in enumerate(element.findall('.//capsule-unit')):
+            if elem.attrib.has_key('ref'):
+                matches = CapsuleUnit.objects.filter(slug=elem.attrib['ref'])
+                if len(matches) == 0:
+                    elem.getparent().append(Comment("Invalid slug ref for capsule-unit #{}".format(i)))
+                    elem.getparent().remove(elem)
+                else:
+                    elem.attrib['image'] = matches[0].image.url
+                    elem.attrib['title'] = matches[0].title
+                    elem.text = matches[0].content
