@@ -15,162 +15,172 @@
 
 			<lesson-banner image="/images/learn/basic-website-banner.png" title="Create a Basic Website"></lesson-banner>
 
-			<div>
+			<narrative-text>
+				<p>
+					It’s the most common reason students walk into Knight Lab for the first time—they want to build some kind of website. Building your own gives you complete control over what that site looks like… but starting from scratch can be overwhelming. It’s hard to know what to Google, when.
+				</p>
+				<p>
+					So we’ve done some of that work for you. Build a Basic Website outlines the path from start to finish. Head straight down for the fastest of walkthroughs; meander for a deeper explanation of why we’re making these choices.
+				</p>
+			</narrative-text>
 
-				<narrative-text>
+			<lesson-block>
+				<h2>
+					You'll need to get started
+				</h2>
+				<div class="horizontal layout">
+					<z-capsule image="images/learn/ftp-program.png" title="FTP Program">
+						<p>
+							A text editor is a type of program used for editing plain text files.
+							Text editors are provided with operating systems and software development packages, and can be used to change configuration files, documentation files and programming language source code.
+						</p>
+					</z-capsule>
+					<z-capsule image="images/learn/ftp-program.png" title="FTP Program">
+						<p>
+							A text editor is a type of program used for editing plain text files.
+							Text editors are provided with operating systems and software development packages, and can be used to change configuration files, documentation files and programming language source code.
+						</p>
+					</z-capsule>
+					<capsule-unit image="images/learn/text-editor.png" title="Text Editor">
+						<p>
+							A text editor is a type of program used for editing plain text files.
+							Text editors are provided with operating systems and software development packages, and can be used to change configuration files, documentation files and programming language source code
+						</p>
+						<link-ref image="images/learn/text-editor.png" title="Sublime Text" link="http://www.sublimetext.com/"></link-ref>
+						<link-ref image="images/learn/text-editor.png" title="Notepad++" link="https://notepad-plus-plus.org/"></link-ref>
+						<link-ref image="images/learn/text-editor.png" title="Atom" link="https://atom.io/"></link-ref>
+						<link-ref image="images/learn/text-editor.png" title="TextMate" link="https://macromates.com/"></link-ref>
+					</capsule-unit>
+
+					<capsule-unit image="images/learn/ftp-program.png" title="FTP Program">
+					</capsule-unit>
+
+				</div>
+			</lesson-block>
+
+			<step-block title="Setup: Create a Folder">
+				<p>
+					You don't want your web files mixing with the rest of your things. Put this folder somewhere you can find it easily.
+				</p>
+				<media-group class="layout horizontal around-justified">
+					<zooming-image src="images/learn/mac-screenshot.png" full-src="images/learn/mac-screenshot-big.png"></zooming-image>
+					<zooming-image src="images/learn/pc-screenshot.png" full-src="images/learn/pc-screenshot-big.png"></zooming-image>
+				</media-group>
+				<info-block>
+					<h2>What do files and folders have to do with websites?</h2>
 					<p>
-						It’s the most common reason students walk into Knight Lab for the first time—they want to build some kind of website. Building your own gives you complete control over what that site looks like… but starting from scratch can be overwhelming. It’s hard to know what to Google, when.
+						A website is just a collection of files that your browser reads and displays. Putting those files in organized folders enables us to give the browser exact directions to the locations of those files. So, no search or spotlight allowed—know where your files are so you can send the browser down the right path. Broken paths, missing files, or imprecise directions is a common reason things break. Ever seen a 404 message? That’s why!
 					</p>
+				</info-block>
+			</step-block>
+
+			<step-block title="Setup: Create an HTML document">
+				<p>
+					In your text editor, create a new file (file > new). Save it as "index.html" in the folder you just created.
+				</p>
+			</step-block>
+
+ 			<step-block title="Write some HTML">
+				<p>To create a website, you’ll need to start with an HTML file.</p>
+				<lesson-ref title="Basic HTML" image="/images/learn/source-code.png">
 					<p>
-						So we’ve done some of that work for you. Build a Basic Website outlines the path from start to finish. Head straight down for the fastest of walkthroughs; meander for a deeper explanation of why we’re making these choices.
+						In this standalone lesson, we'll hit on the rules and regulations for writing solid HTML, as well as the top tags you’re likely to use. Head into this standalone lesson for a better understanding of how to markup your content.
 					</p>
-				</narrative-text>
+				</lesson-ref>
 
-				<lesson-block>
-					<h2>
-						You'll need to get started
-					</h2>
-					<div class="horizontal layout">
-						<z-capsule image="images/learn/ftp-program.png" title="FTP Program">
-							<p>
-								A text editor is a type of program used for editing plain text files.
-								Text editors are provided with operating systems and software development packages, and can be used to change configuration files, documentation files and programming language source code.
-							</p>
-						</z-capsule>
-						<z-capsule image="images/learn/ftp-program.png" title="FTP Program">
-							<p>
-								A text editor is a type of program used for editing plain text files.
-								Text editors are provided with operating systems and software development packages, and can be used to change configuration files, documentation files and programming language source code.
-							</p>
-						</z-capsule>
-						<capsule-unit image="images/learn/text-editor.png" title="Text Editor">
-							<p>
-								A text editor is a type of program used for editing plain text files.
-								Text editors are provided with operating systems and software development packages, and can be used to change configuration files, documentation files and programming language source code
-							</p>
-							<link-ref image="images/learn/text-editor.png" title="Sublime Text" link="http://www.sublimetext.com/"></link-ref>
-							<link-ref image="images/learn/text-editor.png" title="Notepad++" link="https://notepad-plus-plus.org/"></link-ref>
-							<link-ref image="images/learn/text-editor.png" title="Atom" link="https://atom.io/"></link-ref>
-							<link-ref image="images/learn/text-editor.png" title="TextMate" link="https://macromates.com/"></link-ref>
-						</capsule-unit>
-
-						<capsule-unit image="images/learn/ftp-program.png" title="FTP Program">
-						</capsule-unit>
-
-					</div>
-				</lesson-block>
-
-				<step-block title="Setup: Create a Folder">
+				<info-block>
+					<h2>HTML (HyperText Markup Language)</h2>
 					<p>
-						You don't want your web files mixing with the rest of your things. Put this folder somewhere you can find it easily.
+						HTML is the backbone of the web, and the beginning of any website. To break that down: “Hypertext” means the document contains text that has links to other text, like stylesheets or scripts, for example. “Markup Language” is a way of formatting a file so that it distinguishes between content and structure—it “marks up” the text to make it easy for the browser to tell which words it should display on the screen, vs. those that are there to tell it how to structure the page.
 					</p>
-					<media-group class="layout horizontal around-justified">
-						<zooming-image src="images/learn/mac-screenshot.png" full-src="images/learn/mac-screenshot-big.png"></zooming-image>
-						<zooming-image src="images/learn/pc-screenshot.png" full-src="images/learn/pc-screenshot-big.png"></zooming-image>
-					</media-group>
-					<info-block>
-						<h2>What do files and folders have to do with websites?</h2>
-						<p>
-							A website is just a collection of files that your browser reads and displays. Putting those files in organized folders enables us to give the browser exact directions to the locations of those files. So, no search or spotlight allowed—know where your files are so you can send the browser down the right path. Broken paths, missing files, or imprecise directions is a common reason things break. Ever seen a 404 message? That’s why!
-						</p>
-					</info-block>
-				</step-block>
+				</info-block>
+			</step-block>
 
-				<step-block title="Setup: Create an HTML document">
+			<step-block title="Save yourself from yourself: Workflow">
+				<p>Here’s the sad truth: When things go south, it’s always your fault. (At least when it comes to building websites. We can’t vouch for your relationship.) More than likely, the page is not just acting crazy. It’s acting crazy because you told it to act crazy. So here’s a strategy to help you cut down on the amount of time you spend troubleshooting.</p>
+
+				<info-block title="Change, save, refresh, check.">
 					<p>
-						In your text editor, create a new file (file > new). Save it as "index.html" in the folder you just created.
+						If you make a lot of changes and then notice things are broken, it’s tough to tell what exactly broke, and when. So work in very small bursts. Check the results frequently. Then, when something breaks, you know it’s what you just did. Backtrack, fix, check, proceed.
 					</p>
-				</step-block>
+					<ol>
+						<li><strong>Change</strong> something in your HTML and/or CSS documents.</li>
+						<li><strong>Save</strong> every file you touched.</li>
+						<li><strong>Refresh</strong> in your browser.</li>
+						<li><strong>Check</strong> to make sure you’re seeing what you want to.</li>
+					</ol>
+				</info-block>
+			</step-block>
 
-	 			<step-block title="Write some HTML">
-					<p>To create a website, you’ll need to start with an HTML file.</p>
-					<lesson-ref title="Basic HTML" image="/images/learn/source-code.png">
-						<p>
-							In this standalone lesson, we'll hit on the rules and regulations for writing solid HTML, as well as the top tags you’re likely to use. Head into this standalone lesson for a better understanding of how to markup your content.
-						</p>
-					</lesson-ref>
+			<step-block title="Get ready for style: Create a CSS document">
+				<p>
+					Create a new file and save it as "styles.css" in the same folder as your index.html file.
+				</p>
+			</step-block>
 
-					<info-block>
-						<h2>HTML (HyperText Markup Language)</h2>
-						<p>
-							HTML is the backbone of the web, and the beginning of any website. To break that down: “Hypertext” means the document contains text that has links to other text, like stylesheets or scripts, for example. “Markup Language” is a way of formatting a file so that it distinguishes between content and structure—it “marks up” the text to make it easy for the browser to tell which words it should display on the screen, vs. those that are there to tell it how to structure the page.
-						</p>
-					</info-block>
-				</step-block>
+			<step-block title="Hook it up to your HTML">
+				<p>To tell your site where it can find your stylesheet, link to it in your &lt;head&gt;.</p>
+				<code-block>
+					&lt;head&gt;
+					&lt;link rel='stylesheet' href='styles.css'&gt;
+					&lt;/head&gt;
+				</code-block>
+			</step-block>
 
-				<step-block title="Save yourself from yourself: Workflow">
-					<p>Here’s the sad truth: When things go south, it’s always your fault. (At least when it comes to building websites. We can’t vouch for your relationship.) More than likely, the page is not just acting crazy. It’s acting crazy because you told it to act crazy. So here’s a strategy to help you cut down on the amount of time you spend troubleshooting.</p>
-
-					<info-block title="Change, save, refresh, check.">
-						<p>
-							If you make a lot of changes and then notice things are broken, it’s tough to tell what exactly broke, and when. So work in very small bursts. Check the results frequently. Then, when something breaks, you know it’s what you just did. Backtrack, fix, check, proceed.
-						</p>
-						<ol>
-							<li><strong>Change</strong> something in your HTML and/or CSS documents.</li>
-							<li><strong>Save</strong> every file you touched.</li>
-							<li><strong>Refresh</strong> in your browser.</li>
-							<li><strong>Check</strong> to make sure you’re seeing what you want to.</li>
-						</ol>
-					</info-block>
-				</step-block>
-
-				<step-block title="Get ready for style: Create a CSS document">
+			<step-block title="Write some CSS">
+			<!-- <a href="css-lesson.html" target="new"> -->
+				<lesson-ref title="Basic CSS" image="images/learn/source-code.png">
 					<p>
-						Create a new file and save it as "styles.css" in the same folder as your index.html file.
+						Wondering why your site’s looking so ugly? HTML just says what’s what and gives the page structure. CSS is where the real fun starts—it will fix things faster than Fix-It Felix.
 					</p>
-				</step-block>
+				</lesson-ref>
 
-				<step-block title="Hook it up to your HTML">
-					<p>To tell your site where it can find your stylesheet, link to it in your &lt;head&gt;.</p>
-					<code-block>
-						&lt;head&gt;
-						&lt;link rel='stylesheet' href='styles.css'&gt;
-						&lt;/head&gt;
-					</code-block>
-				</step-block>
+				<info-block image="images/learn/info-icon.png">
+			  		<h2>CSS (Cascading Style Sheets)</h2>
+			  		<p>
+			  			CSS stands for Cascading Style Sheet (“Cascading” in this context is just a fancy way of saying that it reads the rules you give it, in order, as it runs through your lines of code.) CSS is responsible for implementing the design of your site—color, typeface, grid, and so on. Thank you, CSS. Thank you.
+			  		</p>
+				</info-block>
+			</step-block>
 
-				<step-block title="Write some CSS">
-				<!-- <a href="css-lesson.html" target="new"> -->
-					<lesson-ref title="Basic CSS" image="images/learn/source-code.png">
-						<p>
-							Wondering why your site’s looking so ugly? HTML just says what’s what and gives the page structure. CSS is where the real fun starts—it will fix things faster than Fix-It Felix.
-						</p>
-					</lesson-ref>
+			<step-block title="Prepare for launch: A preface">
+				<p>
+					If you want to make your website available for the general public to see, you'll have to put it on a server, or a special computer dedicating to holding web files and making sure that people who ask to see your website get sent to the right place. You'll also probably want a unique URL, which makes it easier for people to remember how to get to your website.
+				</p>
 
-					<info-block image="images/learn/info-icon.png">
-				  		<h2>CSS (Cascading Style Sheets)</h2>
-				  		<p>
-				  			CSS stands for Cascading Style Sheet (“Cascading” in this context is just a fancy way of saying that it reads the rules you give it, in order, as it runs through your lines of code.) CSS is responsible for implementing the design of your site—color, typeface, grid, and so on. Thank you, CSS. Thank you.
-				  		</p>
-					</info-block>
-				</step-block>
-
-				<step-block title="Prepare for launch: A preface">
+				<info-block image="images/learn/info-icon.png">
+					<h2>Web Hosting</h2>
 					<p>
-						If you want to make your website available for the general public to see, you'll have to put it on a server, or a special computer dedicating to holding web files and making sure that people who ask to see your website get sent to the right place. You'll also probably want a unique URL, which makes it easier for people to remember how to get to your website.
+						Companies like BlueHost or Hover allow you to rent space on a server to publish your site. This is typically a more expensive service. Depending on the size of your website, you may have to sort through which hosting server is the best option for you. Most big hosting companies with free hosting servers will only provide limited services, put advertisements on your site, and cannot host complex or large sites. If you’re building something very small, though, like a personal portfolio site, there are a few good—and free!—options like Github Pages or Dropbox.
 					</p>
+				</info-block>
+			</step-block>
 
-					<info-block image="images/learn/info-icon.png">
-						<h2>Web Hosting</h2>
-						<p>
-							Companies like BlueHost or Hover allow you to rent space on a server to publish your site. This is typically a more expensive service. Depending on the size of your website, you may have to sort through which hosting server is the best option for you. Most big hosting companies with free hosting servers will only provide limited services, put advertisements on your site, and cannot host complex or large sites. If you’re building something very small, though, like a personal portfolio site, there are a few good—and free!—options like Github Pages or Dropbox.
-						</p>
-					</info-block>
-				</step-block>
+			<step-block title="Connect your hosting server to your domain name">
+				<lesson-ref title="Intro to Web Hosting" image="images/learn/source-code.png">
+					<p>
+						If you're ready to put your website on the internet for everyone to see, follow this lesson to learn how to connect the computer you're typing on to a different computer far, far away from you.
+					</p>
+				</lesson-ref>
+			</step-block>
 
-				<step-block title="Connect your hosting server to your domain name">
-					<lesson-ref title="Intro to Web Hosting" image="images/learn/source-code.png">
-						<p>
-							If you're ready to put your website on the internet for everyone to see, follow this lesson to learn how to connect the computer you're typing on to a different computer far, far away from you.
-						</p>
-					</lesson-ref>
-				</step-block>
+			<step-block title="Check out your site">
+				<p>Now that your website is live, check it out! Click on all of the links to make sure they’re directing to the right places and that all the images are showing. If you have to fix something, change in on your computer, save, then re-upload the edited file onto your hosting server. Did we say good job yet? No? Good job! </p>
+			</step-block>
 
-				<step-block title="Check out your site">
-					<p>Now that your website is live, check it out! Click on all of the links to make sure they’re directing to the right places and that all the images are showing. If you have to fix something, change in on your computer, save, then re-upload the edited file onto your hosting server. Did we say good job yet? No? Good job! </p>
-				</step-block>
 
-			</div>
+		</stage-block>
+
+		<stage-block>
+			<lesson-banner image="/images/learn/basic-website-banner.png" title="Create a Basic Website"></lesson-banner>
+			<narrative-text>
+				<p>
+					It’s the most common reason students walk into Knight Lab for the first time—they want to build some kind of website. Building your own gives you complete control over what that site looks like… but starting from scratch can be overwhelming. It’s hard to know what to Google, when.
+				</p>
+				<p>
+					So we’ve done some of that work for you. Build a Basic Website outlines the path from start to finish. Head straight down for the fastest of walkthroughs; meander for a deeper explanation of why we’re making these choices.
+				</p>
+			</narrative-text>
 		</stage-block>
 	</body>
 </html>
