@@ -39,11 +39,15 @@
 					self.addPage(pageItem, caller);
 				})
 			} else if (url_or_element.tagName == 'PAGE-ITEM') {
-				this.page_stack.push([url_or_element,caller]);
+				this.page_stack.push({el:url_or_element, caller:caller});
+				console.log(url_or_element);
 				console.log("Page stack now " + this.page_stack.length + " deep");
 			} else {
 				console.error("Invalid arguments to pageManager.addPage. First argument must be a page-item or a URL");
 			}
+		},
+		selectPage:function(index) {
+
 		},
 		ready: function() {
 			console.log('page-manager ready!')

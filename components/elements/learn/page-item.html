@@ -109,12 +109,19 @@
 
 		},
 
-		pageOff: function(e) {
+		/* PAGE BEHAVIORS
+		================================================== */
+
+		pageOut: function() {
+
+		},
+
+		pageOff: function(leftPercent) {
 			this.page_item.style.marginLeft = "-75%";
 			this.page_item.style.opacity = "0.5";
 		},
 
-		pageOn: function(e) {
+		pageOn: function() {
 			this.page_item.style.marginLeft = "25%";
 			this.page_item.style.opacity = "1";
 		},
