@@ -1,87 +1,70 @@
-
-<dom-module is="page-item">
-    <template>
-    <content></content>
-    </template>
-</dom-module>
-<script type="text/javascript">
-Polymer({
-    is: "page-item",
-    ready: function() {
-{}    },
-    properties: {
-
-    },
-    page_stack: []
-})    
-</script>
-
 <dom-module is="page-manager">
-    <template>
-    <content></content>
-    </template>
+	<template>
+	<content></content>
+	</template>
 </dom-module>
+
 <script type="text/javascript">
-function getPageItem(url, callback) {
-    var request = new XMLHttpRequest();
-    request.open('GET', url, true);
+	function getPageItem(url, callback) {
+		var request = new XMLHttpRequest();
+		request.open('GET', url, true);
 
-    request.onload = function() {
-      if (request.status >= 200 && request.status < 400) {
-        dp = new DOMParser();
-        var parsed = dp.parseFromString(request.responseText, request.getResponseHeader('content-type'));
-        callback(parsed.querySelector('page-item'));
-      } else {
-        console.log("Error ["+ request.status +"] retrieving " + url);
-        console.log(request);
-      }
-    };
+		request.onload = function() {
+			if (request.status >= 200 && request.status < 400) {
+				dp = new DOMParser();
+				var parsed = dp.parseFromString(request.responseText, request.getResponseHeader('content-type'));
+				callback(parsed.querySelector('page-item'));
+			} else {
+				console.log("Error ["+ request.status +"] retrieving " + url);
+				console.log(request);
+			}
+		};
 
-    request.onerror = function() {
-        console.log("Error ["+ request.status +"] retrieving " + url);
-        console.log(request);
-    };
+		request.onerror = function() {
+			console.log("Error ["+ request.status +"] retrieving " + url);
+			console.log(request);
+		};
 
-    request.send();
-    return request;
-}
+		request.send();
+		return request;
+	}
 
 
-Polymer({
-    is: "page-manager",
-    addPage: function(url_or_element, caller) {
-        if (typeof url_or_element == "string") {
-            var self = this;
-            getPageItem(url_or_element,function(pageItem) {
-                self.addPage(pageItem, caller);
-            })
-        } else if (url_or_element.tagName == 'PAGE-ITEM') {
-            this.page_stack.push([url_or_element,caller]);
-            console.log("Page stack now " + this.page_stack.length + " deep");
-        } else {
-            console.error("Invalid arguments to pageManager.addPage. First argument must be a page-item or a URL");
-        }
-    },
-    ready: function() {
-        console.log('page-manager ready!')
-        if (this.childElementCount == 1 && this.children[0].nodeName == 'PAGE-ITEM') {
-            var pageItem = this.children[0];
-            this.addPage(pageItem, null);
-            var self = this;
-            this.addEventListener("page:add", function(e){
-                var url = e.url || (e.detail && e.detail.url) || null;
-                if (url) {
-                    self.addPage(url, e.target);
+	Polymer({
+		is: "page-manager",
+		addPage: function(url_or_element, caller) {
+			if (typeof url_or_element == "string") {
+				var self = this;
+				getPageItem(url_or_element,function(pageItem) {
+					self.addPage(pageItem, caller);
+				})
+			} else if (url_or_element.tagName == 'PAGE-ITEM') {
+				this.page_stack.push([url_or_element,caller]);
+				console.log("Page stack now " + this.page_stack.length + " deep");
+			} else {
+				console.error("Invalid arguments to pageManager.addPage. First argument must be a page-item or a URL");
+			}
+		},
+		ready: function() {
+			console.log('page-manager ready!')
+			if (this.childElementCount == 1 && this.children[0].nodeName == 'PAGE-ITEM') {
+				var pageItem = this.children[0];
+				this.addPage(pageItem, null);
+				var self = this;
+				this.addEventListener("page:add", function(e){
+					var url = e.url || (e.detail && e.detail.url) || null;
+					if (url) {
+						self.addPage(url, e.target);
 
-                }
-            });
-        } else {
-            console.warn("page-manager expects a single child element, a page-item");
-        }
-    },
-    properties: {
+					}
+				});
+			} else {
+				console.warn("page-manager expects a single child element, a page-item");
+			}
+		},
+		properties: {
 
-    },
-    page_stack: []
-})    
+		},
+		page_stack: []
+	})    
 </script>
