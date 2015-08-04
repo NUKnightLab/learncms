@@ -28,7 +28,9 @@ function getPageItem(url, callback) {
 
     request.onload = function() {
       if (request.status >= 200 && request.status < 400) {
-        dp = new DOMParser();
+        // check on support for DOMParser 
+        // maybe consult https://developer.mozilla.org/en-US/Add-ons/Code_snippets/HTML_to_DOM
+        dp = new DOMParser(); 
         var parsed = dp.parseFromString(request.responseText, request.getResponseHeader('content-type'));
         callback(parsed.querySelector('page-item'));
       } else {
