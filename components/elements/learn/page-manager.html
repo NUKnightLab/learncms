@@ -32,25 +32,45 @@
 
 	Polymer({
 		is: "page-manager",
+		fetchPage: function(url, caller) {
+			var self = this;
+			getPageItem(url,function(pageItem) {
+				var clone = document.createElement("page-item");
+				clone.innerHTML = pageItem.innerHTML;
+				self.addPage(pageItem, caller);
+			})
+		},
+		/**
+		 * Add a polymerized 'page-item' to the pages under management.
+		 * @param {[type]} url_or_element [description]
+		 * @param {[type]} caller         [description]
+		 */
 		addPage: function(url_or_element, caller) {
-			if (typeof url_or_element == "string") {
-				var self = this;
-				getPageItem(url_or_element,function(pageItem) {
-					self.addPage(pageItem, caller);
-				})
-			} else if (url_or_element.tagName == 'PAGE-ITEM') {
+			if (url_or_element.tagName == 'PAGE-ITEM') {
 				this.page_stack.push({el:url_or_element, caller:caller});
-				console.log(url_or_element);
 				console.log("Page stack now " + this.page_stack.length + " deep");
+				this.appendChild(url_or_element);
 			} else {
-				console.error("Invalid arguments to pageManager.addPage. First argument must be a page-item or a URL");
+				console.error("Invalid arguments to pageManager.addPage. First argument must be a page-item.");
 			}
 		},
-		selectPage:function(index) {
 
+		selectPage:function(index) {
+			for (i = 0; i < this.page_stack.length; i++) {
+				console.log(this.page_stack[i].el)
+				this.page_stack[i].el.pageOff();
+
+				// if (i === index) {
+				// 	this.page_stack[i].el.pageOn();
+				// } else {
+				// 	this.page_stack[i].el.pageOff();
+				// }
+			}
 		},
+
 		ready: function() {
-			console.log('page-manager ready!')
+			console.log('page-manager ready!');
+
 			if (this.childElementCount == 1 && this.children[0].nodeName == 'PAGE-ITEM') {
 				var pageItem = this.children[0];
 				this.addPage(pageItem, null);
@@ -58,7 +78,7 @@
 				this.addEventListener("page:add", function(e){
 					var url = e.url || (e.detail && e.detail.url) || null;
 					if (url) {
-						self.addPage(url, e.target);
+						self.fetchPage(url, e.target);
 
 					}
 				});
