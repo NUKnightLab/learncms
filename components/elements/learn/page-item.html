@@ -72,7 +72,7 @@
 		},
 		page_stack: [],
 		ready: function() {
-
+			console.log("page-item ready");
 			// DOM OBJECTS
 			this.page_item = this.$['page-item'];
 			this.default_width = 0;
@@ -117,11 +117,13 @@
 		},
 
 		pageOff: function(leftPercent) {
+			console.log("pageOff")
 			this.page_item.style.marginLeft = "-75%";
 			this.page_item.style.opacity = "0.5";
 		},
 
 		pageOn: function() {
+			console.log("pageOn")
 			this.page_item.style.marginLeft = "25%";
 			this.page_item.style.opacity = "1";
 		},
