@@ -7,7 +7,8 @@ from django.http import Http404
 from lxml.etree import Comment
 from lxml.html import fromstring, tostring
 
-from .models import Lesson, ZoomingImage, CapsuleUnit
+from .models import Lesson
+from .refresolvers import REF_RESOLVERS
 import os.path
 
 # boilerplate
@@ -34,62 +35,32 @@ class LessonDetailView(DetailView):
     model = Lesson
     template_name = "lesson-detail.html"
 
+    def is_editor(self):
+        return self.request.user.is_authenticated()
+
     def get_context_data(self, **kwargs):
         context = super(LessonDetailView, self).get_context_data(**kwargs)
         lesson = self.object
-        print("hi")
-        print(lesson.status)
-        if (lesson.status != Lesson.PUBLISHED and not self.request.user.is_authenticated()):
+        if (lesson.status != Lesson.PUBLISHED and not self.is_editor()):
             raise Http404
         context['title'] = lesson.title
         context['lesson'] = lesson
-        context['evaluated_content'] = self.evaluate_content()
+        context['evaluated_content'] = self.evaluate_content(strip_bad_references=(lesson.status == Lesson.PUBLISHED))
         return context
 
 
-    def evaluate_content(self):
+    def evaluate_content(self,strip_bad_references=False):
         """Convert any convenience markup (such as object references) into the ideal markup
-           for delivering to the page.
+           for delivering to the page. Optionally remove from DOM elements which have ref 
+           attributes which don't resolve to actual objects. (Do this in production but show them in draft/editing mode.)
         """
         content = self.object.content
         element = fromstring(content)
-        self._resolve_zooming_image_refs(element)
-        self._resolve_lesson_refs(element)
-        self._resolve_capsule_units(element)
+        for elem in element.findall('.//*[@ref]'):
+            try:
+                REF_RESOLVERS[elem.tag].resolve_ref(elem,strip_bad_references)
+            except KeyError:
+                self.note_error(elem,"Unrecognized ref type", strip_bad_references)
+
         return tostring(element,encoding='unicode')
 
-    def _resolve_zooming_image_refs(self, element):
-        for i,elem in enumerate(element.findall('.//zooming-image')):
-            if elem.attrib.has_key('ref'):
-                matches = ZoomingImage.objects.filter(slug=elem.attrib['ref'])
-                if len(matches) == 0:
-                    elem.getparent().append(Comment("Invalid slug ref for zooming-image #{}".format(i)))
-                    elem.getparent().remove(elem)
-                else:
-                    elem.attrib['src'] = matches[0].thumbnail.url
-                    elem.attrib['fullSrc'] = matches[0].image.url
-
-    def _resolve_lesson_refs(self, element):
-        for i,elem in enumerate(element.findall('.//lesson-ref')):
-            if elem.attrib.has_key('ref'):
-                matches = Lesson.objects.filter(slug=elem.attrib['ref'])
-                if len(matches) == 0:
-                    elem.getparent().append(Comment("Invalid slug ref for lesson-ref #{}".format(i)))
-                    elem.getparent().remove(elem)
-                else:
-                    elem.attrib['image'] = matches[0].banner_image.url
-                    elem.attrib['title'] = matches[0].title
-                    elem.attrib['url'] = matches[0].get_absolute_url()
-                    elem.text = matches[0].reference_blurb
-
-    def _resolve_capsule_units(self, element):
-        for i,elem in enumerate(element.findall('.//capsule-unit')):
-            if elem.attrib.has_key('ref'):
-                matches = CapsuleUnit.objects.filter(slug=elem.attrib['ref'])
-                if len(matches) == 0:
-                    elem.getparent().append(Comment("Invalid slug ref for capsule-unit #{}".format(i)))
-                    elem.getparent().remove(elem)
-                else:
-                    elem.attrib['image'] = matches[0].image.url
-                    elem.attrib['title'] = matches[0].title
-                    elem.text = matches[0].content
