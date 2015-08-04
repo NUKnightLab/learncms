@@ -20,25 +20,23 @@
 			}
 		};
 
-<<<<<<< HEAD
-    request.onload = function() {
-      if (request.status >= 200 && request.status < 400) {
-        // check on support for DOMParser 
-        // maybe consult https://developer.mozilla.org/en-US/Add-ons/Code_snippets/HTML_to_DOM
-        dp = new DOMParser(); 
-        var parsed = dp.parseFromString(request.responseText, request.getResponseHeader('content-type'));
-        callback(parsed.querySelector('page-item'));
-      } else {
-        console.log("Error ["+ request.status +"] retrieving " + url);
-        console.log(request);
-      }
-    };
-=======
+	    request.onload = function() {
+	      if (request.status >= 200 && request.status < 400) {
+	        // check on support for DOMParser 
+	        // maybe consult https://developer.mozilla.org/en-US/Add-ons/Code_snippets/HTML_to_DOM
+	        dp = new DOMParser(); 
+	        var parsed = dp.parseFromString(request.responseText, request.getResponseHeader('content-type'));
+	        callback(parsed.querySelector('page-item'));
+	      } else {
+	        console.log("Error ["+ request.status +"] retrieving " + url);
+	        console.log(request);
+	      }
+	    };
+
 		request.onerror = function() {
 			console.log("Error ["+ request.status +"] retrieving " + url);
 			console.log(request);
 		};
->>>>>>> 1657cebc98c849587cfe3422b13bf0627287c543
 
 		request.send();
 		return request;
@@ -51,8 +49,10 @@
 
 			var self = this;
 			getPageItem(url,function(pageItem) {
-				var clone = document.createElement("page-item");
-				clone.innerHTML = pageItem.innerHTML;
+				var clone = self.create("page-item");
+				var content = clone.$$('content');
+				content.innerHTML = pageItem.innerHTML;
+				clone.distributeContent();
 				self.addPage(clone, caller);
 				self.selectPage(self.page_stack.length - 1);
 			})
@@ -89,6 +89,8 @@
 				}
 			}
 		},
+
+		getPageItem: getPageItem,
 
 		ready: function() {
 			console.log('page-manager ready!');
