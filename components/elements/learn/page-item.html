@@ -161,7 +161,12 @@
 			this.page_cover.addEventListener("click",function(e){
 				self._onCoverClick();
 			},false);
-			this.pageOn();
+
+			this.fire("page:ready", {caller:self});
+
+			setTimeout(function(){
+				self.pageOn();
+			}, 100);
 		},
 
 		_onCoverClick: function(e) {

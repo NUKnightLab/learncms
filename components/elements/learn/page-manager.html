@@ -110,6 +110,11 @@
 					}
 				});
 
+				this.addEventListener("page:ready", function(e){
+					console.log("page:ready");
+					console.log(e.detail.caller);
+				});
+
 			} else {
 				console.warn("page-manager expects a single child element, a page-item");
 			}
