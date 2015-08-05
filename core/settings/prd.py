@@ -62,6 +62,5 @@ AWS_S3_SECURE_URLS = False
 
 
 # Static files (CSS, JavaScript, Images)
-# STATICFILES_STORAGE = 'storages.backends.s3boto.S3BotoStorage'
-
-STATIC_URL = '//media.knightlab.com/learncms/'
+STATICFILES_STORAGE = 'storages.backends.s3boto.S3BotoStorage'
+STATIC_URL = 'https://{}/static/'.format(AWS_STORAGE_BUCKET_NAME)
