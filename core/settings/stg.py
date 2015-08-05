@@ -45,8 +45,25 @@ DATABASES = {
     }
 }
 
+# should these be in site.py?
+EMAIL_BACKEND = 'django.core.mail.backends.smtp.EmailBackend'
+EMAIL_HOST = environ.get('EMAIL_HOST', 'smtp.gmail.com')
+EMAIL_HOST_PASSWORD = environ.get('EMAIL_HOST_PASSWORD', '')
+EMAIL_HOST_USER = environ.get('EMAIL_HOST_USER', 'knightlab@northwestern.edu')
+EMAIL_PORT = environ.get('EMAIL_PORT', 587)
+EMAIL_SUBJECT_PREFIX = '[projects] '
+EMAIL_USE_TLS = True
+SERVER_EMAIL = EMAIL_HOST_USER
+
+#
+# User uploads settings for S3
+#
+MEDIA_URL = '//s3.amazonaws.com/media.learn.knilab.com/'
+AWS_STORAGE_BUCKET_NAME = 'media.learn.knilab.com'
+
 
 # Static files (CSS, JavaScript, Images)
 #STATICFILES_STORAGE = 'storages.backends.s3boto.S3BotoStorage'
 
 STATIC_URL = '//media.knilab.com/learncms/'
+
