@@ -117,7 +117,6 @@
 
 			if (this.childElementCount == 1 && this.children[0].nodeName == 'PAGE-ITEM') {
 				var pageItem = this.children[0];
-				this.addPage(pageItem, null);
 				var self = this;
 				this.addEventListener("page:add", function(e){
 					var url = e.url || (e.detail && e.detail.url) || null;
@@ -130,6 +129,9 @@
 				this.addEventListener("page:ready", function(e){
 					console.log("page:ready");
 					console.log(e.detail.caller);
+					if (this.page_stack.length == 0) {
+						this.addPage(e.detail.caller, null);
+					}
 				});
 				this.addEventListener("page:out", function(e){
 					console.log("page:out");
