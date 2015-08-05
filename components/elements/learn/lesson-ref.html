@@ -15,22 +15,22 @@ Example:
 	<style>
 	::content #lesson-ref-container {
 		position: relative;
-		right: -40px;
+		right: -30px;
 		background-color: #fff;
 		margin-bottom: 20px;
 		cursor:pointer;
 	}
 	
 	;
-	div.ref-image-wrapper {
+	::content #image-container {
 		position: relative;
 	}
 	
-	div.ref-image-wrapper img {
+	::content #image-container img {
 		width: 100%;
 	}
 	
-	div.ref-image-wrapper h2 {
+	::content #title-el {
 		position: absolute;
 		bottom: 0;
 		left: 0;
@@ -38,7 +38,7 @@ Example:
 		color: #ffffff;
 	}
 	
-	div.ref-image-wrapper paper-fab {
+	::content #image-container paper-fab {
 		position: absolute;
 		right: -30px;
 		bottom: -20px;
@@ -46,23 +46,57 @@ Example:
 		color: #000;
 	}
 	
-	p.ref-copy-wrapper {
-		padding: 5px;
+	::content #text-container {
+		padding: 10px;
+		padding:0px 10px 10px 10px;
+
+	};
+
+	.material-shadow {
+		  transition:box-shadow 0.28s cubic-bezier(0.4, 0, 0.2, 1);
 	}
-	
-	;
+
+	.material-shadow[elevation="1"] {
+	  box-shadow:0 2px 2px 0 rgba(0, 0, 0, 0.14),
+	                  0 1px 5px 0 rgba(0, 0, 0, 0.12),
+	                  0 3px 1px -2px rgba(0, 0, 0, 0.2);
+	}
+
+	.material-shadow[elevation="2"] {
+	  box-shadow:0 4px 5px 0 rgba(0, 0, 0, 0.14),
+	                  0 1px 10px 0 rgba(0, 0, 0, 0.12),
+	                  0 2px 4px -1px rgba(0, 0, 0, 0.4);
+	}
+
+	.material-shadow[elevation="3"] {
+	  box-shadow:0 6px 10px 0 rgba(0, 0, 0, 0.14),
+	                  0 1px 18px 0 rgba(0, 0, 0, 0.12),
+	                  0 3px 5px -1px rgba(0, 0, 0, 0.4);
+	}
+
+	.material-shadow[elevation="4"] {
+	  box-shadow:0 8px 10px 1px rgba(0, 0, 0, 0.14),
+	                  0 3px 14px 2px rgba(0, 0, 0, 0.12),
+	                  0 5px 5px -3px rgba(0, 0, 0, 0.4);
+	}
+
+	.material-shadow[elevation="5"] {
+	  box-shadow:0 16px 24px 2px rgba(0, 0, 0, 0.14),
+	                  0  6px 30px 5px rgba(0, 0, 0, 0.12),
+	                  0  8px 10px -5px rgba(0, 0, 0, 0.4);
+	}
 	</style>
 	<template>
-		<paper-material id="lesson-ref-container" elevation="2" class="paper-font-body2">
-			<div class="ref-image-wrapper">
+		<div id="lesson-ref-container" elevation="2" class="material-shadow">
+			<div id="image-container">
 				<img src="{{ image }}">
-				<h2>{{ title }}</h2>
+				<h2 id="title-el">{{ title }}</h2>
 				<paper-fab icon="arrow-forward"></paper-fab>
 			</div>
-			<p class="ref-copy-wrapper">
+			<div id="text-container">
 				<content></content>
-			</p>
-		</paper-material>
+			</div>
+		</div>
 	</template>
 
 </dom-module>
@@ -89,10 +123,9 @@ Example:
 		},
 		ready: function() {
 			// DOM OBJECTS
-			// this.capsule_image = this.$['capsule-image'];
-			// this.capsule_title = this.$['capsule-title'];
-			// this.capsule_content = this.$['capsule-content'];
-			// this.default_width = 0;
+			this.text_container = this.$['text-container'];
+			this.image_container = this.$['image-container'];
+			this.title_el = this.$['title-el'];
 		},
 		_handleEscapeKey: function(e) {
 			console.log("when available, implement close-capsule here");
