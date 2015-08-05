@@ -74,23 +74,40 @@
 
 		},
 
+		removePage: function(el) {
+			console.log("removePage");
+			console.log(el);
+			this.removeChild(el);
+		},
+
 		selectPage:function(index) {
 			console.log("selectPage");
 
 			var stack_depth_position = 25 / (this.page_stack.length - 1);
 			var stack_depth = 1;
-			
+			var to_remove = [];
 
 			for (i = 0; i < this.page_stack.length; i++) {
 				if (i !== index) {
-					//this.page_stack[i].el.pageOn(this.page_stack.length === 1);
-					this.page_stack[i].el.pageOff(stack_depth_position * stack_depth, 10 - stack_depth);
-					stack_depth++;
+					if (i > index) {
+						console.log("greater than index, will be removed");
+						this.page_stack[i].el.pageOut();
+						to_remove.push(i);
+					} else {
+						this.page_stack[i].el.pageOff(stack_depth_position * stack_depth, 10 - stack_depth, i);
+						stack_depth++;
+					}
+					
 				}
 			}
 
+			// Remove any items that were pageOuted
+			for (i = 0; i < to_remove.length; i++) {
+				this.page_stack.splice(to_remove[i], 1);
+			}
+
 			// after pages have transitioned, do pageOn
-			//this.page_stack[index].el.pageOn(this.page_stack.length === 1);
+			this.page_stack[index].el.pageOn(this.page_stack.length === 1);
 		},
 
 		getPageItem: getPageItem,
@@ -113,6 +130,15 @@
 				this.addEventListener("page:ready", function(e){
 					console.log("page:ready");
 					console.log(e.detail.caller);
+				});
+				this.addEventListener("page:out", function(e){
+					console.log("page:out");
+					console.log(e.detail.caller);
+					console.log(e.detail.index);
+					self.selectPage(e.detail.index);
+				});
+				this.addEventListener("page:remove", function(e){
+					self.removePage(e.detail.caller);
 				});
 
 			} else {

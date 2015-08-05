@@ -145,15 +145,7 @@
 
 			var self = this;
 
-			// TRANSITION LISTENERS
-			//this.page_item.setAttribute("class", "loaded");
-			this.page_item.addEventListener("transitionend",function(e){
-				self._onTransitionEnd();
-			},false);
-
-			this.page_item.addEventListener("webkitTransitionEnd",function(e){
-				self._onTransitionEnd();
-			},false);
+			
 
 			this.page_item.style.marginLeft = "100%";
 			//this.page_item.setAttribute("class", "material-shadow loaded");
@@ -171,10 +163,13 @@
 
 		_onCoverClick: function(e) {
 			console.log("_onCoverClick");
+			this.fire("page:out", {caller:this, index:this.index});
 		},
 
-		_onTransitionEnd: function(e) {
-			console.log("_onTransitionEnd");
+		_removeSelf: function(e) {
+			console.log("_removeSelf");
+			this.fire("page:remove", {caller:this, index:this.index});
+			// DESTROY
 		},
 
 		_onLoad: function(e) {
@@ -213,13 +208,28 @@
 
 		// Removes page
 		pageOut: function() {
+			console.log("PAGE OUT");
+			// TRANSITION LISTENERS
+			//this.page_item.setAttribute("class", "loaded");
+			var self = this;
+			this.page_item.addEventListener("transitionend",function(e){
+				self._removeSelf();
+			},false);
+
+			this.page_item.addEventListener("webkitTransitionEnd",function(e){
+				self._removeSelf();
+			},false);
+
+			this.page_item.style.marginLeft = "100%";
 
 		},
 
 		// Page is no longer active but is visible in the page_stack
-		pageOff: function(stack_depth_position, stack_depth) {
+		pageOff: function(stack_depth_position, stack_depth, index) {
 			console.log("pageOff");
 			var left_pos = 100 - stack_depth_position;
+
+			this.index = index;
 
 			this.page_cover.style.height = "100vh";
 			this.page_cover.style.width = "75%";
@@ -241,7 +251,7 @@
 		},
 
 		// Page is at the top of the page_stack
-		pageOn: function(single) {
+		_pageOn: function(single) {
 			console.log("pageOn");
 			console.log("is single " + single);
 			console.log(this.page_item.style.marginLeft)
@@ -249,7 +259,15 @@
 			this.page_item.style.width = "75%";
 			this.page_item.style.opacity = "1";
 			this.page_item.style.zIndex = 10;
-			console.log(this.page_item.style.marginLeft)
+			console.log(this.page_item.style.marginLeft);
+
+		},
+
+		pageOn: function(single) {
+			var self = this;
+			setTimeout(function(){
+				self._pageOn();
+			}, 100);
 		},
 
 
