@@ -84,14 +84,15 @@
 			
 
 			for (i = 0; i < this.page_stack.length; i++) {
-				
-				if (i === index) {
-					this.page_stack[i].el.pageOn(this.page_stack.length === 1);
-				} else {
+				if (i !== index) {
+					//this.page_stack[i].el.pageOn(this.page_stack.length === 1);
 					this.page_stack[i].el.pageOff(stack_depth_position * stack_depth, 10 - stack_depth);
 					stack_depth++;
 				}
 			}
+
+			// after pages have transitioned, do pageOn
+			this.page_stack[index].el.pageOn(this.page_stack.length === 1);
 		},
 
 		getPageItem: getPageItem,
