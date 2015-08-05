@@ -35,16 +35,20 @@
 			background-color:#FFF;
 			top:0;
 			margin-left:100%;
-			margin-top:50px;
+			
 			/*overflow:hidden;*/
 			overflow-y: scroll;
 			-webkit-transition: margin-left 750ms cubic-bezier(0.770, 0.000, 0.175, 1.000),
+								box-shadow 750ms cubic-bezier(0.770, 0.000, 0.175, 1.000),
 								opacity 750ms cubic-bezier(0.770, 0.000, 0.175, 1.000); 
 			   -moz-transition: margin-left 750ms cubic-bezier(0.770, 0.000, 0.175, 1.000),
+			   					box-shadow 750ms cubic-bezier(0.770, 0.000, 0.175, 1.000),
 			   					opacity 750ms cubic-bezier(0.770, 0.000, 0.175, 1.000); 
 			     -o-transition: margin-left 750ms cubic-bezier(0.770, 0.000, 0.175, 1.000),
+			     				box-shadow 750ms cubic-bezier(0.770, 0.000, 0.175, 1.000),
 			     				opacity 750ms cubic-bezier(0.770, 0.000, 0.175, 1.000);
 			        transition: margin-left 750ms cubic-bezier(0.770, 0.000, 0.175, 1.000),
+			        			box-shadow 750ms cubic-bezier(0.770, 0.000, 0.175, 1.000),
 			        			opacity 750ms cubic-bezier(0.770, 0.000, 0.175, 1.000);
 
 
@@ -62,7 +66,7 @@
 		};
 
 		.material-shadow {
-		  transition:box-shadow 0.28s cubic-bezier(0.4, 0, 0.2, 1);
+		  /*transition:box-shadow 0.28s cubic-bezier(0.4, 0, 0.2, 1);*/
 		};
 
 		.material-shadow[elevation="1"] {
@@ -119,12 +123,12 @@
 		
 
 		created: function() {
-			console.log(this.localName + '#' + this.id + ' was created');
+			//console.log(this.localName + '#' + this.id + ' was created');
 		},
 
 		ready: function() {
-			console.log("page-item ready");
-			console.log(this.localName + '#' + this.id + ' is ready');
+			//console.log("page-item ready");
+			//console.log(this.localName + '#' + this.id + ' is ready');
 			// DOM OBJECTS
 			this.page_item = this.$['page-item'];
 			this.page_cover = this.$['page-cover'];
@@ -140,7 +144,7 @@
 		attached: function() {
 			
 			//this.page_item.style.opacity = "0";
-			console.log(this.localName + '#' + this.id + ' was attached');
+			//console.log(this.localName + '#' + this.id + ' was attached');
 			
 
 			var self = this;
@@ -162,18 +166,18 @@
 		},
 
 		_onCoverClick: function(e) {
-			console.log("_onCoverClick");
+			//console.log("_onCoverClick");
 			this.fire("page:out", {caller:this, index:this.index});
 		},
 
 		_removeSelf: function(e) {
-			console.log("_removeSelf");
+			//console.log("_removeSelf");
 			this.fire("page:remove", {caller:this, index:this.index});
 			// DESTROY
 		},
 
 		_onLoad: function(e) {
-			console.log("_onLoad");
+			//console.log("_onLoad");
 		},
 
 		/* Using IronA11yKeysBehavior, listen for 'esc' key pressed
@@ -208,7 +212,7 @@
 
 		// Removes page
 		pageOut: function() {
-			console.log("PAGE OUT");
+			//console.log("PAGE OUT");
 			// TRANSITION LISTENERS
 			//this.page_item.setAttribute("class", "loaded");
 			var self = this;
@@ -226,7 +230,8 @@
 
 		// Page is no longer active but is visible in the page_stack
 		pageOff: function(stack_depth_position, stack_depth, index) {
-			console.log("pageOff");
+
+			//console.log("pageOff");
 			var left_pos = 100 - stack_depth_position;
 
 			this.index = index;
@@ -252,14 +257,23 @@
 
 		// Page is at the top of the page_stack
 		_pageOn: function(single) {
-			console.log("pageOn");
-			console.log("is single " + single);
-			console.log(this.page_item.style.marginLeft)
+			//console.log("pageOn");
+			//console.log("is single " + single);
+			//console.log(this.page_item.style.marginLeft)
 			this.page_item.style.marginLeft = "25%";
 			this.page_item.style.width = "75%";
 			this.page_item.style.opacity = "1";
-			this.page_item.style.zIndex = 10;
-			console.log(this.page_item.style.marginLeft);
+			
+
+			this.page_cover.style.opacity = "0";
+			this.page_cover.style.height = "0px";
+			//console.log(this.page_item.style.marginLeft);
+			
+			var self = this;
+			setTimeout(function(){
+				self.page_item.style.zIndex = 10;
+				self.page_item.setAttribute("elevation", "5");
+			}, 500);
 
 		},
 
