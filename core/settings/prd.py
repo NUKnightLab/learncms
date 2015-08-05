@@ -45,6 +45,21 @@ DATABASES = {
     }
 }
 
+# User uploads settings for S3
+# In addition to below, set environment vars:
+#
+# AWS_ACCESS_KEY_ID
+# AWS_SECRET_ACCESS_KEY
+#
+DEFAULT_FILE_STORAGE = 'storages.backends.s3boto.S3BotoStorage'
+from boto.s3.connection import OrdinaryCallingFormat 
+AWS_S3_CALLING_FORMAT = OrdinaryCallingFormat()
+AWS_STORAGE_BUCKET_NAME = 'media.learn.knightlab.com'
+MEDIA_URL = '//s3.amazonaws.com/{}/'.format(AWS_STORAGE_BUCKET_NAME)
+AWS_S3_SECURE_URLS = False
+# --- end S3 storages configuration ---
+
+
 
 # Static files (CSS, JavaScript, Images)
 # STATICFILES_STORAGE = 'storages.backends.s3boto.S3BotoStorage'

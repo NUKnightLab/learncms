@@ -27,6 +27,7 @@ STATICFILES_DIRS = (
 
 MEDIA_ROOT = normpath(join(PROJECT_ROOT, 'uploads'))
 
+DEFAULT_FILE_STORAGE = 'django.core.files.storage.FileSystemStorage'
 MEDIA_URL = '/uploads/'
 
 TEMPLATE_DIRS = (
