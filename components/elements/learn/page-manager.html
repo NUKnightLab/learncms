@@ -54,7 +54,7 @@
 				content.innerHTML = pageItem.innerHTML;
 				clone.distributeContent();
 				self.addPage(clone, caller);
-				self.selectPage(self.page_stack.length - 1);
+				//self.selectPage(self.page_stack.length - 1);
 			})
 		},
 		/**
@@ -67,25 +67,29 @@
 				this.page_stack.push({el:url_or_element, caller:caller});
 				console.log("Page stack now " + this.page_stack.length + " deep");
 				this.appendChild(url_or_element);
-				//this.selectPage(this.page_stack.length - 1);
+				this.selectPage(this.page_stack.length - 1);
 			} else {
 				console.error("Invalid arguments to pageManager.addPage. First argument must be a page-item.");
 			}
 
-			//this.selectPage(this.page_stack.length - 1);
 		},
 
 		selectPage:function(index) {
+			console.log("selectPage");
 			console.log(index);
 			console.log(this.page_stack[index]);
+
+			var stack_depth_position = 25 / (this.page_stack.length - 1);
+			var stack_depth = 1;
 			
 
 			for (i = 0; i < this.page_stack.length; i++) {
 				
 				if (i === index) {
-					this.page_stack[i].el.pageOn();
+					this.page_stack[i].el.pageOn(this.page_stack.length === 1);
 				} else {
-					this.page_stack[i].el.pageOff();
+					this.page_stack[i].el.pageOff(stack_depth_position * stack_depth, 10 - stack_depth);
+					stack_depth++;
 				}
 			}
 		},
@@ -106,6 +110,7 @@
 
 					}
 				});
+
 			} else {
 				console.warn("page-manager expects a single child element, a page-item");
 			}
