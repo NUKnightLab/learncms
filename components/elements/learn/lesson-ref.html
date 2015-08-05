@@ -4,87 +4,110 @@
 
 Example:
 
-    <lesson-ref>
-      ... content ...
-    </lesson-ref>
+	<lesson-ref>
+	  ... content ...
+	</lesson-ref>
 
 @group Learn Elements
 @class lesson-ref
 -->
 <dom-module id="lesson-ref">
-  <style>
+	<style>
+	::content #lesson-ref-container {
+		position: relative;
+		right: -40px;
+		background-color: #fff;
+		margin-bottom: 20px;
+		cursor:pointer;
+	}
+	
+	;
+	div.ref-image-wrapper {
+		position: relative;
+	}
+	
+	div.ref-image-wrapper img {
+		width: 100%;
+	}
+	
+	div.ref-image-wrapper h2 {
+		position: absolute;
+		bottom: 0;
+		left: 0;
+		margin-left: 10px;
+		color: #ffffff;
+	}
+	
+	div.ref-image-wrapper paper-fab {
+		position: absolute;
+		right: -30px;
+		bottom: -20px;
+		background-color: #fff;
+		color: #000;
+	}
+	
+	p.ref-copy-wrapper {
+		padding: 5px;
+	}
+	
+	;
+	</style>
+	<template>
+		<paper-material id="lesson-ref-container" elevation="2" class="paper-font-body2">
+			<div class="ref-image-wrapper">
+				<img src="{{ image }}">
+				<h2>{{ title }}</h2>
+				<paper-fab icon="arrow-forward"></paper-fab>
+			</div>
+			<p class="ref-copy-wrapper">
+				<content></content>
+			</p>
+		</paper-material>
+	</template>
 
-  ::content #lesson-ref-container {
-    position: relative;
-    right: -40px;
-    background-color: #fff;
-    margin-bottom: 20px;
-  };
-
-  div.ref-image-wrapper {
-    position: relative;
-  }
-
-  div.ref-image-wrapper img {
-    width: 100%;
-  }
-
-  div.ref-image-wrapper h2 {
-    position: absolute;
-    bottom: 0;
-    left: 0;
-    margin-left: 10px;
-    color: #ffffff;
-  }
-
-  div.ref-image-wrapper paper-fab {
-    position: absolute;
-    right: -30px;
-    bottom: -20px;
-    background-color: #fff;
-    color: #000;
-  }
-
-  p.ref-copy-wrapper {
-    padding: 5px;
-  };
-
-  </style>
-  <template>
-  <paper-material id="lesson-ref-container" elevation="2" class="paper-font-body2">
-  <div class="ref-image-wrapper">
-    <img src="{{ image }}">
-    <h2>{{ title }}</h2>
-    <paper-fab icon="arrow-forward" on-click="loadReference"></paper-fab>
-  </div>
-  <p class="ref-copy-wrapper">
-    <content></content>
-  </p>
-  </paper-material>
-  </template>
 </dom-module>
+
 <script>
-  Polymer({
-    is: 'lesson-ref',
-    loadReference: function() {
-      if (this.url) {
-        window.open(this.url,"_blank");
-      }
-      console.log('clicky');
-    },
-    properties: {
-      title: {
-        type: String,
-        value: "Lesson Title"
-      },
-      image: {
-        type: String,
-        value: ""
-      },
-      url: {
-        type: String,
-        value: ""
-      }
-    }
-  });
+	Polymer({
+		is: 'lesson-ref',
+		listeners: {
+			"click": "_clickListener"
+		},
+		properties: {
+			title: {
+				type: String,
+				value: "Lesson Title"
+			},
+			image: {
+				type: String,
+				value: ""
+			},
+			url: {
+				type: String,
+				value: ""
+			}
+		},
+		ready: function() {
+			// DOM OBJECTS
+			// this.capsule_image = this.$['capsule-image'];
+			// this.capsule_title = this.$['capsule-title'];
+			// this.capsule_content = this.$['capsule-content'];
+			// this.default_width = 0;
+		},
+		_handleEscapeKey: function(e) {
+			console.log("when available, implement close-capsule here");
+		},
+
+		_handlePaperButtonClick: function(e) {
+
+		},
+
+		_clickListener: function(e) {
+			console.log("_clickListener");
+			if (this.url) {
+				//window.open(this.url, "_blank");
+				this.fire("page:add", {url:this.url});
+			}
+		}
+	});
 </script>
