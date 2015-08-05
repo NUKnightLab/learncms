@@ -65,7 +65,7 @@
 		addPage: function(url_or_element, caller) {
 			if (url_or_element.tagName == 'PAGE-ITEM') {
 				this.page_stack.push({el:url_or_element, caller:caller});
-				console.log("Page stack now " + this.page_stack.length + " deep");
+				//console.log("Page stack now " + this.page_stack.length + " deep");
 				this.appendChild(url_or_element);
 				//this.selectPage(this.page_stack.length - 1);
 			} else {
@@ -75,17 +75,20 @@
 		},
 
 		removePage: function(el) {
-			console.log("removePage");
-			console.log(el);
+			//console.log("removePage");
+			//console.log(el);
 			this.removeChild(el);
 		},
 
 		selectPage:function(index) {
-			console.log("selectPage");
+			//console.log("selectPage");
+			console.log("index " + index);
 
-			var stack_depth_position = 25 / (this.page_stack.length - 1);
-			var stack_depth = 1;
-			var to_remove = [];
+			var stack_depth_position = 0,
+				stack_depth = 1,
+				to_remove = [],
+				to_page_out = [];
+
 
 			for (i = 0; i < this.page_stack.length; i++) {
 				if (i !== index) {
@@ -94,8 +97,7 @@
 						this.page_stack[i].el.pageOut();
 						to_remove.push(i);
 					} else {
-						this.page_stack[i].el.pageOff(stack_depth_position * stack_depth, 10 - stack_depth, i);
-						stack_depth++;
+						to_page_out.push(this.page_stack[i].el);
 					}
 					
 				}
@@ -103,7 +105,16 @@
 
 			// Remove any items that were pageOuted
 			for (i = 0; i < to_remove.length; i++) {
-				this.page_stack.splice(to_remove[i], 1);
+				this.page_stack.pop();
+			}
+
+
+			stack_depth_position = 25 / to_page_out.length;
+
+			// PageOuts
+			for (i = 0; i < to_page_out.length; i++) {
+				to_page_out[i].pageOff(stack_depth_position * stack_depth, 10 - stack_depth, i);
+				stack_depth++;
 			}
 
 			// after pages have transitioned, do pageOn
@@ -113,7 +124,7 @@
 		getPageItem: getPageItem,
 
 		ready: function() {
-			console.log('page-manager ready!');
+			//console.log('page-manager ready!');
 
 			if (this.childElementCount == 1 && this.children[0].nodeName == 'PAGE-ITEM') {
 				var pageItem = this.children[0];
@@ -127,16 +138,16 @@
 				});
 
 				this.addEventListener("page:ready", function(e){
-					console.log("page:ready");
-					console.log(e.detail.caller);
+					//console.log("page:ready");
+					//console.log(e.detail.caller);
 					if (this.page_stack.length == 0) {
 						this.addPage(e.detail.caller, null);
 					}
 				});
 				this.addEventListener("page:out", function(e){
-					console.log("page:out");
-					console.log(e.detail.caller);
-					console.log(e.detail.index);
+					//console.log("page:out");
+					//console.log(e.detail.caller);
+					//console.log(e.detail.index);
 					self.selectPage(e.detail.index);
 				});
 				this.addEventListener("page:remove", function(e){
