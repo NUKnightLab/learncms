@@ -46,14 +46,14 @@ DATABASES = {
 }
 
 # should these be in site.py?
-EMAIL_BACKEND = 'django.core.mail.backends.smtp.EmailBackend'
-EMAIL_HOST = environ.get('EMAIL_HOST', 'smtp.gmail.com')
-EMAIL_HOST_PASSWORD = environ.get('EMAIL_HOST_PASSWORD', '')
-EMAIL_HOST_USER = environ.get('EMAIL_HOST_USER', 'knightlab@northwestern.edu')
-EMAIL_PORT = environ.get('EMAIL_PORT', 587)
-EMAIL_SUBJECT_PREFIX = '[projects] '
-EMAIL_USE_TLS = True
-SERVER_EMAIL = EMAIL_HOST_USER
+# EMAIL_BACKEND = 'django.core.mail.backends.smtp.EmailBackend'
+# EMAIL_HOST = os.environ.get('EMAIL_HOST', 'smtp.gmail.com')
+# EMAIL_HOST_PASSWORD = os.environ.get('EMAIL_HOST_PASSWORD', '')
+# EMAIL_HOST_USER = os.environ.get('EMAIL_HOST_USER', 'knightlab@northwestern.edu')
+# EMAIL_PORT = os.environ.get('EMAIL_PORT', 587)
+# EMAIL_SUBJECT_PREFIX = '[learn.knightlab.com CMS] '
+# EMAIL_USE_TLS = True
+# SERVER_EMAIL = EMAIL_HOST_USER
 
 # User uploads settings for S3
 # In addition to below, set environment vars:
