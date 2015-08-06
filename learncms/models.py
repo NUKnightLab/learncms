@@ -6,6 +6,8 @@ from django.contrib.contenttypes.models import ContentType
 from imagekit.models import ImageSpecField
 from imagekit.processors import ResizeToFill
 
+
+
 class Lesson(models.Model):
     PUBLISHED = 'published'
     DRAFT = 'draft'
@@ -17,7 +19,7 @@ class Lesson(models.Model):
     slug = models.SlugField(unique=True, help_text="Don't edit this, let it be automatically assigned. Must be unique.")
     banner_image = models.ImageField(upload_to='lessons')
     status = models.CharField(choices=LESSON_STATUS_CHOICES, default=DRAFT, max_length=50)
-    reference_blurb = models.CharField(max_length=500, blank=True, help_text="The text which appears when a reference to this lesson is included in some other. Don't use markup.")
+    reference_blurb = models.CharField(max_length=500, blank=True, size=20, help_text="The text which appears when a reference to this lesson is included in some other. Don't use markup.")
     content = models.TextField(blank=True,help_text="The body of the lesson, marked up with web component magic.")
     created_at = models.DateTimeField(auto_now_add=True)
     updated_at = models.DateTimeField(auto_now=True)
