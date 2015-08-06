@@ -15,13 +15,37 @@ Example:
 	<style>
 	::content #lesson-ref-container {
 		position: relative;
-		right: -30px;
+		/*right: -30px;*/
 		background-color: #fff;
 		margin-bottom: 20px;
+		left: 30px;
+		top:0px;
+		height:100%;
 		cursor:pointer;
+		-webkit-transition: all 750ms cubic-bezier(0.770, 0.000, 0.175, 1.000); 
+		   -moz-transition: all 750ms cubic-bezier(0.770, 0.000, 0.175, 1.000); 
+		     -o-transition: all 750ms cubic-bezier(0.770, 0.000, 0.175, 1.000); 
+		        transition: all 750ms cubic-bezier(0.770, 0.000, 0.175, 1.000); 
+
+
+		-webkit-transition-timing-function: cubic-bezier(0.770, 0.000, 0.175, 1.000); 
+		   -moz-transition-timing-function: cubic-bezier(0.770, 0.000, 0.175, 1.000); 
+		     -o-transition-timing-function: cubic-bezier(0.770, 0.000, 0.175, 1.000); 
+		        transition-timing-function: cubic-bezier(0.770, 0.000, 0.175, 1.000);
+	}
+	::content #lesson-ref-container.animate {
+/*		-webkit-transition: all 750ms cubic-bezier(0.770, 0.000, 0.175, 1.000); 
+		   -moz-transition: all 750ms cubic-bezier(0.770, 0.000, 0.175, 1.000); 
+		     -o-transition: all 750ms cubic-bezier(0.770, 0.000, 0.175, 1.000); 
+		        transition: all 750ms cubic-bezier(0.770, 0.000, 0.175, 1.000); 
+
+
+		-webkit-transition-timing-function: cubic-bezier(0.770, 0.000, 0.175, 1.000); 
+		   -moz-transition-timing-function: cubic-bezier(0.770, 0.000, 0.175, 1.000); 
+		     -o-transition-timing-function: cubic-bezier(0.770, 0.000, 0.175, 1.000); 
+		        transition-timing-function: cubic-bezier(0.770, 0.000, 0.175, 1.000);*/
 	}
 	
-	;
 	::content #image-container {
 		position: relative;
 	}
@@ -53,7 +77,7 @@ Example:
 	};
 
 	.material-shadow {
-		  transition:box-shadow 0.28s cubic-bezier(0.4, 0, 0.2, 1);
+		  /*transition:box-shadow 0.28s cubic-bezier(0.4, 0, 0.2, 1);*/
 	}
 
 	.material-shadow[elevation="1"] {
@@ -123,10 +147,24 @@ Example:
 		},
 		ready: function() {
 			// DOM OBJECTS
+			this.container =  this.$['lesson-ref-container'];
 			this.text_container = this.$['text-container'];
 			this.image_container = this.$['image-container'];
 			this.title_el = this.$['title-el'];
+
+			
 		},
+
+		attached: function() {
+			var self = this;
+			setTimeout(function(){
+				self.container.style.height = self.container.offsetHeight +"px";
+				console.log(self.container.offsetHeight)
+			}, 500);
+			
+			
+		},
+
 		_handleEscapeKey: function(e) {
 			console.log("when available, implement close-capsule here");
 		},
@@ -137,10 +175,25 @@ Example:
 
 		_clickListener: function(e) {
 			console.log("_clickListener");
+			
+
 			if (this.url) {
-				//window.open(this.url, "_blank");
+				
+				// var container_top = this.container.getBoundingClientRect().top;
+				// this.container.style.left = "150%";
+				// this.container.style.height = window.innerHeight + "px";
+				
+				// this.container.style.top = -container_top + "px";
+				// this.container.setAttribute("elevation", "5");
 				this.fire("page:add", {url:this.url});
 			}
+		},
+
+		pageOn: function() {
+			this.container.style.left = "30px";
+			this.container.style.height = "100%";
+			this.container.style.top = "0px";
 		}
+
 	});
 </script>

@@ -4,69 +4,89 @@
 
 Example:
 
-    <info-block>
-      ... content ...
-    </info-block>
+	<info-block>
+	  ... content ...
+	</info-block>
 
 @group Learn Elements
 @class info-block
 -->
 <dom-module id="info-block">
-  <style>
+	<style>
 
-  ::content #info-block-wrapper {
-    background-color: #F5F4F4;
-    padding: 0 10px;
-  };
+		::content #info-block-wrapper {
+			background-color: #F5F4F4;
+			padding: 0 10px;
+			margin-top:20px;
+			border-radius:8px;
+		};
 
-  ::content #info-block-content {
-    padding: 0 10px;
-  }
-  #info-block-content h2 {
-   color: #263238;
- }
+		::content #info-block-content {
+			padding: 0 10px;
+		}
+		#info-block-content h2 {
+			color: #263238;
+		}
 
-  #info-block-content p {
-   color: #9B9B9B;
+		#info-block-content p {
+			color: #9B9B9B;
 
- }
+		}
 
-  #info-block-img {
-    display: flex;
-    align-items: center;
-    justify-content: center;
-    margin-bottom:50px;
-    background-image: var(--info-icon-url);
-    background-repeat: no-repeat;
-    background-position: center;
-    width: 112px;
-    height: 112px;
-  }
+		#info-block-icon {
+			display: flex;
+			align-items: center;
+			justify-content: center;
+			/*margin-bottom:50px;*/
+
+/*			background-image: var(--info-icon-url);
+			background-repeat: no-repeat;
+			background-position: center;*/
+			
+			
+		}
+		::content #info-block-icon-background {
+			display: flex;
+			align-items: center;
+			justify-content: center;
+			font-family: Roboto, sans-serif;
+			color: #FFF;
+			font-size: 38px;
+
+			border-radius:50%;
+			background-color:#DDD;
+			width: 112px;
+			height: 112px;
+			text-align:center;
+			color:#FFF;
+		};
 
 
-  </style>
+	</style>
   <template>
   <paper-material elevation="0" class="paper-font-body2">
-    <div id="info-block-wrapper" class="layout horizontal">
-      <div id="info-block-img" class="flex">
-        
-      </div>
-      <div id="info-block-content" class="flex-3">
-        <content></content>
-      </div>
-    </div>
+	<div id="info-block-wrapper" class="layout horizontal">
+	  <div id="info-block-icon" class="flex">
+			<div id="info-block-icon-background">
+				i
+			</div>
+	  </div>
+	  <div id="info-block-content" class="flex-3">
+		<content></content>
+	  </div>
+	</div>
   </paper-material>
   </template>
 </dom-module>
 <script>
   Polymer({
-    is: 'info-block',
+	is: 'info-block',
 
-    properties: {
-      image: {
-        type: String,
-        value: "images/learn/info-icon.png"
-      }
-    }
+	properties: {
+	  image: {
+		type: String,
+		value: "images/learn/info-icon.png"
+	  }
+	}
   });
 </script>
