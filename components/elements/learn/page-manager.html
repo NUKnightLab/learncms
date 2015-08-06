@@ -50,6 +50,9 @@
 			var self = this;
 			getPageItem(url,function(pageItem) {
 				var clone = self.create("page-item");
+				for (var i = 0; i < pageItem.attributes.length; i++) {
+					clone.attributes.setNamedItem(pageItem.attributes[i].cloneNode())
+				};
 				var content = clone.$$('content');
 				content.innerHTML = pageItem.innerHTML;
 				clone.distributeContent();
