@@ -11901,11 +11901,30 @@ styles. All other styles should exist as single lines."
 
 		}
 
-		paper-material {
-			padding: 10px;
-			width: 50%;
+		::content #step-content {
+			padding: 20px;
+			width: 70%;
 			/*margin: 0 auto;*/
-			padding-top: 30px;
+			/*padding-top: 30px;*/
+			padding-top:30px;
+			background-color:#FFF;
+		}
+
+		::content #step-content p{
+			font-family: 'Roboto', 'Noto', sans-serif;
+			font-size:18px;
+			line-height: 26px;
+			font-weight:normal;
+			margin-top:20px;
+			margin-bottom:20px;
+		}
+
+		::content h2#step-title {
+			font-family: 'Roboto', 'Noto', sans-serif;
+			color:#338D83;
+			font-size:28px;
+			font-weight:bold;
+			margin:0;
 		}
 
 		step-number {
@@ -11932,16 +11951,50 @@ styles. All other styles should exist as single lines."
 			margin-right: -20px;
 		}
 
+		.material-shadow {
+		  transition:box-shadow 0.28s cubic-bezier(0.4, 0, 0.2, 1);
+		};
+
+		.material-shadow[elevation="1"] {
+		  box-shadow:0 2px 2px 0 rgba(0, 0, 0, 0.14),
+		                  0 1px 5px 0 rgba(0, 0, 0, 0.12),
+		                  0 3px 1px -2px rgba(0, 0, 0, 0.2);
+		};
+
+		.material-shadow[elevation="2"] {
+		  box-shadow:0 4px 5px 0 rgba(0, 0, 0, 0.14),
+		                  0 1px 10px 0 rgba(0, 0, 0, 0.12),
+		                  0 2px 4px -1px rgba(0, 0, 0, 0.4);
+		};
+
+		.material-shadow[elevation="3"] {
+		  box-shadow:0 6px 10px 0 rgba(0, 0, 0, 0.14),
+		                  0 1px 18px 0 rgba(0, 0, 0, 0.12),
+		                  0 3px 5px -1px rgba(0, 0, 0, 0.4);
+		};
+
+		.material-shadow[elevation="4"] {
+		  box-shadow:0 8px 10px 1px rgba(0, 0, 0, 0.14),
+		                  0 3px 14px 2px rgba(0, 0, 0, 0.12),
+		                  0 5px 5px -3px rgba(0, 0, 0, 0.4);
+		};
+
+		.material-shadow[elevation="5"] {
+		  box-shadow:0 16px 24px 2px rgba(0, 0, 0, 0.14),
+		                  0  6px 30px 5px rgba(0, 0, 0, 0.12),
+		                  0  8px 10px -5px rgba(0, 0, 0, 0.4);
+		};
+
 
 	</style>
 	<template>
 		<content-wrapper>
 			<step-number>{{ stepnum }}</step-number>
-			<paper-material class="paper-font-body2">
-				<h2>{{ title }}</h2>
+			<div id="step-content" class="material-shadow paper-font-body2" elevation="1">
+				<h2 id="step-title">{{ title }}</h2>
 				<content></content>
 
-			</paper-material>
+			</div>
 			
 		</content-wrapper>
 	</template>
@@ -12009,6 +12062,7 @@ styles. All other styles should exist as single lines."
     padding: 25px;
     margin-left: 50px;
     margin-right: 50px;
+    margin-bottom: 50px;
   };
 
   ::content .lesson-block-wrapper h2 { /* Free floating for any h2 inside */
@@ -12248,7 +12302,6 @@ styles. All other styles should exist as single lines."
 		/* WHEN TRANSITION ENDS
 		================================================== */
 		_onBackgroundTransition: function(e) {
-			console.log("transitionend");
 			this.background.style.display = "none";
 			this.zoom_container.classList.remove('container-zoomed');
 
@@ -12273,8 +12326,6 @@ styles. All other styles should exist as single lines."
 		/* HIDE AND SHOW
 		================================================== */
 		_zoomIn: function() {
-			console.log("_zoomIn");
-			//this.fullsize.style.display = "block";
 			this.zoom_container.classList.add('container-zoomed');
 
 			var margin = 20;
@@ -12289,7 +12340,6 @@ styles. All other styles should exist as single lines."
 
 			// Calculate Position
 			var position = this.zoom_container.getBoundingClientRect();
-			console.log(position.left - margin);
 			
 			this.zoom_container.style.left = -(position.left - margin) + "px";
 			this.zoom_container.style.top = -(position.top - margin) + "px";
@@ -12305,7 +12355,6 @@ styles. All other styles should exist as single lines."
 		},
 
 		_zoomOut: function() {
-			console.log("_zoomOut");
 			if (this.zoom_container) {
 				
 				this.zoom_container.style.width = this.default_width + "px";
@@ -12359,15 +12408,16 @@ styles. All other styles should exist as single lines."
 			left: 0;
 			top: 0;
 		}
-		#title {
+		::content #title {
 			font-family: Roboto, sans-serif;
-			color: black;
-			font-size: 24px;
-			font-weight: bold;
+			color: #273238;
+			font-size: 64px;
+			font-weight: normal;
 			width: 100%;
 			text-align: center;
 			position:absolute;
 			bottom:0;
+			margin:0;
 		}
 	</style>
 	<template>
@@ -12396,11 +12446,12 @@ styles. All other styles should exist as single lines."
     <style>
 
         ::content {
+           
         }
 
-        #navigation {
+        ::content #navigation {
             background-color: #263238;
-            padding: 10px;
+            z-index:11;
             color: var(--learn-primary-color);
             font-family: var(--learn-primary-font);
             font-weight: 500;
@@ -12411,16 +12462,23 @@ styles. All other styles should exist as single lines."
             position: relative;
         }
 
+        ::content #navigation-container {
+            padding: 10px;
+        }
+
         #kl-link {
             position: absolute;
             right: 40px;
         }
     </style>
     <template>
-            <div id="navigation">
+        <div id="navigation">
             
-            Learn
-            <a id="kl-link" href="http://knightlab.northwestern.edu"><img src="{{ logo }}"></a>
+            <div id="navigation-container">
+
+                Learn
+                <a id="kl-link" href="http://knightlab.northwestern.edu"><img src="{{ logo }}"></a>
+            </div>
         </div>
     
     </template>
@@ -12438,168 +12496,177 @@ styles. All other styles should exist as single lines."
     })
 </script>
 <dom-module id="capsule-unit" assetpath="learn/">
-  <style>
-    .capsule-unit-wrapper {
-/*      height: 300px;
-      width: 300px;
-      padding-right: 100px;*/
-    }
-  </style>
-  <template>
-    <div class="capsule-unit-wrapper">
-    <neon-animated-pages id="pages" selected="0">
 
-        <capsule-ref image="{{ image }}" title="{{ title }}">
-        </capsule-ref>
-        <capsule-card title="{{ title }}">
-          <content></content>
-        </capsule-card>
+	<style>
+		.capsule-unit-wrapper {
+	/*      height: 300px;
+		  width: 300px;
+		  padding-right: 100px;*/
+		}
+	</style>
 
-    </neon-animated-pages>
-  </div>
-  </template>
+	<template>
+		<div class="capsule-unit-wrapper">
+			<neon-animated-pages id="pages" selected="0">
+
+				<capsule-ref image="{{ image }}" title="{{ title }}"></capsule-ref>
+				<capsule-card title="{{ title }}">
+					<content></content>
+				</capsule-card>
+
+			</neon-animated-pages>
+		</div>
+	</template>
+
 </dom-module>
+
 <script type="text/javascript">
-Polymer({
-    is: 'capsule-unit',
+	Polymer({
+		is: 'capsule-unit',
 
-    behaviors: [Polymer.IronA11yKeysBehavior],
-    keyBindings: {
-      'esc': '_handleEscapeKey'
-    },
-    /* Using IronA11yKeysBehavior, listen for 'esc' key pressed
-     * anywhere on the page (see keyEventTarget property). 
-     * escape will close an open capsule.
-     */
-    _handleEscapeKey: function(e) {
-      this.$$('neon-animated-pages').select(0);
-    },
+		behaviors: [Polymer.IronA11yKeysBehavior],
+		keyBindings: {
+		  'esc': '_handleEscapeKey'
+		},
+		/* Using IronA11yKeysBehavior, listen for 'esc' key pressed
+		 * anywhere on the page (see keyEventTarget property). 
+		 * escape will close an open capsule.
+		 */
+		_handleEscapeKey: function(e) {
+			this.$$('neon-animated-pages').select(0);
+		},
 
-    properties: {
-    image: {
-      type: String,
-      value: ""
-    },
-    title: {
-      type: String,
-      value: "See also"
-    },
-    keyEventTarget: { // IronA11yKeysBehavior
-      type: Object,
-      value: function() {
-        return document.body;
-      }
-    }
-  }
-});
+		properties: {
+			image: {
+				type: String,
+				value: ""
+			},
+			title: {
+				type: String,
+				value: "See also"
+			},
+			keyEventTarget: { // IronA11yKeysBehavior
+				type: Object,
+				value: function() {
+					return document.body;
+				}
+			}
+		}
+	});
 
   
 </script>
+
+
 
 
 <dom-module id="capsule-ref" assetpath="learn/">
-  <style>
-  ::content .capsule-ref-wrapper {
-    width: 344px;
-    background-color: white;
+	<style>
+		::content .capsule-ref-wrapper {
+			width: 344px;
+			background-color: white;
 
-  }
+		}
 
-  ::content .capsule-ref-wrapper p {
-    color: #5C5C5C;
-    background-color: white;
-    font-size: 24px;
-    margin: 15px;
-    padding-bottom: 20px;
-  }
+		::content .capsule-ref-wrapper p {
+			color: #5C5C5C;
+			background-color: white;
+			font-size: 24px;
+			margin: 15px;
+			padding-bottom: 20px;
+		}
 
-  paper-fab {
-    color: #80CBC4;
-    background-color: #273238;
-    right: 25px;
-    bottom: 38px;
-    position: absolute;
-    z-index: 998;
-  }
-  </style>
+		paper-fab {
+			color: #80CBC4;
+			background-color: #273238;
+			right: 25px;
+			bottom: 38px;
+			position: absolute;
+			z-index: 998;
+		}
+	</style>
 
-  <template>
-  <div id="hero">
-  <paper-material elevation="1" class="wrapper paper-font-body2">
-  <div class="capsule-ref-wrapper" style="position:relative">
-      <img src="{{ image }}">
-      <paper-fab icon="content-copy" on-click="doExpand"></paper-fab>
-      <p>{{ title }}</p>
-  </div>
-  </paper-material>
-  </div>
-  </template>
+	<template>
+		<div id="hero">
+			<paper-material elevation="1" class="wrapper paper-font-body2">
+				<div class="capsule-ref-wrapper" style="position:relative">
+					<img src="{{ image }}">
+					<paper-fab icon="content-copy" on-click="doExpand"></paper-fab>
+					<p>{{ title }}</p>
+				</div>
+			</paper-material>
+		</div>
+	</template>
+
 </dom-module>
+
 <script type="text/javascript">
-Polymer({
-  is: 'capsule-ref',
+	Polymer({
+		is: 'capsule-ref',
 
-  behaviors: [
-      Polymer.NeonAnimatableBehavior
-  ],
+		behaviors: [
+			Polymer.NeonAnimatableBehavior
+		],
 
-  doExpand: function() {
-    this.parentElement.select(1);
-  },
-  properties: {
-      /**
-       * a URL to the image to be shown for the reference. 
-       *
-       * @attribute image
-       * @type String
-       * @default ""
-       */
-      image: {
-        type: String,
-        value: ""
-      },
+		doExpand: function() {
+			this.parentElement.select(1);
+		},
 
-      /**
-       * a text label for the reference. Passes through to the capsule-ref
-       *
-       * @attribute label
-       * @type String
-       * @default "See also"
-       */
-    title: {
-        type: String,
-        value: "See also"
-    },
+		properties: {
+			/**
+			* a URL to the image to be shown for the reference. 
+			*
+			* @attribute image
+			* @type String
+			* @default ""
+			*/
+			image: {
+				type: String,
+				value: ""
+			},
 
-    animationConfig: {
-        value: function() {
-          return {
-            'exit': {
-              name: 'hero-animation',
-              id: 'hero',
-              fromPage: this,
-            },
-            'entry': {
-              name: 'hero-animation',
-              id: 'hero',
-              toPage: this,
-            }
-          }
-        }
-    },
-    sharedElements: {
-        value: function() {
-            return {
-              'hero': this.$.hero,
-            }
-        }
-    }
+			/**
+			* a text label for the reference. Passes through to the capsule-ref
+			*
+			* @attribute label
+			* @type String
+			* @default "See also"
+			*/
+			title: {
+				type: String,
+				value: "See also"
+			},
 
-  },
-  });
+			animationConfig: {
+				value: function() {
+					return {
+						'exit': {
+							name: 'hero-animation',
+							id: 'hero',
+							fromPage: this,
+						},
+						'entry': {
+							name: 'hero-animation',
+							id: 'hero',
+							toPage: this,
+						}
+					}
+				}
+			},
+			sharedElements: {
+				value: function() {
+					return {
+						'hero': this.$.hero,
+					}
+				}
+			}
+
+		},
+	});
 
   
 </script>
+
 
 
 <dom-module id="capsule-card" assetpath="learn/">
@@ -12659,197 +12726,338 @@ Polymer({
 
 
 <script>
-Polymer({
-is: "capsule-card",
+	Polymer({
+		is: "capsule-card",
 
-behaviors: [
-    Polymer.NeonAnimatableBehavior
-],
+		behaviors: [
+			Polymer.NeonAnimatableBehavior
+		],
 
- doClose: function() {
-  this.parentElement.select(0);
-},
+		doClose: function() {
+			this.parentElement.select(0);
+		},
 
-properties: {
-    title: {
-      type: String,
-      value: "Card Title"
-    },
+		properties: {
+			title: {
+				type: String,
+				value: "Card Title"
+			},
 
-    sharedElements: {
-        type: Object,
-        value: function() {
-            return {
-              'hero': this.$.card,
-              }
-        }
-    },
+			sharedElements: {
+				type: Object,
+				value: function() {
+					return {
+						'hero': this.$.card,
+					}
+				}
+			},
 
-    animationConfig: {
-        value: function() {
-            return {
-                // the incoming page defines the 'entry' animation
-                'entry': {
-                    name: 'hero-animation',
-                    id: 'hero',
-                    toPage: this,
-                },
-                'exit': {
-                    name: 'hero-animation',
-                    id: 'hero',
-                    fromPage: this,
-                }
+			animationConfig: {
+				value: function() {
+					return {
+						// the incoming page defines the 'entry' animation
+						'entry': {
+							name: 'hero-animation',
+							id: 'hero',
+							toPage: this,
+						},
+						'exit': {
+							name: 'hero-animation',
+							id: 'hero',
+							fromPage: this,
+						}
 
-            }
-        }
-    },
+					}
+				}
+			},
 
-}
-});
+		}
+	});
 </script>
 <dom-module id="info-block" assetpath="learn/">
-  <style>
+	<style>
 
-  ::content #info-block-wrapper {
-    background-color: #F5F4F4;
-    padding: 0 10px;
-  };
+		::content #info-block-wrapper {
+			background-color: #F5F4F4;
+			padding: 0 10px;
+			margin-top:20px;
+			border-radius:8px;
+		};
 
-  ::content #info-block-content {
-    padding: 0 10px;
-  }
-  #info-block-content h2 {
-   color: #263238;
- }
+		::content #info-block-content {
+			padding: 0 10px;
+		}
+		::content #info-block-content h2 {
+			color: #263238;
+			font-weight:500;
+			font-style:italic;
+		}
 
-  #info-block-content p {
-   color: #9B9B9B;
+		::content #info-block-content p {
+			color: #9B9B9B;
+			font-size:16px;
+			line-height: 22px;
+			font-style: italic;
 
- }
+		}
 
-  #info-block-img {
-    display: flex;
-    align-items: center;
-    justify-content: center;
-    margin-bottom:50px;
-    background-image: var(--info-icon-url);
-    background-repeat: no-repeat;
-    background-position: center;
-    width: 112px;
-    height: 112px;
-  }
+		#info-block-icon {
+			display: flex;
+			align-items: center;
+			justify-content: center;
+			/*margin-bottom:50px;*/
+
+/*			background-image: var(--info-icon-url);
+			background-repeat: no-repeat;
+			background-position: center;*/
+			
+			
+		}
+		::content #info-block-icon-background {
+			display: flex;
+			align-items: center;
+			justify-content: center;
+			font-family: Roboto, sans-serif;
+			color: #FAFAFA;
+			font-size: 38px;
+
+			border-radius:50%;
+			background-color:#E7E6E6;
+			width: 112px;
+			height: 112px;
+			text-align:center;
+			color:#FFF;
+		};
 
 
-  </style>
+	</style>
   <template>
   <paper-material elevation="0" class="paper-font-body2">
-    <div id="info-block-wrapper" class="layout horizontal">
-      <div id="info-block-img" class="flex">
-        
-      </div>
-      <div id="info-block-content" class="flex-3">
-        <content></content>
-      </div>
-    </div>
+	<div id="info-block-wrapper" class="layout horizontal">
+	  <div id="info-block-icon" class="flex">
+			<div id="info-block-icon-background">
+				i
+			</div>
+	  </div>
+	  <div id="info-block-content" class="flex-4">
+		<content></content>
+	  </div>
+	</div>
   </paper-material>
   </template>
 </dom-module>
 <script>
   Polymer({
-    is: 'info-block',
+	is: 'info-block',
 
-    properties: {
-      image: {
-        type: String,
-        value: "images/learn/info-icon.png"
-      }
-    }
+	properties: {
+	  image: {
+		type: String,
+		value: "images/learn/info-icon.png"
+	  }
+	}
   });
 </script>
 <dom-module id="lesson-ref" assetpath="learn/">
-  <style>
+	<style>
+	::content #lesson-ref-container {
+		position: relative;
+		/*right: -30px;*/
+		background-color: #fff;
+		margin-bottom: 20px;
+		margin-top:20px;
+		left: 30px;
+		top:0px;
+		height:100%;
+		cursor:pointer;
+		-webkit-transition: all 750ms cubic-bezier(0.770, 0.000, 0.175, 1.000); 
+		   -moz-transition: all 750ms cubic-bezier(0.770, 0.000, 0.175, 1.000); 
+		     -o-transition: all 750ms cubic-bezier(0.770, 0.000, 0.175, 1.000); 
+		        transition: all 750ms cubic-bezier(0.770, 0.000, 0.175, 1.000); 
 
-  ::content #lesson-ref-container {
-    position: relative;
-    right: -40px;
-    background-color: #fff;
-    margin-bottom: 20px;
-  };
 
-  div.ref-image-wrapper {
-    position: relative;
-  }
+		-webkit-transition-timing-function: cubic-bezier(0.770, 0.000, 0.175, 1.000); 
+		   -moz-transition-timing-function: cubic-bezier(0.770, 0.000, 0.175, 1.000); 
+		     -o-transition-timing-function: cubic-bezier(0.770, 0.000, 0.175, 1.000); 
+		        transition-timing-function: cubic-bezier(0.770, 0.000, 0.175, 1.000);
+	}
+	::content #lesson-ref-container.animate {
+/*		-webkit-transition: all 750ms cubic-bezier(0.770, 0.000, 0.175, 1.000); 
+		   -moz-transition: all 750ms cubic-bezier(0.770, 0.000, 0.175, 1.000); 
+		     -o-transition: all 750ms cubic-bezier(0.770, 0.000, 0.175, 1.000); 
+		        transition: all 750ms cubic-bezier(0.770, 0.000, 0.175, 1.000); 
 
-  div.ref-image-wrapper img {
-    width: 100%;
-  }
 
-  div.ref-image-wrapper h2 {
-    position: absolute;
-    bottom: 0;
-    left: 0;
-    margin-left: 10px;
-    color: #ffffff;
-  }
+		-webkit-transition-timing-function: cubic-bezier(0.770, 0.000, 0.175, 1.000); 
+		   -moz-transition-timing-function: cubic-bezier(0.770, 0.000, 0.175, 1.000); 
+		     -o-transition-timing-function: cubic-bezier(0.770, 0.000, 0.175, 1.000); 
+		        transition-timing-function: cubic-bezier(0.770, 0.000, 0.175, 1.000);*/
+	}
+	
+	::content #image-container {
+		position: relative;
+	}
+	
+	::content #image-container img {
+		width: 100%;
+	}
+	
+	::content #title-el {
+		position: absolute;
+		bottom: 0;
+		left: 0;
+		margin-left: 10px;
+		color: #ffffff;
+	}
+	
+	::content #image-container paper-fab {
+		position: absolute;
+		right: -30px;
+		bottom: -20px;
+		background-color: #fff;
+		color: #000;
+	}
+	
+	::content #text-container {
+		padding: 10px;
+		padding:0px 10px 10px 10px;
 
-  div.ref-image-wrapper paper-fab {
-    position: absolute;
-    right: -30px;
-    bottom: -20px;
-    background-color: #fff;
-    color: #000;
-  }
+	};
 
-  p.ref-copy-wrapper {
-    padding: 5px;
-  };
+	.material-shadow {
+		  /*transition:box-shadow 0.28s cubic-bezier(0.4, 0, 0.2, 1);*/
+	}
 
-  </style>
-  <template>
-  <paper-material id="lesson-ref-container" elevation="2" class="paper-font-body2">
-  <div class="ref-image-wrapper">
-    <img src="{{ image }}">
-    <h2>{{ title }}</h2>
-    <paper-fab icon="arrow-forward" on-click="loadReference"></paper-fab>
-  </div>
-  <p class="ref-copy-wrapper">
-    <content></content>
-  </p>
-  </paper-material>
-  </template>
+	.material-shadow[elevation="1"] {
+	  box-shadow:0 2px 2px 0 rgba(0, 0, 0, 0.14),
+	                  0 1px 5px 0 rgba(0, 0, 0, 0.12),
+	                  0 3px 1px -2px rgba(0, 0, 0, 0.2);
+	}
+
+	.material-shadow[elevation="2"] {
+	  box-shadow:0 4px 5px 0 rgba(0, 0, 0, 0.14),
+	                  0 1px 10px 0 rgba(0, 0, 0, 0.12),
+	                  0 2px 4px -1px rgba(0, 0, 0, 0.4);
+	}
+
+	.material-shadow[elevation="3"] {
+	  box-shadow:0 6px 10px 0 rgba(0, 0, 0, 0.14),
+	                  0 1px 18px 0 rgba(0, 0, 0, 0.12),
+	                  0 3px 5px -1px rgba(0, 0, 0, 0.4);
+	}
+
+	.material-shadow[elevation="4"] {
+	  box-shadow:0 8px 10px 1px rgba(0, 0, 0, 0.14),
+	                  0 3px 14px 2px rgba(0, 0, 0, 0.12),
+	                  0 5px 5px -3px rgba(0, 0, 0, 0.4);
+	}
+
+	.material-shadow[elevation="5"] {
+	  box-shadow:0 16px 24px 2px rgba(0, 0, 0, 0.14),
+	                  0  6px 30px 5px rgba(0, 0, 0, 0.12),
+	                  0  8px 10px -5px rgba(0, 0, 0, 0.4);
+	}
+	</style>
+	<template>
+		<div id="lesson-ref-container" elevation="2" class="material-shadow">
+			<div id="image-container">
+				<img src="{{ image }}">
+				<h2 id="title-el">{{ title }}</h2>
+				<paper-fab icon="arrow-forward"></paper-fab>
+			</div>
+			<div id="text-container">
+				<content></content>
+			</div>
+		</div>
+	</template>
+
 </dom-module>
+
 <script>
-  Polymer({
-    is: 'lesson-ref',
-    loadReference: function() {
-      if (this.url) {
-        window.open(this.url,"_blank");
-      }
-      console.log('clicky');
-    },
-    properties: {
-      title: {
-        type: String,
-        value: "Lesson Title"
-      },
-      image: {
-        type: String,
-        value: ""
-      },
-      url: {
-        type: String,
-        value: ""
-      }
-    }
-  });
+	Polymer({
+		is: 'lesson-ref',
+		listeners: {
+			"click": "_clickListener"
+		},
+		properties: {
+			title: {
+				type: String,
+				value: "Lesson Title"
+			},
+			image: {
+				type: String,
+				value: ""
+			},
+			url: {
+				type: String,
+				value: ""
+			}
+		},
+		ready: function() {
+			// DOM OBJECTS
+			this.container =  this.$['lesson-ref-container'];
+			this.text_container = this.$['text-container'];
+			this.image_container = this.$['image-container'];
+			this.title_el = this.$['title-el'];
+
+			
+		},
+
+		attached: function() {
+			var self = this;
+			setTimeout(function(){
+				self.container.style.height = self.container.offsetHeight +"px";
+				console.log(self.container.offsetHeight)
+			}, 500);
+			
+			
+		},
+
+		_handleEscapeKey: function(e) {
+			console.log("when available, implement close-capsule here");
+		},
+
+		_handlePaperButtonClick: function(e) {
+
+		},
+
+		_clickListener: function(e) {
+			console.log("_clickListener");
+			
+
+			if (this.url) {
+				
+				// var container_top = this.container.getBoundingClientRect().top;
+				// this.container.style.left = "150%";
+				// this.container.style.height = window.innerHeight + "px";
+				
+				// this.container.style.top = -container_top + "px";
+				// this.container.setAttribute("elevation", "5");
+				this.fire("page:add", {url:this.url});
+			}
+		},
+
+		pageOn: function() {
+			this.container.style.left = "30px";
+			this.container.style.height = "100%";
+			this.container.style.top = "0px";
+		}
+
+	});
 </script>
 <dom-module id="narrative-text" assetpath="learn/">
     <style>
+        ::content #narritive-text-copy p{
+            font-family: Roboto, sans-serif;
+            font-size:20px;
+            line-height: 26px;
+            font-weight:300;
+        };
     </style>
     <template>
         <div class="horizontal layout center-justified">
         <div class="flex"></div>
-        <paper-material elevation="0" class="paper-font-body2 flex-4">
+        <paper-material elevation="0" id="narritive-text-copy" class="paper-font-body2 flex-4">
         <content></content>
         </paper-material>
         <div class="flex"></div>
@@ -12933,47 +13141,62 @@ Polymer({
 
 </script>
 <dom-module id="code-block" assetpath="learn/">
-  <style>
-  ::content paper-material.code-block {
-    background-color: var(--learn-secondary-color);
+
+	<style>
+	::content .code-block {
+		background-color: var(--learn-secondary-color);
+		/*background-color:#F5F4F4;*/
 
 
+	}
+	::content pre.prettyprint {
+		padding: 2px;
+		border: none !important;
+		margin:0;
+	};
 
-  }
+	::content .code-block-wrapper {
+		padding: 10px;
+		
+		-webkit-box-shadow: inset 3px 3px 10px -3px rgba(186, 167, 130 ,0.8);
+		   -moz-box-shadow: inset 3px 3px 10px -3px rgba(186, 167, 130 ,0.8);
+				box-shadow: inset 3px 3px 10px -3px rgba(186, 167, 130 ,0.8);
 
-  ::content .code-block-wrapper {
-    padding: 5px;
-    margin-left: 50px;
-    margin-right: 50px;
+		border: 1px solid rgba(219, 206, 180 ,0.8);
+		border-radius: 4px;
 
-  };
+	};
 
-  ::content .code-block-wrapper h2 { /* Free floating for any h2 inside */
-    color: #E3B052;
+	::content .code-block-wrapper h2 { /* Free floating for any h2 inside */
+		color: #E3B052;
 
-  }
-  </style>
-  <template>
-  <paper-material elevation="-1" class="code-block paper-font-body2">
-    <div class="code-block-wrapper">
-      <pre class="prettyprint">        <content></content>
-      </pre>
-    </div>
-  </paper-material>
-  </template>
+	}
+	</style>
+
+	<template>
+		<div class="code-block paper-font-body2">
+			<div class="code-block-wrapper">
+				<pre class="prettyprint">					<content></content>
+				</pre>
+			</div>
+		</div>
+	</template>
+
 </dom-module>
 <script>
 	Polymer({
 		is: 'code-block',
 
-    attached: function() {
-  	  this.async(function() {
-        prettyPrint()
-      })
-    },
+		attached: function() {
+			this.async(function() {
+				prettyPrint()
+			})
+		},
 
 		properties: {
+
 		}
+
 	});
 </script>
 <dom-module id="z-capsule" assetpath="learn/">
@@ -13114,8 +13337,562 @@ Polymer({
 		_clickListener: function(e) {
 			console.log("CLICK");
 			this.capsule_content.style.display = "block";
+			
 		},
 
 	});
 
-</script></div></body></html>
+</script><dom-module is="page-manager">
+	<template>
+	<content></content>
+	</template>
+</dom-module>
+
+<script type="text/javascript">
+	function getPageItem(url, callback) {
+		var request = new XMLHttpRequest();
+		request.open('GET', url, true);
+
+		request.onload = function() {
+			if (request.status >= 200 && request.status < 400) {
+				dp = new DOMParser();
+				contentType = request.getResponseHeader('content-type');
+				contentType = contentType.split(';')[0]
+				var parsed = dp.parseFromString(request.responseText, contentType);
+				callback(parsed.querySelector('page-item'));
+			} else {
+				console.log("Error ["+ request.status +"] retrieving " + url);
+				console.log(request);
+			}
+		};
+
+	    request.onload = function() {
+	      if (request.status >= 200 && request.status < 400) {
+	        // check on support for DOMParser 
+	        // maybe consult https://developer.mozilla.org/en-US/Add-ons/Code_snippets/HTML_to_DOM
+	        dp = new DOMParser(); 
+	        var parsed = dp.parseFromString(request.responseText, request.getResponseHeader('content-type'));
+	        callback(parsed.querySelector('page-item'));
+	      } else {
+	        console.log("Error ["+ request.status +"] retrieving " + url);
+	        console.log(request);
+	      }
+	    };
+
+		request.onerror = function() {
+			console.log("Error ["+ request.status +"] retrieving " + url);
+			console.log(request);
+		};
+
+		request.send();
+		return request;
+	}
+
+
+	Polymer({
+		is: "page-manager",
+		listeners: {
+			'page:add': '_onPageAdd',
+			'page:ready': '_onPageReady',
+			'page:remove': '_onPageRemove',
+			'page:out': '_onPageOut'
+		},
+		fetchPage: function(url, caller) {
+
+			var self = this;
+			getPageItem(url,function(pageItem) {
+				var clone = self.create("page-item");
+				for (var i = 0; i < pageItem.attributes.length; i++) {
+					clone.attributes.setNamedItem(pageItem.attributes[i].cloneNode())
+				};
+				var content = clone.$$('content');
+				content.innerHTML = pageItem.innerHTML;
+				clone.distributeContent();
+				self.addPage(clone, caller);
+				//self.selectPage(self.page_stack.length - 1);
+			})
+		},
+		/**
+		 * Add a polymerized 'page-item' to the pages under management.
+		 * @param {[type]} url_or_element [description]
+		 * @param {[type]} caller         [description]
+		 */
+		addPage: function(pageItem, caller) {
+			if (pageItem.tagName == 'PAGE-ITEM') {
+				if (this.page_stack.length > 0) {
+					history.pushState({ stack_end_index: this.page_stack.length }, pageItem.title);
+
+				}
+				this.page_stack.push({el:pageItem, caller:caller});
+				this.appendChild(pageItem);
+				console.log(this.page_stack);
+				this.selectPage(this.page_stack.length - 1);
+				console.log(this.page_stack);
+			} else {
+				console.error("Invalid arguments to pageManager.addPage. First argument must be a page-item.");
+			}
+
+		},
+		_onPageAdd: function(e){
+			var url = e.url || (e.detail && e.detail.url) || null;
+			if (url) {
+				this.fetchPage(url, e.target);
+			} else {
+				console.log("page:add event with no discernable url")
+				console.log(e);
+			}
+		},
+		_onPageOut: function(e) {
+			this.selectPage(e.detail.index);
+		},
+		_onPageRemove: function(e) {
+			this.removePage(e.detail.caller);
+		},
+		_onPageReady: function(e) {
+			if (this.page_stack.length == 0) {
+				this.addPage(e.detail.caller, null);
+			}
+		},
+		removePage: function(el) {
+			//console.log("removePage");
+			//console.log(el);
+			this.removeChild(el);
+		},
+
+		selectPage:function(index) {
+			console.log("selectPage");
+			console.log("selectPage index " + index);
+
+			var stack_depth_position = 0,
+				stack_depth = 1,
+				to_remove = [],
+				to_page_out = [];
+
+
+			for (i = 0; i < this.page_stack.length; i++) {
+				if (i !== index) {
+					if (i > index) {
+						console.log("greater than index, will be removed");
+						this.page_stack[i].el.pageOut();
+						to_remove.push(i);
+					} else {
+						to_page_out.push(this.page_stack[i].el);
+					}
+					
+				}
+			}
+
+			// Remove any items that were pageOuted
+			for (i = 0; i < to_remove.length; i++) {
+				this.page_stack.pop();
+			}
+
+
+			stack_depth_position = 25 / to_page_out.length;
+
+			// PageOuts
+			for (i = 0; i < to_page_out.length; i++) {
+				to_page_out[i].pageOff(stack_depth_position * stack_depth, 10 - stack_depth, i, stack_depth_position);
+				stack_depth++;
+			}
+
+			// after pages have transitioned, do pageOn
+			console.log(this.page_stack.length)
+			this.page_stack[index].el.pageOn(this.page_stack.length === 1);
+		},
+
+		getPageItem: getPageItem,
+
+		ready: function() {
+			var self = this;
+			window.onpopstate = function(e) {
+				if (e.state && typeof(e.state.stack_end_index) == "number") {
+					self.selectPage(e.state.stack_end_index)	
+				} else {
+					console.log("Don't know what to do with popped state");
+					console.log(e);
+				}
+			}
+		},
+		properties: {
+
+		},
+		page_stack: []
+	})    
+</script><dom-module id="page-item" assetpath="learn/">
+	<style>
+		::content #page-container {
+			position:relative;
+			z-index:20;
+		};
+
+		::content #page-cover {
+			width:100%;
+			height:100%;
+			background-color:#80CBC4;
+			display:block;
+			height:0;
+			position:absolute;
+			margin-left:0%;
+			overflow:hidden;
+			opacity:0;
+			top:0;
+			right:0;
+			z-index:1;
+			cursor:pointer;
+			-webkit-transition: margin-left 750ms cubic-bezier(0.770, 0.000, 0.175, 1.000),
+								width 750ms cubic-bezier(0.770, 0.000, 0.175, 1.000),
+								right 750ms cubic-bezier(0.770, 0.000, 0.175, 1.000),
+								opacity 750ms cubic-bezier(0.770, 0.000, 0.175, 1.000); 
+			   -moz-transition: margin-left 750ms cubic-bezier(0.770, 0.000, 0.175, 1.000),
+			   					width 750ms cubic-bezier(0.770, 0.000, 0.175, 1.000),
+			   					right 750ms cubic-bezier(0.770, 0.000, 0.175, 1.000),
+			   					opacity 750ms cubic-bezier(0.770, 0.000, 0.175, 1.000); 
+			     -o-transition: margin-left 750ms cubic-bezier(0.770, 0.000, 0.175, 1.000),
+			     				width 750ms cubic-bezier(0.770, 0.000, 0.175, 1.000),
+			     				right 750ms cubic-bezier(0.770, 0.000, 0.175, 1.000),
+			     				opacity 750ms cubic-bezier(0.770, 0.000, 0.175, 1.000);
+			        transition: margin-left 750ms cubic-bezier(0.770, 0.000, 0.175, 1.000),
+			        			width 750ms cubic-bezier(0.770, 0.000, 0.175, 1.000),
+			        			right 750ms cubic-bezier(0.770, 0.000, 0.175, 1.000),
+			        			opacity 750ms cubic-bezier(0.770, 0.000, 0.175, 1.000);
+
+
+			-webkit-transition-timing-function: cubic-bezier(0.770, 0.000, 0.175, 1.000); 
+			   -moz-transition-timing-function: cubic-bezier(0.770, 0.000, 0.175, 1.000); 
+			     -o-transition-timing-function: cubic-bezier(0.770, 0.000, 0.175, 1.000); 
+			        transition-timing-function: cubic-bezier(0.770, 0.000, 0.175, 1.000);
+		};
+
+		::content #page-cover-title {
+			position:absolute;
+			top:0;
+			right:0;
+			height:100vh;
+			width:100%;
+		}
+
+		::content #page-cover-title h2 {
+			display: block;
+			text-align:right;
+			font-family: Roboto, sans-serif;
+			color: #FFF;
+			font-size: 38px;
+			font-weight: bold;
+			position: absolute;
+			/*width:100%;*/
+			right:0;
+			top:50px;
+			float:left;
+			margin:0;
+			/*transform-origin: left bottom 0;*/
+			  -webkit-transform-origin: 50% 50%;
+  -moz-transform-origin: 50% 50%;
+  -ms-transform-origin: 50% 50%;
+  -o-transform-origin: 50% 50%;
+  transform-origin: 50% 50%;
+			-webkit-transform: rotate(90deg); /* Chrome, Safari, Opera */
+				-ms-transform: rotate(90deg); /* IE 9 */
+					transform: rotate(90deg);
+		}
+
+		::content #page-item {
+			width:100%;
+			height:100vh;
+			position:absolute;
+			background-color:#F4F4F4;
+			top:0;
+			margin-left:100%;
+			
+			/*overflow:hidden;*/
+			overflow-y: scroll;
+			-webkit-transition: margin-left 750ms cubic-bezier(0.770, 0.000, 0.175, 1.000),
+								width 750ms cubic-bezier(0.770, 0.000, 0.175, 1.000),
+								box-shadow 250ms ease-in-out,
+								opacity 750ms cubic-bezier(0.770, 0.000, 0.175, 1.000); 
+			   -moz-transition: margin-left 750ms cubic-bezier(0.770, 0.000, 0.175, 1.000),
+			   					width 750ms cubic-bezier(0.770, 0.000, 0.175, 1.000),
+			   					box-shadow 250ms ease-in-out,
+			   					opacity 750ms cubic-bezier(0.770, 0.000, 0.175, 1.000); 
+			     -o-transition: margin-left 750ms cubic-bezier(0.770, 0.000, 0.175, 1.000),
+			     				width 750ms cubic-bezier(0.770, 0.000, 0.175, 1.000),
+			     				box-shadow 250ms ease-in-out,
+			     				opacity 750ms cubic-bezier(0.770, 0.000, 0.175, 1.000);
+			        transition: margin-left 750ms cubic-bezier(0.770, 0.000, 0.175, 1.000),
+			        			width 750ms cubic-bezier(0.770, 0.000, 0.175, 1.000),
+			        			box-shadow 250ms ease-in-out,
+			        			opacity 750ms cubic-bezier(0.770, 0.000, 0.175, 1.000);
+
+
+
+			-webkit-transition-timing-function: cubic-bezier(0.770, 0.000, 0.175, 1.000); 
+			   -moz-transition-timing-function: cubic-bezier(0.770, 0.000, 0.175, 1.000); 
+			     -o-transition-timing-function: cubic-bezier(0.770, 0.000, 0.175, 1.000); 
+			        transition-timing-function: cubic-bezier(0.770, 0.000, 0.175, 1.000);
+		};
+
+		::content #page-item.loaded {
+			width:75%;
+			margin-left:25%;
+
+		};
+
+		.material-shadow {
+		  /*transition:box-shadow 0.28s cubic-bezier(0.4, 0, 0.2, 1);*/
+		};
+
+		.material-shadow[elevation="1"] {
+		  box-shadow:0 2px 2px 0 rgba(0, 0, 0, 0.14),
+		                  0 1px 5px 0 rgba(0, 0, 0, 0.12),
+		                  0 3px 1px -2px rgba(0, 0, 0, 0.2);
+		};
+
+		.material-shadow[elevation="2"] {
+		  box-shadow:0 4px 5px 0 rgba(0, 0, 0, 0.14),
+		                  0 1px 10px 0 rgba(0, 0, 0, 0.12),
+		                  0 2px 4px -1px rgba(0, 0, 0, 0.4);
+		};
+
+		.material-shadow[elevation="3"] {
+		  box-shadow:0 6px 10px 0 rgba(0, 0, 0, 0.14),
+		                  0 1px 18px 0 rgba(0, 0, 0, 0.12),
+		                  0 3px 5px -1px rgba(0, 0, 0, 0.4);
+		};
+
+		.material-shadow[elevation="4"] {
+		  box-shadow:0 8px 10px 1px rgba(0, 0, 0, 0.14),
+		                  0 3px 14px 2px rgba(0, 0, 0, 0.12),
+		                  0 5px 5px -3px rgba(0, 0, 0, 0.4);
+		};
+
+		.material-shadow[elevation="5"] {
+		  box-shadow:0 16px 24px 2px rgba(0, 0, 0, 0.14),
+		                  0  6px 30px 5px rgba(0, 0, 0, 0.12),
+		                  0  8px 10px -5px rgba(0, 0, 0, 0.4);
+		};
+
+
+	</style>
+	<template>
+		<div id="page-container">
+			<div id="page-cover" class="material-shadow" elevation="3">
+				<div id="page-cover-title">
+					<h2>{{title}}</h2>
+				</div>
+
+			</div>
+			<div id="page-item" class="material-shadow" elevation="5">
+				<content></content>
+			</div>
+		</div>
+
+	</template>
+</dom-module>
+<script>
+	Polymer({
+		is: 'page-item',
+		behaviors: [ ],
+		listeners: {
+			"click": "_clickListener"
+		},
+		page_stack: [],
+		
+
+		created: function() {
+			//console.log(this.localName + '#' + this.id + ' was created');
+		},
+
+		ready: function() {
+			//console.log("page-item ready");
+			//console.log(this.localName + '#' + this.id + ' is ready');
+			// DOM OBJECTS
+			this.page_container = this.$['page-container'];
+			this.page_item = this.$['page-item'];
+			this.page_cover = this.$['page-cover'];
+			this.default_width = 0;
+
+			var self = this;
+			//this.page_item.style.marginLeft = "100%";
+			//this.page_item.style.opacity = "0";
+			console.log("TITLE " + this.title);
+			
+  		},
+
+		attached: function() {
+			
+			//this.page_item.style.opacity = "0";
+			//console.log(this.localName + '#' + this.id + ' was attached');
+			
+
+			var self = this;
+
+			
+
+			this.page_item.style.marginLeft = "100%";
+			//this.page_item.setAttribute("class", "material-shadow loaded");
+
+			this.page_cover.addEventListener("click",function(e){
+				self._onCoverClick();
+			},false);
+
+			this.fire("page:ready", {caller:self});
+		},
+
+		_onCoverClick: function(e) {
+			//console.log("_onCoverClick");
+			this.fire("page:out", {caller:this, index:this.index});
+		},
+
+		_removeSelf: function(e) {
+			//console.log("_removeSelf");
+			this.fire("page:remove", {caller:this, index:this.index});
+			// DESTROY
+		},
+
+		_onLoad: function(e) {
+			//console.log("_onLoad");
+		},
+
+		/* Using IronA11yKeysBehavior, listen for 'esc' key pressed
+		 * anywhere on the page (see keyEventTarget property). 
+		 * escape will hide a zoomed image.
+		 */
+		_handleEscapeKey: function(e) {
+			
+		},
+
+		/* 	Click Listener
+			Support users clicking on the small image to get the big one,
+			and the big one to hide it and go back to the small one.
+		================================================== */
+		_clickListener: function(e) {
+			//this.zoomed = (e.target.id == 'thumbnail');
+			//this.pageOff(e);
+
+		},
+
+		/* WHEN TRANSITION ENDS
+		================================================== */
+		_onBackgroundTransition: function(e) {
+			// console.log("transitionend");
+			// this.background.style.display = "none";
+			// this.zoom_container.classList.remove('container-zoomed');
+
+		},
+
+		/* PAGE BEHAVIORS
+		================================================== */
+
+		// Removes page
+		pageOut: function() {
+			//console.log("PAGE OUT");
+			// TRANSITION LISTENERS
+			//this.page_item.setAttribute("class", "loaded");
+			var self = this;
+			this.page_item.addEventListener("transitionend",function(e){
+				self._removeSelf();
+			},false);
+
+			this.page_item.addEventListener("webkitTransitionEnd",function(e){
+				self._removeSelf();
+			},false);
+
+			this.page_item.style.marginLeft = "100%";
+
+
+
+		},
+
+		// Page is no longer active but is visible in the page_stack
+		pageOff: function(stack_depth_position, stack_depth, index, stack_width) {
+
+			//console.log("pageOff");
+			var left_pos = 100 - stack_depth_position,
+				self = this;
+
+			this.index = index;
+
+			
+			this.page_cover.style.marginLeft = "0%";
+			this.page_cover.style.height = "100vh";
+			this.page_cover.style.width = "75%";
+			
+			this.page_cover.style.display = "block";
+			this.page_cover.style.zIndex = stack_depth + 1;
+			//this.page_cover.style.marginLeft = -left_pos + 25 + "%";
+			this.page_cover.style.right = left_pos + "%";
+			this.page_cover.style.width = stack_width + "%";
+
+			this.page_cover.style.zIndex = 2;
+			this.page_item.style.zIndex = 1;
+			this.page_container.style.zIndex = stack_depth;
+
+			this.page_item.style.width = "75%";
+			this.page_item.style.marginLeft = -left_pos + 25 + "%";
+			this.page_item.style.opacity = "1";
+			this.page_item.setAttribute("elevation", "1");
+
+
+			setTimeout(function(){
+				// self.page_cover.style.marginLeft = -left_pos + 25 + "%";
+				// self.page_item.style.marginLeft = -left_pos + 25 + "%";
+				//self.page_item.style.zIndex = stack_depth;
+			}, 250);
+
+			setTimeout(function(){
+				self.page_cover.style.opacity = "0.5";
+			}, 750);
+			//this.page_item.style.width = "100%";
+			
+		},
+
+		// Page is at the top of the page_stack
+		_pageOn: function(single) {
+
+			console.log("single? " + single);
+			//console.log("is single " + single);
+			//console.log(this.page_item.style.marginLeft)
+			if (single) {
+				this.page_item.style.marginLeft = "0%";
+				this.page_item.style.width = "100%";
+			} else {
+				this.page_item.style.marginLeft = "25%";
+				this.page_item.style.width = "75%";
+			}
+			
+			this.page_item.style.opacity = "1";
+			
+
+			this.page_cover.style.opacity = "0";
+			this.page_cover.style.height = "0px";
+			//console.log(this.page_item.style.marginLeft);
+			
+			var self = this;
+			setTimeout(function(){
+				self.page_container.style.zIndex = 10;
+				
+				self.page_item.setAttribute("elevation", "5");
+			}, 500);
+
+		},
+
+		pageOn: function(single) {
+			var self = this;
+			setTimeout(function(){
+				self._pageOn(single);
+			}, 100);
+		},
+
+
+		/* PROPERTIES
+		================================================== */
+		properties: {
+			title: {
+				type: String,
+				value: "Title"
+			}
+		}
+
+	});
+</script>
+</div></body></html>

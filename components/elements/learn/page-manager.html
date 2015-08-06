@@ -12,7 +12,9 @@
 		request.onload = function() {
 			if (request.status >= 200 && request.status < 400) {
 				dp = new DOMParser();
-				var parsed = dp.parseFromString(request.responseText, request.getResponseHeader('content-type'));
+				contentType = request.getResponseHeader('content-type');
+				contentType = contentType.split(';')[0]
+				var parsed = dp.parseFromString(request.responseText, contentType);
 				callback(parsed.querySelector('page-item'));
 			} else {
 				console.log("Error ["+ request.status +"] retrieving " + url);
@@ -73,7 +75,10 @@
 		 */
 		addPage: function(pageItem, caller) {
 			if (pageItem.tagName == 'PAGE-ITEM') {
-				history.pushState({ stack_end_index: this.page_stack.length }, pageItem.title);
+				if (this.page_stack.length > 0) {
+					history.pushState({ stack_end_index: this.page_stack.length }, pageItem.title);
+
+				}
 				this.page_stack.push({el:pageItem, caller:caller});
 				this.appendChild(pageItem);
 				console.log(this.page_stack);
@@ -157,7 +162,7 @@
 		ready: function() {
 			var self = this;
 			window.onpopstate = function(e) {
-				if (typeof(e.state.stack_end_index) == "number") {
+				if (e.state && typeof(e.state.stack_end_index) == "number") {
 					self.selectPage(e.state.stack_end_index)	
 				} else {
 					console.log("Don't know what to do with popped state");
