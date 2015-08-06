@@ -11,6 +11,8 @@
 
 		request.onload = function() {
 			if (request.status >= 200 && request.status < 400) {
+	        // check on support for DOMParser 
+	        // maybe consult https://developer.mozilla.org/en-US/Add-ons/Code_snippets/HTML_to_DOM
 				dp = new DOMParser();
 				contentType = request.getResponseHeader('content-type');
 				contentType = contentType.split(';')[0]
@@ -21,19 +23,6 @@
 				console.log(request);
 			}
 		};
-
-	    request.onload = function() {
-	      if (request.status >= 200 && request.status < 400) {
-	        // check on support for DOMParser 
-	        // maybe consult https://developer.mozilla.org/en-US/Add-ons/Code_snippets/HTML_to_DOM
-	        dp = new DOMParser(); 
-	        var parsed = dp.parseFromString(request.responseText, request.getResponseHeader('content-type'));
-	        callback(parsed.querySelector('page-item'));
-	      } else {
-	        console.log("Error ["+ request.status +"] retrieving " + url);
-	        console.log(request);
-	      }
-	    };
 
 		request.onerror = function() {
 			console.log("Error ["+ request.status +"] retrieving " + url);
