@@ -38,8 +38,8 @@ class Lesson(models.Model):
 
 
 class ZoomingImage(models.Model):
-    slug = models.SlugField(unique=True)
-    image = models.ImageField(upload_to='zimages')
+    slug = models.SlugField(unique=True, help_text="You choose. Lowercase letters and numbers and - characters only please.")
+    image = models.ImageField(upload_to='zimages',help_text="Upload the full-size version of the image. The system will create the thumbnail.")
     thumbnail = ImageSpecField(source='image',
                                processors=[ResizeToFill(313, 207)],
                                format='JPEG',
@@ -53,10 +53,10 @@ class ZoomingImage(models.Model):
         return self.slug
 
 class CapsuleUnit(models.Model):
-    title = models.CharField(max_length=200)
-    slug = models.SlugField(unique=True)
+    title = models.CharField(max_length=200, help_text="")
+    slug = models.SlugField(unique=True, help_text="Don't edit this, let it be automatically assigned. Must be unique.")
     image = models.ImageField(upload_to='capsules')
-    content = models.TextField(blank=True)
+    content = models.TextField(blank=True, help_text="HTML is OK")
 
     def __str__(self):
         return self.title

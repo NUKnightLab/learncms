@@ -49,4 +49,3 @@ DATABASES = {
 
 STATIC_URL = '/static/'
 
-DJANGO_SERVES_STATIC = True # only true for local
