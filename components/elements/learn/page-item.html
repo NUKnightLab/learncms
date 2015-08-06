@@ -52,7 +52,8 @@
 		}
 
 		::content #page-cover-title h2 {
-			text-align:center;
+			display: block;
+			text-align:right;
 			font-family: Roboto, sans-serif;
 			color: #FFF;
 			font-size: 38px;
@@ -60,8 +61,15 @@
 			position: absolute;
 			/*width:100%;*/
 			right:0;
-			top:0;
-			/*transform-origin: right top 0;*/
+			top:50px;
+			float:left;
+			margin:0;
+			/*transform-origin: left bottom 0;*/
+			  -webkit-transform-origin: 50% 50%;
+  -moz-transform-origin: 50% 50%;
+  -ms-transform-origin: 50% 50%;
+  -o-transform-origin: 50% 50%;
+  transform-origin: 50% 50%;
 			-webkit-transform: rotate(90deg); /* Chrome, Safari, Opera */
 				-ms-transform: rotate(90deg); /* IE 9 */
 					transform: rotate(90deg);
@@ -275,7 +283,7 @@
 		},
 
 		// Page is no longer active but is visible in the page_stack
-		pageOff: function(stack_depth_position, stack_depth, index) {
+		pageOff: function(stack_depth_position, stack_depth, index, stack_width) {
 
 			//console.log("pageOff");
 			var left_pos = 100 - stack_depth_position,
@@ -292,7 +300,7 @@
 			this.page_cover.style.zIndex = stack_depth + 1;
 			//this.page_cover.style.marginLeft = -left_pos + 25 + "%";
 			this.page_cover.style.right = left_pos + "%";
-			this.page_cover.style.width = 100 - left_pos + "%";
+			this.page_cover.style.width = stack_width + "%";
 
 			this.page_cover.style.zIndex = 2;
 			this.page_item.style.zIndex = 1;
