@@ -54,7 +54,7 @@
 				content.innerHTML = pageItem.innerHTML;
 				clone.distributeContent();
 				self.addPage(clone, caller);
-				self.selectPage(self.page_stack.length - 1);
+				//self.selectPage(self.page_stack.length - 1);
 			})
 		},
 		/**
@@ -67,7 +67,9 @@
 				this.page_stack.push({el:url_or_element, caller:caller});
 				//console.log("Page stack now " + this.page_stack.length + " deep");
 				this.appendChild(url_or_element);
-				//this.selectPage(this.page_stack.length - 1);
+				console.log(this.page_stack);
+				this.selectPage(this.page_stack.length - 1);
+				console.log(this.page_stack);
 			} else {
 				console.error("Invalid arguments to pageManager.addPage. First argument must be a page-item.");
 			}
@@ -81,8 +83,8 @@
 		},
 
 		selectPage:function(index) {
-			//console.log("selectPage");
-			console.log("index " + index);
+			console.log("selectPage");
+			console.log("selectPage index " + index);
 
 			var stack_depth_position = 0,
 				stack_depth = 1,
@@ -118,6 +120,7 @@
 			}
 
 			// after pages have transitioned, do pageOn
+			console.log(this.page_stack.length)
 			this.page_stack[index].el.pageOn(this.page_stack.length === 1);
 		},
 
@@ -145,9 +148,10 @@
 					}
 				});
 				this.addEventListener("page:out", function(e){
-					//console.log("page:out");
+					console.log("page:out");
 					//console.log(e.detail.caller);
 					//console.log(e.detail.index);
+					
 					self.selectPage(e.detail.index);
 				});
 				this.addEventListener("page:remove", function(e){
