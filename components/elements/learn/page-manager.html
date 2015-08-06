@@ -45,6 +45,11 @@
 
 	Polymer({
 		is: "page-manager",
+		listeners: {
+			'page:ready': '_onPageReady',
+			'page:remove': '_onPageRemove',
+			'page:out': '_onPageOut'
+		},
 		fetchPage: function(url, caller) {
 
 			var self = this;
@@ -78,7 +83,17 @@
 			}
 
 		},
-
+		_onPageOut: function(e) {
+			this.selectPage(e.detail.index);
+		},
+		_onPageRemove: function(e) {
+			this.removePage(e.detail.caller);
+		},
+		_onPageReady: function(e) {
+			if (this.page_stack.length == 0) {
+				this.addPage(e.detail.caller, null);
+			}
+		},
 		removePage: function(el) {
 			//console.log("removePage");
 			//console.log(el);
@@ -141,24 +156,6 @@
 						self.fetchPage(url, e.target);
 
 					}
-				});
-
-				this.addEventListener("page:ready", function(e){
-					//console.log("page:ready");
-					//console.log(e.detail.caller);
-					if (this.page_stack.length == 0) {
-						this.addPage(e.detail.caller, null);
-					}
-				});
-				this.addEventListener("page:out", function(e){
-					console.log("page:out");
-					//console.log(e.detail.caller);
-					//console.log(e.detail.index);
-					
-					self.selectPage(e.detail.index);
-				});
-				this.addEventListener("page:remove", function(e){
-					self.removePage(e.detail.caller);
 				});
 
 			} else {
