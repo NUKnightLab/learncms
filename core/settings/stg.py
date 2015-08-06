@@ -64,9 +64,11 @@ DATABASES = {
 DEFAULT_FILE_STORAGE = 'storages.backends.s3boto.S3BotoStorage'
 from boto.s3.connection import OrdinaryCallingFormat 
 AWS_S3_CALLING_FORMAT = OrdinaryCallingFormat()
-AWS_STORAGE_BUCKET_NAME = 'media.knilab.com'
-MEDIA_URL = 'https://s3.amazonaws.com/{}/'.format(AWS_STORAGE_BUCKET_NAME)
+AWS_S3_URL_PROTOCOL = 'https'
 AWS_S3_SECURE_URLS = False
+AWS_STORAGE_BUCKET_NAME = 'media.knilab.com'
+# not sure who uses this -- not S3BotoStorage
+MEDIA_URL = 'https://s3.amazonaws.com/{}/'.format(AWS_STORAGE_BUCKET_NAME)
 # --- end S3 storages configuration ---
 
 # Static files (CSS, JavaScript, Images)
