@@ -70,5 +70,4 @@ AWS_S3_SECURE_URLS = False
 # --- end S3 storages configuration ---
 
 # Static files (CSS, JavaScript, Images)
-STATICFILES_STORAGE = 'storages.backends.s3boto.S3BotoStorage'
-STATIC_URL = 'https://{}/static/'.format(AWS_STORAGE_BUCKET_NAME)
+STATIC_URL = '//{}/static/'.format(AWS_STORAGE_BUCKET_NAME)
