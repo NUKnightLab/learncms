@@ -46,6 +46,7 @@
 	Polymer({
 		is: "page-manager",
 		listeners: {
+			'page:add': '_onPageAdd',
 			'page:ready': '_onPageReady',
 			'page:remove': '_onPageRemove',
 			'page:out': '_onPageOut'
@@ -70,11 +71,11 @@
 		 * @param {[type]} url_or_element [description]
 		 * @param {[type]} caller         [description]
 		 */
-		addPage: function(url_or_element, caller) {
-			if (url_or_element.tagName == 'PAGE-ITEM') {
-				this.page_stack.push({el:url_or_element, caller:caller});
-				//console.log("Page stack now " + this.page_stack.length + " deep");
-				this.appendChild(url_or_element);
+		addPage: function(pageItem, caller) {
+			if (pageItem.tagName == 'PAGE-ITEM') {
+				history.pushState({ stack_end_index: this.page_stack.length }, pageItem.title);
+				this.page_stack.push({el:pageItem, caller:caller});
+				this.appendChild(pageItem);
 				console.log(this.page_stack);
 				this.selectPage(this.page_stack.length - 1);
 				console.log(this.page_stack);
@@ -82,6 +83,15 @@
 				console.error("Invalid arguments to pageManager.addPage. First argument must be a page-item.");
 			}
 
+		},
+		_onPageAdd: function(e){
+			var url = e.url || (e.detail && e.detail.url) || null;
+			if (url) {
+				this.fetchPage(url, e.target);
+			} else {
+				console.log("page:add event with no discernable url")
+				console.log(e);
+			}
 		},
 		_onPageOut: function(e) {
 			this.selectPage(e.detail.index);
@@ -145,21 +155,14 @@
 		getPageItem: getPageItem,
 
 		ready: function() {
-			//console.log('page-manager ready!');
-
-			if (this.childElementCount == 1 && this.children[0].nodeName == 'PAGE-ITEM') {
-				var pageItem = this.children[0];
-				var self = this;
-				this.addEventListener("page:add", function(e){
-					var url = e.url || (e.detail && e.detail.url) || null;
-					if (url) {
-						self.fetchPage(url, e.target);
-
-					}
-				});
-
-			} else {
-				console.warn("page-manager expects a single child element, a page-item");
+			var self = this;
+			window.onpopstate = function(e) {
+				if (typeof(e.state.stack_end_index) == "number") {
+					self.selectPage(e.state.stack_end_index)	
+				} else {
+					console.log("Don't know what to do with popped state");
+					console.log(e);
+				}
 			}
 		},
 		properties: {
