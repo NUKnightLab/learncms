@@ -1,69 +1,180 @@
 <dom-module id="link-ref">
-  <style>
-  ::content .link-ref-wrapper {
-    width: 344px;
-    background-color: white;
+	<style>
 
-  }
 
-  ::content .link-ref-wrapper p {
-    color: #5C5C5C;
-    background-color: white;
-    font-size: 24px;
-    margin: 15px;
-    padding-bottom: 20px;
-  }
+		::content #link-container {
+/*			height: 300px;
+			width: 300px;
+			padding-right: 100px;*/
+			margin-right:50px;
+			position:relative;
+			background-color:#FFF;
+			
+			border-radius:4px;
+			width:100%;
+		}
 
-  paper-fab {
-    color: #80CBC4;
-    background-color: #9B59B6;
-    right: 25px;
-    bottom: 38px;
-    position: absolute;
-    z-index: 998;
-  }
-  </style>
+		::content #link-ref {
+			position:relative;
+			z-index:4;
+			cursor:pointer;
+		};
+		::content #link-ref paper-fab {
+			color: #E3B052;
+			background-color: #273238;
+			right: 20px;
+			top: 147px;
+			position: absolute;
+			z-index: 3;
+		};
+		::content #link-image-container {
+			width:100%;
+			height:175px;
+			overflow:hidden;
+			
+			position:relative;
+			z-index:1;
+		};
 
-  <template>
-  <paper-material elevation="1" class="wrapper paper-font-body2">
-    <div class="link-ref-wrapper" style="position:relative">
-      <img src="{{ image }}">
-      <paper-fab icon="link" on-click="doLink"></paper-fab>
-      <p>{{ title }}</p>
-    </div>
-  </paper-material>
-  </template>
+		::content #link-image {
+			background-size: cover;
+			background-position: center center;
+			width:100%;
+			height:100%;
+			z-index: 0;
+			position: absolute;
+			top: 0;
+			left: 0;
+		};
+
+		::content #link-image-overlay {
+			background-color:#FFF7E8;
+			width:100%;
+			height:100%;
+			z-index: 0;
+			position: absolute;
+			top: 0;
+			left: 0;
+			z-index:1;
+			opacity:0.5;
+		};
+
+		
+
+		::content #link-title {
+			margin:0;
+			padding:20px;
+			padding-top:12px;
+			color:#5C5C5C;
+			font-weight: 400;
+ 			line-height: 24px;
+ 			font-size: 24px;
+		};
+
+		.material-shadow {
+		  /*transition:box-shadow 0.28s cubic-bezier(0.4, 0, 0.2, 1);*/
+		}
+
+		.material-shadow[elevation="1"] {
+		  box-shadow:0 2px 2px 0 rgba(0, 0, 0, 0.14),
+		                  0 1px 5px 0 rgba(0, 0, 0, 0.12),
+		                  0 3px 1px -2px rgba(0, 0, 0, 0.2);
+		}
+
+		.material-shadow[elevation="2"] {
+		  box-shadow:0 4px 5px 0 rgba(0, 0, 0, 0.14),
+		                  0 1px 10px 0 rgba(0, 0, 0, 0.12),
+		                  0 2px 4px -1px rgba(0, 0, 0, 0.4);
+		}
+
+		.material-shadow[elevation="3"] {
+		  box-shadow:0 6px 10px 0 rgba(0, 0, 0, 0.14),
+		                  0 1px 18px 0 rgba(0, 0, 0, 0.12),
+		                  0 3px 5px -1px rgba(0, 0, 0, 0.4);
+		}
+
+		.material-shadow[elevation="4"] {
+		  box-shadow:0 8px 10px 1px rgba(0, 0, 0, 0.14),
+		                  0 3px 14px 2px rgba(0, 0, 0, 0.12),
+		                  0 5px 5px -3px rgba(0, 0, 0, 0.4);
+		}
+
+		.material-shadow[elevation="5"] {
+		  box-shadow:0 16px 24px 2px rgba(0, 0, 0, 0.14),
+		                  0  6px 30px 5px rgba(0, 0, 0, 0.12),
+		                  0  8px 10px -5px rgba(0, 0, 0, 0.4);
+		}
+		:host {
+			width:100%;
+			margin-right:20px;
+			max-width:400px;
+			min-width:200px;
+		}
+	</style>
+
+	<template>
+		<div id="link-container" class="material-shadow" elevation="2">
+			<div id="link-ref">
+				<div id="link-image-container">
+					<div id="link-image-overlay"></div>
+					<div id="link-image"></div>
+					
+				</div>
+				<h2 id="link-title">{{ title }}</h2>
+				<paper-fab icon="link"></paper-fab>
+			</div>
+		</div>
+
+	</template>
+
 </dom-module>
 
 <script>
 
 Polymer({
-  is: 'link-ref',
+	is: 'link-ref',
 
-  behaviors: [
+	behaviors: [
 
-  ],
+	],
+	ready: function() {
+		// DOM OBJECTS
+		this.link_image = this.$['link-image'];
+		this.link_ref = this.$['link-ref'];
+		
+	},
 
-  doLink: function() {
-  window.open(this.link)
-  },
-  properties: {
+	attached: function() {
+		var self = this;
+		this.link_image.style.backgroundImage = "url(" + this.image + ")";
 
-    image: {
-      type: String,
-      value: ""
-    },
+		this.link_ref.addEventListener("click", function(e) {
+			self._onLinkRefClick(e);
+		});
+		
+	},
 
-    title: {
-      type: String,
-      value: "See also"
-    },
+	_onLinkRefClick: function() {
+		window.open(this.link)
+	},
 
-    link: {
-      type: String,
-      value: ""
-    },
-  }
+	properties: {
+
+		image: {
+			type: String,
+			value: ""
+		},
+
+		title: {
+			type: String,
+			value: "See also"
+		},
+
+		link: {
+			type: String,
+			value: ""
+		},
+	}
 });
 
 </script>
