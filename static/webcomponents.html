@@ -13397,26 +13397,27 @@ Polymer({
 				var content = clone.$$('content');
 				content.innerHTML = pageItem.innerHTML;
 				clone.distributeContent();
-				self.addPage(clone, caller);
+				self.addPage(clone, caller, url);
 				//self.selectPage(self.page_stack.length - 1);
 			})
 		},
 		/**
 		 * Add a polymerized 'page-item' to the pages under management.
-		 * @param {[type]} url_or_element [description]
-		 * @param {[type]} caller         [description]
+		 * @param {PageItem} pageItem: a PageItem component which is coming into view
+		 * @param {DOMElement} caller: the element that brought the new page on, to
+		 *                             support animating the reverse
+		 * @param {String} url: the URL which represents the natural location of `pageItem`
+		 *                      for history management.
 		 */
-		addPage: function(pageItem, caller) {
+		addPage: function(pageItem, caller, url) {
 			if (pageItem.tagName == 'PAGE-ITEM') {
 				if (this.page_stack.length > 0) {
-					history.pushState({ stack_end_index: this.page_stack.length }, pageItem.title);
+					history.pushState({ stack_end_index: this.page_stack.length }, pageItem.title, url);
 
 				}
 				this.page_stack.push({el:pageItem, caller:caller});
 				this.appendChild(pageItem);
-				console.log(this.page_stack);
 				this.selectPage(this.page_stack.length - 1);
-				console.log(this.page_stack);
 			} else {
 				console.error("Invalid arguments to pageManager.addPage. First argument must be a page-item.");
 			}
@@ -13432,7 +13433,9 @@ Polymer({
 			}
 		},
 		_onPageOut: function(e) {
-			this.selectPage(e.detail.index);
+			var target = e.detail.index;
+			history.go(target - (this.page_stack.length - 1));
+			// this.selectPage(e.detail.index);
 		},
 		_onPageRemove: function(e) {
 			this.removePage(e.detail.caller);
@@ -13443,15 +13446,10 @@ Polymer({
 			}
 		},
 		removePage: function(el) {
-			//console.log("removePage");
-			//console.log(el);
 			this.removeChild(el);
 		},
 
 		selectPage:function(index) {
-			console.log("selectPage");
-			console.log("selectPage index " + index);
-
 			var stack_depth_position = 0,
 				stack_depth = 1,
 				to_remove = [],
@@ -13486,7 +13484,6 @@ Polymer({
 			}
 
 			// after pages have transitioned, do pageOn
-			console.log(this.page_stack.length)
 			this.page_stack[index].el.pageOn(this.page_stack.length === 1);
 		},
 
@@ -13496,10 +13493,18 @@ Polymer({
 			var self = this;
 			window.onpopstate = function(e) {
 				if (e.state && typeof(e.state.stack_end_index) == "number") {
-					self.selectPage(e.state.stack_end_index)	
+					if (e.state.stack_end_index < self.page_stack.length) {
+						self.selectPage(e.state.stack_end_index)	
+					} else {
+						console.log("Forward not supported at this time.");
+					}
 				} else {
-					console.log("Don't know what to do with popped state");
-					console.log(e);
+					if (self.page_stack.length > 1) {
+						self.selectPage(0);
+					} else {
+						console.log("Don't know what to do with popped state");
+						console.log(e);
+					}
 				}
 			}
 		},
