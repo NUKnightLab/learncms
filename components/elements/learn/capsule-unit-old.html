@@ -1,0 +1,299 @@
+<!--
+
+`capsule-unit` is a labeled image which triggers to a modal "capsule" explanation of a concept. In our prototype example, capsule-references appear in the "what you'll need" block and explain more about text editors and FTP programs. The element is intended to be empty, and all necessary variable data is specified in attributes.
+
+`capsule-unit` is a polymer component made up of two other polymer components, `capsule-ref` and `capsule-card`. It acts as a container for these two sub components and handles the hero-animation transition between the two sub components.
+Example:
+
+	<capsule-unit img="path/to/image.png" title="Title for both the reference and the card">
+	  Put the conent of your card here in regular text.
+	</capsule-unit>
+
+@group Learn Elements
+@class capsule-unit
+-->
+
+<!-- CAPSULE-UNIT 
+================================================== -->
+<dom-module id="capsule-unit">
+
+	<style>
+		.capsule-unit-wrapper {
+	/*      height: 300px;
+		  width: 300px;
+		  padding-right: 100px;*/
+		}
+	</style>
+
+	<template>
+		<div class="capsule-unit-wrapper">
+			<neon-animated-pages id="pages" selected="0">
+
+				<capsule-ref image="{{ image }}" title="{{ title }}"></capsule-ref>
+				<capsule-card title="{{ title }}">
+					<content></content>
+				</capsule-card>
+
+			</neon-animated-pages>
+		</div>
+	</template>
+
+</dom-module>
+
+<script type="text/javascript">
+	Polymer({
+		is: 'capsule-unit',
+
+		behaviors: [Polymer.IronA11yKeysBehavior],
+		keyBindings: {
+		  'esc': '_handleEscapeKey'
+		},
+		/* Using IronA11yKeysBehavior, listen for 'esc' key pressed
+		 * anywhere on the page (see keyEventTarget property). 
+		 * escape will close an open capsule.
+		 */
+		_handleEscapeKey: function(e) {
+			this.$$('neon-animated-pages').select(0);
+		},
+
+		properties: {
+			image: {
+				type: String,
+				value: ""
+			},
+			title: {
+				type: String,
+				value: "See also"
+			},
+			keyEventTarget: { // IronA11yKeysBehavior
+				type: Object,
+				value: function() {
+					return document.body;
+				}
+			}
+		}
+	});
+
+  
+</script>
+
+
+<!-- CAPSULE-REF 
+================================================== -->
+
+<dom-module id="capsule-ref">
+	<style>
+		::content .capsule-ref-wrapper {
+			width: 344px;
+			background-color: white;
+
+		}
+
+		::content .capsule-ref-wrapper p {
+			color: #5C5C5C;
+			background-color: white;
+			font-size: 24px;
+			margin: 15px;
+			padding-bottom: 20px;
+		}
+
+		paper-fab {
+			color: #80CBC4;
+			background-color: #273238;
+			right: 25px;
+			bottom: 38px;
+			position: absolute;
+			z-index: 998;
+		}
+	</style>
+
+	<template>
+		<div id="hero">
+			<paper-material elevation="1" class="wrapper paper-font-body2">
+				<div class="capsule-ref-wrapper" style="position:relative">
+					<img src="{{ image }}">
+					<paper-fab icon="content-copy" on-click="doExpand"></paper-fab>
+					<p>{{ title }}</p>
+				</div>
+			</paper-material>
+		</div>
+	</template>
+
+</dom-module>
+
+<script type="text/javascript">
+	Polymer({
+		is: 'capsule-ref',
+
+		behaviors: [
+			Polymer.NeonAnimatableBehavior
+		],
+
+		doExpand: function() {
+			this.parentElement.select(1);
+		},
+
+		properties: {
+			/**
+			* a URL to the image to be shown for the reference. 
+			*
+			* @attribute image
+			* @type String
+			* @default ""
+			*/
+			image: {
+				type: String,
+				value: ""
+			},
+
+			/**
+			* a text label for the reference. Passes through to the capsule-ref
+			*
+			* @attribute label
+			* @type String
+			* @default "See also"
+			*/
+			title: {
+				type: String,
+				value: "See also"
+			},
+
+			animationConfig: {
+				value: function() {
+					return {
+						'exit': {
+							name: 'hero-animation',
+							id: 'hero',
+							fromPage: this,
+						},
+						'entry': {
+							name: 'hero-animation',
+							id: 'hero',
+							toPage: this,
+						}
+					}
+				}
+			},
+			sharedElements: {
+				value: function() {
+					return {
+						'hero': this.$.hero,
+					}
+				}
+			}
+
+		},
+	});
+
+  
+</script>
+
+
+<!-- CAPSULE-CARD 
+================================================== -->
+<dom-module id="capsule-card">
+
+	<style>
+		#card {
+			width:700px;
+			height:700px;
+			position:absolute;
+			left:300px;
+			top:100px;
+			margin: 25px;
+			z-index: 999;
+		};
+
+		#card h2 {
+			position: absolute;
+			padding-top: 20px;
+			padding-left: 20px;
+			font-color: #338D83;
+		};
+
+		paper-material {
+			background-color: white;
+
+		};
+
+		paper-icon-button {
+			position: absolute;
+			top: 0px;
+			right: 0px;
+		};
+
+		::content .card-content {
+			padding:25px;
+			padding-top:50px;
+		};
+
+
+
+	</style>
+
+	<template>
+		<div id="card">
+			<paper-material elevation="1" class="wrapper paper-font-body2">
+				<div class="card-content">
+					<h2>{{ title }}</h2>
+					<paper-icon-button icon="clear" on-click="doClose"></paper-icon-button>
+					<content></content>
+				</div>
+			</paper-material>
+		</div>
+	</template>
+
+</dom-module>
+
+<!-- SCRIPTS
+================================================== -->
+
+<script>
+	Polymer({
+		is: "capsule-card",
+
+		behaviors: [
+			Polymer.NeonAnimatableBehavior
+		],
+
+		doClose: function() {
+			this.parentElement.select(0);
+		},
+
+		properties: {
+			title: {
+				type: String,
+				value: "Card Title"
+			},
+
+			sharedElements: {
+				type: Object,
+				value: function() {
+					return {
+						'hero': this.$.card,
+					}
+				}
+			},
+
+			animationConfig: {
+				value: function() {
+					return {
+						// the incoming page defines the 'entry' animation
+						'entry': {
+							name: 'hero-animation',
+							id: 'hero',
+							toPage: this,
+						},
+						'exit': {
+							name: 'hero-animation',
+							id: 'hero',
+							fromPage: this,
+						}
+
+					}
+				}
+			},
+
+		}
+	});
+</script>
