@@ -6,6 +6,8 @@ For each new referenceable model type, add a resolve here and "register" it in R
 """
 from .models import Lesson, ZoomingImage, CapsuleUnit
 from lxml.etree import Comment
+from lxml.html import fromstring, tostring
+
 
 class ReferenceResolver(object):
     """An abstract class"""
@@ -56,13 +58,13 @@ class ZoomingImageRefResolver(ReferenceResolver):
 
 
 class CapsuleRefResolver(ReferenceResolver):
+    """A Capsule Unit has a title, an image URL, and HTML content."""
     klass = CapsuleUnit
 
     def update_element(self, elem, obj):
         elem.attrib['image'] = obj.image.url
         elem.attrib['title'] = obj.title
-        elem.text = obj.content
-
+        elem.append(fromstring(obj.content))
 
 REF_RESOLVERS = {
     'zooming-image': ZoomingImageRefResolver(),
