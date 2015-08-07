@@ -63,9 +63,17 @@ class CapsuleUnit(models.Model):
     def __str__(self):
         return self.title
 
-class LinkReference(models.Model):
-    title = models.CharField(max_length=50, help_text="The label which will be shown on the unit.")
-    image = models.ImageField(upload_to='linkrefs')
-    slug = models.SlugField(unique=True, help_text="Don't edit this, let it be automatically assigned. Must be unique.")
-    url = models.URLField()
-    
+class GeneralImage(models.Model):
+    image = models.ImageField(upload_to='images')
+    description = models.TextField(blank=True, help_text="Anything that you might want to use to search for this image later.")
+
+    @property
+    def filename(self):
+        return self.image.url.split('/')[-1]
+
+    @property
+    def url(self):
+        return self.image.url
+
+    def __str__(self):
+        return self.filename
