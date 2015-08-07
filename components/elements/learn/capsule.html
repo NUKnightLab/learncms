@@ -23,12 +23,15 @@ Example:
 			margin-right:50px;
 			position:relative;
 			background-color:#FFF;
-			cursor:pointer;
+			
 			border-radius:4px;
+			width:100%;
 		}
 
 		::content #capsule-ref {
 			position:relative;
+			z-index:4;
+			cursor:pointer;
 		};
 		::content #capsule-ref paper-fab {
 			color: #80CBC4;
@@ -42,7 +45,7 @@ Example:
 			width:100%;
 			height:175px;
 			overflow:hidden;
-			min-width:300px;
+			
 			position:relative;
 			z-index:1;
 		};
@@ -84,6 +87,16 @@ Example:
 
 		::content #capsule-content {
 			display:none;
+			-webkit-transition: opacity 500ms ease-in-out; 
+			   -moz-transition: opacity 500ms ease-in-out; 
+			     -o-transition: opacity 500ms ease-in-out; 
+			        transition: opacity 500ms ease-in-out; 
+
+
+			-webkit-transition-timing-function: cubic-bezier(0.770, 0.000, 0.175, 1.000); 
+			   -moz-transition-timing-function: cubic-bezier(0.770, 0.000, 0.175, 1.000); 
+			     -o-transition-timing-function: cubic-bezier(0.770, 0.000, 0.175, 1.000); 
+			        transition-timing-function: cubic-bezier(0.770, 0.000, 0.175, 1.000);
 		};
 
 		::content #capsule-content-container {
@@ -93,6 +106,8 @@ Example:
 			top:0;
 			left:0;
 			width:100%;
+			height:100%;
+			visibility: hidden;
 			overflow:hidden;
 			-webkit-transition: all 750ms cubic-bezier(0.770, 0.000, 0.175, 1.000); 
 			   -moz-transition: all 750ms cubic-bezier(0.770, 0.000, 0.175, 1.000); 
@@ -105,7 +120,6 @@ Example:
 			     -o-transition-timing-function: cubic-bezier(0.770, 0.000, 0.175, 1.000); 
 			        transition-timing-function: cubic-bezier(0.770, 0.000, 0.175, 1.000);
 		};
-
 		
 		.material-shadow {
 		  /*transition:box-shadow 0.28s cubic-bezier(0.4, 0, 0.2, 1);*/
@@ -140,6 +154,12 @@ Example:
 		                  0  6px 30px 5px rgba(0, 0, 0, 0.12),
 		                  0  8px 10px -5px rgba(0, 0, 0, 0.4);
 		}
+		:host {
+			width:100%;
+			margin-right:20px;
+			max-width:400px;
+			min-width:200px;
+		}
 	</style>
 	<template>
 		<div id="capsule-container" class="material-shadow" elevation="2">
@@ -171,9 +191,6 @@ Example:
 		keyBindings: {
 			'esc': '_handleEscapeKey'
 		},
-		listeners: {
-			"click": "_clickListener"
-		},
 		properties: {
 			image: {
 				type: String,
@@ -195,15 +212,35 @@ Example:
 		ready: function() {
 			// DOM OBJECTS
 			this.capsule_image = this.$['capsule-image'];
+			this.capsule_ref = this.$['capsule-ref'];
 			this.capsule_title = this.$['capsule-title'];
 			this.capsule_content = this.$['capsule-content'];
 			this.capsule_content_container = this.$['capsule-content-container'];
 			this.default_width = 0;
+			this.window_open = false;
 			
 		},
 
 		attached: function() {
+			var self = this;
 			this.capsule_image.style.backgroundImage = "url(" + this.image + ")";
+
+			this.capsule_ref.addEventListener("click", function(e) {
+				self._onCapsuleRefClick(e);
+			});
+
+			this.capsule_content_container.addEventListener("click", function(e) {
+				self._onCapsuleCloseClick(e);
+			});
+
+			this.capsule_content_container.addEventListener("transitionend",function(e){
+				self._hideContentContainer();
+			},false);
+
+			this.capsule_content_container.addEventListener("webkitTransitionEnd",function(e){
+				self._hideContentContainer();
+			},false);
+			
 		},
 
 		/* Using IronA11yKeysBehavior, listen for 'esc' key pressed
@@ -218,29 +255,80 @@ Example:
 
 		},
 
-		
+		_onCapsuleRefClick: function(e) {
+			console.log("_onCapsuleRefClick")
+			this.windowOn(e);
+		},
+
+		_onCapsuleCloseClick: function(e) {
+			this.windowOff(e);
+		},
+
 		
 
 		_clickListener: function(e) {
 			console.log("CLICK");
-			this.windowOn(e);
+			
+		},
+
+		_hideContentContainer: function(e) {
+			console.log("_hideContentContainer");
+
+			if (this.window_open) {
+				console.log("window open");
+				var self = this;
+				// this.capsule_content_container.removeEventListener("transitionend",function(e){
+				// 	self._hideContentContainer();
+				// },false);
+
+				// this.capsule_content_container.removeEventListener("webkitTransitionEnd",function(e){
+				// 	self._hideContentContainer();
+				// },false);
+
+				this.capsule_content_container.style.visibility = "hidden";
+				this.capsule_ref.style.zIndex = "4";
+				//this.capsule_content_container.style.opacity = "1";
+				this.window_open = false;
+			} else {
+				console.log("window closed")
+			}
+			
+			
 		},
 
 		windowOn:function(e) {
+			
 			this.capsule_content.style.display = "block";
+			this.capsule_content.style.opacity = 1;
+			this.capsule_content_container.style.visibility = "visible";
 			this.capsule_content_container.style.width = window.innerWidth - 100 + "px";
 			this.capsule_content_container.style.height = window.innerHeight - 150 + "px";
+
 			var container_top = this.capsule_content_container.getBoundingClientRect();
 			this.capsule_content_container.style.left = -container_top.left + 50 + "px";
 			this.capsule_content_container.style.top = -container_top.top + 100 + "px";
-
+			this.capsule_content_container.style.opacity = "1";
 			this.capsule_content_container.setAttribute("elevation", "5");
+			this.capsule_content_container.style.zIndex = "98";
 			// this.container.style.top = -container_top + "px";
 			// this.container.setAttribute("elevation", "5");
 		},
 
 		windowOff: function(e) {
+			this.window_open = true;
+			var self = this;
 
+
+			this.capsule_content_container.style.left = "0px";
+			this.capsule_content_container.style.top = "0px";
+			this.capsule_content_container.style.width = "100%";
+			this.capsule_content_container.style.height = "100%";
+			this.capsule_content_container.setAttribute("elevation", "1");
+			this.capsule_content_container.style.zIndex = "-1";
+			this.capsule_content_container.style.opacity = "0.5";
+
+			this.capsule_content.style.opacity = 0;
+			//this.capsule_ref.style.zIndex = "99";
 		},
 
 

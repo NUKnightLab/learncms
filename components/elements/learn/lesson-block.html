@@ -12,33 +12,38 @@ Example:
 @class lesson-block
 -->
 <dom-module id="lesson-block">
-  <style>
-  ::content paper-material.lesson-block {
-    background-color: var(--learn-secondary-color);
+	<style>
+		::content paper-material.lesson-block {
+			background-color: var(--learn-secondary-color);
 
 
-  }
+		}
 
-  ::content .lesson-block-wrapper {
-    padding: 25px;
-    margin-left: 50px;
-    margin-right: 50px;
-    margin-bottom: 50px;
-  };
+		::content .lesson-block-wrapper {
+			padding: 25px;
+			margin-left: 50px;
+			margin-right: 50px;
+			margin-bottom: 50px;
+		};
 
-  ::content .lesson-block-wrapper h2 { /* Free floating for any h2 inside */
-    color: #E3B052;
+		::content .lesson-block-wrapper h2 { /* Free floating for any h2 inside */
+			color: #E3B052;
+			font-size:28px;
+			font-weight:500;
+		}
 
-  }
-  </style>
-  <template>
-  <paper-material elevation="1" class="lesson-block paper-font-body2">
-    <div class="lesson-block-wrapper">
-      <content></content>
-    </div>
-  </paper-material>
-  </template>
+	</style>
+
+	<template>
+		<paper-material elevation="1" class="lesson-block paper-font-body2">
+			<div class="lesson-block-wrapper">
+				<content></content>
+			</div>
+		</paper-material>
+	</template>
+
 </dom-module>
+
 <script>
 	Polymer({
 		is: 'lesson-block',
