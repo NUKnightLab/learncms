@@ -12634,6 +12634,8 @@ styles. All other styles should exist as single lines."
 		::content #capsule-content-container {
 			position:absolute;
 			background-color:#FFF;
+			
+			overflow-y:scroll;
 			z-index:99;
 			top:0;
 			left:0;
@@ -12656,6 +12658,17 @@ styles. All other styles should exist as single lines."
 		::content #capsule-close-button {
 			position:absolute;
 			right:0;
+		};
+
+		::content #capsule-page-block {
+			position:fixed;
+			width:100%;
+			height:100vh;
+			visibility:hidden;
+			
+			z-index:90;
+			top:0;
+			left:0;
 		};
 
 		.material-shadow {
@@ -12699,7 +12712,7 @@ styles. All other styles should exist as single lines."
 		}
 	</style>
 	<template>
-		<div id="capsule-container" class="material-shadow" elevation="2">
+		<div id="capsule-container" class="material-shadow" elevation="1">
 			<div id="capsule-ref">
 				<div id="capsule-image-container">
 					<div id="capsule-image-overlay"></div>
@@ -12717,7 +12730,7 @@ styles. All other styles should exist as single lines."
 					<content></content>
 				</div>
 			</div>
-			
+			<div id="capsule-page-block"></div>
 		</div>
 	</template>
 </dom-module>
@@ -12756,6 +12769,7 @@ styles. All other styles should exist as single lines."
 			this.capsule_content = this.$['capsule-content'];
 			this.capsule_content_container = this.$['capsule-content-container'];
 			this.capsule_close_btn = this.$['capsule-close-button'];
+			this.capsule_page_block = this.$['capsule-page-block'];
 			this.default_width = 0;
 			this.window_open = false;
 			
@@ -12767,6 +12781,10 @@ styles. All other styles should exist as single lines."
 
 			this.capsule_ref.addEventListener("click", function(e) {
 				self._onCapsuleRefClick(e);
+			});
+
+			this.capsule_page_block.addEventListener("click", function(e) {
+				self._onCapsuleCloseClick(e);
 			});
 
 			this.capsule_close_btn.addEventListener("click", function(e) {
@@ -12850,6 +12868,8 @@ styles. All other styles should exist as single lines."
 			this.capsule_content_container.style.opacity = "1";
 			this.capsule_content_container.setAttribute("elevation", "5");
 			this.capsule_content_container.style.zIndex = "98";
+
+			this.capsule_page_block.style.visibility = "visible";
 			// this.container.style.top = -container_top + "px";
 			// this.container.setAttribute("elevation", "5");
 		},
@@ -12858,6 +12878,7 @@ styles. All other styles should exist as single lines."
 			this.window_open = true;
 			var self = this;
 
+			this.capsule_page_block.style.visibility = "hidden";
 
 			this.capsule_content_container.style.left = "0px";
 			this.capsule_content_container.style.top = "0px";
@@ -13071,7 +13092,7 @@ styles. All other styles should exist as single lines."
 	}
 	</style>
 	<template>
-		<div id="lesson-ref-container" elevation="2" class="material-shadow">
+		<div id="lesson-ref-container" elevation="1" class="material-shadow">
 			<div id="image-container">
 				<img src="{{ image }}">
 				<h2 id="title-el">{{ title }}</h2>
@@ -13165,16 +13186,21 @@ styles. All other styles should exist as single lines."
             line-height: 26px;
             font-weight:300;
         };
+
+        ::content #narrative-text-container {
+        	margin-top:50px;
+        	margin-bottom:50px;
+        };
     </style>
-    <template>
-        <div class="horizontal layout center-justified">
-        <div class="flex"></div>
-        <paper-material elevation="0" id="narritive-text-copy" class="paper-font-body2 flex-4">
-        <content></content>
-        </paper-material>
-        <div class="flex"></div>
-        </div>
-    </template>
+	<template>
+		<div id="narrative-text-container" class="horizontal layout center-justified">
+			<div class="flex"></div>
+			<paper-material elevation="0" id="narritive-text-copy" class="paper-font-body2 flex-4">
+				<content></content>
+			</paper-material>
+			<div class="flex"></div>
+		</div>
+	</template>
 </dom-module>
 <script>
     Polymer({
@@ -13298,7 +13324,7 @@ styles. All other styles should exist as single lines."
 	</style>
 
 	<template>
-		<div id="link-container" class="material-shadow" elevation="2">
+		<div id="link-container" class="material-shadow" elevation="1">
 			<div id="link-ref">
 				<div id="link-image-container">
 					<div id="link-image-overlay"></div>
@@ -13604,7 +13630,7 @@ Polymer({
 		::content #page-cover {
 			width:100%;
 			height:100%;
-			background-color:#80CBC4;
+			
 			display:block;
 			height:0;
 			position:absolute;
@@ -13638,6 +13664,16 @@ Polymer({
 			     -o-transition-timing-function: cubic-bezier(0.770, 0.000, 0.175, 1.000); 
 			        transition-timing-function: cubic-bezier(0.770, 0.000, 0.175, 1.000);
 		};
+		::content #page-cover-background {
+			/*background-color:#338D83;*/
+			background-color:#273238;
+			opacity:0.6;
+			width:100%;
+			height:100%;
+			position:absolute;
+			top:0;
+			left:0;
+		};
 
 		::content #page-cover-title {
 			position:absolute;
@@ -13645,30 +13681,48 @@ Polymer({
 			right:0;
 			height:100vh;
 			width:100%;
+			display:flex;
+			align-items: center;
+			justify-content: center;
 		}
+		::content #page-cover-title-container {
+			text-align:center;
+			padding-left:10px;
+			padding-right:10px;
+			z-index:1;
+		};
+
+		::content #page-cover-title-container paper-fab {
+			/*background-color:#273238;
+			color:#FFF;*/
+			background-color:#80CBC4;
+			color:#273238;
+
+		};
 
 		::content #page-cover-title h2 {
 			display: block;
-			text-align:right;
+			text-align:center;
 			font-family: Roboto, sans-serif;
 			color: #FFF;
-			font-size: 38px;
+			font-size: 18px;
 			font-weight: bold;
-			position: absolute;
+			text-shadow: 1px 1px 4px #273238;
+			/*position: absolute;*/
 			/*width:100%;*/
-			right:0;
-			top:50px;
-			float:left;
+			/*right:0;
+			top:50px;*/
+			/*float:left;*/
 			margin:0;
 			/*transform-origin: left bottom 0;*/
-			  -webkit-transform-origin: 50% 50%;
+/*			  -webkit-transform-origin: 50% 50%;
   -moz-transform-origin: 50% 50%;
   -ms-transform-origin: 50% 50%;
   -o-transform-origin: 50% 50%;
-  transform-origin: 50% 50%;
-			-webkit-transform: rotate(90deg); /* Chrome, Safari, Opera */
-				-ms-transform: rotate(90deg); /* IE 9 */
-					transform: rotate(90deg);
+  transform-origin: 50% 50%;*/
+/*			-webkit-transform: rotate(90deg); 
+				-ms-transform: rotate(90deg);
+					transform: rotate(90deg);*/
 		}
 
 		::content #page-item {
@@ -13752,8 +13806,12 @@ Polymer({
 		<div id="page-container">
 			<div id="page-cover" class="material-shadow" elevation="3">
 				<div id="page-cover-title">
-					<h2>{{title}}</h2>
+					<div id="page-cover-title-container">
+						<paper-fab icon="arrow-back"></paper-fab><br>
+						<h2>{{title}}</h2>
+					</div>
 				</div>
+				<div id="page-cover-background"></div>
 
 			</div>
 			<div id="page-item" class="material-shadow" elevation="5">
@@ -13915,7 +13973,7 @@ Polymer({
 			}, 250);
 
 			setTimeout(function(){
-				self.page_cover.style.opacity = "0.5";
+				self.page_cover.style.opacity = "1";
 			}, 750);
 			//this.page_item.style.width = "100%";
 			
@@ -13977,7 +14035,7 @@ Polymer({
 
 	</style>
 	<template>
-		<div class="horizontal layout flex center-center">
+		<div class="horizontal layout flex center-center around-justified">
 			<content></content>
 		</div>
 
