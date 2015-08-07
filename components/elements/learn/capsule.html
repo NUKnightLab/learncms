@@ -24,17 +24,60 @@ Example:
 			position:relative;
 			background-color:#FFF;
 			cursor:pointer;
+			border-radius:4px;
 		}
-		::content #capsule-image {
 
+		::content #capsule-ref {
+			position:relative;
 		};
+		::content #capsule-ref paper-fab {
+			color: #80CBC4;
+			background-color: #273238;
+			right: 20px;
+			top: 147px;
+			position: absolute;
+			z-index: 3;
+		};
+		::content #capsule-image-container {
+			width:100%;
+			height:175px;
+			overflow:hidden;
+			min-width:300px;
+			position:relative;
+			z-index:1;
+		};
+
+		::content #capsule-image {
+			background-size: cover;
+			background-position: center center;
+			width:100%;
+			height:100%;
+			z-index: 0;
+			position: absolute;
+			top: 0;
+			left: 0;
+		};
+
+		::content #capsule-image-overlay {
+			background-color:#80CBC4;
+			width:100%;
+			height:100%;
+			z-index: 0;
+			position: absolute;
+			top: 0;
+			left: 0;
+			z-index:1;
+			opacity:0.5;
+		};
+
+		
 
 		::content #capsule-title {
 			margin:0;
 			padding:20px;
 			padding-top:12px;
 			color:#5C5C5C;
-			font-weight: 500;
+			font-weight: 400;
  			line-height: 24px;
  			font-size: 24px;
 		};
@@ -42,16 +85,30 @@ Example:
 		::content #capsule-content {
 			display:none;
 		};
-		paper-fab {
-			color: #80CBC4;
-			background-color: #273238;
-			right: 25px;
-			bottom: 80px;
-			position: absolute;
-			z-index: 10;
-		}
+
+		::content #capsule-content-container {
+			position:absolute;
+			background-color:#FFF;
+			z-index:99;
+			top:0;
+			left:0;
+			width:100%;
+			overflow:hidden;
+			-webkit-transition: all 750ms cubic-bezier(0.770, 0.000, 0.175, 1.000); 
+			   -moz-transition: all 750ms cubic-bezier(0.770, 0.000, 0.175, 1.000); 
+			     -o-transition: all 750ms cubic-bezier(0.770, 0.000, 0.175, 1.000);
+			        transition: all 750ms cubic-bezier(0.770, 0.000, 0.175, 1.000);
+
+
+			-webkit-transition-timing-function: cubic-bezier(0.770, 0.000, 0.175, 1.000); 
+			   -moz-transition-timing-function: cubic-bezier(0.770, 0.000, 0.175, 1.000); 
+			     -o-transition-timing-function: cubic-bezier(0.770, 0.000, 0.175, 1.000); 
+			        transition-timing-function: cubic-bezier(0.770, 0.000, 0.175, 1.000);
+		};
+
+		
 		.material-shadow {
-		  transition:box-shadow 0.28s cubic-bezier(0.4, 0, 0.2, 1);
+		  /*transition:box-shadow 0.28s cubic-bezier(0.4, 0, 0.2, 1);*/
 		}
 
 		.material-shadow[elevation="1"] {
@@ -85,14 +142,23 @@ Example:
 		}
 	</style>
 	<template>
-		<div id="capsule-container" class="material-shadow" elevation="1">
-			<img id="capsule-image" src="{{ image }}">
-			<h2 id="capsule-title">{{ title }}</h2>
-			<div id="capsule-content">
-				<content></content>
+		<div id="capsule-container" class="material-shadow" elevation="2">
+			<div id="capsule-ref">
+				<div id="capsule-image-container">
+					<div id="capsule-image-overlay"></div>
+					<div id="capsule-image"></div>
+					
+				</div>
+				<h2 id="capsule-title">{{ title }}</h2>
+				<paper-fab icon="content-copy"></paper-fab>
 			</div>
-
-			<paper-fab icon="content-copy"></paper-fab>
+			
+			<div id="capsule-content-container" class="material-shadow" elevation="1">
+				<div id="capsule-content">
+					<content></content>
+				</div>
+			</div>
+			
 		</div>
 	</template>
 </dom-module>
@@ -131,7 +197,13 @@ Example:
 			this.capsule_image = this.$['capsule-image'];
 			this.capsule_title = this.$['capsule-title'];
 			this.capsule_content = this.$['capsule-content'];
+			this.capsule_content_container = this.$['capsule-content-container'];
 			this.default_width = 0;
+			
+		},
+
+		attached: function() {
+			this.capsule_image.style.backgroundImage = "url(" + this.image + ")";
 		},
 
 		/* Using IronA11yKeysBehavior, listen for 'esc' key pressed
@@ -151,9 +223,26 @@ Example:
 
 		_clickListener: function(e) {
 			console.log("CLICK");
-			this.capsule_content.style.display = "block";
-			
+			this.windowOn(e);
 		},
+
+		windowOn:function(e) {
+			this.capsule_content.style.display = "block";
+			this.capsule_content_container.style.width = window.innerWidth - 100 + "px";
+			this.capsule_content_container.style.height = window.innerHeight - 150 + "px";
+			var container_top = this.capsule_content_container.getBoundingClientRect();
+			this.capsule_content_container.style.left = -container_top.left + 50 + "px";
+			this.capsule_content_container.style.top = -container_top.top + 100 + "px";
+
+			this.capsule_content_container.setAttribute("elevation", "5");
+			// this.container.style.top = -container_top + "px";
+			// this.container.setAttribute("elevation", "5");
+		},
+
+		windowOff: function(e) {
+
+		},
+
 
 	});
 

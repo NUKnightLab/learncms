@@ -31,6 +31,39 @@ Example:
 			left: 0;
 			top: 0;
 		}
+		::content #lesson-banner-container {
+			width:100%;
+			height:200px;
+			overflow:hidden;
+			min-width:300px;
+			position:relative;
+			z-index:1;
+		};
+
+		::content #lesson-banner-image {
+			background-size: cover;
+			background-position: center center;
+			width:100%;
+			height:100%;
+			z-index: 0;
+			position: absolute;
+			top: 0;
+			left: 0;
+			opacity:0.25;
+		};
+
+		::content #lesson-banner-image-overlay {
+			background-color:#80CBC4;
+			width:100%;
+			height:100%;
+			z-index: 0;
+			position: absolute;
+			top: 0;
+			left: 0;
+			z-index:1;
+			opacity:0.5;
+		};
+
 		::content #title {
 			font-family: Roboto, sans-serif;
 			color: #273238;
@@ -41,11 +74,17 @@ Example:
 			position:absolute;
 			bottom:0;
 			margin:0;
+			z-index:2;
 		}
 	</style>
 	<template>
-		<div id="container" class="">
+<!-- 		<div id="container" class="">
 			<img id='image' src="{{ image }}">
+			<h1 id="title">{{title}}</h1>
+		</div> -->
+		<div id="lesson-banner-container">
+			<div id="lesson-banner-image-overlay"></div>
+			<div id="lesson-banner-image"></div>
 			<h1 id="title">{{title}}</h1>
 		</div>
 	</template>
@@ -62,6 +101,15 @@ Example:
 						type: String,
 						value: "Lesson Title"
 				}
-		}
+		},
+		ready: function() {
+			// DOM OBJECTS
+			this.lesson_banner_image = this.$['lesson-banner-image'];
+			this.content_container = this.$['lesson-banner-container'];
+			
+		},
+		attached: function() {
+			this.lesson_banner_image.style.backgroundImage = "url(" + this.image + ")";
+		},
 	});
 </script>
