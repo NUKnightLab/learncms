@@ -12051,33 +12051,38 @@ styles. All other styles should exist as single lines."
   });
 </script>
 <dom-module id="lesson-block" assetpath="learn/">
-  <style>
-  ::content paper-material.lesson-block {
-    background-color: var(--learn-secondary-color);
+	<style>
+		::content paper-material.lesson-block {
+			background-color: var(--learn-secondary-color);
 
 
-  }
+		}
 
-  ::content .lesson-block-wrapper {
-    padding: 25px;
-    margin-left: 50px;
-    margin-right: 50px;
-    margin-bottom: 50px;
-  };
+		::content .lesson-block-wrapper {
+			padding: 25px;
+			margin-left: 50px;
+			margin-right: 50px;
+			margin-bottom: 50px;
+		};
 
-  ::content .lesson-block-wrapper h2 { /* Free floating for any h2 inside */
-    color: #E3B052;
+		::content .lesson-block-wrapper h2 { /* Free floating for any h2 inside */
+			color: #E3B052;
+			font-size:28px;
+			font-weight:500;
+		}
 
-  }
-  </style>
-  <template>
-  <paper-material elevation="1" class="lesson-block paper-font-body2">
-    <div class="lesson-block-wrapper">
-      <content></content>
-    </div>
-  </paper-material>
-  </template>
+	</style>
+
+	<template>
+		<paper-material elevation="1" class="lesson-block paper-font-body2">
+			<div class="lesson-block-wrapper">
+				<content></content>
+			</div>
+		</paper-material>
+	</template>
+
 </dom-module>
+
 <script>
 	Polymer({
 		is: 'lesson-block',
@@ -12092,7 +12097,7 @@ styles. All other styles should exist as single lines."
 			position: relative;
 			cursor:pointer;
 		}
-		
+
 		;
 		::content #zooming-image-tag {
 			position: absolute;
@@ -12108,15 +12113,6 @@ styles. All other styles should exist as single lines."
 			top:0;
 			left:0;
 			background-color:#000;
-/*			-webkit-transition: all 1000ms cubic-bezier(0.770, 0.000, 0.175, 1.000); 
-			   -moz-transition: all 1000ms cubic-bezier(0.770, 0.000, 0.175, 1.000); 
-			     -o-transition: all 1000ms cubic-bezier(0.770, 0.000, 0.175, 1.000); 
-			        transition: all 1000ms cubic-bezier(0.770, 0.000, 0.175, 1.000);
-
-			-webkit-transition-timing-function: cubic-bezier(0.770, 0.000, 0.175, 1.000); 
-			   -moz-transition-timing-function: cubic-bezier(0.770, 0.000, 0.175, 1.000); 
-			     -o-transition-timing-function: cubic-bezier(0.770, 0.000, 0.175, 1.000); 
-			        transition-timing-function: cubic-bezier(0.770, 0.000, 0.175, 1.000);*/
 		};
 		.material-shadow {
 		  transition:box-shadow 0.28s cubic-bezier(0.4, 0, 0.2, 1);
@@ -12152,7 +12148,7 @@ styles. All other styles should exist as single lines."
 		                  0  8px 10px -5px rgba(0, 0, 0, 0.4);
 		}
 		::content #zoom-image-container.container-zoomed {
-			
+
 			z-index:1001;
 		};
 
@@ -12164,37 +12160,27 @@ styles. All other styles should exist as single lines."
 			top:0;
 			left:0;
 
-			
+
 			display:none;
 			z-index: 998;
 			opacity:0.0;
-			-webkit-transition: opacity 500ms cubic-bezier(0.770, 0.000, 0.175, 1.000); 
-			   -moz-transition: opacity 500ms cubic-bezier(0.770, 0.000, 0.175, 1.000); 
-			     -o-transition: opacity 500ms cubic-bezier(0.770, 0.000, 0.175, 1.000); 
+			-webkit-transition: opacity 500ms cubic-bezier(0.770, 0.000, 0.175, 1.000);
+			   -moz-transition: opacity 500ms cubic-bezier(0.770, 0.000, 0.175, 1.000);
+			     -o-transition: opacity 500ms cubic-bezier(0.770, 0.000, 0.175, 1.000);
 			        transition: opacity 500ms cubic-bezier(0.770, 0.000, 0.175, 1.000);
 
-			-webkit-transition-timing-function: cubic-bezier(0.770, 0.000, 0.175, 1.000); 
-			   -moz-transition-timing-function: cubic-bezier(0.770, 0.000, 0.175, 1.000); 
-			     -o-transition-timing-function: cubic-bezier(0.770, 0.000, 0.175, 1.000); 
+			-webkit-transition-timing-function: cubic-bezier(0.770, 0.000, 0.175, 1.000);
+			   -moz-transition-timing-function: cubic-bezier(0.770, 0.000, 0.175, 1.000);
+			     -o-transition-timing-function: cubic-bezier(0.770, 0.000, 0.175, 1.000);
 			        transition-timing-function: cubic-bezier(0.770, 0.000, 0.175, 1.000);
 		}
 
 
 		::content #zoom-image-container {
-			-webkit-transition: all 250ms ease-in-out; 
-			   -moz-transition: all 250ms ease-in-out; 
-			     -o-transition: all 250ms ease-in-out; 
+			-webkit-transition: all 250ms ease-in-out;
+			   -moz-transition: all 250ms ease-in-out;
+			     -o-transition: all 250ms ease-in-out;
 			        transition: all 250ms ease-in-out;
-
-/*			-webkit-transition: all 500ms cubic-bezier(0.770, 0.000, 0.175, 1.000); 
-			   -moz-transition: all 500ms cubic-bezier(0.770, 0.000, 0.175, 1.000); 
-			     -o-transition: all 500ms cubic-bezier(0.770, 0.000, 0.175, 1.000); 
-			        transition: all 500ms cubic-bezier(0.770, 0.000, 0.175, 1.000);
-
-			-webkit-transition-timing-function: cubic-bezier(0.770, 0.000, 0.175, 1.000); 
-			   -moz-transition-timing-function: cubic-bezier(0.770, 0.000, 0.175, 1.000); 
-			     -o-transition-timing-function: cubic-bezier(0.770, 0.000, 0.175, 1.000); 
-			        transition-timing-function: cubic-bezier(0.770, 0.000, 0.175, 1.000);*/
 		};
 
 		::content #thumbnail {
@@ -12206,7 +12192,7 @@ styles. All other styles should exist as single lines."
 		};
 
 		::content #fullsize {
-			/* also set display:none using style attribute so the to-small 
+			/* also set display:none using style attribute so the to-small
 		 * doesn't happen on page load
 		*/
 			position: absolute;
@@ -12224,7 +12210,7 @@ styles. All other styles should exist as single lines."
 
 		<div id="zooming-image">
 			<div id="zoom-image-container">
-				
+
 				<img id="thumbnail" class="material-shadow" elevation="1" src="{{ src }}">
 
 				<img id="fullsize">
@@ -12255,7 +12241,7 @@ styles. All other styles should exist as single lines."
 			this.default_width = 0;
 
 			var self = this;
-			this.thumbnail.onload = function() { 
+			this.thumbnail.onload = function() {
 
 				self.default_width = self.zoom_container.offsetWidth;
 
@@ -12283,7 +12269,7 @@ styles. All other styles should exist as single lines."
   		},
 
 		/* Using IronA11yKeysBehavior, listen for 'esc' key pressed
-		 * anywhere on the page (see keyEventTarget property). 
+		 * anywhere on the page (see keyEventTarget property).
 		 * escape will hide a zoomed image.
 		 */
 		_handleEscapeKey: function(e) {
@@ -12295,7 +12281,7 @@ styles. All other styles should exist as single lines."
 			and the big one to hide it and go back to the small one.
 		================================================== */
 		_clickListener: function(e) {
-			this.zoomed = (e.target.id == 'thumbnail');
+			this.zoomed = !(this.zoomed);
 
 		},
 
@@ -12331,32 +12317,32 @@ styles. All other styles should exist as single lines."
 			var margin = 20;
 
 			var self = this;
-			this.fullsize.onload = function() { 
+			this.fullsize.onload = function() {
 				self.fullsize.style.display = "block";
 			}
 
 			this.fullsize.src = this.fullSrc;
-			
+
 
 			// Calculate Position
 			var position = this.zoom_container.getBoundingClientRect();
-			
+
 			this.zoom_container.style.left = -(position.left - margin) + "px";
 			this.zoom_container.style.top = -(position.top - margin) + "px";
 
 			this.zoom_container.style.width = window.innerWidth - (margin*2) + "px";
-			
+
 			//this.background.style.display = "block";
 			this.background.style.opacity = "0.8";
 
 			this.thumbnail.getAttributeNode("elevation").value = "5";
 
-			
+
 		},
 
 		_zoomOut: function() {
 			if (this.zoom_container) {
-				
+
 				this.zoom_container.style.width = this.default_width + "px";
 				this.zoom_container.style.left = "0px";
 				this.zoom_container.style.top = "0px";
@@ -12408,6 +12394,39 @@ styles. All other styles should exist as single lines."
 			left: 0;
 			top: 0;
 		}
+		::content #lesson-banner-container {
+			width:100%;
+			height:200px;
+			overflow:hidden;
+			min-width:300px;
+			position:relative;
+			z-index:1;
+		};
+
+		::content #lesson-banner-image {
+			background-size: cover;
+			background-position: center center;
+			width:100%;
+			height:100%;
+			z-index: 0;
+			position: absolute;
+			top: 0;
+			left: 0;
+			opacity:0.25;
+		};
+
+		::content #lesson-banner-image-overlay {
+			background-color:#80CBC4;
+			width:100%;
+			height:100%;
+			z-index: 0;
+			position: absolute;
+			top: 0;
+			left: 0;
+			z-index:1;
+			opacity:0.5;
+		};
+
 		::content #title {
 			font-family: Roboto, sans-serif;
 			color: #273238;
@@ -12418,11 +12437,14 @@ styles. All other styles should exist as single lines."
 			position:absolute;
 			bottom:0;
 			margin:0;
+			z-index:2;
 		}
 	</style>
 	<template>
-		<div id="container" class="">
-			<img id="image" src="{{ image }}">
+
+		<div id="lesson-banner-container">
+			<div id="lesson-banner-image-overlay"></div>
+			<div id="lesson-banner-image"></div>
 			<h1 id="title">{{title}}</h1>
 		</div>
 	</template>
@@ -12439,7 +12461,16 @@ styles. All other styles should exist as single lines."
 						type: String,
 						value: "Lesson Title"
 				}
-		}
+		},
+		ready: function() {
+			// DOM OBJECTS
+			this.lesson_banner_image = this.$['lesson-banner-image'];
+			this.content_container = this.$['lesson-banner-container'];
+			
+		},
+		attached: function() {
+			this.lesson_banner_image.style.backgroundImage = "url(" + this.image + ")";
+		},
 	});
 </script>
 <dom-module id="learn-nav" assetpath="learn/">
@@ -12782,6 +12813,7 @@ styles. All other styles should exist as single lines."
 			padding: 0 10px;
 			margin-top:20px;
 			border-radius:8px;
+			padding-top:30px;
 		};
 
 		::content #info-block-content {
@@ -12791,6 +12823,8 @@ styles. All other styles should exist as single lines."
 			color: #263238;
 			font-weight:500;
 			font-style:italic;
+			margin-top:0;
+			margin-bottom:10px;
 		}
 
 		::content #info-block-content p {
@@ -12798,6 +12832,7 @@ styles. All other styles should exist as single lines."
 			font-size:16px;
 			line-height: 22px;
 			font-style: italic;
+			margin-top:0;
 
 		}
 
@@ -12908,6 +12943,8 @@ styles. All other styles should exist as single lines."
 		left: 0;
 		margin-left: 10px;
 		color: #ffffff;
+		font-size:26px;
+		font-weight:900;
 	}
 	
 	::content #image-container paper-fab {
@@ -12921,8 +12958,14 @@ styles. All other styles should exist as single lines."
 	::content #text-container {
 		padding: 10px;
 		padding:0px 10px 10px 10px;
+		
 
 	};
+
+	::content #text-container p {
+		font-size:14px;
+		line-height:22px;
+	}
 
 	.material-shadow {
 		  /*transition:box-shadow 0.28s cubic-bezier(0.4, 0, 0.2, 1);*/
@@ -13208,35 +13251,106 @@ Polymer({
 			margin-right:50px;
 			position:relative;
 			background-color:#FFF;
-			cursor:pointer;
+			
+			border-radius:4px;
+			width:100%;
 		}
-		::content #capsule-image {
 
+		::content #capsule-ref {
+			position:relative;
+			z-index:4;
+			cursor:pointer;
 		};
+		::content #capsule-ref paper-fab {
+			color: #80CBC4;
+			background-color: #273238;
+			right: 20px;
+			top: 147px;
+			position: absolute;
+			z-index: 3;
+		};
+		::content #capsule-image-container {
+			width:100%;
+			height:175px;
+			overflow:hidden;
+			
+			position:relative;
+			z-index:1;
+		};
+
+		::content #capsule-image {
+			background-size: cover;
+			background-position: center center;
+			width:100%;
+			height:100%;
+			z-index: 0;
+			position: absolute;
+			top: 0;
+			left: 0;
+		};
+
+		::content #capsule-image-overlay {
+			background-color:#80CBC4;
+			width:100%;
+			height:100%;
+			z-index: 0;
+			position: absolute;
+			top: 0;
+			left: 0;
+			z-index:1;
+			opacity:0.5;
+		};
+
+		
 
 		::content #capsule-title {
 			margin:0;
 			padding:20px;
 			padding-top:12px;
 			color:#5C5C5C;
-			font-weight: 500;
+			font-weight: 400;
  			line-height: 24px;
  			font-size: 24px;
 		};
 
 		::content #capsule-content {
 			display:none;
+			-webkit-transition: opacity 500ms ease-in-out; 
+			   -moz-transition: opacity 500ms ease-in-out; 
+			     -o-transition: opacity 500ms ease-in-out; 
+			        transition: opacity 500ms ease-in-out; 
+
+
+			-webkit-transition-timing-function: cubic-bezier(0.770, 0.000, 0.175, 1.000); 
+			   -moz-transition-timing-function: cubic-bezier(0.770, 0.000, 0.175, 1.000); 
+			     -o-transition-timing-function: cubic-bezier(0.770, 0.000, 0.175, 1.000); 
+			        transition-timing-function: cubic-bezier(0.770, 0.000, 0.175, 1.000);
 		};
-		paper-fab {
-			color: #80CBC4;
-			background-color: #273238;
-			right: 25px;
-			bottom: 80px;
-			position: absolute;
-			z-index: 10;
-		}
+
+		::content #capsule-content-container {
+			position:absolute;
+			background-color:#FFF;
+			z-index:99;
+			top:0;
+			left:0;
+			width:100%;
+			height:100%;
+			visibility: hidden;
+			overflow:hidden;
+			-webkit-transition: all 750ms cubic-bezier(0.770, 0.000, 0.175, 1.000); 
+			   -moz-transition: all 750ms cubic-bezier(0.770, 0.000, 0.175, 1.000); 
+			     -o-transition: all 750ms cubic-bezier(0.770, 0.000, 0.175, 1.000);
+			        transition: all 750ms cubic-bezier(0.770, 0.000, 0.175, 1.000);
+
+
+			-webkit-transition-timing-function: cubic-bezier(0.770, 0.000, 0.175, 1.000); 
+			   -moz-transition-timing-function: cubic-bezier(0.770, 0.000, 0.175, 1.000); 
+			     -o-transition-timing-function: cubic-bezier(0.770, 0.000, 0.175, 1.000); 
+			        transition-timing-function: cubic-bezier(0.770, 0.000, 0.175, 1.000);
+		};
+		
 		.material-shadow {
-		  transition:box-shadow 0.28s cubic-bezier(0.4, 0, 0.2, 1);
+		  /*transition:box-shadow 0.28s cubic-bezier(0.4, 0, 0.2, 1);*/
 		}
 
 		.material-shadow[elevation="1"] {
@@ -13268,16 +13382,31 @@ Polymer({
 		                  0  6px 30px 5px rgba(0, 0, 0, 0.12),
 		                  0  8px 10px -5px rgba(0, 0, 0, 0.4);
 		}
+		:host {
+			width:100%;
+			margin-right:20px;
+			max-width:400px;
+			min-width:200px;
+		}
 	</style>
 	<template>
-		<div id="capsule-container" class="material-shadow" elevation="1">
-			<img id="capsule-image" src="{{ image }}">
-			<h2 id="capsule-title">{{ title }}</h2>
-			<div id="capsule-content">
-				<content></content>
+		<div id="capsule-container" class="material-shadow" elevation="2">
+			<div id="capsule-ref">
+				<div id="capsule-image-container">
+					<div id="capsule-image-overlay"></div>
+					<div id="capsule-image"></div>
+					
+				</div>
+				<h2 id="capsule-title">{{ title }}</h2>
+				<paper-fab icon="content-copy"></paper-fab>
 			</div>
-
-			<paper-fab icon="content-copy"></paper-fab>
+			
+			<div id="capsule-content-container" class="material-shadow" elevation="1">
+				<div id="capsule-content">
+					<content></content>
+				</div>
+			</div>
+			
 		</div>
 	</template>
 </dom-module>
@@ -13289,9 +13418,6 @@ Polymer({
 		behaviors: [Polymer.IronA11yKeysBehavior],
 		keyBindings: {
 			'esc': '_handleEscapeKey'
-		},
-		listeners: {
-			"click": "_clickListener"
 		},
 		properties: {
 			image: {
@@ -13314,9 +13440,35 @@ Polymer({
 		ready: function() {
 			// DOM OBJECTS
 			this.capsule_image = this.$['capsule-image'];
+			this.capsule_ref = this.$['capsule-ref'];
 			this.capsule_title = this.$['capsule-title'];
 			this.capsule_content = this.$['capsule-content'];
+			this.capsule_content_container = this.$['capsule-content-container'];
 			this.default_width = 0;
+			this.window_open = false;
+			
+		},
+
+		attached: function() {
+			var self = this;
+			this.capsule_image.style.backgroundImage = "url(" + this.image + ")";
+
+			this.capsule_ref.addEventListener("click", function(e) {
+				self._onCapsuleRefClick(e);
+			});
+
+			this.capsule_content_container.addEventListener("click", function(e) {
+				self._onCapsuleCloseClick(e);
+			});
+
+			this.capsule_content_container.addEventListener("transitionend",function(e){
+				self._hideContentContainer();
+			},false);
+
+			this.capsule_content_container.addEventListener("webkitTransitionEnd",function(e){
+				self._hideContentContainer();
+			},false);
+			
 		},
 
 		/* Using IronA11yKeysBehavior, listen for 'esc' key pressed
@@ -13331,14 +13483,82 @@ Polymer({
 
 		},
 
-		
+		_onCapsuleRefClick: function(e) {
+			console.log("_onCapsuleRefClick")
+			this.windowOn(e);
+		},
+
+		_onCapsuleCloseClick: function(e) {
+			this.windowOff(e);
+		},
+
 		
 
 		_clickListener: function(e) {
 			console.log("CLICK");
-			this.capsule_content.style.display = "block";
 			
 		},
+
+		_hideContentContainer: function(e) {
+			console.log("_hideContentContainer");
+
+			if (this.window_open) {
+				console.log("window open");
+				var self = this;
+				// this.capsule_content_container.removeEventListener("transitionend",function(e){
+				// 	self._hideContentContainer();
+				// },false);
+
+				// this.capsule_content_container.removeEventListener("webkitTransitionEnd",function(e){
+				// 	self._hideContentContainer();
+				// },false);
+
+				this.capsule_content_container.style.visibility = "hidden";
+				this.capsule_ref.style.zIndex = "4";
+				//this.capsule_content_container.style.opacity = "1";
+				this.window_open = false;
+			} else {
+				console.log("window closed")
+			}
+			
+			
+		},
+
+		windowOn:function(e) {
+			
+			this.capsule_content.style.display = "block";
+			this.capsule_content.style.opacity = 1;
+			this.capsule_content_container.style.visibility = "visible";
+			this.capsule_content_container.style.width = window.innerWidth - 100 + "px";
+			this.capsule_content_container.style.height = window.innerHeight - 150 + "px";
+
+			var container_top = this.capsule_content_container.getBoundingClientRect();
+			this.capsule_content_container.style.left = -container_top.left + 50 + "px";
+			this.capsule_content_container.style.top = -container_top.top + 100 + "px";
+			this.capsule_content_container.style.opacity = "1";
+			this.capsule_content_container.setAttribute("elevation", "5");
+			this.capsule_content_container.style.zIndex = "98";
+			// this.container.style.top = -container_top + "px";
+			// this.container.setAttribute("elevation", "5");
+		},
+
+		windowOff: function(e) {
+			this.window_open = true;
+			var self = this;
+
+
+			this.capsule_content_container.style.left = "0px";
+			this.capsule_content_container.style.top = "0px";
+			this.capsule_content_container.style.width = "100%";
+			this.capsule_content_container.style.height = "100%";
+			this.capsule_content_container.setAttribute("elevation", "1");
+			this.capsule_content_container.style.zIndex = "-1";
+			this.capsule_content_container.style.opacity = "0.5";
+
+			this.capsule_content.style.opacity = 0;
+			//this.capsule_ref.style.zIndex = "99";
+		},
+
 
 	});
 
