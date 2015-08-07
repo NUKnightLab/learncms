@@ -90,7 +90,9 @@
 			}
 		},
 		_onPageOut: function(e) {
-			this.selectPage(e.detail.index);
+			var target = e.detail.index;
+			history.go(target - (this.page_stack.length - 1));
+			// this.selectPage(e.detail.index);
 		},
 		_onPageRemove: function(e) {
 			this.removePage(e.detail.caller);
@@ -153,7 +155,11 @@
 				if (e.state && typeof(e.state.stack_end_index) == "number") {
 					console.log("e.state.stack_end_index: " + e.state.stack_end_index)
 					console.log("self.page_stack.length: " + self.page_stack.length)
-					self.selectPage(e.state.stack_end_index)	
+					if (e.state.stack_end_index < self.page_stack.length) {
+						self.selectPage(e.state.stack_end_index)	
+					} else {
+						console.log("Forward not supported at this time.");
+					}
 				} else {
 					if (self.page_stack.length > 1) {
 						self.selectPage(0);
