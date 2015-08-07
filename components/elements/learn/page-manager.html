@@ -1,0 +1,172 @@
+<dom-module is="page-manager">
+	<template>
+	<content></content>
+	</template>
+</dom-module>
+
+<script type="text/javascript">
+	function getPageItem(url, callback) {
+		var request = new XMLHttpRequest();
+		request.open('GET', url, true);
+
+		request.onload = function() {
+			if (request.status >= 200 && request.status < 400) {
+	        // check on support for DOMParser 
+	        // maybe consult https://developer.mozilla.org/en-US/Add-ons/Code_snippets/HTML_to_DOM
+				dp = new DOMParser();
+				contentType = request.getResponseHeader('content-type');
+				contentType = contentType.split(';')[0]
+				var parsed = dp.parseFromString(request.responseText, contentType);
+				callback(parsed.querySelector('page-item'));
+			} else {
+				console.log("Error ["+ request.status +"] retrieving " + url);
+				console.log(request);
+			}
+		};
+
+		request.onerror = function() {
+			console.log("Error ["+ request.status +"] retrieving " + url);
+			console.log(request);
+		};
+
+		request.send();
+		return request;
+	}
+
+
+	Polymer({
+		is: "page-manager",
+		listeners: {
+			'page:add': '_onPageAdd',
+			'page:ready': '_onPageReady',
+			'page:remove': '_onPageRemove',
+			'page:out': '_onPageOut'
+		},
+		fetchPage: function(url, caller) {
+
+			var self = this;
+			getPageItem(url,function(pageItem) {
+				var clone = self.create("page-item");
+				for (var i = 0; i < pageItem.attributes.length; i++) {
+					clone.attributes.setNamedItem(pageItem.attributes[i].cloneNode())
+				};
+				var content = clone.$$('content');
+				content.innerHTML = pageItem.innerHTML;
+				clone.distributeContent();
+				self.addPage(clone, caller, url);
+				//self.selectPage(self.page_stack.length - 1);
+			})
+		},
+		/**
+		 * Add a polymerized 'page-item' to the pages under management.
+		 * @param {PageItem} pageItem: a PageItem component which is coming into view
+		 * @param {DOMElement} caller: the element that brought the new page on, to
+		 *                             support animating the reverse
+		 * @param {String} url: the URL which represents the natural location of `pageItem`
+		 *                      for history management.
+		 */
+		addPage: function(pageItem, caller, url) {
+			pageItem.title = "page " + this.page_stack.length; // diagnostic
+			if (pageItem.tagName == 'PAGE-ITEM') {
+				if (this.page_stack.length > 0) {
+					history.pushState({ stack_end_index: this.page_stack.length }, pageItem.title, url);
+
+				}
+				this.page_stack.push({el:pageItem, caller:caller});
+				this.appendChild(pageItem);
+				this.selectPage(this.page_stack.length - 1);
+			} else {
+				console.error("Invalid arguments to pageManager.addPage. First argument must be a page-item.");
+			}
+
+		},
+		_onPageAdd: function(e){
+			var url = e.url || (e.detail && e.detail.url) || null;
+			if (url) {
+				this.fetchPage(url, e.target);
+			} else {
+				console.log("page:add event with no discernable url")
+				console.log(e);
+			}
+		},
+		_onPageOut: function(e) {
+			this.selectPage(e.detail.index);
+		},
+		_onPageRemove: function(e) {
+			this.removePage(e.detail.caller);
+		},
+		_onPageReady: function(e) {
+			if (this.page_stack.length == 0) {
+				this.addPage(e.detail.caller, null);
+			}
+		},
+		removePage: function(el) {
+			this.removeChild(el);
+		},
+
+		selectPage:function(index) {
+			console.log("selectPage index " + index);
+			var stack_depth_position = 0,
+				stack_depth = 1,
+				to_remove = [],
+				to_page_out = [];
+
+
+			for (i = 0; i < this.page_stack.length; i++) {
+				if (i !== index) {
+					if (i > index) {
+						console.log("greater than index, will be removed");
+						this.page_stack[i].el.pageOut();
+						to_remove.push(i);
+					} else {
+						to_page_out.push(this.page_stack[i].el);
+					}
+					
+				}
+			}
+
+			// Remove any items that were pageOuted
+			for (i = 0; i < to_remove.length; i++) {
+				this.page_stack.pop();
+			}
+
+
+			stack_depth_position = 25 / to_page_out.length;
+
+			// PageOuts
+			for (i = 0; i < to_page_out.length; i++) {
+				to_page_out[i].pageOff(stack_depth_position * stack_depth, 10 - stack_depth, i, stack_depth_position);
+				stack_depth++;
+			}
+
+			// after pages have transitioned, do pageOn
+			this.page_stack[index].el.pageOn(this.page_stack.length === 1);
+		},
+
+		getPageItem: getPageItem,
+
+		ready: function() {
+			var self = this;
+			window.onpopstate = function(e) {
+				console.log('history.length: ' + history.length);
+				console.log('popstate event: ', e);
+				if (e.state && typeof(e.state.stack_end_index) == "number") {
+					console.log("e.state.stack_end_index: " + e.state.stack_end_index)
+					console.log("self.page_stack.length: " + self.page_stack.length)
+					self.selectPage(e.state.stack_end_index)	
+				} else {
+					if (self.page_stack.length > 1) {
+						self.selectPage(0);
+					} else {
+						console.log("Don't know what to do with popped state");
+						console.log(e);
+					}
+				}
+			}
+		},
+		properties: {
+
+		},
+		page_stack: []
+	})    
+</script>

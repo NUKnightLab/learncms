@@ -17,11 +17,12 @@ Example:
     <style>
 
         ::content {
+           
         }
 
-        #navigation {
+        ::content #navigation {
             background-color: #263238;
-            padding: 10px;
+            z-index:11;
             color: var(--learn-primary-color);
             font-family: var(--learn-primary-font);
             font-weight: 500;
@@ -32,16 +33,23 @@ Example:
             position: relative;
         }
 
+        ::content #navigation-container {
+            padding: 10px;
+        }
+
         #kl-link {
             position: absolute;
             right: 40px;
         }
     </style>
     <template>
-            <div id="navigation">
+        <div id="navigation">
             <!-- TK: hamburger menu? -->
-            Learn
-            <a id="kl-link" href="http://knightlab.northwestern.edu"><img src="{{ logo }}"></a>
+            <div id="navigation-container">
+
+                Learn
+                <a id="kl-link" href="http://knightlab.northwestern.edu"><img src="{{ logo }}"></a>
+            </div>
         </div>
     
     </template>

@@ -18,7 +18,7 @@ PROJECT_ROOT = dirname(CORE_ROOT)
 # See also per-deployment target settings for
 # STATIC_URL
 # STATICFILES_STORAGE
-
+# Don't change this, it is connected to our salt deployment system
 STATIC_ROOT = '/tmp/learncms-static'
 
 STATICFILES_DIRS = (
@@ -96,5 +96,3 @@ USE_I18N = True
 USE_L10N = True
 
 USE_TZ = True
-
-DJANGO_SERVES_STATIC = False # change for local

@@ -214,7 +214,6 @@
 		/* WHEN TRANSITION ENDS
 		================================================== */
 		_onBackgroundTransition: function(e) {
-			console.log("transitionend");
 			this.background.style.display = "none";
 			this.zoom_container.classList.remove('container-zoomed');
 
@@ -239,8 +238,6 @@
 		/* HIDE AND SHOW
 		================================================== */
 		_zoomIn: function() {
-			console.log("_zoomIn");
-			//this.fullsize.style.display = "block";
 			this.zoom_container.classList.add('container-zoomed');
 
 			var margin = 20;
@@ -255,7 +252,6 @@
 
 			// Calculate Position
 			var position = this.zoom_container.getBoundingClientRect();
-			console.log(position.left - margin);
 			
 			this.zoom_container.style.left = -(position.left - margin) + "px";
 			this.zoom_container.style.top = -(position.top - margin) + "px";
@@ -271,7 +267,6 @@
 		},
 
 		_zoomOut: function() {
-			console.log("_zoomOut");
 			if (this.zoom_container) {
 				
 				this.zoom_container.style.width = this.default_width + "px";

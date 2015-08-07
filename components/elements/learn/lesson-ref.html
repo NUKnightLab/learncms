@@ -4,87 +4,197 @@
 
 Example:
 
-    <lesson-ref>
-      ... content ...
-    </lesson-ref>
+	<lesson-ref>
+	  ... content ...
+	</lesson-ref>
 
 @group Learn Elements
 @class lesson-ref
 -->
 <dom-module id="lesson-ref">
-  <style>
+	<style>
+	::content #lesson-ref-container {
+		position: relative;
+		/*right: -30px;*/
+		background-color: #fff;
+		margin-bottom: 20px;
+		margin-top:20px;
+		left: 30px;
+		top:0px;
+		height:100%;
+		cursor:pointer;
+		-webkit-transition: all 750ms cubic-bezier(0.770, 0.000, 0.175, 1.000); 
+		   -moz-transition: all 750ms cubic-bezier(0.770, 0.000, 0.175, 1.000); 
+		     -o-transition: all 750ms cubic-bezier(0.770, 0.000, 0.175, 1.000); 
+		        transition: all 750ms cubic-bezier(0.770, 0.000, 0.175, 1.000); 
 
-  ::content #lesson-ref-container {
-    position: relative;
-    right: -40px;
-    background-color: #fff;
-    margin-bottom: 20px;
-  };
 
-  div.ref-image-wrapper {
-    position: relative;
-  }
+		-webkit-transition-timing-function: cubic-bezier(0.770, 0.000, 0.175, 1.000); 
+		   -moz-transition-timing-function: cubic-bezier(0.770, 0.000, 0.175, 1.000); 
+		     -o-transition-timing-function: cubic-bezier(0.770, 0.000, 0.175, 1.000); 
+		        transition-timing-function: cubic-bezier(0.770, 0.000, 0.175, 1.000);
+	}
+	::content #lesson-ref-container.animate {
+/*		-webkit-transition: all 750ms cubic-bezier(0.770, 0.000, 0.175, 1.000); 
+		   -moz-transition: all 750ms cubic-bezier(0.770, 0.000, 0.175, 1.000); 
+		     -o-transition: all 750ms cubic-bezier(0.770, 0.000, 0.175, 1.000); 
+		        transition: all 750ms cubic-bezier(0.770, 0.000, 0.175, 1.000); 
 
-  div.ref-image-wrapper img {
-    width: 100%;
-  }
 
-  div.ref-image-wrapper h2 {
-    position: absolute;
-    bottom: 0;
-    left: 0;
-    margin-left: 10px;
-    color: #ffffff;
-  }
+		-webkit-transition-timing-function: cubic-bezier(0.770, 0.000, 0.175, 1.000); 
+		   -moz-transition-timing-function: cubic-bezier(0.770, 0.000, 0.175, 1.000); 
+		     -o-transition-timing-function: cubic-bezier(0.770, 0.000, 0.175, 1.000); 
+		        transition-timing-function: cubic-bezier(0.770, 0.000, 0.175, 1.000);*/
+	}
+	
+	::content #image-container {
+		position: relative;
+	}
+	
+	::content #image-container img {
+		width: 100%;
+	}
+	
+	::content #title-el {
+		position: absolute;
+		bottom: 0;
+		left: 0;
+		margin-left: 10px;
+		color: #ffffff;
+	}
+	
+	::content #image-container paper-fab {
+		position: absolute;
+		right: -30px;
+		bottom: -20px;
+		background-color: #fff;
+		color: #000;
+	}
+	
+	::content #text-container {
+		padding: 10px;
+		padding:0px 10px 10px 10px;
 
-  div.ref-image-wrapper paper-fab {
-    position: absolute;
-    right: -30px;
-    bottom: -20px;
-    background-color: #fff;
-    color: #000;
-  }
+	};
 
-  p.ref-copy-wrapper {
-    padding: 5px;
-  };
+	.material-shadow {
+		  /*transition:box-shadow 0.28s cubic-bezier(0.4, 0, 0.2, 1);*/
+	}
 
-  </style>
-  <template>
-  <paper-material id="lesson-ref-container" elevation="2" class="paper-font-body2">
-  <div class="ref-image-wrapper">
-    <img src="{{ image }}">
-    <h2>{{ title }}</h2>
-    <paper-fab icon="arrow-forward" on-click="loadReference"></paper-fab>
-  </div>
-  <p class="ref-copy-wrapper">
-    <content></content>
-  </p>
-  </paper-material>
-  </template>
+	.material-shadow[elevation="1"] {
+	  box-shadow:0 2px 2px 0 rgba(0, 0, 0, 0.14),
+	                  0 1px 5px 0 rgba(0, 0, 0, 0.12),
+	                  0 3px 1px -2px rgba(0, 0, 0, 0.2);
+	}
+
+	.material-shadow[elevation="2"] {
+	  box-shadow:0 4px 5px 0 rgba(0, 0, 0, 0.14),
+	                  0 1px 10px 0 rgba(0, 0, 0, 0.12),
+	                  0 2px 4px -1px rgba(0, 0, 0, 0.4);
+	}
+
+	.material-shadow[elevation="3"] {
+	  box-shadow:0 6px 10px 0 rgba(0, 0, 0, 0.14),
+	                  0 1px 18px 0 rgba(0, 0, 0, 0.12),
+	                  0 3px 5px -1px rgba(0, 0, 0, 0.4);
+	}
+
+	.material-shadow[elevation="4"] {
+	  box-shadow:0 8px 10px 1px rgba(0, 0, 0, 0.14),
+	                  0 3px 14px 2px rgba(0, 0, 0, 0.12),
+	                  0 5px 5px -3px rgba(0, 0, 0, 0.4);
+	}
+
+	.material-shadow[elevation="5"] {
+	  box-shadow:0 16px 24px 2px rgba(0, 0, 0, 0.14),
+	                  0  6px 30px 5px rgba(0, 0, 0, 0.12),
+	                  0  8px 10px -5px rgba(0, 0, 0, 0.4);
+	}
+	</style>
+	<template>
+		<div id="lesson-ref-container" elevation="2" class="material-shadow">
+			<div id="image-container">
+				<img src="{{ image }}">
+				<h2 id="title-el">{{ title }}</h2>
+				<paper-fab icon="arrow-forward"></paper-fab>
+			</div>
+			<div id="text-container">
+				<content></content>
+			</div>
+		</div>
+	</template>
+
 </dom-module>
+
 <script>
-  Polymer({
-    is: 'lesson-ref',
-    loadReference: function() {
-      if (this.url) {
-        window.open(this.url,"_blank");
-      }
-      console.log('clicky');
-    },
-    properties: {
-      title: {
-        type: String,
-        value: "Lesson Title"
-      },
-      image: {
-        type: String,
-        value: ""
-      },
-      url: {
-        type: String,
-        value: ""
-      }
-    }
-  });
+	Polymer({
+		is: 'lesson-ref',
+		listeners: {
+			"click": "_clickListener"
+		},
+		properties: {
+			title: {
+				type: String,
+				value: "Lesson Title"
+			},
+			image: {
+				type: String,
+				value: ""
+			},
+			url: {
+				type: String,
+				value: ""
+			}
+		},
+		ready: function() {
+			// DOM OBJECTS
+			this.container =  this.$['lesson-ref-container'];
+			this.text_container = this.$['text-container'];
+			this.image_container = this.$['image-container'];
+			this.title_el = this.$['title-el'];
+
+			
+		},
+
+		attached: function() {
+			var self = this;
+			setTimeout(function(){
+				self.container.style.height = self.container.offsetHeight +"px";
+				console.log(self.container.offsetHeight)
+			}, 500);
+			
+			
+		},
+
+		_handleEscapeKey: function(e) {
+			console.log("when available, implement close-capsule here");
+		},
+
+		_handlePaperButtonClick: function(e) {
+
+		},
+
+		_clickListener: function(e) {
+			console.log("_clickListener");
+			
+
+			if (this.url) {
+				
+				// var container_top = this.container.getBoundingClientRect().top;
+				// this.container.style.left = "150%";
+				// this.container.style.height = window.innerHeight + "px";
+				
+				// this.container.style.top = -container_top + "px";
+				// this.container.setAttribute("elevation", "5");
+				this.fire("page:add", {url:this.url});
+			}
+		},
+
+		pageOn: function() {
+			this.container.style.left = "30px";
+			this.container.style.height = "100%";
+			this.container.style.top = "0px";
+		}
+
+	});
 </script>

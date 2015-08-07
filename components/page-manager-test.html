@@ -1,0 +1,25 @@
+<!DOCTYPE html>
+<html>
+    <head>
+        <meta charset="UTF-8">
+        <title>Page Manager Test</title>
+
+        <script src="bower_components/webcomponentsjs/webcomponents-lite.min.js">
+        </script>
+        <link rel="import" href="elements/elements.html">
+        <script type="text/javascript">
+        function addPage(caller, url) {
+            Polymer.Gestures.fire(caller, "page:add", {url: url})
+
+        }
+        </script>
+    </head>
+
+    <body class="fullbleed">
+    <page-manager>
+        <page-item>
+        <div style="width: 100%; height: 500px; background-color: #ff0000"></div>
+        </page-item>
+    </page-manager>
+    </body>
+</html>
