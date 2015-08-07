@@ -66,7 +66,6 @@
 		 *                      for history management.
 		 */
 		addPage: function(pageItem, caller, url) {
-			pageItem.title = "page " + this.page_stack.length; // diagnostic
 			if (pageItem.tagName == 'PAGE-ITEM') {
 				if (this.page_stack.length > 0) {
 					history.pushState({ stack_end_index: this.page_stack.length }, pageItem.title, url);
@@ -107,7 +106,6 @@
 		},
 
 		selectPage:function(index) {
-			console.log("selectPage index " + index);
 			var stack_depth_position = 0,
 				stack_depth = 1,
 				to_remove = [],
@@ -150,11 +148,7 @@
 		ready: function() {
 			var self = this;
 			window.onpopstate = function(e) {
-				console.log('history.length: ' + history.length);
-				console.log('popstate event: ', e);
 				if (e.state && typeof(e.state.stack_end_index) == "number") {
-					console.log("e.state.stack_end_index: " + e.state.stack_end_index)
-					console.log("self.page_stack.length: " + self.page_stack.length)
 					if (e.state.stack_end_index < self.page_stack.length) {
 						self.selectPage(e.state.stack_end_index)	
 					} else {
