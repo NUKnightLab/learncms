@@ -14,16 +14,21 @@
             line-height: 26px;
             font-weight:300;
         };
+
+        ::content #narrative-text-container {
+        	margin-top:50px;
+        	margin-bottom:50px;
+        };
     </style>
-    <template>
-        <div class="horizontal layout center-justified">
-        <div class="flex"></div>
-        <paper-material elevation="0" id="narritive-text-copy" class="paper-font-body2 flex-4">
-        <content></content>
-        </paper-material>
-        <div class="flex"></div>
-        </div>
-    </template>
+	<template>
+		<div id="narrative-text-container" class="horizontal layout center-justified">
+			<div class="flex"></div>
+			<paper-material elevation="0" id="narritive-text-copy" class="paper-font-body2 flex-4">
+				<content></content>
+			</paper-material>
+			<div class="flex"></div>
+		</div>
+	</template>
 </dom-module>
 <script>
     Polymer({

@@ -122,6 +122,8 @@ Example:
 		::content #capsule-content-container {
 			position:absolute;
 			background-color:#FFF;
+			
+			overflow-y:scroll;
 			z-index:99;
 			top:0;
 			left:0;
@@ -144,6 +146,17 @@ Example:
 		::content #capsule-close-button {
 			position:absolute;
 			right:0;
+		};
+
+		::content #capsule-page-block {
+			position:fixed;
+			width:100%;
+			height:100vh;
+			visibility:hidden;
+			
+			z-index:90;
+			top:0;
+			left:0;
 		};
 
 		.material-shadow {
@@ -187,7 +200,7 @@ Example:
 		}
 	</style>
 	<template>
-		<div id="capsule-container" class="material-shadow" elevation="2">
+		<div id="capsule-container" class="material-shadow" elevation="1">
 			<div id="capsule-ref">
 				<div id="capsule-image-container">
 					<div id="capsule-image-overlay"></div>
@@ -205,7 +218,7 @@ Example:
 					<content></content>
 				</div>
 			</div>
-			
+			<div id="capsule-page-block"></div>
 		</div>
 	</template>
 </dom-module>
@@ -244,6 +257,7 @@ Example:
 			this.capsule_content = this.$['capsule-content'];
 			this.capsule_content_container = this.$['capsule-content-container'];
 			this.capsule_close_btn = this.$['capsule-close-button'];
+			this.capsule_page_block = this.$['capsule-page-block'];
 			this.default_width = 0;
 			this.window_open = false;
 			
@@ -255,6 +269,10 @@ Example:
 
 			this.capsule_ref.addEventListener("click", function(e) {
 				self._onCapsuleRefClick(e);
+			});
+
+			this.capsule_page_block.addEventListener("click", function(e) {
+				self._onCapsuleCloseClick(e);
 			});
 
 			this.capsule_close_btn.addEventListener("click", function(e) {
@@ -338,6 +356,8 @@ Example:
 			this.capsule_content_container.style.opacity = "1";
 			this.capsule_content_container.setAttribute("elevation", "5");
 			this.capsule_content_container.style.zIndex = "98";
+
+			this.capsule_page_block.style.visibility = "visible";
 			// this.container.style.top = -container_top + "px";
 			// this.container.setAttribute("elevation", "5");
 		},
@@ -346,6 +366,7 @@ Example:
 			this.window_open = true;
 			var self = this;
 
+			this.capsule_page_block.style.visibility = "hidden";
 
 			this.capsule_content_container.style.left = "0px";
 			this.capsule_content_container.style.top = "0px";
