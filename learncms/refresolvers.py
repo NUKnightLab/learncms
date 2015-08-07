@@ -8,6 +8,19 @@ from .models import Lesson, ZoomingImage, CapsuleUnit
 from lxml.etree import Comment
 from lxml.html import fromstring, tostring
 
+def evaluate_content(element,strip_bad_references=False):
+    """Convert any convenience markup (such as object references) into the ideal markup
+       for delivering to the page. Optionally remove from DOM elements which have ref 
+       attributes which don't resolve to actual objects. (Do this in production but show them in draft/editing mode.)
+    """
+    for elem in element.findall('.//*[@ref]'):
+        try:
+            REF_RESOLVERS[elem.tag].resolve_ref(elem,strip_bad_references)
+        except KeyError:
+            self.note_error(elem,"Unrecognized ref type", strip_bad_references)
+
+
+
 
 class ReferenceResolver(object):
     """An abstract class"""

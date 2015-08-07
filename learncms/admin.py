@@ -1,6 +1,6 @@
 from django.contrib import admin
 import reversion
-from learncms.models import Lesson, ZoomingImage, CapsuleUnit
+from learncms.models import Lesson, ZoomingImage, CapsuleUnit, LinkReference
 from django.forms import widgets
 from django import forms
 
@@ -28,6 +28,12 @@ class CapsuleUnitAdmin(admin.ModelAdmin):
     list_display = ('title',)
     prepopulated_fields = {"slug": ("title",)}
 
+class LinkReferenceAdmin(admin.ModelAdmin):
+    list_display = ('title',)
+    prepopulated_fields = {"slug": ("title",)}
+
+
 admin.site.register(Lesson, LessonAdmin)
 admin.site.register(ZoomingImage, ZoomingImageAdmin)
 admin.site.register(CapsuleUnit, CapsuleUnitAdmin)
+admin.site.register(LinkReference, LinkReferenceAdmin)
