@@ -6,6 +6,8 @@ from django.contrib.contenttypes.models import ContentType
 from imagekit.models import ImageSpecField
 from imagekit.processors import ResizeToFill
 
+
+
 class Lesson(models.Model):
     PUBLISHED = 'published'
     DRAFT = 'draft'
