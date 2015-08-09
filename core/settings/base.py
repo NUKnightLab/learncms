@@ -88,6 +88,8 @@ TEMPLATES = [
     },
 ]
 
+GRAPPELLI_ADMIN_TITLE = 'Learn.KnightLab.com'
+
 # boring standard stuff
 LANGUAGE_CODE = 'en-us'
 
