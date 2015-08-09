@@ -3,6 +3,8 @@ from django.contrib.auth.models import User
 from django.core.urlresolvers import reverse
 from django.contrib.contenttypes.models import ContentType
 
+from filebrowser.fields import FileBrowseField
+
 from imagekit.models import ImageSpecField
 from imagekit.processors import ResizeToFill
 
@@ -18,6 +20,7 @@ class Lesson(models.Model):
     title = models.CharField(max_length=200)
     slug = models.SlugField(unique=True, help_text="Don't edit this, let it be automatically assigned. Must be unique.")
     banner_image = models.ImageField(upload_to='lessons')
+    lesson_image = FileBrowseField('Image', max_length=200, directory='lessons', blank=True)
     status = models.CharField(choices=LESSON_STATUS_CHOICES, default=DRAFT, max_length=50)
     reference_blurb = models.CharField(max_length=500, blank=True, help_text="The text which appears when a reference to this lesson is included in some other. Don't use markup.")
     content = models.TextField(blank=True,help_text="The body of the lesson, marked up with web component magic.")
@@ -25,7 +28,6 @@ class Lesson(models.Model):
     updated_at = models.DateTimeField(auto_now=True)
     created_by = models.ForeignKey(User, null=True, blank=True, related_name='creator')
     updated_by = models.ForeignKey(User, null=True, blank=True, related_name='updater')
-
 
     def get_absolute_url(self):
         return reverse('lesson-detail', args=(self.slug,))
