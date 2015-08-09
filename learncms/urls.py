@@ -22,14 +22,15 @@ from django.views.generic.list import ListView
 from .models import Lesson
 from .views import LessonDetailView, handler404, handler500
 
+admin.site.site_header = "Learn.KnightLab.com admin"
+
 urlpatterns = [
     url(r'^admin/', include(admin.site.urls)),
     url(r'^lesson/(?P<slug>[a-z\-]+)/$', LessonDetailView.as_view(), name='lesson-detail'),
     url(r'^/?$', ListView.as_view(template_name="index.html",model=Lesson), name='homepage'),
-] 
+]
 
 # these only work if the URL does not have a protocol (i.e. local)
 # otherwise, Django will save us
-urlpatterns += static(settings.STATIC_URL, document_root=settings.STATIC_ROOT) 
+urlpatterns += static(settings.STATIC_URL, document_root=settings.STATIC_ROOT)
 urlpatterns += static(settings.MEDIA_URL, document_root=settings.MEDIA_ROOT)
-
