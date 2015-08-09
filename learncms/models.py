@@ -6,7 +6,7 @@ from django.contrib.contenttypes.models import ContentType
 from imagekit.models import ImageSpecField
 from imagekit.processors import ResizeToFill
 
-
+from concurrency.fields import IntegerVersionField
 
 class Lesson(models.Model):
     PUBLISHED = 'published'
@@ -25,7 +25,7 @@ class Lesson(models.Model):
     updated_at = models.DateTimeField(auto_now=True)
     created_by = models.ForeignKey(User, null=True, blank=True, related_name='creator')
     updated_by = models.ForeignKey(User, null=True, blank=True, related_name='updater')
-
+    version = IntegerVersionField()
 
     def get_absolute_url(self):
         return reverse('lesson-detail', args=(self.slug,))
@@ -59,6 +59,7 @@ class CapsuleUnit(models.Model):
     slug = models.SlugField(unique=True, help_text="Don't edit this, let it be automatically assigned. Must be unique.")
     image = models.ImageField(upload_to='capsules')
     content = models.TextField(blank=True, help_text="HTML is OK")
+    version = IntegerVersionField()
 
     def __str__(self):
         return self.title
