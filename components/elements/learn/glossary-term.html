@@ -1,0 +1,59 @@
+<script type="text/javascript" src="../../scripts/glossary.js"></script>
+<dom-module id="glossary-term">
+  <style>
+    #term.usable {
+      background-color: var(--learn-secondary-color,);
+      cursor: pointer;
+    }
+
+    ::content {
+      display: inline;
+    }
+  </style>
+  <template>
+    <span id="term"><content></content></span>
+  </template>
+</dom-module>
+<script type="text/javascript">
+Polymer({
+  is: 'glossary-term',
+  listeners: {
+    click: "toggleDefinition"
+  },
+  properties: {
+    lemma: {
+      type: String,
+      value: null
+    },
+    definition: {
+      type: String,
+      value: null
+    },
+    usable: {
+      type: Boolean,
+      value: false,
+      observer: '_usableStateChange'
+    }
+  },
+  ready: function() {
+      if (!this.lemma) {
+        this.lemma = this.textContent.replace(/^\s*|\s*$/g,'');
+      }
+      if (this.definition) {
+        this.usable = true;
+      }
+  },
+  _usableStateChange: function() {
+      if (this.usable) {
+        this.$.term.classList.add('usable');
+      } else {
+        this.$.term.classList.remove('usable');
+      }
+  },
+  toggleDefinition: function() {
+    if (this.usable) {
+      console.log('toggle!');
+    }
+  }
+})
+</script>

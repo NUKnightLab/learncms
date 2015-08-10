@@ -78,3 +78,11 @@ class GeneralImage(models.Model):
 
     def __str__(self):
         return self.filename
+
+class GlossaryTerm(models.Model):
+    """(GlossaryTerm description)"""
+    lemma = models.CharField(max_length=50, help_text="The canonical form of the word or phrase being defined.")
+    definition = models.TextField(help_text="The definition of the term. Don't use markup.")
+    # to do: alternate forms? See also? Do we want a page of all the terms?
+    def __str__(self):
+        return u"GlossaryTerm"
