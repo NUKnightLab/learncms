@@ -4,13 +4,14 @@ with data from the referenced object, so that people don't have to copy.
 
 For each new referenceable model type, add a resolve here and "register" it in REF_RESOLVERS.
 """
-from .models import Lesson, ZoomingImage, CapsuleUnit
+from .models import Lesson, ZoomingImage, CapsuleUnit, GlossaryTerm
 from lxml.etree import Comment
 from lxml.html import fromstring, tostring
+from collections import defaultdict
 
 def evaluate_content(element,strip_bad_references=False):
     """Convert any convenience markup (such as object references) into the ideal markup
-       for delivering to the page. Optionally remove from DOM elements which have ref 
+       for delivering to the page. Optionally remove from DOM elements which have ref
        attributes which don't resolve to actual objects. (Do this in production but show them in draft/editing mode.)
     """
     for elem in element.findall('.//*[@ref]'):
@@ -19,7 +20,30 @@ def evaluate_content(element,strip_bad_references=False):
         except KeyError:
             self.note_error(elem,"Unrecognized ref type", strip_bad_references)
 
+    terms = defaultdict(list)
+    defs = dict()
+    for gt in element.findall('.//glossary-term'):
+        lemma = gt.attrib.get('lemma',gt.text_content())
+        if lemma:
+            terms[lemma].append(gt)
 
+    for defn in GlossaryTerm.objects.filter(lemma__in=terms):
+        defs[defn.lemma] = defn
+    # right now terms must be an exact match for what's in the DB
+    # we could try harder to deal with case variations, but also the
+    # lemma attribute provides a way to clue the system in.
+
+    for lemma,gts in terms.items():
+        try:
+            defn = defs[lemma].definition
+        except:
+            if strip_bad_references:
+                defn = None
+            else:
+                defn = "No definition for {}".format(lemma)
+        for gt in gts:
+            if defn:
+                gt.attrib['definition'] = defn
 
 
 class ReferenceResolver(object):
@@ -30,13 +54,13 @@ class ReferenceResolver(object):
     def get_object(self, elem):
         id = elem.attrib[self.ref_attr]
         kwargs = {self.property: id}
-        self.klass.objects.get(**kwargs)        
+        self.klass.objects.get(**kwargs)
         return self.klass.objects.get(slug=id)
 
     def resolve_ref(self, elem, strip_bad_references):
         """Given an element, look up the matching object and populate the given element.
            If strip_bad_references is True, then remove the element if no corresponding object
-           could be found. Whether or not the object is removed, add an HTML comment 
+           could be found. Whether or not the object is removed, add an HTML comment
            indicating that the reference could not be resolved.
         """
         try:

@@ -85,4 +85,7 @@ class GlossaryTerm(models.Model):
     definition = models.TextField(help_text="The definition of the term. Don't use markup.")
     # to do: alternate forms? See also? Do we want a page of all the terms?
     def __str__(self):
-        return u"GlossaryTerm"
+        return self.lemma
+
+    class Meta:
+        ordering = ['lemma']    
