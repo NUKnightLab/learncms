@@ -60,6 +60,47 @@ Example:
 			margin:0;
 		}
 
+		/* Begin ordered list styling */
+
+		::content #step-content ol {
+			counter-reset: item;
+			padding-left: 0;
+			margin-left: 1em;
+		}
+
+		::content #step-content ol li {
+			display: block;
+			margin-bottom: .5em;
+		}
+
+		::content #step-content ol li:first-child {
+			margin-bottom: 0em;
+			margin-top: 1em;
+		}
+
+		::content #step-content ol li p {
+			margin-top: 0em;
+			margin-left: 4em;
+		}
+
+		::content #step-content ol li:before {
+			display: inline-block;
+			content: counter(item);
+			counter-increment: item;
+			width: 5em;
+			height: 5em;
+			border-radius: 100%;
+			text-align: center;
+			background-color: #FFDDA7;
+			position: relative;
+			left: -1em;
+			line-height: 5em;
+			margin-bottom: -2.5em;
+			color: #E3B052;
+		}
+
+		/* End ordered list styling */
+
 		step-number {
 			color: #ffffff;
 			background-color: #80CBC4;
