@@ -29,11 +29,10 @@
         cursor: pointer;
     }
     #popup dt {
-        font-weight: bold;
+        font-weight: 900;
         font-style: italic;
         color: #FFF7E8;
-        font-weight: 700;
-        font-size: 1.2em;
+        font-size: 1.5em;
         margin-bottom: .5em;
     }
     #popup dd {
@@ -48,7 +47,7 @@
   </style>
   <template>
     <span id="term"><content></content></span>
-    <div on-click="toggleDefinition" id="popup">
+    <div id="popup">
       <small on-click="toggleDefinition" class="close"><i class="fa fa-times-circle"></i> Close</small>
       <dt>{{lemma}}</dt>
       <dd>{{definition}}</dd>
