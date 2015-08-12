@@ -2,32 +2,89 @@
 <dom-module id="glossary-term">
   <style>
     #term.usable {
-      background-color: var(--learn-secondary-color,);
+      background-color: var(--learn-secondary-color);
       cursor: pointer;
     }
 
     ::content {
       display: inline;
     }
+
+    #popup {
+      display: none;
+      background-color: #E3B052;
+      position: absolute;
+      z-index: 999;
+      width: 300px;
+      text-align: left;
+      padding: 1em 1.2em;
+      pointer-events: auto;
+      border-radius: 25px;
+      border: 1px solid black;
+
+    }
+
+    #popup small {
+        float: right;
+        cursor: pointer;
+    }
+    #popup dt {
+        font-weight: bold;
+        font-style: italic;
+        color: #FFF7E8;
+        font-weight: 700;
+        font-size: 1.2em;
+        margin-bottom: .5em;
+    }
+    #popup dd {
+        margin: 0;
+        color: #fff;
+        font-weight: 700;
+    }
+    #popup p:last-child {
+        margin-bottom: 0;
+    }
+
   </style>
   <template>
     <span id="term"><content></content></span>
+    <div on-click="toggleDefinition" id="popup">
+      <small on-click="toggleDefinition" class="close"><i class="fa fa-times-circle"></i> Close</small>
+      <dt>{{lemma}}</dt>
+      <dd>{{definition}}</dd>
+    </div>
+
   </template>
 </dom-module>
 <script type="text/javascript">
+var offset = function(o) {
+  return {
+      top: o.offsetTop,
+      left: o.offsetLeft,
+      height: o.offsetHeight,
+      width: o.offsetWidth
+  }
+}
+
 Polymer({
   is: 'glossary-term',
   listeners: {
     click: "toggleDefinition"
   },
+  keyBindings: {
+    'esc': '_handleEscapeKey'
+  },
+  behaviors: [ Polymer.IronA11yKeysBehavior ],
   properties: {
     lemma: {
       type: String,
-      value: null
+      value: "",
+      reflectToAttribute: true
     },
     definition: {
       type: String,
-      value: null
+      value: "",
+      reflectToAttribute: true
     },
     usable: {
       type: Boolean,
@@ -37,10 +94,18 @@ Polymer({
   },
   ready: function() {
       if (!this.lemma) {
-        this.lemma = this.textContent.replace(/^\s*|\s*$/g,'');
+        this.lemma = this.$.term.textContent.replace(/^\s*|\s*$/g,'');
+        this.detachPopup();
       }
-      if (this.definition) {
+      if (this.lemma && this.definition) {
         this.usable = true;
+      }
+  },
+  detachPopup: function() {
+      if (!this.popup) {
+          this.popup = this.$.popup;
+          this.removeChild(this.popup);
+          this.popup.style.display = 'block';
       }
   },
   _usableStateChange: function() {
@@ -50,10 +115,33 @@ Polymer({
         this.$.term.classList.remove('usable');
       }
   },
-  toggleDefinition: function() {
+  toggleDefinition: function(e) {
     if (this.usable) {
-      console.log('toggle!');
+        if (this.popup.parentElement) {
+            this.hideDefinition();
+        } else {
+            this.popup.style.left = offset(this).left + "px";
+            this.popup.style.top = (offset(this).top + 25) + "px";
+            this.parentElement.appendChild(this.popup);
+        }
+        if (e) {
+            e.cancelBubble = true;
+            e.preventDefault();
+        }
     }
+  },
+  hideDefinition: function() {
+      if (this.popup.parentElement) {
+          this.popup.parentElement.removeChild(this.popup);
+      }
+  },
+  /* Using IronA11yKeysBehavior, listen for 'esc' key pressed
+   * anywhere on the page (see keyEventTarget property).
+   * escape will hide a zoomed image.
+   */
+  _handleEscapeKey: function(e) {
+      console.log('glossary-term heard ESC')
+      this.hideDefinition();
   }
 })
 </script>
