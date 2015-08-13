@@ -20,31 +20,6 @@ def evaluate_content(element,strip_bad_references=False):
         except KeyError:
             self.note_error(elem,"Unrecognized ref type", strip_bad_references)
 
-    terms = defaultdict(list)
-    defs = dict()
-    for gt in element.findall('.//glossary-term'):
-        lemma = gt.attrib.get('lemma',gt.text_content())
-        if lemma:
-            terms[lemma].append(gt)
-
-    for defn in GlossaryTerm.objects.filter(lemma__in=terms):
-        defs[defn.lemma] = defn
-    # right now terms must be an exact match for what's in the DB
-    # we could try harder to deal with case variations, but also the
-    # lemma attribute provides a way to clue the system in.
-
-    for lemma,gts in terms.items():
-        try:
-            defn = defs[lemma].definition
-        except:
-            if strip_bad_references:
-                defn = None
-            else:
-                defn = "No definition for {}".format(lemma)
-        for gt in gts:
-            if defn:
-                gt.attrib['definition'] = defn
-
 
 class ReferenceResolver(object):
     """An abstract class"""

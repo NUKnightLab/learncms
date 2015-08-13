@@ -14099,6 +14099,7 @@ Polymer({
   <style>
     #term.usable {
       background-color: var(--learn-secondary-color);
+      border-bottom: '1px dotted #999';
       cursor: pointer;
     }
 
@@ -14179,18 +14180,25 @@ Polymer({
     definition: {
       type: String,
       value: "",
-      reflectToAttribute: true
+      reflectToAttribute: true,
+      observer: '_definitionStateChange'
     },
     usable: {
       type: Boolean,
       value: false,
       observer: '_usableStateChange'
+    },
+    keyEventTarget: { // IronA11yKeysBehavior - listen for esc anywhere on page
+        type: Object,
+        value: function() {
+            return document.body;
+        }
     }
   },
   ready: function() {
+      this.detachPopup();
       if (!this.lemma) {
         this.lemma = this.$.term.textContent.replace(/^\s*|\s*$/g,'');
-        this.detachPopup();
       }
       if (this.lemma && this.definition) {
         this.usable = true;
@@ -14209,6 +14217,9 @@ Polymer({
       } else {
         this.$.term.classList.remove('usable');
       }
+  },
+  _definitionStateChange: function(e) {
+      this.usable = (this.lemma && this.definition);
   },
   toggleDefinition: function(e) {
     if (this.usable) {
@@ -14239,5 +14250,68 @@ Polymer({
       this.hideDefinition();
   }
 })
+</script>
+/**
+ * `glossary-manager` is used to load an external glossary JSON file and use it to fill in the definitions for `glossary-term` elements.
+ * It is not strictly required, as it is possible to specify definitions directly as attributes on `glossary-term`s. However, it is likely
+ * to be preferable to load them as a resource.
+ */
+<dom-module is="glossary-manager">
+
+</dom-module>
+<script type="text/javascript">
+function fetchGlossary(url, callback) {
+    var request = new XMLHttpRequest();
+    request.open('GET', url, true);
+
+    request.onload = function() {
+        if (request.status >= 200 && request.status < 400) {
+            callback(JSON.parse(request.responseText));
+        } else {
+            console.log("Error ["+ request.status +"] retrieving " + url);
+            console.log(request);
+        }
+    };
+
+    request.onerror = function() {
+        console.log("Error ["+ request.status +"] retrieving " + url);
+        console.log(request);
+    };
+
+    request.send();
+}
+
+
+
+    Polymer({
+        is: 'glossary-manager',
+        ready: function(){
+            document.addEventListener('readystatechange', function(e){
+                if (e.target.readyState == 'complete') {
+                    if (this.jsonUrl) {
+                        fetchGlossary(this.jsonUrl,this.initGlossary);
+                    } else {
+                        console.log("Configuration error: no glossary JSON specified");
+                    }
+                }
+            }.bind(this));
+        },
+        initGlossary: function(lexicon) {
+            var targets = document.getElementsByTagName('glossary-term');
+            for (var i = 0; i < targets.length; i++) {
+                if (lexicon[targets[i].lemma]) {
+                    console.log(targets[i].lemma);
+                    targets[i].definition = lexicon[targets[i].lemma];
+                } else if (!targets[i].definition) {
+                    console.log('No definition specified and none in lexicon for ' + targets[i].lemma);
+                }
+            }
+        },
+        properties: {
+            jsonUrl: {
+                type: String
+            } // should there be a property for the retrieved terms?
+        }
+    })
 </script>
 </div></body></html>

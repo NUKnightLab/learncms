@@ -2,6 +2,7 @@
   <style>
     #term.usable {
       background-color: var(--learn-secondary-color);
+      border-bottom: '1px dotted #999';
       cursor: pointer;
     }
 
@@ -82,18 +83,25 @@ Polymer({
     definition: {
       type: String,
       value: "",
-      reflectToAttribute: true
+      reflectToAttribute: true,
+      observer: '_definitionStateChange'
     },
     usable: {
       type: Boolean,
       value: false,
       observer: '_usableStateChange'
+    },
+    keyEventTarget: { // IronA11yKeysBehavior - listen for esc anywhere on page
+        type: Object,
+        value: function() {
+            return document.body;
+        }
     }
   },
   ready: function() {
+      this.detachPopup();
       if (!this.lemma) {
         this.lemma = this.$.term.textContent.replace(/^\s*|\s*$/g,'');
-        this.detachPopup();
       }
       if (this.lemma && this.definition) {
         this.usable = true;
@@ -112,6 +120,9 @@ Polymer({
       } else {
         this.$.term.classList.remove('usable');
       }
+  },
+  _definitionStateChange: function(e) {
+      this.usable = (this.lemma && this.definition);
   },
   toggleDefinition: function(e) {
     if (this.usable) {
@@ -138,7 +149,6 @@ Polymer({
    * escape will hide a zoomed image.
    */
   _handleEscapeKey: function(e) {
-      console.log('glossary-term heard ESC')
       this.hideDefinition();
   }
 })
