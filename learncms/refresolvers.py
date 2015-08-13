@@ -66,7 +66,7 @@ class ZoomingImageRefResolver(ReferenceResolver):
 
     def update_element(self, elem, obj):
         elem.attrib['src'] = obj.thumbnail.url
-        elem.attrib['fullSrc'] = obj.image.url
+        elem.attrib['full-src'] = obj.image.url
 
 
 class CapsuleRefResolver(ReferenceResolver):
