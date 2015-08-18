@@ -35,11 +35,7 @@ urlpatterns = patterns(
     url(r'^lesson/(?P<slug>[a-z\-]+)/$', LessonDetailView.as_view(), name='lesson-detail'),
     url(r'^glossary.json$', glossary_json, name='glossary-json'),
     url(r'^/?$', ListView.as_view(template_name="index.html",model=Lesson), name='homepage'),
-<<<<<<< HEAD
 )
-=======
-]
->>>>>>> master
 
 # these only work if the URL does not have a protocol (i.e. local)
 # otherwise, Django will save us
