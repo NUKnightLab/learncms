@@ -13,33 +13,73 @@ Example:
 -->
 <dom-module id="info-block">
 	<style>
-
 		::content #info-block-wrapper {
 			background-color: #F5F4F4;
 			padding: 0 10px;
-			margin-top:20px;
-			border-radius:8px;
-			padding-top:30px;
-		};
+			margin-top: 20px;
+			border-radius: 8px;
+			padding-top: 30px;
+		}
 
 		::content #info-block-content {
 			padding: 0 10px;
+			margin-left: 5.5em;
 		}
+
+		::content #info-block-content h2 {
+			margin-left: -4.1em;
+		}
+
+		::content #info-block-content ol {
+			counter-reset: item;
+			margin-left: 0;
+			padding-left: 0;
+		}
+
+		::content #info-block-content ol li {
+			display: block;
+			margin-bottom: .5em;
+		}
+
+		::content #info-block-content ol li:first-child {
+			margin-bottom: 0em;
+			margin-top: 1em;
+		}
+
+		::content #info-block-content ol li p {
+			margin-top: 0em;
+		}
+
+		::content #info-block-content ol li:before {
+			display: inline-block;
+			content: counter(item);
+			counter-increment: item;
+			width: 5em;
+			height: 5em;
+			border-radius: 100%;
+			text-align: center;
+			margin-left: -5em;
+			background-color: #FFDDA7;
+			position: relative;
+			left: -1em;
+			line-height: 5em;
+			margin-bottom: -2.5em;
+		}
+
 		::content #info-block-content h2 {
 			color: #263238;
-			font-weight:500;
-			font-style:italic;
-			margin-top:0;
-			margin-bottom:10px;
+			font-weight: 500;
+			font-style: italic;
+			margin-top: 0;
+			margin-bottom: 10px;
 		}
 
 		::content #info-block-content p {
 			color: #9B9B9B;
-			font-size:16px;
+			font-size: 16px;
 			line-height: 22px;
 			font-style: italic;
-			margin-top:0;
-
+			margin-top: 0;
 		}
 
 		#info-block-icon {
@@ -47,13 +87,11 @@ Example:
 			align-items: center;
 			justify-content: center;
 			/*margin-bottom:50px;*/
-
-/*			background-image: var(--info-icon-url);
+			/*			background-image: var(--info-icon-url);
 			background-repeat: no-repeat;
 			background-position: center;*/
-			
-			
 		}
+
 		::content #info-block-icon-background {
 			display: flex;
 			align-items: center;
@@ -61,41 +99,40 @@ Example:
 			font-family: Roboto, sans-serif;
 			color: #FAFAFA;
 			font-size: 38px;
-
-			border-radius:50%;
-			background-color:#E7E6E6;
+			border-radius: 50%;
+			background-color: #E7E6E6;
 			width: 112px;
 			height: 112px;
-			text-align:center;
-			color:#FFF;
-		};
+			text-align: center;
+			color: #FFF;
+		}
 
-
+		;
 	</style>
-  <template>
-  <paper-material elevation="0" class="paper-font-body2">
-	<div id="info-block-wrapper" class="layout horizontal">
-	  <div id="info-block-icon" class="flex">
-			<div id="info-block-icon-background">
-				i
+	<template>
+		<paper-material elevation="0" class="paper-font-body2">
+			<div id="info-block-wrapper" class="layout horizontal">
+				<div id="info-block-icon" class="flex">
+					<div id="info-block-icon-background">
+						i
+					</div>
+				</div>
+				<div id="info-block-content" class="flex-4">
+					<content></content>
+				</div>
 			</div>
-	  </div>
-	  <div id="info-block-content" class="flex-4">
-		<content></content>
-	  </div>
-	</div>
-  </paper-material>
-  </template>
+		</paper-material>
+	</template>
 </dom-module>
 <script>
-  Polymer({
-	is: 'info-block',
+	Polymer({
+		is: 'info-block',
 
-	properties: {
-	  image: {
-		type: String,
-		value: "images/learn/info-icon.png"
-	  }
-	}
-  });
+		properties: {
+			image: {
+				type: String,
+				value: "images/learn/info-icon.png"
+			}
+		}
+	});
 </script>

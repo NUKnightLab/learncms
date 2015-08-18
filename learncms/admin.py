@@ -1,6 +1,6 @@
 from django.contrib import admin
 import reversion
-from learncms.models import Lesson, ZoomingImage, CapsuleUnit, GeneralImage
+from learncms.models import Lesson, ZoomingImage, CapsuleUnit, GeneralImage, GlossaryTerm
 from django.forms import widgets
 from django import forms
 
@@ -46,3 +46,4 @@ admin.site.register(Lesson, LessonAdmin)
 admin.site.register(ZoomingImage, ZoomingImageAdmin)
 admin.site.register(CapsuleUnit, CapsuleUnitAdmin)
 admin.site.register(GeneralImage, GeneralImageAdmin)
+admin.site.register(GlossaryTerm)

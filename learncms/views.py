@@ -1,13 +1,15 @@
 from django.conf import settings
 
 from django.shortcuts import render
+from django.http import HttpResponse, HttpResponseRedirect
+import json
 from django.views.generic.detail import DetailView
 from django.http import Http404
 
 from lxml.etree import Comment
 from lxml.html import fromstring, tostring
 
-from .models import Lesson
+from .models import Lesson, GlossaryTerm
 from .refresolvers import evaluate_content
 import os.path
 
@@ -32,6 +34,17 @@ def handler500(request):
     response.status_code = 500
     return response
 
+class JSONResponse(HttpResponse):
+    def __init__(self,payload):
+        if isinstance(payload,str):
+            json_str = payload
+        else:
+            json_str = json.dumps(payload)
+        super(JSONResponse,self).__init__(json_str,content_type="application/json")
+
+
+
+
 # Create your views here.
 class LessonDetailView(DetailView):
 
@@ -53,3 +66,6 @@ class LessonDetailView(DetailView):
         context['evaluated_content'] = tostring(elem)
         return context
 
+def glossary_json(request):
+    terms = dict((gt.lemma, gt.definition) for gt in GlossaryTerm.objects.all())
+    return JSONResponse(terms)

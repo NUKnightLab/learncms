@@ -1,0 +1,62 @@
+/**
+ * `glossary-manager` is used to load an external glossary JSON file and use it to fill in the definitions for `glossary-term` elements.
+ * It is not strictly required, as it is possible to specify definitions directly as attributes on `glossary-term`s. However, it is likely
+ * to be preferable to load them as a resource.
+ */
+<dom-module is="glossary-manager">
+<!-- There is no visual presentation for a glossary-manager -->
+</dom-module>
+<script type="text/javascript">
+function fetchGlossary(url, callback) {
+    var request = new XMLHttpRequest();
+    request.open('GET', url, true);
+
+    request.onload = function() {
+        if (request.status >= 200 && request.status < 400) {
+            callback(JSON.parse(request.responseText));
+        } else {
+            console.log("Error ["+ request.status +"] retrieving " + url);
+            console.log(request);
+        }
+    };
+
+    request.onerror = function() {
+        console.log("Error ["+ request.status +"] retrieving " + url);
+        console.log(request);
+    };
+
+    request.send();
+}
+
+
+
+    Polymer({
+        is: 'glossary-manager',
+        ready: function(){
+            document.addEventListener('readystatechange', function(e){
+                if (e.target.readyState == 'complete') {
+                    if (this.jsonUrl) {
+                        fetchGlossary(this.jsonUrl,this.initGlossary);
+                    } else {
+                        console.log("Configuration error: no glossary JSON specified");
+                    }
+                }
+            }.bind(this));
+        },
+        initGlossary: function(lexicon) {
+            var targets = document.getElementsByTagName('glossary-term');
+            for (var i = 0; i < targets.length; i++) {
+                if (lexicon[targets[i].lemma]) {
+                    targets[i].definition = lexicon[targets[i].lemma];
+                } else if (!targets[i].definition) {
+                    console.log('No definition specified and none in lexicon for ' + targets[i].lemma);
+                }
+            }
+        },
+        properties: {
+            jsonUrl: {
+                type: String
+            } // should there be a property for the retrieved terms?
+        }
+    })
+</script>

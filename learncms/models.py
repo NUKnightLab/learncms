@@ -8,7 +8,7 @@ from filebrowser.fields import FileBrowseField
 from imagekit.models import ImageSpecField
 from imagekit.processors import ResizeToFill
 
-
+from concurrency.fields import IntegerVersionField
 
 class Lesson(models.Model):
     PUBLISHED = 'published'
@@ -28,6 +28,10 @@ class Lesson(models.Model):
     updated_at = models.DateTimeField(auto_now=True)
     created_by = models.ForeignKey(User, null=True, blank=True, related_name='creator')
     updated_by = models.ForeignKey(User, null=True, blank=True, related_name='updater')
+<<<<<<< HEAD
+=======
+    version = IntegerVersionField()
+>>>>>>> master
 
     def get_absolute_url(self):
         return reverse('lesson-detail', args=(self.slug,))
@@ -61,6 +65,7 @@ class CapsuleUnit(models.Model):
     slug = models.SlugField(unique=True, help_text="Don't edit this, let it be automatically assigned. Must be unique.")
     image = models.ImageField(upload_to='capsules')
     content = models.TextField(blank=True, help_text="HTML is OK")
+    version = IntegerVersionField()
 
     def __str__(self):
         return self.title
@@ -79,3 +84,14 @@ class GeneralImage(models.Model):
 
     def __str__(self):
         return self.filename
+
+class GlossaryTerm(models.Model):
+    """(GlossaryTerm description)"""
+    lemma = models.CharField(max_length=50, help_text="The canonical form of the word or phrase being defined.")
+    definition = models.TextField(help_text="The definition of the term. Don't use markup.")
+    # to do: alternate forms? See also? Do we want a page of all the terms?
+    def __str__(self):
+        return self.lemma
+
+    class Meta:
+        ordering = ['lemma']    

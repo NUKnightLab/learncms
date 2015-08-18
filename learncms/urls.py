@@ -20,7 +20,9 @@ from django.conf import settings
 from django.views.generic.list import ListView
 
 from .models import Lesson
-from .views import LessonDetailView, handler404, handler500
+from .views import LessonDetailView, glossary_json, handler404, handler500
+
+admin.site.site_header = "Learn.KnightLab.com admin"
 
 from filebrowser.sites import site
 from grappelli import urls as grapelli_urls
@@ -31,8 +33,13 @@ urlpatterns = patterns(
     url(r'^grappelli/', include(grapelli_urls)),
     url(r'^admin/', include(admin.site.urls)),
     url(r'^lesson/(?P<slug>[a-z\-]+)/$', LessonDetailView.as_view(), name='lesson-detail'),
+    url(r'^glossary.json$', glossary_json, name='glossary-json'),
     url(r'^/?$', ListView.as_view(template_name="index.html",model=Lesson), name='homepage'),
+<<<<<<< HEAD
 )
+=======
+]
+>>>>>>> master
 
 # these only work if the URL does not have a protocol (i.e. local)
 # otherwise, Django will save us
