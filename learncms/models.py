@@ -28,10 +28,7 @@ class Lesson(models.Model):
     updated_at = models.DateTimeField(auto_now=True)
     created_by = models.ForeignKey(User, null=True, blank=True, related_name='creator')
     updated_by = models.ForeignKey(User, null=True, blank=True, related_name='updater')
-<<<<<<< HEAD
-=======
     version = IntegerVersionField()
->>>>>>> master
 
     def get_absolute_url(self):
         return reverse('lesson-detail', args=(self.slug,))
@@ -94,4 +91,4 @@ class GlossaryTerm(models.Model):
         return self.lemma
 
     class Meta:
-        ordering = ['lemma']    
+        ordering = ['lemma']
