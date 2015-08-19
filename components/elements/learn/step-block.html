@@ -24,14 +24,10 @@ Example:
 -->
 <dom-module id="step-block">
 	<style>
-
-		}
-
 		h2 {
 			color: #338D83;
 			font-family: Roboto;
 			font-weight: bold;
-
 		}
 
 		::content #step-content {
@@ -39,27 +35,26 @@ Example:
 			width: 70%;
 			/*margin: 0 auto;*/
 			/*padding-top: 30px;*/
-			padding-top:30px;
-			background-color:#FFF;
+			padding-top: 30px;
+			background-color: #FFF;
 		}
 
-		::content #step-content p{
+		::content #step-content p {
 			font-family: 'Roboto', 'Noto', sans-serif;
-			font-size:18px;
+			font-size: 18px;
 			line-height: 26px;
-			font-weight:normal;
-			margin-top:20px;
-			margin-bottom:20px;
+			font-weight: normal;
+			margin-top: 20px;
+			margin-bottom: 20px;
 		}
 
 		::content h2#step-title {
 			font-family: 'Roboto', 'Noto', sans-serif;
-			color:#338D83;
-			font-size:28px;
-			font-weight:bold;
-			margin:0;
+			color: #338D83;
+			font-size: 28px;
+			font-weight: bold;
+			margin: 0;
 		}
-
 		/* Begin ordered list styling */
 
 		::content #step-content ol {
@@ -93,7 +88,6 @@ Example:
 			margin-bottom: -2.5em;
 			color: #E3B052;
 		}
-
 		/* End ordered list styling */
 
 		step-number {
@@ -103,18 +97,22 @@ Example:
 			border-radius: 50%;
 			font-family: Roboto;
 			font-weight: 500;
-			margin-right:20px;
+			margin-right: 20px;
 		}
 
 		content-wrapper {
 			display: flex;
+			display: -webkit-flex;
+			display: -ms-flexbox;
 			/*
 			Aligns step number to center of step block
 			align-items: center;
 			*/
 			align-items: flex-start;
+			-webkit-align-items: flex-start;
 			justify-content: center;
-			margin-bottom:50px;
+			-webkit-justify-content: center;
+			margin-bottom: 50px;
 		}
 
 		.question {
@@ -125,40 +123,35 @@ Example:
 		}
 
 		.material-shadow {
-		  transition:box-shadow 0.28s cubic-bezier(0.4, 0, 0.2, 1);
-		};
+			transition: box-shadow 0.28s cubic-bezier(0.4, 0, 0.2, 1);
+		}
 
+		;
 		.material-shadow[elevation="1"] {
-		  box-shadow:0 2px 2px 0 rgba(0, 0, 0, 0.14),
-		                  0 1px 5px 0 rgba(0, 0, 0, 0.12),
-		                  0 3px 1px -2px rgba(0, 0, 0, 0.2);
-		};
+			box-shadow: 0 2px 2px 0 rgba(0, 0, 0, 0.14), 0 1px 5px 0 rgba(0, 0, 0, 0.12), 0 3px 1px -2px rgba(0, 0, 0, 0.2);
+		}
 
+		;
 		.material-shadow[elevation="2"] {
-		  box-shadow:0 4px 5px 0 rgba(0, 0, 0, 0.14),
-		                  0 1px 10px 0 rgba(0, 0, 0, 0.12),
-		                  0 2px 4px -1px rgba(0, 0, 0, 0.4);
-		};
+			box-shadow: 0 4px 5px 0 rgba(0, 0, 0, 0.14), 0 1px 10px 0 rgba(0, 0, 0, 0.12), 0 2px 4px -1px rgba(0, 0, 0, 0.4);
+		}
 
+		;
 		.material-shadow[elevation="3"] {
-		  box-shadow:0 6px 10px 0 rgba(0, 0, 0, 0.14),
-		                  0 1px 18px 0 rgba(0, 0, 0, 0.12),
-		                  0 3px 5px -1px rgba(0, 0, 0, 0.4);
-		};
+			box-shadow: 0 6px 10px 0 rgba(0, 0, 0, 0.14), 0 1px 18px 0 rgba(0, 0, 0, 0.12), 0 3px 5px -1px rgba(0, 0, 0, 0.4);
+		}
 
+		;
 		.material-shadow[elevation="4"] {
-		  box-shadow:0 8px 10px 1px rgba(0, 0, 0, 0.14),
-		                  0 3px 14px 2px rgba(0, 0, 0, 0.12),
-		                  0 5px 5px -3px rgba(0, 0, 0, 0.4);
-		};
+			box-shadow: 0 8px 10px 1px rgba(0, 0, 0, 0.14), 0 3px 14px 2px rgba(0, 0, 0, 0.12), 0 5px 5px -3px rgba(0, 0, 0, 0.4);
+		}
 
+		;
 		.material-shadow[elevation="5"] {
-		  box-shadow:0 16px 24px 2px rgba(0, 0, 0, 0.14),
-		                  0  6px 30px 5px rgba(0, 0, 0, 0.12),
-		                  0  8px 10px -5px rgba(0, 0, 0, 0.4);
-		};
+			box-shadow: 0 16px 24px 2px rgba(0, 0, 0, 0.14), 0 6px 30px 5px rgba(0, 0, 0, 0.12), 0 8px 10px -5px rgba(0, 0, 0, 0.4);
+		}
 
-
+		;
 	</style>
 	<template>
 		<content-wrapper>
@@ -174,52 +167,52 @@ Example:
 </dom-module>
 
 <script>
-  Polymer({
-	is: 'step-block',
+	Polymer({
+		is: 'step-block',
 
-	attached: function() {
-	  this.async(function() {
-		var steps = 0;
-		var kids = this.parentNode.children;
-		for (var i = 0; i < kids.length; i++) {
-		  if (kids[i].nodeName == this.nodeName) {
-			steps += 1;
-			if (kids[i] === this) {
-			  this.stepnum = steps;
-			  break;
-			}
-		  }
-		};
-	  })
-	},
-
-	properties: {
-		/**
-		 * The primary label for this step.
-		 *
-		 * @attribute title
-		 * @type String
-		 * @default ""
-		 */
-		title: {
-			type: String,
-			value: ""
+		attached: function() {
+			this.async(function() {
+				var steps = 0;
+				var kids = this.parentNode.children;
+				for (var i = 0; i < kids.length; i++) {
+					if (kids[i].nodeName == this.nodeName) {
+						steps += 1;
+						if (kids[i] === this) {
+							this.stepnum = steps;
+							break;
+						}
+					}
+				};
+			})
 		},
 
-		/**
-		 * The position of this step among all steps. Not meant to be set by users,
-		 * at the moment it gets set at page load time by analyzing all other steps
-		 * with the same parent.
-		 *
-		 * @attribute title
-		 * @type String
-		 * @default ""
-		 */
-		stepnum: {
-			type: Number,
-			value: 0
-		}
+		properties: {
+			/**
+			 * The primary label for this step.
+			 *
+			 * @attribute title
+			 * @type String
+			 * @default ""
+			 */
+			title: {
+				type: String,
+				value: ""
+			},
 
-	}
-  });
+			/**
+			 * The position of this step among all steps. Not meant to be set by users,
+			 * at the moment it gets set at page load time by analyzing all other steps
+			 * with the same parent.
+			 *
+			 * @attribute title
+			 * @type String
+			 * @default ""
+			 */
+			stepnum: {
+				type: Number,
+				value: 0
+			}
+
+		}
+	});
 </script>
