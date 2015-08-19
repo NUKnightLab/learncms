@@ -1,0 +1,7 @@
+#staff-toolbar {
+    display: flex;
+    justify-content: space-between;
+    background-color: #FFF7E8;
+    font-family: Roboto;
+    padding: 3px;
+}
