@@ -38,12 +38,7 @@ Example:
 
 		::content #info-block-content ol li {
 			display: block;
-			margin-bottom: .5em;
-		}
-
-		::content #info-block-content ol li:first-child {
-			margin-bottom: 0em;
-			margin-top: 1em;
+			margin-bottom: 3em;
 		}
 
 		::content #info-block-content ol li p {
@@ -84,8 +79,14 @@ Example:
 
 		#info-block-icon {
 			display: flex;
+			display: -webkit-flex;
+			display: -ms-flexbox;
 			align-items: center;
+			-webkit-align-items: center;
+
 			justify-content: center;
+			-webkit-justify-content: center;
+
 			/*margin-bottom:50px;*/
 			/*			background-image: var(--info-icon-url);
 			background-repeat: no-repeat;
@@ -94,8 +95,13 @@ Example:
 
 		::content #info-block-icon-background {
 			display: flex;
+			display: -webkit-flex;
+			display: -ms-flexbox;
 			align-items: center;
+			-webkit-align-items: center;
 			justify-content: center;
+			-webkit-justify-content: center;
+
 			font-family: Roboto, sans-serif;
 			color: #FAFAFA;
 			font-size: 38px;

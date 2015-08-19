@@ -2,9 +2,19 @@
 <html>
 <head>
     <title>{% if title %}{{title}} -{% endif %} Learn.KnightLab.com</title>
+    <link rel="stylesheet" href="{{ STATIC_URL }}/css/app.css" media="screen" title="no title" charset="utf-8">
+
     {% block extrahead %}{% endblock extrahead %}
 </head>
 <body class="fullbleed">
+{% if user.is_staff %}
+<div id="staff-toolbar">
+    <span id="staff-greeting">welcome, {{ user }} [<a href="{% url 'admin:logout' %}">log out</a>]</span>
+    <a id="staff-admin-link" href="{% url 'admin:index' %}">admin site</a>
+    <span id="staff-edit-lesson">{% if lesson %}<a href="{{lesson.get_admin_url}}">edit this lesson</a>{% endif %}</span></span>
+</div>
+{% endif %}
+
 {% block content %}{% endblock %}
 </body>
 </html>
