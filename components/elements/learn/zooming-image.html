@@ -122,7 +122,7 @@
 
 				<img id='fullsize'>
 			</div>
-			<paper-icon-button icon="zoom-in" on-click="_handleMagnifyingGlassClick" style="position:absolute;z-index:11;right:8px;bottom:8px; color: white"></paper-icon-button>
+			<paper-icon-button icon="zoom-in" style="position:absolute;z-index:11;right:8px;bottom:8px; color: white"></paper-icon-button>
 			<div id="zoom-image-background"></div>
 		</div>
 
@@ -208,12 +208,6 @@
 			} else {
 				this._zoomOut();
 			}
-		},
-
-		// Working around the built in functionality of the material button
-		_handleMagnifyingGlassClick: function(e) {
-			this.zoomed = true;
-			e.stopPropagation();
 		},
 
 		/* HIDE AND SHOW

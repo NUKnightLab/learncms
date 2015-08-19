@@ -13,7 +13,7 @@ For a little while, we'll use this document to keep track of things to know. We 
 ## Lessons
 
 * Title: hopefully obvious
-* Slug: don't edit this 
+* Slug: don't edit this
 * Banner image: upload an appropriate file. We should establish image size guidelines, and if possible, enforce them in the authoring tool
 * Status: experimental. For now, 'draft' is only visible by logged in users.
 * Reference blurb: this is the part that gets shown if this lesson is referenced from another
@@ -58,3 +58,9 @@ For now, assign the `slug` yourself. Maybe we can make that more automatic, but 
 
 ## Capsule Units
 The animations for these are a little wack, so they're hard to preview correctly. Should be fixed soon.
+
+## Glossary Terms
+
+There's now a model object for glossary terms. "Lemma" is a fancy lexicographer's word for the main word you use to define things, even though it might show up in alternate forms: e.g. "HTML" or "Hypertext Markup Language."
+
+To mark a term as a glossary-term, just wrap it in &lt;glossary-term&gt; tags. Then go and create a matching term and definition in the admin tool. If you want to use something in text which isn't the exact "lemma", then you can use a "lemma" attribute to link to the right definition.  For now, posts in draft mode will show the definition as a link even if there isn't yet a matching term, but published posts will not let those be clickable.  Also, for now, the text inside the `glossary-term` tags must exactly match the lemma in the admin (including case). You can use the `lemma` attribute to assist. Doing case-insensitive matches could add overhead for pages with lots of terms, but we could do it if it makes sense.

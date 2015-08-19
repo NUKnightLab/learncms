@@ -11939,7 +11939,11 @@ styles. All other styles should exist as single lines."
 
 		content-wrapper {
 			display: flex;
+			/*
+			Aligns step number to center of step block
 			align-items: center;
+			*/
+			align-items: flex-start;
 			justify-content: center;
 			margin-bottom:50px;
 		}
@@ -12215,7 +12219,7 @@ styles. All other styles should exist as single lines."
 
 				<img id="fullsize">
 			</div>
-			<paper-icon-button icon="zoom-in" on-click="_handleMagnifyingGlassClick" style="position:absolute;z-index:11;right:8px;bottom:8px; color: white"></paper-icon-button>
+			<paper-icon-button icon="zoom-in" style="position:absolute;z-index:11;right:8px;bottom:8px; color: white"></paper-icon-button>
 			<div id="zoom-image-background"></div>
 		</div>
 
@@ -12301,12 +12305,6 @@ styles. All other styles should exist as single lines."
 			} else {
 				this._zoomOut();
 			}
-		},
-
-		// Working around the built in functionality of the material button
-		_handleMagnifyingGlassClick: function(e) {
-			this.zoomed = true;
-			e.stopPropagation();
 		},
 
 		/* HIDE AND SHOW
@@ -12897,33 +12895,73 @@ styles. All other styles should exist as single lines."
 
 </script><dom-module id="info-block" assetpath="learn/">
 	<style>
-
 		::content #info-block-wrapper {
 			background-color: #F5F4F4;
 			padding: 0 10px;
-			margin-top:20px;
-			border-radius:8px;
-			padding-top:30px;
-		};
+			margin-top: 20px;
+			border-radius: 8px;
+			padding-top: 30px;
+		}
 
 		::content #info-block-content {
 			padding: 0 10px;
+			margin-left: 5.5em;
 		}
+
+		::content #info-block-content h2 {
+			margin-left: -4.1em;
+		}
+
+		::content #info-block-content ol {
+			counter-reset: item;
+			margin-left: 0;
+			padding-left: 0;
+		}
+
+		::content #info-block-content ol li {
+			display: block;
+			margin-bottom: .5em;
+		}
+
+		::content #info-block-content ol li:first-child {
+			margin-bottom: 0em;
+			margin-top: 1em;
+		}
+
+		::content #info-block-content ol li p {
+			margin-top: 0em;
+		}
+
+		::content #info-block-content ol li:before {
+			display: inline-block;
+			content: counter(item);
+			counter-increment: item;
+			width: 5em;
+			height: 5em;
+			border-radius: 100%;
+			text-align: center;
+			margin-left: -5em;
+			background-color: #FFDDA7;
+			position: relative;
+			left: -1em;
+			line-height: 5em;
+			margin-bottom: -2.5em;
+		}
+
 		::content #info-block-content h2 {
 			color: #263238;
-			font-weight:500;
-			font-style:italic;
-			margin-top:0;
-			margin-bottom:10px;
+			font-weight: 500;
+			font-style: italic;
+			margin-top: 0;
+			margin-bottom: 10px;
 		}
 
 		::content #info-block-content p {
 			color: #9B9B9B;
-			font-size:16px;
+			font-size: 16px;
 			line-height: 22px;
 			font-style: italic;
-			margin-top:0;
-
+			margin-top: 0;
 		}
 
 		#info-block-icon {
@@ -12931,13 +12969,11 @@ styles. All other styles should exist as single lines."
 			align-items: center;
 			justify-content: center;
 			/*margin-bottom:50px;*/
-
-/*			background-image: var(--info-icon-url);
+			/*			background-image: var(--info-icon-url);
 			background-repeat: no-repeat;
 			background-position: center;*/
-			
-			
 		}
+
 		::content #info-block-icon-background {
 			display: flex;
 			align-items: center;
@@ -12945,43 +12981,42 @@ styles. All other styles should exist as single lines."
 			font-family: Roboto, sans-serif;
 			color: #FAFAFA;
 			font-size: 38px;
-
-			border-radius:50%;
-			background-color:#E7E6E6;
+			border-radius: 50%;
+			background-color: #E7E6E6;
 			width: 112px;
 			height: 112px;
-			text-align:center;
-			color:#FFF;
-		};
+			text-align: center;
+			color: #FFF;
+		}
 
-
+		;
 	</style>
-  <template>
-  <paper-material elevation="0" class="paper-font-body2">
-	<div id="info-block-wrapper" class="layout horizontal">
-	  <div id="info-block-icon" class="flex">
-			<div id="info-block-icon-background">
-				i
+	<template>
+		<paper-material elevation="0" class="paper-font-body2">
+			<div id="info-block-wrapper" class="layout horizontal">
+				<div id="info-block-icon" class="flex">
+					<div id="info-block-icon-background">
+						i
+					</div>
+				</div>
+				<div id="info-block-content" class="flex-4">
+					<content></content>
+				</div>
 			</div>
-	  </div>
-	  <div id="info-block-content" class="flex-4">
-		<content></content>
-	  </div>
-	</div>
-  </paper-material>
-  </template>
+		</paper-material>
+	</template>
 </dom-module>
 <script>
-  Polymer({
-	is: 'info-block',
+	Polymer({
+		is: 'info-block',
 
-	properties: {
-	  image: {
-		type: String,
-		value: "images/learn/info-icon.png"
-	  }
-	}
-  });
+		properties: {
+			image: {
+				type: String,
+				value: "images/learn/info-icon.png"
+			}
+		}
+	});
 </script>
 <dom-module id="lesson-ref" assetpath="learn/">
 	<style>
@@ -14053,5 +14088,222 @@ Polymer({
 			}
 		}
 	});
+</script>
+<dom-module id="glossary-term" assetpath="learn/">
+  <style>
+    #term.usable {
+      background-color: var(--learn-secondary-color);
+      border-bottom: '1px dotted #999';
+      cursor: pointer;
+    }
+
+    ::content {
+      display: inline;
+    }
+
+    #popup {
+      display: none;
+      background-color: #E3B052;
+      position: absolute;
+      z-index: 999;
+      width: 300px;
+      text-align: left;
+      padding: 1em 1.2em;
+      pointer-events: auto;
+      border-radius: 25px;
+      border: 1px solid black;
+
+    }
+
+    #popup small {
+        float: right;
+        cursor: pointer;
+    }
+    #popup dt {
+        font-weight: 900;
+        font-style: italic;
+        color: #FFF7E8;
+        font-size: 1.5em;
+        margin-bottom: .5em;
+    }
+    #popup dd {
+        margin: 0;
+        color: #fff;
+        font-weight: 700;
+    }
+    #popup p:last-child {
+        margin-bottom: 0;
+    }
+
+  </style>
+  <template>
+    <span id="term"><content></content></span>
+    <div id="popup">
+      <small on-click="toggleDefinition" class="close"><i class="fa fa-times-circle"></i> Close</small>
+      <dt>{{lemma}}</dt>
+      <dd>{{definition}}</dd>
+    </div>
+
+  </template>
+</dom-module>
+<script type="text/javascript">
+var offset = function(o) {
+  return {
+      top: o.offsetTop,
+      left: o.offsetLeft,
+      height: o.offsetHeight,
+      width: o.offsetWidth
+  }
+}
+
+Polymer({
+  is: 'glossary-term',
+  listeners: {
+    click: "toggleDefinition"
+  },
+  keyBindings: {
+    'esc': '_handleEscapeKey'
+  },
+  behaviors: [ Polymer.IronA11yKeysBehavior ],
+  properties: {
+    lemma: {
+      type: String,
+      value: "",
+      reflectToAttribute: true
+    },
+    definition: {
+      type: String,
+      value: "",
+      reflectToAttribute: true,
+      observer: '_definitionStateChange'
+    },
+    usable: {
+      type: Boolean,
+      value: false,
+      observer: '_usableStateChange'
+    },
+    keyEventTarget: { // IronA11yKeysBehavior - listen for esc anywhere on page
+        type: Object,
+        value: function() {
+            return document.body;
+        }
+    }
+  },
+  ready: function() {
+      this.detachPopup();
+      if (!this.lemma) {
+        this.lemma = this.$.term.textContent.replace(/^\s*|\s*$/g,'');
+      }
+      if (this.lemma && this.definition) {
+        this.usable = true;
+      }
+  },
+  detachPopup: function() {
+      if (!this.popup) {
+          this.popup = this.$.popup;
+          this.removeChild(this.popup);
+          this.popup.style.display = 'block';
+      }
+  },
+  _usableStateChange: function() {
+      if (this.usable) {
+        this.$.term.classList.add('usable');
+      } else {
+        this.$.term.classList.remove('usable');
+      }
+  },
+  _definitionStateChange: function(e) {
+      this.usable = (this.lemma && this.definition);
+  },
+  toggleDefinition: function(e) {
+    if (this.usable) {
+        if (this.popup.parentElement) {
+            this.hideDefinition();
+        } else {
+            this.popup.style.left = offset(this).left + "px";
+            this.popup.style.top = (offset(this).top + 25) + "px";
+            this.parentElement.appendChild(this.popup);
+        }
+        if (e) {
+            e.cancelBubble = true;
+            e.preventDefault();
+        }
+    }
+  },
+  hideDefinition: function() {
+      if (this.popup.parentElement) {
+          this.popup.parentElement.removeChild(this.popup);
+      }
+  },
+  /* Using IronA11yKeysBehavior, listen for 'esc' key pressed
+   * anywhere on the page (see keyEventTarget property).
+   * escape will hide a zoomed image.
+   */
+  _handleEscapeKey: function(e) {
+      this.hideDefinition();
+  }
+})
+</script>
+/**
+ * `glossary-manager` is used to load an external glossary JSON file and use it to fill in the definitions for `glossary-term` elements.
+ * It is not strictly required, as it is possible to specify definitions directly as attributes on `glossary-term`s. However, it is likely
+ * to be preferable to load them as a resource.
+ */
+<dom-module is="glossary-manager">
+
+</dom-module>
+<script type="text/javascript">
+function fetchGlossary(url, callback) {
+    var request = new XMLHttpRequest();
+    request.open('GET', url, true);
+
+    request.onload = function() {
+        if (request.status >= 200 && request.status < 400) {
+            callback(JSON.parse(request.responseText));
+        } else {
+            console.log("Error ["+ request.status +"] retrieving " + url);
+            console.log(request);
+        }
+    };
+
+    request.onerror = function() {
+        console.log("Error ["+ request.status +"] retrieving " + url);
+        console.log(request);
+    };
+
+    request.send();
+}
+
+
+
+    Polymer({
+        is: 'glossary-manager',
+        ready: function(){
+            document.addEventListener('readystatechange', function(e){
+                if (e.target.readyState == 'complete') {
+                    if (this.jsonUrl) {
+                        fetchGlossary(this.jsonUrl,this.initGlossary);
+                    } else {
+                        console.log("Configuration error: no glossary JSON specified");
+                    }
+                }
+            }.bind(this));
+        },
+        initGlossary: function(lexicon) {
+            var targets = document.getElementsByTagName('glossary-term');
+            for (var i = 0; i < targets.length; i++) {
+                if (lexicon[targets[i].lemma]) {
+                    targets[i].definition = lexicon[targets[i].lemma];
+                } else if (!targets[i].definition) {
+                    console.log('No definition specified and none in lexicon for ' + targets[i].lemma);
+                }
+            }
+        },
+        properties: {
+            jsonUrl: {
+                type: String
+            } // should there be a property for the retrieved terms?
+        }
+    })
 </script>
 </div></body></html>

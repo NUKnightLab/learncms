@@ -4,13 +4,14 @@ with data from the referenced object, so that people don't have to copy.
 
 For each new referenceable model type, add a resolve here and "register" it in REF_RESOLVERS.
 """
-from .models import Lesson, ZoomingImage, CapsuleUnit
+from .models import Lesson, ZoomingImage, CapsuleUnit, GlossaryTerm
 from lxml.etree import Comment
 from lxml.html import fromstring, tostring
+from collections import defaultdict
 
 def evaluate_content(element,strip_bad_references=False):
     """Convert any convenience markup (such as object references) into the ideal markup
-       for delivering to the page. Optionally remove from DOM elements which have ref 
+       for delivering to the page. Optionally remove from DOM elements which have ref
        attributes which don't resolve to actual objects. (Do this in production but show them in draft/editing mode.)
     """
     for elem in element.findall('.//*[@ref]'):
@@ -18,8 +19,6 @@ def evaluate_content(element,strip_bad_references=False):
             REF_RESOLVERS[elem.tag].resolve_ref(elem,strip_bad_references)
         except KeyError:
             self.note_error(elem,"Unrecognized ref type", strip_bad_references)
-
-
 
 
 class ReferenceResolver(object):
@@ -30,13 +29,13 @@ class ReferenceResolver(object):
     def get_object(self, elem):
         id = elem.attrib[self.ref_attr]
         kwargs = {self.property: id}
-        self.klass.objects.get(**kwargs)        
+        self.klass.objects.get(**kwargs)
         return self.klass.objects.get(slug=id)
 
     def resolve_ref(self, elem, strip_bad_references):
         """Given an element, look up the matching object and populate the given element.
            If strip_bad_references is True, then remove the element if no corresponding object
-           could be found. Whether or not the object is removed, add an HTML comment 
+           could be found. Whether or not the object is removed, add an HTML comment
            indicating that the reference could not be resolved.
         """
         try:
@@ -67,7 +66,7 @@ class ZoomingImageRefResolver(ReferenceResolver):
 
     def update_element(self, elem, obj):
         elem.attrib['src'] = obj.thumbnail.url
-        elem.attrib['fullSrc'] = obj.image.url
+        elem.attrib['full-src'] = obj.image.url
 
 
 class CapsuleRefResolver(ReferenceResolver):

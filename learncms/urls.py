@@ -20,13 +20,14 @@ from django.conf import settings
 from django.views.generic.list import ListView
 
 from .models import Lesson
-from .views import LessonDetailView, handler404, handler500
+from .views import LessonDetailView, glossary_json, handler404, handler500
 
 admin.site.site_header = "Learn.KnightLab.com admin"
 
 urlpatterns = [
     url(r'^admin/', include(admin.site.urls)),
     url(r'^lesson/(?P<slug>[a-z\-]+)/$', LessonDetailView.as_view(), name='lesson-detail'),
+    url(r'^glossary.json$', glossary_json, name='glossary-json'),
     url(r'^/?$', ListView.as_view(template_name="index.html",model=Lesson), name='homepage'),
 ]
 
