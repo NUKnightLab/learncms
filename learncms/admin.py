@@ -6,6 +6,11 @@ from django import forms
 
 from django.db import models
 from filebrowser.widgets import FileInput
+from filebrowser.storage import S3BotoStorageMixin
+from storages.backends.s3boto import S3BotoStorage
+
+class S3FileBrowserStorage(S3BotoStorage,S3BotoStorageMixin):
+    pass
 
 class LessonForm(forms.ModelForm):
     reference_blurb = forms.CharField(widget=forms.Textarea(attrs={'rows': 5}))

@@ -61,8 +61,8 @@ DATABASES = {
 # AWS_ACCESS_KEY_ID
 # AWS_SECRET_ACCESS_KEY
 #
-DEFAULT_FILE_STORAGE = 'storages.backends.s3boto.S3BotoStorage'
-from boto.s3.connection import OrdinaryCallingFormat 
+DEFAULT_FILE_STORAGE = 'learncms.admin.S3FileBrowserStorage'
+from boto.s3.connection import OrdinaryCallingFormat
 AWS_S3_CALLING_FORMAT = OrdinaryCallingFormat()
 AWS_S3_URL_PROTOCOL = 'https'
 AWS_S3_SECURE_URLS = False
