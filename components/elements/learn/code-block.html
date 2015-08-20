@@ -24,7 +24,7 @@ Example:
 		padding: 2px;
 		border: none !important;
 		margin:0;
-		white-space: pre-line;
+		white-space: pre-wrap;
 	}
 
 	::content .code-block-wrapper {
@@ -46,11 +46,7 @@ Example:
 
 	<template>
 		<div class="code-block paper-font-body2">
-			<div class="code-block-wrapper">
-				<pre class="prettyprint">
-					<content></content>
-				</pre>
-			</div>
+			<div class="code-block-wrapper"><pre class="prettyprint"><code><content></content></code></pre></div>
 		</div>
 	</template>
 
@@ -60,13 +56,19 @@ Example:
 		is: 'code-block',
 
 		attached: function() {
+			if (this.lang) {
+				this.$$('code').classList.add('language-' + this.lang);
+			}
 			this.async(function() {
 				prettyPrint()
 			})
 		},
 
 		properties: {
-
+			lang: {
+				type: String,
+				value: ""
+			}
 		}
 
 	});

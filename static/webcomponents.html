@@ -11891,14 +11891,10 @@ styles. All other styles should exist as single lines."
 </script>
 <dom-module id="step-block" assetpath="learn/">
 	<style>
-
-		}
-
 		h2 {
 			color: #338D83;
 			font-family: Roboto;
 			font-weight: bold;
-
 		}
 
 		::content #step-content {
@@ -11906,26 +11902,60 @@ styles. All other styles should exist as single lines."
 			width: 70%;
 			/*margin: 0 auto;*/
 			/*padding-top: 30px;*/
-			padding-top:30px;
-			background-color:#FFF;
+			padding-top: 30px;
+			background-color: #FFF;
 		}
 
-		::content #step-content p{
+		::content #step-content p {
 			font-family: 'Roboto', 'Noto', sans-serif;
-			font-size:18px;
+			font-size: 18px;
 			line-height: 26px;
-			font-weight:normal;
-			margin-top:20px;
-			margin-bottom:20px;
+			font-weight: normal;
+			margin-top: 20px;
+			margin-bottom: 20px;
 		}
 
 		::content h2#step-title {
 			font-family: 'Roboto', 'Noto', sans-serif;
-			color:#338D83;
-			font-size:28px;
-			font-weight:bold;
-			margin:0;
+			color: #338D83;
+			font-size: 28px;
+			font-weight: bold;
+			margin: 0;
 		}
+		/* Begin ordered list styling */
+
+		::content #step-content ol {
+			counter-reset: item;
+			padding-left: 0;
+			margin-left: 1em;
+		}
+
+		::content #step-content ol li {
+			display: block;
+			margin-bottom: 3em;
+		}
+
+		::content #step-content ol li p {
+			margin-top: 0em;
+			margin-left: 4em;
+		}
+
+		::content #step-content ol li:before {
+			display: inline-block;
+			content: counter(item);
+			counter-increment: item;
+			width: 5em;
+			height: 5em;
+			border-radius: 100%;
+			text-align: center;
+			background-color: #FFDDA7;
+			position: relative;
+			left: -1em;
+			line-height: 5em;
+			margin-bottom: -2.5em;
+			color: #E3B052;
+		}
+		/* End ordered list styling */
 
 		step-number {
 			color: #ffffff;
@@ -11934,18 +11964,22 @@ styles. All other styles should exist as single lines."
 			border-radius: 50%;
 			font-family: Roboto;
 			font-weight: 500;
-			margin-right:20px;
+			margin-right: 20px;
 		}
 
 		content-wrapper {
 			display: flex;
+			display: -webkit-flex;
+			display: -ms-flexbox;
 			/*
 			Aligns step number to center of step block
 			align-items: center;
 			*/
 			align-items: flex-start;
+			-webkit-align-items: flex-start;
 			justify-content: center;
-			margin-bottom:50px;
+			-webkit-justify-content: center;
+			margin-bottom: 50px;
 		}
 
 		.question {
@@ -11956,40 +11990,35 @@ styles. All other styles should exist as single lines."
 		}
 
 		.material-shadow {
-		  transition:box-shadow 0.28s cubic-bezier(0.4, 0, 0.2, 1);
-		};
+			transition: box-shadow 0.28s cubic-bezier(0.4, 0, 0.2, 1);
+		}
 
+		;
 		.material-shadow[elevation="1"] {
-		  box-shadow:0 2px 2px 0 rgba(0, 0, 0, 0.14),
-		                  0 1px 5px 0 rgba(0, 0, 0, 0.12),
-		                  0 3px 1px -2px rgba(0, 0, 0, 0.2);
-		};
+			box-shadow: 0 2px 2px 0 rgba(0, 0, 0, 0.14), 0 1px 5px 0 rgba(0, 0, 0, 0.12), 0 3px 1px -2px rgba(0, 0, 0, 0.2);
+		}
 
+		;
 		.material-shadow[elevation="2"] {
-		  box-shadow:0 4px 5px 0 rgba(0, 0, 0, 0.14),
-		                  0 1px 10px 0 rgba(0, 0, 0, 0.12),
-		                  0 2px 4px -1px rgba(0, 0, 0, 0.4);
-		};
+			box-shadow: 0 4px 5px 0 rgba(0, 0, 0, 0.14), 0 1px 10px 0 rgba(0, 0, 0, 0.12), 0 2px 4px -1px rgba(0, 0, 0, 0.4);
+		}
 
+		;
 		.material-shadow[elevation="3"] {
-		  box-shadow:0 6px 10px 0 rgba(0, 0, 0, 0.14),
-		                  0 1px 18px 0 rgba(0, 0, 0, 0.12),
-		                  0 3px 5px -1px rgba(0, 0, 0, 0.4);
-		};
+			box-shadow: 0 6px 10px 0 rgba(0, 0, 0, 0.14), 0 1px 18px 0 rgba(0, 0, 0, 0.12), 0 3px 5px -1px rgba(0, 0, 0, 0.4);
+		}
 
+		;
 		.material-shadow[elevation="4"] {
-		  box-shadow:0 8px 10px 1px rgba(0, 0, 0, 0.14),
-		                  0 3px 14px 2px rgba(0, 0, 0, 0.12),
-		                  0 5px 5px -3px rgba(0, 0, 0, 0.4);
-		};
+			box-shadow: 0 8px 10px 1px rgba(0, 0, 0, 0.14), 0 3px 14px 2px rgba(0, 0, 0, 0.12), 0 5px 5px -3px rgba(0, 0, 0, 0.4);
+		}
 
+		;
 		.material-shadow[elevation="5"] {
-		  box-shadow:0 16px 24px 2px rgba(0, 0, 0, 0.14),
-		                  0  6px 30px 5px rgba(0, 0, 0, 0.12),
-		                  0  8px 10px -5px rgba(0, 0, 0, 0.4);
-		};
+			box-shadow: 0 16px 24px 2px rgba(0, 0, 0, 0.14), 0 6px 30px 5px rgba(0, 0, 0, 0.12), 0 8px 10px -5px rgba(0, 0, 0, 0.4);
+		}
 
-
+		;
 	</style>
 	<template>
 		<content-wrapper>
@@ -12005,61 +12034,59 @@ styles. All other styles should exist as single lines."
 </dom-module>
 
 <script>
-  Polymer({
-	is: 'step-block',
+	Polymer({
+		is: 'step-block',
 
-	attached: function() {
-	  this.async(function() {
-		var steps = 0;
-		var kids = this.parentNode.children;
-		for (var i = 0; i < kids.length; i++) {
-		  if (kids[i].nodeName == this.nodeName) {
-			steps += 1;
-			if (kids[i] === this) {
-			  this.stepnum = steps;
-			  break;
-			}
-		  }
-		};
-	  })
-	},
-
-	properties: {
-		/**
-		 * The primary label for this step.
-		 *
-		 * @attribute title
-		 * @type String
-		 * @default ""
-		 */
-		title: {
-			type: String,
-			value: ""
+		attached: function() {
+			this.async(function() {
+				var steps = 0;
+				var kids = this.parentNode.children;
+				for (var i = 0; i < kids.length; i++) {
+					if (kids[i].nodeName == this.nodeName) {
+						steps += 1;
+						if (kids[i] === this) {
+							this.stepnum = steps;
+							break;
+						}
+					}
+				};
+			})
 		},
 
-		/**
-		 * The position of this step among all steps. Not meant to be set by users,
-		 * at the moment it gets set at page load time by analyzing all other steps
-		 * with the same parent.
-		 *
-		 * @attribute title
-		 * @type String
-		 * @default ""
-		 */
-		stepnum: {
-			type: Number,
-			value: 0
-		}
+		properties: {
+			/**
+			 * The primary label for this step.
+			 *
+			 * @attribute title
+			 * @type String
+			 * @default ""
+			 */
+			title: {
+				type: String,
+				value: ""
+			},
 
-	}
-  });
+			/**
+			 * The position of this step among all steps. Not meant to be set by users,
+			 * at the moment it gets set at page load time by analyzing all other steps
+			 * with the same parent.
+			 *
+			 * @attribute title
+			 * @type String
+			 * @default ""
+			 */
+			stepnum: {
+				type: Number,
+				value: 0
+			}
+
+		}
+	});
 </script>
 <dom-module id="lesson-block" assetpath="learn/">
 	<style>
 		::content paper-material.lesson-block {
 			background-color: var(--learn-secondary-color);
-
-
 		}
 
 		::content .lesson-block-wrapper {
@@ -12067,7 +12094,7 @@ styles. All other styles should exist as single lines."
 			margin-left: 50px;
 			margin-right: 50px;
 			margin-bottom: 50px;
-		};
+		}
 
 		::content .lesson-block-wrapper h2 { /* Free floating for any h2 inside */
 			color: #E3B052;
@@ -12100,9 +12127,9 @@ styles. All other styles should exist as single lines."
 		::content #zooming-image {
 			position: relative;
 			cursor:pointer;
+			height: 100%;
 		}
 
-		;
 		::content #zooming-image-tag {
 			position: absolute;
 			top: 0;
@@ -12920,12 +12947,7 @@ styles. All other styles should exist as single lines."
 
 		::content #info-block-content ol li {
 			display: block;
-			margin-bottom: .5em;
-		}
-
-		::content #info-block-content ol li:first-child {
-			margin-bottom: 0em;
-			margin-top: 1em;
+			margin-bottom: 3em;
 		}
 
 		::content #info-block-content ol li p {
@@ -12966,8 +12988,14 @@ styles. All other styles should exist as single lines."
 
 		#info-block-icon {
 			display: flex;
+			display: -webkit-flex;
+			display: -ms-flexbox;
 			align-items: center;
+			-webkit-align-items: center;
+
 			justify-content: center;
+			-webkit-justify-content: center;
+
 			/*margin-bottom:50px;*/
 			/*			background-image: var(--info-icon-url);
 			background-repeat: no-repeat;
@@ -12976,8 +13004,13 @@ styles. All other styles should exist as single lines."
 
 		::content #info-block-icon-background {
 			display: flex;
+			display: -webkit-flex;
+			display: -ms-flexbox;
 			align-items: center;
+			-webkit-align-items: center;
 			justify-content: center;
+			-webkit-justify-content: center;
+
 			font-family: Roboto, sans-serif;
 			color: #FAFAFA;
 			font-size: 38px;
@@ -13430,15 +13463,13 @@ Polymer({
 	::content .code-block {
 		background-color: var(--learn-secondary-color);
 		/*background-color:#F5F4F4;*/
-
-
 	}
 	::content pre.prettyprint {
 		padding: 2px;
 		border: none !important;
 		margin:0;
-		white-space: pre-line;
-	};
+		white-space: pre-wrap;
+	}
 
 	::content .code-block-wrapper {
 		padding: 10px;
@@ -13450,20 +13481,16 @@ Polymer({
 		border: 1px solid rgba(219, 206, 180 ,0.8);
 		border-radius: 4px;
 
-	};
+	}
 
 	::content .code-block-wrapper h2 { /* Free floating for any h2 inside */
 		color: #E3B052;
-
 	}
 	</style>
 
 	<template>
 		<div class="code-block paper-font-body2">
-			<div class="code-block-wrapper">
-				<pre class="prettyprint">					<content></content>
-				</pre>
-			</div>
+			<div class="code-block-wrapper"><pre class="prettyprint"><code><content></content></code></pre></div>
 		</div>
 	</template>
 
@@ -13473,13 +13500,19 @@ Polymer({
 		is: 'code-block',
 
 		attached: function() {
+			if (this.lang) {
+				this.$$('code').classList.add('language-' + this.lang);
+			}
 			this.async(function() {
 				prettyPrint()
 			})
 		},
 
 		properties: {
-
+			lang: {
+				type: String,
+				value: ""
+			}
 		}
 
 	});
@@ -14306,4 +14339,8 @@ function fetchGlossary(url, callback) {
         }
     })
 </script>
+&lt;&lt;&lt;&lt;&lt;&lt;&lt; HEAD
+=======
+
+&gt;&gt;&gt;&gt;&gt;&gt;&gt; NUKnightLab/master
 </div></body></html>
