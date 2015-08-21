@@ -15,14 +15,12 @@ function fetchGlossary(url, callback) {
         if (request.status >= 200 && request.status < 400) {
             callback(JSON.parse(request.responseText));
         } else {
-            console.log("Error ["+ request.status +"] retrieving " + url);
-            console.log(request);
+            console.log("Error ["+ request.status +"] retrieving " + url,request);
         }
     };
 
     request.onerror = function() {
-        console.log("Error ["+ request.status +"] retrieving " + url);
-        console.log(request);
+        console.log("Error ["+ request.status +"] retrieving " + url, request);
     };
 
     request.send();
