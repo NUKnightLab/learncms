@@ -44,6 +44,7 @@ subject to an additional IP rights grant found at http://polymer.github.io/PATEN
 
   <!-- build:css styles/main.css -->
   <link rel="stylesheet" href="styles/main.css">
+  <link rel="stylesheet" href="styles/index.css">
   <!-- endbuild-->
 
   <!-- build:js bower_components/webcomponentsjs/webcomponents-lite.min.js -->
@@ -53,134 +54,94 @@ subject to an additional IP rights grant found at http://polymer.github.io/PATEN
   <!-- will be replaced with elements/elements.vulcanized.html -->
   <link rel="import" href="elements/elements.html">
   <!-- endreplace-->
+
+  <!-- Droid Serif -->
+  <link href='http://fonts.googleapis.com/css?family=Droid+Serif:700italic' rel='stylesheet' type='text/css'>
 </head>
 
-<body unresolved class="fullbleed layout vertical">
-  <span id="browser-sync-binding"></span>
-  <template is="dom-bind" id="app">
+<body unresolved class='fullbleed'>
 
-    <paper-drawer-panel id="paperDrawerPanel">
-      <div drawer>
+  <section class="hero-banner">
+    <div class='hero-header'>
+      <h1>Learn</h1>
+      <h3>Join what might be one of many possible futures of journalism.</h3>
+      <p>
+        Lorem ipsum dolor sit amet, consectetur adipiscing elit. Vivamus ut massa quis arcu fringilla pharetra eu sed ligula. In facilisis eros ac ante sodales cursus sit amet at risus. Nunc placerat in quam ut mattis.
+      </p>
+    </div>
 
-        <!-- Drawer Toolbar -->
-        <paper-toolbar id="drawerToolbar">
-          <span class="paper-font-title">Menu</span>
-        </paper-toolbar>
-
-        <!-- Drawer Content -->
-          <paper-menu class="list" attr-for-selected="data-route" selected="{{route}}" on-iron-select="onMenuSelect">
-              <a data-route="home" href="/">
-                <iron-icon icon="home"></iron-icon>
-                <span>Home</span>
-              </a>
-
-              <a data-route="users" href="/users">
-                <iron-icon icon="info"></iron-icon>
-                <span>Users</span>
-              </a>
-
-              <a data-route="contact" href="/contact">
-                <iron-icon icon="mail"></iron-icon>
-                <span>Contact</span>
-              </a>
-          </paper-menu>
+    <div class="hero-lesson-container">
+      <a href="lesson.html">
+        <lesson-ref title="Build a Basic Website" image="images/learn/source-code.png" url="lesson.html">
+          <p>
+            Wondering why your site’s looking so ugly? HTML just says what’s what and gives the page structure. CSS is where the real fun starts—it will fix things faster than Fix-It Felix.
+          </p>
+        </lesson-ref>
+      </a>
       </div>
-      <paper-header-panel main mode="waterfall-tall">
-
-        <!-- Main Toolbar -->
-        <paper-toolbar id="mainToolbar">
-          <paper-icon-button id="paperToggle" icon="menu" paper-drawer-toggle></paper-icon-button>
-          <span class="flex"></span>
-
-          <!-- Toolbar icons -->
-          <paper-icon-button icon="refresh"></paper-icon-button>
-          <paper-icon-button icon="search"></paper-icon-button>
-
-          <!-- Application name -->
-          <div class="middle paper-font-display2 app-name">Polymer Starter Kit</div>
-
-          <!-- Application sub title -->
-          <div class="bottom title"></div>
-
-        </paper-toolbar>
-
-        <!-- Main Content -->
-        <div class="content">
-          <iron-pages attr-for-selected="data-route" selected="{{route}}">
-
-            <section data-route="home">
-
-              <paper-material elevation="1" class="paper-font-body2">
-                <p>For now, leaving the "polymer starter kit" index page mostly intact.
-                You may be looking for the <a href="lesson.html">Prototype lesson.</a></p>
-              </paper-material>
-
-
-              <paper-material elevation="1">
-                <my-greeting greeting='hooooooo'></my-greeting>
-
-                <p class="paper-font-subhead">You now have:</p>
-                <my-list></my-list>
-
-                <p class="paper-font-body2">Looking for more Web App layouts? Check out our <a href="https://github.com/PolymerElements/app-layout-templates">layouts</a> collection. You can also <a href="http://polymerelements.github.io/app-layout-templates/">preview</a> them live.</p>
-              </paper-material>
-              <paper-material elevation="1">
-                <p class="paper-font-body2">This is another card.</p>
-              </paper-material>
-            
-
-              <paper-material elevation="1" class="paper-font-body2">
-                <h1 id="license">License</h1>
-                <p>Everything in this repo is BSD style license unless otherwise specified.</p>
-                <p>Copyright (c) 2015 The Polymer Authors. All rights reserved.</p>
-                <p>Redistribution and use in source and binary forms, with or without modification, are permitted provided that the following conditions are met:</p>
-                <ul>
-                <li>Redistributions of source code must retain the above copyright
-                notice, this list of conditions and the following disclaimer.</li>
-                <li>Redistributions in binary form must reproduce the above
-                copyright notice, this list of conditions and the following disclaimer
-                in the documentation and/or other materials provided with the
-                distribution.</li>
-                <li>Neither the name of Google Inc. nor the names of its
-                contributors may be used to endorse or promote products derived from
-                this software without specific prior written permission.</li>
-                </ul>
-                <p>THIS SOFTWARE IS PROVIDED BY THE COPYRIGHT HOLDERS AND CONTRIBUTORS &quot;AS IS&quot; AND ANY EXPRESS OR IMPLIED WARRANTIES, INCLUDING, BUT NOT LIMITED TO, THE IMPLIED WARRANTIES OF MERCHANTABILITY AND FITNESS FOR A PARTICULAR PURPOSE ARE DISCLAIMED. IN NO EVENT SHALL THE COPYRIGHT OWNER OR CONTRIBUTORS BE LIABLE FOR ANY DIRECT, INDIRECT, INCIDENTAL, SPECIAL, EXEMPLARY, OR CONSEQUENTIAL DAMAGES (INCLUDING, BUT NOT LIMITED TO, PROCUREMENT OF SUBSTITUTE GOODS OR SERVICES; LOSS OF USE, DATA, OR PROFITS; OR BUSINESS INTERRUPTION) HOWEVER CAUSED AND ON ANY THEORY OF LIABILITY, WHETHER IN CONTRACT, STRICT LIABILITY, OR TORT (INCLUDING NEGLIGENCE OR OTHERWISE) ARISING IN ANY WAY OUT OF THE USE OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.</p>
-              </paper-material>
-
-            </section>
-
-            <section data-route="users">
-              <paper-material elevation="1">
-                <h2 class="paper-font-display2">Users</h2>
-                <p>This is the users section</p>
-                <a href="/users/Rob">Rob</a>
-              </paper-material>
-            </section>
-
-            <section data-route="user-info">
-              <paper-material elevation="1">
-                <h2 class="paper-font-display2">
-                User:<span>{{params.name}}</span>
-                </h2>
-                <div>This is <span>{{params.name}}</span>'s section</div>
-              </paper-material>
-            </section>
-
-            <section data-route="contact">
-              <paper-material elevation="1">
-                <h2 class="paper-font-display2">Contact</h2>
-                <p>This is the contact section</p>
-              </paper-material>
-            </section>
-
-          </iron-pages>
+    <div class="arrow-down-container">
+      <a href="#gallery">
+        <div class="arrow-down">
+          See the lessons
         </div>
-      </paper-header-panel>
-    </paper-drawer-panel>
-
-  </template>
-
+        <i class='material-icons'>keyboard_arrow_down</i>
+      </a>
+    </div>
+  </section>
+  <section class='gallery-container' id='gallery'>
+    <h2>Start Learning</h2>
+    <div class="lesson-container">
+      <lesson-ref title="Basic HTML" image="images/learn/source-code.png" url="lesson.html">
+        <p>
+          Wondering why your site’s looking so ugly? HTML just says what’s what and gives the page structure. CSS is where the real fun starts—it will fix things faster than Fix-It Felix.
+        </p>
+      </lesson-ref>
+    </div>
+    <div class="lesson-container">
+      <lesson-ref title="Basic CSS" image="images/learn/source-code.png" url="lesson.html">
+        <p>
+          Wondering why your site’s looking so ugly? HTML just says what’s what and gives the page structure. CSS is where the real fun starts—it will fix things faster than Fix-It Felix.
+        </p>
+      </lesson-ref>
+    </div>
+    <div class='lesson-container'>
+      <lesson-ref title="Build a Responsive Website" image="images/learn/source-code.png" url="lesson.html">
+        <p>
+          Wondering why your site’s looking so ugly? HTML just says what’s what and gives the page structure. CSS is where the real fun starts—it will fix things faster than Fix-It Felix.
+        </p>
+      </lesson-ref>
+    </div>
+  </section>
+  <section class='features-container'>
+    <h2>How it works</h2>
+    <div class="feature-set">
+      <div class="feature-text-left">
+        <h3>Carve your own path</h3>
+        <p>
+          Lorem ipsum dolor sit amet, consectetur adipiscing elit. Vivamus ut massa quis arcu fringilla pharetra eu sed ligula. In facilisis eros ac ante sodales cursus sit amet at risus. Nunc placerat in quam ut mattis.
+        </p>
+      </div>
+        <img class='feature-image-right' src="images/index/screen-feature.png" alt="" />
+    </div>
+    <div class="feature-set">
+      <img class='feature-image-left' src="images/index/screen-feature.png" alt="" />
+      <div class="feature-text-right">
+        <h3>Get definition</h3>
+        <p>
+          Lorem ipsum dolor sit amet, consectetur adipiscing elit. Vivamus ut massa quis arcu fringilla pharetra eu sed ligula. In facilisis eros ac ante sodales cursus sit amet at risus. Nunc placerat in quam ut mattis.
+        </p>
+      </div>
+    </div>
+    <div class="feature-set">
+      <div class="feature-text-left">
+        <h3>Some other feature</h3>
+        <p>
+          Lorem ipsum dolor sit amet, consectetur adipiscing elit. Vivamus ut massa quis arcu fringilla pharetra eu sed ligula. In facilisis eros ac ante sodales cursus sit amet at risus. Nunc placerat in quam ut mattis.
+        </p>
+      </div>
+        <img class='feature-image-right' src="images/index/screen-feature.png" alt="" />
+    </div>
+  </section>
   <!-- build:js scripts/app.js -->
   <script src="scripts/app.js"></script>
   <!-- endbuild-->
