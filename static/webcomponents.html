@@ -12560,7 +12560,7 @@ styles. All other styles should exist as single lines."
 			margin-right:50px;
 			position:relative;
 			background-color:#FFF;
-			
+
 			border-radius:4px;
 			width:100%;
 		}
@@ -12582,7 +12582,7 @@ styles. All other styles should exist as single lines."
 			width:100%;
 			height:175px;
 			overflow:hidden;
-			
+
 			position:relative;
 			z-index:1;
 		};
@@ -12610,7 +12610,7 @@ styles. All other styles should exist as single lines."
 			opacity:0.5;
 		};
 
-		
+
 
 		::content #capsule-title {
 			margin:0;
@@ -12622,22 +12622,22 @@ styles. All other styles should exist as single lines."
  			font-size: 24px;
 		};
 
-		
-		
+
+
 
 		::content #capsule-content {
 			display:none;
 			padding:20px;
 			padding-top:40px;
-			-webkit-transition: opacity 500ms ease-in-out; 
-			   -moz-transition: opacity 500ms ease-in-out; 
-			     -o-transition: opacity 500ms ease-in-out; 
-			        transition: opacity 500ms ease-in-out; 
+			-webkit-transition: opacity 500ms ease-in-out;
+			   -moz-transition: opacity 500ms ease-in-out;
+			     -o-transition: opacity 500ms ease-in-out;
+			        transition: opacity 500ms ease-in-out;
 
 
-			-webkit-transition-timing-function: cubic-bezier(0.770, 0.000, 0.175, 1.000); 
-			   -moz-transition-timing-function: cubic-bezier(0.770, 0.000, 0.175, 1.000); 
-			     -o-transition-timing-function: cubic-bezier(0.770, 0.000, 0.175, 1.000); 
+			-webkit-transition-timing-function: cubic-bezier(0.770, 0.000, 0.175, 1.000);
+			   -moz-transition-timing-function: cubic-bezier(0.770, 0.000, 0.175, 1.000);
+			     -o-transition-timing-function: cubic-bezier(0.770, 0.000, 0.175, 1.000);
 			        transition-timing-function: cubic-bezier(0.770, 0.000, 0.175, 1.000);
 		};
 
@@ -12659,7 +12659,7 @@ styles. All other styles should exist as single lines."
 		::content #capsule-content-container {
 			position:absolute;
 			background-color:#FFF;
-			
+
 			overflow-y:scroll;
 			z-index:99;
 			top:0;
@@ -12668,18 +12668,18 @@ styles. All other styles should exist as single lines."
 			height:100%;
 			visibility: hidden;
 			overflow:hidden;
-			-webkit-transition: all 750ms cubic-bezier(0.770, 0.000, 0.175, 1.000); 
-			   -moz-transition: all 750ms cubic-bezier(0.770, 0.000, 0.175, 1.000); 
+			-webkit-transition: all 750ms cubic-bezier(0.770, 0.000, 0.175, 1.000);
+			   -moz-transition: all 750ms cubic-bezier(0.770, 0.000, 0.175, 1.000);
 			     -o-transition: all 750ms cubic-bezier(0.770, 0.000, 0.175, 1.000);
 			        transition: all 750ms cubic-bezier(0.770, 0.000, 0.175, 1.000);
 
 
-			-webkit-transition-timing-function: cubic-bezier(0.770, 0.000, 0.175, 1.000); 
-			   -moz-transition-timing-function: cubic-bezier(0.770, 0.000, 0.175, 1.000); 
-			     -o-transition-timing-function: cubic-bezier(0.770, 0.000, 0.175, 1.000); 
+			-webkit-transition-timing-function: cubic-bezier(0.770, 0.000, 0.175, 1.000);
+			   -moz-transition-timing-function: cubic-bezier(0.770, 0.000, 0.175, 1.000);
+			     -o-transition-timing-function: cubic-bezier(0.770, 0.000, 0.175, 1.000);
 			        transition-timing-function: cubic-bezier(0.770, 0.000, 0.175, 1.000);
 		};
-		
+
 		::content #capsule-close-button {
 			position:absolute;
 			right:0;
@@ -12690,7 +12690,7 @@ styles. All other styles should exist as single lines."
 			width:100%;
 			height:100vh;
 			visibility:hidden;
-			
+
 			z-index:90;
 			top:0;
 			left:0;
@@ -12742,12 +12742,12 @@ styles. All other styles should exist as single lines."
 				<div id="capsule-image-container">
 					<div id="capsule-image-overlay"></div>
 					<div id="capsule-image"></div>
-					
+
 				</div>
 				<h2 id="capsule-title">{{ title }}</h2>
 				<paper-fab icon="content-copy"></paper-fab>
 			</div>
-			
+
 			<div id="capsule-content-container" class="material-shadow" elevation="1">
 				<paper-icon-button id="capsule-close-button" icon="clear"></paper-icon-button>
 				<div id="capsule-content">
@@ -12783,7 +12783,7 @@ styles. All other styles should exist as single lines."
 					return document.body;
 				}
 			}
-			
+
 		},
 
 		ready: function() {
@@ -12797,7 +12797,7 @@ styles. All other styles should exist as single lines."
 			this.capsule_page_block = this.$['capsule-page-block'];
 			this.default_width = 0;
 			this.window_open = false;
-			
+
 		},
 
 		attached: function() {
@@ -12823,11 +12823,11 @@ styles. All other styles should exist as single lines."
 			this.capsule_content_container.addEventListener("webkitTransitionEnd",function(e){
 				self._hideContentContainer();
 			},false);
-			
+
 		},
 
 		/* Using IronA11yKeysBehavior, listen for 'esc' key pressed
-		 * anywhere on the page (see keyEventTarget property). 
+		 * anywhere on the page (see keyEventTarget property).
 		 * escape will close an open capsule.
 		 */
 		_handleEscapeKey: function(e) {
@@ -12839,7 +12839,6 @@ styles. All other styles should exist as single lines."
 		},
 
 		_onCapsuleRefClick: function(e) {
-			console.log("_onCapsuleRefClick")
 			this.windowOn(e);
 		},
 
@@ -12847,18 +12846,14 @@ styles. All other styles should exist as single lines."
 			this.windowOff(e);
 		},
 
-		
+
 
 		_clickListener: function(e) {
-			console.log("CLICK");
-			
 		},
 
 		_hideContentContainer: function(e) {
-			console.log("_hideContentContainer");
 
 			if (this.window_open) {
-				console.log("window open");
 				var self = this;
 				// this.capsule_content_container.removeEventListener("transitionend",function(e){
 				// 	self._hideContentContainer();
@@ -12875,12 +12870,12 @@ styles. All other styles should exist as single lines."
 			} else {
 				console.log("window closed")
 			}
-			
-			
+
+
 		},
 
 		windowOn:function(e) {
-			
+
 			this.capsule_content.style.display = "block";
 			this.capsule_content.style.opacity = 1;
 			this.capsule_content_container.style.visibility = "visible";
@@ -12920,7 +12915,8 @@ styles. All other styles should exist as single lines."
 
 	});
 
-</script><dom-module id="info-block" assetpath="learn/">
+</script>
+<dom-module id="info-block" assetpath="learn/">
 	<style>
 		::content #info-block-wrapper {
 			background-color: #F5F4F4;
@@ -13063,38 +13059,38 @@ styles. All other styles should exist as single lines."
 		top:0px;
 		height:100%;
 		cursor:pointer;
-		-webkit-transition: all 750ms cubic-bezier(0.770, 0.000, 0.175, 1.000); 
-		   -moz-transition: all 750ms cubic-bezier(0.770, 0.000, 0.175, 1.000); 
-		     -o-transition: all 750ms cubic-bezier(0.770, 0.000, 0.175, 1.000); 
-		        transition: all 750ms cubic-bezier(0.770, 0.000, 0.175, 1.000); 
+		-webkit-transition: all 750ms cubic-bezier(0.770, 0.000, 0.175, 1.000);
+		   -moz-transition: all 750ms cubic-bezier(0.770, 0.000, 0.175, 1.000);
+		     -o-transition: all 750ms cubic-bezier(0.770, 0.000, 0.175, 1.000);
+		        transition: all 750ms cubic-bezier(0.770, 0.000, 0.175, 1.000);
 
 
-		-webkit-transition-timing-function: cubic-bezier(0.770, 0.000, 0.175, 1.000); 
-		   -moz-transition-timing-function: cubic-bezier(0.770, 0.000, 0.175, 1.000); 
-		     -o-transition-timing-function: cubic-bezier(0.770, 0.000, 0.175, 1.000); 
+		-webkit-transition-timing-function: cubic-bezier(0.770, 0.000, 0.175, 1.000);
+		   -moz-transition-timing-function: cubic-bezier(0.770, 0.000, 0.175, 1.000);
+		     -o-transition-timing-function: cubic-bezier(0.770, 0.000, 0.175, 1.000);
 		        transition-timing-function: cubic-bezier(0.770, 0.000, 0.175, 1.000);
 	}
 	::content #lesson-ref-container.animate {
-/*		-webkit-transition: all 750ms cubic-bezier(0.770, 0.000, 0.175, 1.000); 
-		   -moz-transition: all 750ms cubic-bezier(0.770, 0.000, 0.175, 1.000); 
-		     -o-transition: all 750ms cubic-bezier(0.770, 0.000, 0.175, 1.000); 
-		        transition: all 750ms cubic-bezier(0.770, 0.000, 0.175, 1.000); 
+/*		-webkit-transition: all 750ms cubic-bezier(0.770, 0.000, 0.175, 1.000);
+		   -moz-transition: all 750ms cubic-bezier(0.770, 0.000, 0.175, 1.000);
+		     -o-transition: all 750ms cubic-bezier(0.770, 0.000, 0.175, 1.000);
+		        transition: all 750ms cubic-bezier(0.770, 0.000, 0.175, 1.000);
 
 
-		-webkit-transition-timing-function: cubic-bezier(0.770, 0.000, 0.175, 1.000); 
-		   -moz-transition-timing-function: cubic-bezier(0.770, 0.000, 0.175, 1.000); 
-		     -o-transition-timing-function: cubic-bezier(0.770, 0.000, 0.175, 1.000); 
+		-webkit-transition-timing-function: cubic-bezier(0.770, 0.000, 0.175, 1.000);
+		   -moz-transition-timing-function: cubic-bezier(0.770, 0.000, 0.175, 1.000);
+		     -o-transition-timing-function: cubic-bezier(0.770, 0.000, 0.175, 1.000);
 		        transition-timing-function: cubic-bezier(0.770, 0.000, 0.175, 1.000);*/
 	}
-	
+
 	::content #image-container {
 		position: relative;
 	}
-	
+
 	::content #image-container img {
 		width: 100%;
 	}
-	
+
 	::content #title-el {
 		position: absolute;
 		bottom: 0;
@@ -13104,7 +13100,7 @@ styles. All other styles should exist as single lines."
 		font-size:26px;
 		font-weight:900;
 	}
-	
+
 	::content #image-container paper-fab {
 		position: absolute;
 		right: -30px;
@@ -13112,11 +13108,11 @@ styles. All other styles should exist as single lines."
 		background-color: #fff;
 		color: #000;
 	}
-	
+
 	::content #text-container {
 		padding: 10px;
 		padding:0px 10px 10px 10px;
-		
+
 
 	};
 
@@ -13201,17 +13197,16 @@ styles. All other styles should exist as single lines."
 			this.image_container = this.$['image-container'];
 			this.title_el = this.$['title-el'];
 
-			
+
 		},
 
 		attached: function() {
 			var self = this;
 			setTimeout(function(){
 				self.container.style.height = self.container.offsetHeight +"px";
-				console.log(self.container.offsetHeight)
 			}, 500);
-			
-			
+
+
 		},
 
 		_handleEscapeKey: function(e) {
@@ -13223,15 +13218,12 @@ styles. All other styles should exist as single lines."
 		},
 
 		_clickListener: function(e) {
-			console.log("_clickListener");
-			
-
 			if (this.url) {
-				
+
 				// var container_top = this.container.getBoundingClientRect().top;
 				// this.container.style.left = "150%";
 				// this.container.style.height = window.innerHeight + "px";
-				
+
 				// this.container.style.top = -container_top + "px";
 				// this.container.setAttribute("elevation", "5");
 				this.fire("page:add", {url:this.url});
@@ -13530,7 +13522,7 @@ Polymer({
 
 		request.onload = function() {
 			if (request.status >= 200 && request.status < 400) {
-	        // check on support for DOMParser 
+	        // check on support for DOMParser
 	        // maybe consult https://developer.mozilla.org/en-US/Add-ons/Code_snippets/HTML_to_DOM
 				dp = new DOMParser();
 				contentType = request.getResponseHeader('content-type');
@@ -13538,14 +13530,12 @@ Polymer({
 				var parsed = dp.parseFromString(request.responseText, contentType);
 				callback(parsed.querySelector('page-item'));
 			} else {
-				console.log("Error ["+ request.status +"] retrieving " + url);
-				console.log(request);
+				console.log("Error ["+ request.status +"] retrieving " + url, request);
 			}
 		};
 
 		request.onerror = function() {
-			console.log("Error ["+ request.status +"] retrieving " + url);
-			console.log(request);
+			console.log("Error ["+ request.status +"] retrieving " + url, request);
 		};
 
 		request.send();
@@ -13569,6 +13559,7 @@ Polymer({
 				for (var i = 0; i < pageItem.attributes.length; i++) {
 					clone.attributes.setNamedItem(pageItem.attributes[i].cloneNode())
 				};
+				clone.title = clone.attributes.title.value; // safari needs help here
 				var content = clone.$$('content');
 				content.innerHTML = pageItem.innerHTML;
 				clone.distributeContent();
@@ -13640,7 +13631,7 @@ Polymer({
 					} else {
 						to_page_out.push(this.page_stack[i].el);
 					}
-					
+
 				}
 			}
 
@@ -13669,12 +13660,13 @@ Polymer({
 			window.onpopstate = function(e) {
 				if (e.state && typeof(e.state.stack_end_index) == "number") {
 					if (e.state.stack_end_index < self.page_stack.length) {
-						self.selectPage(e.state.stack_end_index)	
+						self.selectPage(e.state.stack_end_index)
 					} else {
 						console.log("Forward not supported at this time.");
 					}
 				} else {
 					if (self.page_stack.length > 1) {
+						console.log('state has no stack_end_index so selecting page 0');
 						self.selectPage(0);
 					} else {
 						console.log("Don't know what to do with popped state");
@@ -13687,8 +13679,9 @@ Polymer({
 
 		},
 		page_stack: []
-	})    
-</script><dom-module id="page-item" assetpath="learn/">
+	})
+</script>
+<dom-module id="page-item" assetpath="learn/">
 	<style>
 		::content #page-container {
 			position:relative;
@@ -13698,7 +13691,7 @@ Polymer({
 		::content #page-cover {
 			width:100%;
 			height:100%;
-			
+
 			display:block;
 			height:0;
 			position:absolute;
@@ -13712,11 +13705,11 @@ Polymer({
 			-webkit-transition: margin-left 750ms cubic-bezier(0.770, 0.000, 0.175, 1.000),
 								width 750ms cubic-bezier(0.770, 0.000, 0.175, 1.000),
 								right 750ms cubic-bezier(0.770, 0.000, 0.175, 1.000),
-								opacity 750ms cubic-bezier(0.770, 0.000, 0.175, 1.000); 
+								opacity 750ms cubic-bezier(0.770, 0.000, 0.175, 1.000);
 			   -moz-transition: margin-left 750ms cubic-bezier(0.770, 0.000, 0.175, 1.000),
 			   					width 750ms cubic-bezier(0.770, 0.000, 0.175, 1.000),
 			   					right 750ms cubic-bezier(0.770, 0.000, 0.175, 1.000),
-			   					opacity 750ms cubic-bezier(0.770, 0.000, 0.175, 1.000); 
+			   					opacity 750ms cubic-bezier(0.770, 0.000, 0.175, 1.000);
 			     -o-transition: margin-left 750ms cubic-bezier(0.770, 0.000, 0.175, 1.000),
 			     				width 750ms cubic-bezier(0.770, 0.000, 0.175, 1.000),
 			     				right 750ms cubic-bezier(0.770, 0.000, 0.175, 1.000),
@@ -13727,9 +13720,9 @@ Polymer({
 			        			opacity 750ms cubic-bezier(0.770, 0.000, 0.175, 1.000);
 
 
-			-webkit-transition-timing-function: cubic-bezier(0.770, 0.000, 0.175, 1.000); 
-			   -moz-transition-timing-function: cubic-bezier(0.770, 0.000, 0.175, 1.000); 
-			     -o-transition-timing-function: cubic-bezier(0.770, 0.000, 0.175, 1.000); 
+			-webkit-transition-timing-function: cubic-bezier(0.770, 0.000, 0.175, 1.000);
+			   -moz-transition-timing-function: cubic-bezier(0.770, 0.000, 0.175, 1.000);
+			     -o-transition-timing-function: cubic-bezier(0.770, 0.000, 0.175, 1.000);
 			        transition-timing-function: cubic-bezier(0.770, 0.000, 0.175, 1.000);
 		};
 		::content #page-cover-background {
@@ -13749,9 +13742,10 @@ Polymer({
 			right:0;
 			height:100vh;
 			width:100%;
-			display:flex;
+			@apply(--layout-center-center);
+			/*display:flex;
 			align-items: center;
-			justify-content: center;
+			justify-content: center;*/
 		}
 		::content #page-cover-title-container {
 			text-align:center;
@@ -13788,7 +13782,7 @@ Polymer({
   -ms-transform-origin: 50% 50%;
   -o-transform-origin: 50% 50%;
   transform-origin: 50% 50%;*/
-/*			-webkit-transform: rotate(90deg); 
+/*			-webkit-transform: rotate(90deg);
 				-ms-transform: rotate(90deg);
 					transform: rotate(90deg);*/
 		}
@@ -13800,17 +13794,17 @@ Polymer({
 			background-color:#F4F4F4;
 			top:0;
 			margin-left:100%;
-			
+
 			/*overflow:hidden;*/
 			overflow-y: scroll;
 			-webkit-transition: margin-left 750ms cubic-bezier(0.770, 0.000, 0.175, 1.000),
 								width 750ms cubic-bezier(0.770, 0.000, 0.175, 1.000),
 								box-shadow 250ms ease-in-out,
-								opacity 750ms cubic-bezier(0.770, 0.000, 0.175, 1.000); 
+								opacity 750ms cubic-bezier(0.770, 0.000, 0.175, 1.000);
 			   -moz-transition: margin-left 750ms cubic-bezier(0.770, 0.000, 0.175, 1.000),
 			   					width 750ms cubic-bezier(0.770, 0.000, 0.175, 1.000),
 			   					box-shadow 250ms ease-in-out,
-			   					opacity 750ms cubic-bezier(0.770, 0.000, 0.175, 1.000); 
+			   					opacity 750ms cubic-bezier(0.770, 0.000, 0.175, 1.000);
 			     -o-transition: margin-left 750ms cubic-bezier(0.770, 0.000, 0.175, 1.000),
 			     				width 750ms cubic-bezier(0.770, 0.000, 0.175, 1.000),
 			     				box-shadow 250ms ease-in-out,
@@ -13822,9 +13816,9 @@ Polymer({
 
 
 
-			-webkit-transition-timing-function: cubic-bezier(0.770, 0.000, 0.175, 1.000); 
-			   -moz-transition-timing-function: cubic-bezier(0.770, 0.000, 0.175, 1.000); 
-			     -o-transition-timing-function: cubic-bezier(0.770, 0.000, 0.175, 1.000); 
+			-webkit-transition-timing-function: cubic-bezier(0.770, 0.000, 0.175, 1.000);
+			   -moz-transition-timing-function: cubic-bezier(0.770, 0.000, 0.175, 1.000);
+			     -o-transition-timing-function: cubic-bezier(0.770, 0.000, 0.175, 1.000);
 			        transition-timing-function: cubic-bezier(0.770, 0.000, 0.175, 1.000);
 		};
 
@@ -13897,15 +13891,15 @@ Polymer({
 			"click": "_clickListener"
 		},
 		page_stack: [],
-		
+
 
 		created: function() {
-			//console.log(this.localName + '#' + this.id + ' was created');
+
 		},
 
 		ready: function() {
-			//console.log("page-item ready");
-			//console.log(this.localName + '#' + this.id + ' is ready');
+			//
+			(this.localName + '#' + this.id + ' is ready');
 			// DOM OBJECTS
 			this.page_container = this.$['page-container'];
 			this.page_item = this.$['page-item'];
@@ -13915,22 +13909,13 @@ Polymer({
 			var self = this;
 			//this.page_item.style.marginLeft = "100%";
 			//this.page_item.style.opacity = "0";
-			console.log("TITLE " + this.title);
-			
+
   		},
 
 		attached: function() {
-			
-			//this.page_item.style.opacity = "0";
-			//console.log(this.localName + '#' + this.id + ' was attached');
-			
-
 			var self = this;
 
-			
-
 			this.page_item.style.marginLeft = "100%";
-			//this.page_item.setAttribute("class", "material-shadow loaded");
 
 			this.page_cover.addEventListener("click",function(e){
 				self._onCoverClick();
@@ -13940,26 +13925,23 @@ Polymer({
 		},
 
 		_onCoverClick: function(e) {
-			//console.log("_onCoverClick");
 			this.fire("page:out", {caller:this, index:this.index});
 		},
 
 		_removeSelf: function(e) {
-			//console.log("_removeSelf");
 			this.fire("page:remove", {caller:this, index:this.index});
 			// DESTROY
 		},
 
 		_onLoad: function(e) {
-			//console.log("_onLoad");
 		},
 
 		/* Using IronA11yKeysBehavior, listen for 'esc' key pressed
-		 * anywhere on the page (see keyEventTarget property). 
+		 * anywhere on the page (see keyEventTarget property).
 		 * escape will hide a zoomed image.
 		 */
 		_handleEscapeKey: function(e) {
-			
+
 		},
 
 		/* 	Click Listener
@@ -13975,7 +13957,6 @@ Polymer({
 		/* WHEN TRANSITION ENDS
 		================================================== */
 		_onBackgroundTransition: function(e) {
-			// console.log("transitionend");
 			// this.background.style.display = "none";
 			// this.zoom_container.classList.remove('container-zoomed');
 
@@ -13986,7 +13967,6 @@ Polymer({
 
 		// Removes page
 		pageOut: function() {
-			//console.log("PAGE OUT");
 			// TRANSITION LISTENERS
 			//this.page_item.setAttribute("class", "loaded");
 			var self = this;
@@ -14007,17 +13987,16 @@ Polymer({
 		// Page is no longer active but is visible in the page_stack
 		pageOff: function(stack_depth_position, stack_depth, index, stack_width) {
 
-			//console.log("pageOff");
 			var left_pos = 100 - stack_depth_position,
 				self = this;
 
 			this.index = index;
 
-			
+
 			this.page_cover.style.marginLeft = "0%";
 			this.page_cover.style.height = "100vh";
 			this.page_cover.style.width = "75%";
-			
+
 			this.page_cover.style.display = "block";
 			this.page_cover.style.zIndex = stack_depth + 1;
 			//this.page_cover.style.marginLeft = -left_pos + 25 + "%";
@@ -14044,15 +14023,12 @@ Polymer({
 				self.page_cover.style.opacity = "1";
 			}, 750);
 			//this.page_item.style.width = "100%";
-			
+
 		},
 
 		// Page is at the top of the page_stack
 		_pageOn: function(single) {
 
-			console.log("single? " + single);
-			//console.log("is single " + single);
-			//console.log(this.page_item.style.marginLeft)
 			if (single) {
 				this.page_item.style.marginLeft = "0%";
 				this.page_item.style.width = "100%";
@@ -14060,18 +14036,17 @@ Polymer({
 				this.page_item.style.marginLeft = "25%";
 				this.page_item.style.width = "75%";
 			}
-			
+
 			this.page_item.style.opacity = "1";
-			
+
 
 			this.page_cover.style.opacity = "0";
 			this.page_cover.style.height = "0px";
-			//console.log(this.page_item.style.marginLeft);
-			
+
 			var self = this;
 			setTimeout(function(){
 				self.page_container.style.zIndex = 10;
-				
+
 				self.page_item.setAttribute("elevation", "5");
 			}, 500);
 
@@ -14294,14 +14269,12 @@ function fetchGlossary(url, callback) {
         if (request.status >= 200 && request.status < 400) {
             callback(JSON.parse(request.responseText));
         } else {
-            console.log("Error ["+ request.status +"] retrieving " + url);
-            console.log(request);
+            console.log("Error ["+ request.status +"] retrieving " + url,request);
         }
     };
 
     request.onerror = function() {
-        console.log("Error ["+ request.status +"] retrieving " + url);
-        console.log(request);
+        console.log("Error ["+ request.status +"] retrieving " + url, request);
     };
 
     request.send();
