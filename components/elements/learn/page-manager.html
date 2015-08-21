@@ -11,7 +11,7 @@
 
 		request.onload = function() {
 			if (request.status >= 200 && request.status < 400) {
-	        // check on support for DOMParser 
+	        // check on support for DOMParser
 	        // maybe consult https://developer.mozilla.org/en-US/Add-ons/Code_snippets/HTML_to_DOM
 				dp = new DOMParser();
 				contentType = request.getResponseHeader('content-type');
@@ -121,7 +121,7 @@
 					} else {
 						to_page_out.push(this.page_stack[i].el);
 					}
-					
+
 				}
 			}
 
@@ -150,7 +150,7 @@
 			window.onpopstate = function(e) {
 				if (e.state && typeof(e.state.stack_end_index) == "number") {
 					if (e.state.stack_end_index < self.page_stack.length) {
-						self.selectPage(e.state.stack_end_index)	
+						self.selectPage(e.state.stack_end_index)
 					} else {
 						console.log("Forward not supported at this time.");
 					}
@@ -168,5 +168,5 @@
 
 		},
 		page_stack: []
-	})    
+	})
 </script>

@@ -80,10 +80,8 @@ Example:
 			display: -ms-flexbox;
 			align-items: center;
 			-webkit-align-items: center;
-
 			justify-content: center;
 			-webkit-justify-content: center;
-
 			/*margin-bottom:50px;*/
 			/*			background-image: var(--info-icon-url);
 			background-repeat: no-repeat;
@@ -98,7 +96,6 @@ Example:
 			-webkit-align-items: center;
 			justify-content: center;
 			-webkit-justify-content: center;
-
 			font-family: Roboto, sans-serif;
 			color: #FAFAFA;
 			font-size: 38px;
@@ -111,11 +108,12 @@ Example:
 		}
 
 		.material-icons {
-			position: absolute;
+			position: relative;
+			margin-right: -25px;
+			top: 3px;
 			align-items: center;
 			-webkit-align-items: center;
 		}
-
 	</style>
 	<template>
 		<paper-material elevation="0" class="paper-font-body2">
