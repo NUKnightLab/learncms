@@ -48,6 +48,7 @@
 				for (var i = 0; i < pageItem.attributes.length; i++) {
 					clone.attributes.setNamedItem(pageItem.attributes[i].cloneNode())
 				};
+				clone.title = clone.attributes.title.value; // safari needs help here
 				var content = clone.$$('content');
 				content.innerHTML = pageItem.innerHTML;
 				clone.distributeContent();
