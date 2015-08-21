@@ -1,5 +1,10 @@
 #staff-toolbar {
-    display: flex;
+    display: -webkit-box; /* OLD - iOS 6-, Safari 3.1-6 */
+    display: -moz-box;    /* OLD - Firefox 19- (buggy but mostly works) */
+    display: -ms-flexbox;  /* TWEENER - IE 10 */
+    display: -webkit-flex; /* NEW - Chrome */
+    -webkit-justify-content: space-between; /* Safari 6.1+ */
+    display: flex;         /* NEW, Spec - Opera 12.1, Firefox 20+ */
     justify-content: space-between;
     background-color: #FFF7E8;
     font-family: Roboto;
