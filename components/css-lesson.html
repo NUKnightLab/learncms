@@ -42,8 +42,8 @@
 				You'll need to get started
 			</h2>
 			<div style="display:flex">
-				<capsule-unit image="images/learn/text-editor.png" label="Text Editor" style="padding-right: 25px" id="text-editor"></capsule-unit>
-				<capsule-unit image="images/learn/ftp-program.png" label="Modern Web Browser" style="padding-right: 25px"></capsule-unit>
+				<capsule-unit ref="text-editor"></capsule-unit>
+				<capsule-unit ref='modern-web-browser'></capsule-unit>
 			</div>
 		</lesson-block>
 
@@ -53,15 +53,12 @@
 			<p>
 				The syntax for CSS is a lot simpler than the syntax for HTML. Are you ready for it? Here it is:
 			</p>
-			<pre class='code-snippet'>
-				<p>
-					<code>
+			<code-block>
 element {
   property: value;
   property: value;
-}</code>
-			</p>
-			</pre>
+}
+			</code-block>
 				<p>A property is an attribute of an element. Common properties include background-color, height, width, and others. A property’s value affects certain parts of the element, usually in how it is displayed. Values can be a range of different things, like a number, word or color.</p>
 
 				<p>That’s it, seriously. Okay, that’s not <i>it</i> it, but you can do quite a bit just by modifying the properties of specific elements. </p>
@@ -73,15 +70,11 @@ element {
 		<step-block title="Change it up">
 			<p>
 				Let’s change the background color of our page. To do that, type the following into your CSS file:</p>
-				<pre class='code-snippet'>
-					<p>
-						<code>
+				<code-block>
 body {
   background-color: beige;
 }
-						</code>
-					</p>
-				</pre>
+				</code-block>
 			<info-block image="images/learn/info-icon.png">
 				<h2>RGB and HSB and Hex, Oh my!</h2>
 				<p>There are a lot of ways to pick color values. The way we have here is to just use a color that the browser already knows, like red or beige. For a more precise method of picking colors, look into RGB, HSB, and hex values.</p>
@@ -98,9 +91,7 @@ body {
 			<info-block>
 			<h2>Blast from the past</h2>
 				<p>But there’s still a problem. As of right now, we don’t have any way of grouping certain elements together in our HTML. Let’s say we wanted to have all of our introductory information have the same background-color. We could try styling each piece at once, like this:</p>
-			<pre class='code-snippet'>
-				<p>
-					<code>
+			<code-block>
 h1 {
   background-color: firebrick;
 }
@@ -112,25 +103,19 @@ img {
 p {
   background-color: firebrick;
 }
-					</code>
-				</p>
-			</pre>
+			</code-block>
 
 			<p>But that doesn’t really give us what we want (and even if it was what we wanted, there would be an easier way to do that). Instead of combining the individual elements, we just have three separately colored blocks. If only there was some way to go in our HTML and put the elements into one larger, over-arching element. Oh, wait there is.</p>
 		</info-block>
-			<p>Remember how in the HTML lesson we had you wrap all your introductory information in a &lt;div&gt;? Yeah, those were good times. And now we get to actually put that &lt;div&gt; to use.</p>
+			<p>Remember how in the HTML lesson we had you wrap all your introductory information in a <code>&lt;div&gt;</code>? Yeah, those were good times. And now we get to actually put that <code>&lt;div&gt;</code> to use.</p>
 
-			<p>Now we can target the containing element in our CSS by modifying the &lt;div&gt; like so:</p>
+			<p>Now we can target the containing element in our CSS by modifying the <code>&lt;div&gt;</code> like so:</p>
 
-			<pre class='code-snippet'>
-				<p>
-					<code>
+			<code-block>
 div {
   background-color: firebrick;
 }
-					</code>
-				</p>
-			</pre>
+			</code-block>
 		</step-block>
 
 		<step-block title='Real classy: Getting real specific'>
@@ -140,9 +125,7 @@ div {
 			<p>
 				Back in your HTML document, dd a class to your header and paragraph and call it white-text, like this:
 			</p>
-			<pre class='code-snippet'>
-				<p>
-					<code>
+			<code-block>
 &lt;h1 class='white-text'&gt;
   // your text
 &lt;h1&gt;
@@ -150,18 +133,15 @@ div {
 &lt;p class='white-text'&gt;
   // your text
 &lt;p&gt;
-					</code>
-				</p>
-			</pre>
+			</code-block>
 			<p>
 				Add an ID to your ordered list and call it ‘gray-text.’
-			<pre class='code-snippet'>
-				<p>
+			</p>
+			<code-block>
 &lt;ol id='gray-text'&gt;
   // list items
 &lt;ol&gt;
-				</p>
-			</pre>
+			</code-block>
 
 		</step-block>
 
@@ -169,38 +149,31 @@ div {
 			<p>
 				Let’s target our classes and IDs. To modify an element based on its class, you need to add a period before the class name in the CSS file.
 			</p>
-			<pre class='code-snippet'>
-				<p>
-					<code>
+			<code-block>
 .white-text {
   color: white;
 }
-					</code>
-				</p>
-			</pre>
+			</code-block>
 			<p>
 				To target an ID, simply use a pound sign instead of a period.
-				<pre class='code-snippet'>
-					<p>
-						<code>
+			</p>
+				<code-block>
 #gray-text {
   color: gray;
 }
-						</code>
-					</p>
-				</pre>
+				</code-block>
 
-			<info-block image="images/learn/info-icon.png">
-				<h2>Be descriptive</h2>
-				<p>Classes and IDs not only make it easier to style your code, but are also a good opportunity to help with organization and readability as well because it allows people (including you!) to understand the purpose of each HTML element at a glance. Give your classes and IDs descriptive names so you can come back to them more easily when you need to modify them again.</p>
-			</info-block>
-
+		<info-block image="images/learn/info-icon.png">
+			<h2>Be descriptive</h2>
+			<p>Classes and IDs not only make it easier to style your code, but are also a good opportunity to help with organization and readability as well because it allows people (including you!) to understand the purpose of each HTML element at a glance. Give your classes and IDs descriptive names so you can come back to them more easily when you need to modify them again.</p>
+		</info-block>
 		</step-block>
 
-		<step-block title="The box model">
+		<step-block title="Positions, everyone!">
 			<p>
-				Probably one of the biggest things you’ll be modifying in your CSS is your webpage’s layout. Now that you have a grasp over how to change elements’ styles – such as color and size – you’ll want to be able to dictate where those elements go and how they are positioned in relation to each other. This is where the box model comes in handy. In CSS, each element is essentially surrounded by a box made up of margins, borders and padding. It's a lot to take in at once, so head to this standalone lesson to get acquainted with it.
+				Play around with the display and positioning of your site's elements. The Box Model is a handy tool in visualizing where things go.
 			</p>
+<lesson-ref ref="box-model"></lesson-ref>
 	</step-block>
 
 		<step-block title="Pass the bar">
@@ -210,95 +183,67 @@ div {
 				<p>Navbars might seem complicated, but they’re really just styled lists. Let’s turn our unordered list of social media links into our navbar. </p>
 
 				<p>First, let’s make this easier on our future selves by applying a descriptive ID to our unordered list. Let’s call it ‘navbar.’</p>
-				<pre class='code-snippet'>
-						<p>
-							<code>
+				<code-block>
 &lt;ul id='navbar'&gt;
   // list items
 &lt;/ul&gt;
-							</code>
-						</p>
-				</pre>
+				</code-block>
 
-				<p>Now let’s get rid of those ugly little bullets. In your CSS document, target the &lt;li&gt;s nested in your navbar ID and change the list-style-type to none.</p>
+				<p>Now let’s get rid of those ugly little bullets. In your CSS document, target the <code>&lt;li&gt;</code>s nested in your navbar ID and change the list-style-type to none.</p>
 
-				<pre class='code-snippet'>
-					<p>
-						<code>
+				<code-block>
 #navbar li{
   list-style-type: none;
 }
-						</code>
-					</p>
-				</pre>
+				</code-block>
 
 				<p>Next, we want our links to all be in a row instead of stacked on top of each other. To change that, we’ll affect the display property.</p>
 
-				<pre class='code-snippet'>
-					<p>
-						<code>
+				<code-block>
 #navbar li{
   list-style-type: none
   display: inline-block;
 }
-						</code>
-					</p>
-				</pre>
+				</code-block>
 
-				<p>The links seem a little too close to each other, so let’s adjust the width of their &lt;a&gt; elements. We’re adjusting the &lt;a&gt; tags rather than the &lt;li&gt; because we want the user to be able to click on the link from anywhere inside the box that holds the link. We need the links to have a display value of block in order for the width to apply to them, however.</p>
+				<p>The links seem a little too close to each other, so let’s adjust the width of their <code>&lt;a&gt;</code> elements. We’re adjusting the <code>&lt;a&gt;</code> tags rather than the <code>&lt;li&gt;</code> because we want the user to be able to click on the link from anywhere inside the box that holds the link. We need the links to have a display value of block in order for the width to apply to them, however.</p>
 
-				<pre class='code-snippet'>
-					<p>
-						<code>
+				<code-block>
 #navbar li a{
   display: block;
   width: 120px;
 }
-						</code>
-					</p>
-				</pre>
+				</code-block>
 
 				<p>Great! Now let’s center the text for the links inside their boxes and provide some vertical padding.</p>
 
-				<pre class='code-snippet'>
-					<p>
-						<code>
+				<code-block>
 #navbar li a{
   text-align: center;
   padding-top: 10px;
   padding-bottom: 10px;
 }
-						</code>
-					</p>
-				</pre>
+				</code-block>
 
-				<p>Something’s still a bit off: the placement of our navbar right now just doesn’t make sense. Navbars are supposed to be at the top of the page, but right now our &lt;ul&gt; is buried. In your HTML file, move the &lt;ul&gt; tag and its contents to the top of the body, above the &lt;div&gt;.</p>
+				<p>Something’s still a bit off: the placement of our navbar right now just doesn’t make sense. Navbars are supposed to be at the top of the page, but right now our <code>&lt;ul&gt;</code> is buried. In your HTML file, move the <code>&lt;ul&gt;</code> tag and its contents to the top of the body, above the <code>&lt;div&gt;</code>.</p>
 
 				<p>Now when we refresh the page the position of the navbar makes sense, although it still doesn’t look quite right visually. That’s because of the top margin. The navbar has some top margin by default, which is keeping it from going to the top of the page. To fix that, change the display of the navbar to be inline-block and get rid of the top margin.</p>
 
-				<pre class='code-snippet'>
-					<p>
-						<code>
+				<code-block>
 #navbar {
   display: inline-block;
   margin-top: 0;
 }
-						</code>
-					</p>
-				</pre>
+				</code-block>
 
 				<p>We want our navbar to stretch across the whole screen, so we need to set its width to 100%. We also want it to be distinct from the rest of the page, so we need to change its background color as well. I’ll be changing mine to darkslategray, but you can pick whatever value you want (try playing around with RGB or even hex values if you’re feeling adventurous).</p>
 
-				<pre class='code-snippet'>
-					<p>
-						<code>
+				<code-block>
 #navbar {
   width: 100%;
   background-color: darkslategray;
 }
-						</code>
-					</p>
-				</pre>
+				</code-block>
 
 				<p>At this point you might also want to change the color of the links inside your navbar if the default blue is hard to see against your background. Experiment with different font-family, color, and other values and find a combination you like. That’s the fun with styling: you can make it anything you want. Like literally almost anything.</p>
 
@@ -306,15 +251,11 @@ div {
 
 				<p>Guess what? You can do that with CSS. We’ve already covered a few selectors, but there are so many more useful selectors that can be applied in a variety of ways. One class of selectors is referred to as a “pseudo-class” uses a colon (:) to select an element which has a certain property. For example, if we wanted to change the color of links that had already been visited, we would target a:visited in our CSS. For our navbar, we can respond to users by changing the background color of the links they’re hovering over. We’ll use the a:hover selector for that.</p>
 
-				<pre class='code-snippet'>
-					<p>
-						<code>
+				<code-block>
 #navbar li a:hover{
   background-color: black;
 }
-						</code>
-					</p>
-				</pre>
+				</code-block>
 
 				<p>Try it out! There are more useful selectors just like :hover and :visited, and being familiar with them can make your life a whole lot easier and make your website that much more versatile.</p>
 
@@ -322,17 +263,17 @@ div {
 			<h2>Useful selectors</h2>
 				<ol>
 					<li>
-						<code>#element {</code>
-						<br>
-						<p>
-							The pound sign allows you to select classes, which is very useful for styling multiple elements at once
-						</p>
-					</li>
-					<li>
 						<code>.element {</code>
 						<br>
 						<p>
-							Like the class selector, a period allows you to select an element based on its unique ID
+							The period allows you to select classes, which is very useful for styling multiple elements at once
+						</p>
+					</li>
+					<li>
+						<code>#element {</code>
+						<br>
+						<p>
+							Like the class selector, a pound sign allows you to select an element based on its unique ID
 						</p>
 					</li>
 					<li>
@@ -395,9 +336,7 @@ div {
 
 			<info-block>
 				<h2>Code Summary</h2>
-				<pre class='code-snippet'>
-				<code>
-					<p>
+				<code-block>
 body {
   background-color: beige;
   margin: 0 0 0 0;
@@ -441,12 +380,9 @@ div {
 #navbar li a:hover {
   background-color: black;
 }
-					</p>
-				</code>
-			</pre>
+			</code-block>
 			</info-block>
 		</step-block>
-
 	</div>
 	<script src="https://ajax.googleapis.com/ajax/libs/jquery/2.1.3/jquery.min.js"></script>
 	<script type="text/javascript" src="scripts/hack.js"></script>
