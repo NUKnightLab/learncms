@@ -27,7 +27,7 @@
         <learn-nav logo="{% static 'img/banner-logo-white.png' %}"></learn-nav>
         <page-manager>
         <page-item title="{{ lesson.title }}">
-        <lesson-banner image="{{ MEDIA_URL }}{{ lesson.banner_image }}" title="{{ lesson.title }}"></lesson-banner>
+        <lesson-banner image="{{ lesson.banner_image.url }}" title="{{ lesson.title }}"></lesson-banner>
 
         {{ evaluated_content|safe }}
         </page-item>

@@ -63,3 +63,5 @@ target/
 .DS_Store
 
 db.sqlite3
+# Filebrowser image uploads
+fbimages

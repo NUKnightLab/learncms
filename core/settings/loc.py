@@ -49,20 +49,16 @@ DATABASES = {
 
 STATIC_URL = '/static/'
 
-# User uploads settings for S3
-# In addition to below, set environment vars:
-#
-# AWS_ACCESS_KEY_ID
-# AWS_SECRET_ACCESS_KEY
-#
-DEFAULT_FILE_STORAGE = 'learncms.admin.S3FileBrowserStorage'
+#django-filebrowser needs its own storage
+from django.core.files.storage import FileSystemStorage
+FILEBROWSER_ROOT=os.path.normpath(os.path.join(PROJECT_ROOT, 'fbimages'))
+FILEBROWSER_URL="/fbimages/"
+FILEBROWSER_STORAGE = FileSystemStorage(location=FILEBROWSER_ROOT,base_url=FILEBROWSER_URL)
 from filebrowser.sites import site
-site.directory = 'learncms'
-from boto.s3.connection import OrdinaryCallingFormat
-AWS_S3_CALLING_FORMAT = OrdinaryCallingFormat()
-AWS_S3_URL_PROTOCOL = 'https'
-AWS_S3_SECURE_URLS = False
-AWS_STORAGE_BUCKET_NAME = 'media.knilab.com'
-# not sure who uses this -- not S3BotoStorage
-MEDIA_URL = 'https://s3.amazonaws.com/{}/'.format(AWS_STORAGE_BUCKET_NAME)
-# --- end S3 storages configuration ---
+site.storage = FILEBROWSER_STORAGE
+site.directory = ''
+import os
+try:
+    os.makedirs(os.path.join(site.storage.location, site.directory))
+except FileExistsError:
+    pass
