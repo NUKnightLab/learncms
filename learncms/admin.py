@@ -21,7 +21,7 @@ class LessonForm(forms.ModelForm):
 
 class LessonAdmin(reversion.VersionAdmin):
     form = LessonForm
-    list_display = ('title', 'slug', 'updated_at', 'updated_by')
+    list_display = ('title', 'slug', 'status', 'updated_at', 'updated_by')
     prepopulated_fields = {"slug": ("title",)}
     search_fields = ['title', 'reference_blurb', 'content']
     save_on_top = True
