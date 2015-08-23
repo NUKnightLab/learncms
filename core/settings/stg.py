@@ -98,5 +98,5 @@ import os
 try:
     os.makedirs(os.path.join(site.storage.location, site.directory))
     os.makedirs(os.path.join(site.storage.location, FILEBROWSER_VERSIONS_BASEDIR))
-except FileExistsError:
+except Exception:
     pass
