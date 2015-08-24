@@ -4,6 +4,14 @@ from learncms.models import Lesson, ZoomingImage, CapsuleUnit, GeneralImage, Glo
 from django.forms import widgets
 from django import forms
 
+from django.db import models
+from filebrowser.widgets import FileInput
+from filebrowser.storage import S3BotoStorageMixin
+from storages.backends.s3boto import S3BotoStorage
+
+class S3FileBrowserStorage(S3BotoStorage,S3BotoStorageMixin):
+    pass
+
 class LessonForm(forms.ModelForm):
     reference_blurb = forms.CharField(widget=forms.Textarea(attrs={'rows': 5}))
 
@@ -13,10 +21,13 @@ class LessonForm(forms.ModelForm):
 
 class LessonAdmin(reversion.VersionAdmin):
     form = LessonForm
-    list_display = ('title', 'slug', 'updated_at', 'updated_by')
+    list_display = ('title', 'slug', 'status', 'updated_at', 'updated_by')
     prepopulated_fields = {"slug": ("title",)}
     search_fields = ['title', 'reference_blurb', 'content']
     save_on_top = True
+    formfield_overrides = {
+        models.ImageField: {'widget': FileInput},
+    }
 
     def save_model(self, request, obj, form, change):
         if obj.created_by is None:

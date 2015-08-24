@@ -13,7 +13,7 @@ Including another URLconf
     1. Add an import:  from blog import urls as blog_urls
     2. Add a URL to urlpatterns:  url(r'^blog/', include(blog_urls))
 """
-from django.conf.urls import include, url
+from django.conf.urls import include, url, patterns
 from django.conf.urls.static import static
 from django.contrib import admin
 from django.conf import settings
@@ -24,14 +24,21 @@ from .views import LessonDetailView, glossary_json, handler404, handler500
 
 admin.site.site_header = "Learn.KnightLab.com admin"
 
-urlpatterns = [
+from filebrowser.sites import site
+from grappelli import urls as grapelli_urls
+
+urlpatterns = patterns(
+    '',
+    url(r'^admin/filebrowser/', include(site.urls)),
+    url(r'^grappelli/', include(grapelli_urls)),
     url(r'^admin/', include(admin.site.urls)),
     url(r'^lesson/(?P<slug>[a-z\-]+)/$', LessonDetailView.as_view(), name='lesson-detail'),
     url(r'^glossary.json$', glossary_json, name='glossary-json'),
     url(r'^/?$', ListView.as_view(template_name="index.html",model=Lesson), name='homepage'),
-]
+)
 
 # these only work if the URL does not have a protocol (i.e. local)
 # otherwise, Django will save us
 urlpatterns += static(settings.STATIC_URL, document_root=settings.STATIC_ROOT)
 urlpatterns += static(settings.MEDIA_URL, document_root=settings.MEDIA_ROOT)
+urlpatterns += static(settings.FILEBROWSER_URL, document_root=settings.FILEBROWSER_ROOT)

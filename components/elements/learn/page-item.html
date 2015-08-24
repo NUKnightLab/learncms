@@ -217,12 +217,12 @@
 
 
 		created: function() {
-			//console.log(this.localName + '#' + this.id + ' was created');
+
 		},
 
 		ready: function() {
-			//console.log("page-item ready");
-			//console.log(this.localName + '#' + this.id + ' is ready');
+			//
+			(this.localName + '#' + this.id + ' is ready');
 			// DOM OBJECTS
 			this.page_container = this.$['page-container'];
 			this.page_item = this.$['page-item'];
@@ -232,22 +232,13 @@
 			var self = this;
 			//this.page_item.style.marginLeft = "100%";
 			//this.page_item.style.opacity = "0";
-			console.log("TITLE " + this.title);
 
   		},
 
 		attached: function() {
-
-			//this.page_item.style.opacity = "0";
-			//console.log(this.localName + '#' + this.id + ' was attached');
-
-
 			var self = this;
 
-
-
 			this.page_item.style.marginLeft = "100%";
-			//this.page_item.setAttribute("class", "material-shadow loaded");
 
 			this.page_cover.addEventListener("click",function(e){
 				self._onCoverClick();
@@ -257,18 +248,15 @@
 		},
 
 		_onCoverClick: function(e) {
-			//console.log("_onCoverClick");
 			this.fire("page:out", {caller:this, index:this.index});
 		},
 
 		_removeSelf: function(e) {
-			//console.log("_removeSelf");
 			this.fire("page:remove", {caller:this, index:this.index});
 			// DESTROY
 		},
 
 		_onLoad: function(e) {
-			//console.log("_onLoad");
 		},
 
 		/* Using IronA11yKeysBehavior, listen for 'esc' key pressed
@@ -292,7 +280,6 @@
 		/* WHEN TRANSITION ENDS
 		================================================== */
 		_onBackgroundTransition: function(e) {
-			// console.log("transitionend");
 			// this.background.style.display = "none";
 			// this.zoom_container.classList.remove('container-zoomed');
 
@@ -303,7 +290,6 @@
 
 		// Removes page
 		pageOut: function() {
-			//console.log("PAGE OUT");
 			// TRANSITION LISTENERS
 			//this.page_item.setAttribute("class", "loaded");
 			var self = this;
@@ -324,7 +310,6 @@
 		// Page is no longer active but is visible in the page_stack
 		pageOff: function(stack_depth_position, stack_depth, index, stack_width) {
 
-			//console.log("pageOff");
 			var left_pos = 100 - stack_depth_position,
 				self = this;
 
@@ -367,9 +352,6 @@
 		// Page is at the top of the page_stack
 		_pageOn: function(single) {
 
-			console.log("single? " + single);
-			//console.log("is single " + single);
-			//console.log(this.page_item.style.marginLeft)
 			if (single) {
 				this.page_item.style.marginLeft = "0%";
 				this.page_item.style.width = "100%";
@@ -383,7 +365,6 @@
 
 			this.page_cover.style.opacity = "0";
 			this.page_cover.style.height = "0px";
-			//console.log(this.page_item.style.marginLeft);
 
 			var self = this;
 			setTimeout(function(){

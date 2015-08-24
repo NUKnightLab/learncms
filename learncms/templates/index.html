@@ -4,15 +4,15 @@
     body {
         font-family: Roboto
     }
-</style>    
+</style>
 {% endblock %}
 {% block content %}
-<h1>Learn.Knightlab.com</h1>     
+<h1>Learn.Knightlab.com</h1>
 <ul>
 {% for lesson in object_list %}
-<li><a href="{{lesson.get_absolute_url}}">{{ lesson.title }}</a></li>    
+<li><a href="{{lesson.get_absolute_url}}">{{ lesson.title }}</a> ({{ lesson.status }})</li>    
 {% empty %}
-<li><a href="/admin/">No lessons yet</a></li>    
+<li><a href="/admin/">No lessons yet</a></li>
 {% endfor %}
 </ul>
- {% endblock %} 
+ {% endblock %}

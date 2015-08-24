@@ -8341,1689 +8341,6 @@ styles. All other styles should exist as single lines."
 
 
 
-<script>
-
-  /**
-   * Use `Polymer.NeonAnimationBehavior` to implement an animation.
-   * @polymerBehavior
-   */
-  Polymer.NeonAnimationBehavior = {
-
-    properties: {
-
-      /**
-       * Defines the animation timing.
-       */
-      animationTiming: {
-        type: Object,
-        value: function() {
-          return {
-            duration: 500,
-            easing: 'cubic-bezier(0.4, 0, 0.2, 1)',
-            fill: 'both'
-          }
-        }
-      }
-
-    },
-
-    registered: function() {
-      new Polymer.IronMeta({type: 'animation', key: this.is, value: this.constructor});
-    },
-
-    /**
-     * Do any animation configuration here.
-     */
-    // configure: function(config) {
-    // },
-
-    /**
-     * Returns the animation timing by mixing in properties from `config` to the defaults defined
-     * by the animation.
-     */
-    timingFromConfig: function(config) {
-      if (config.timing) {
-        for (var property in config.timing) {
-          this.animationTiming[property] = config.timing[property];
-        }
-      }
-      return this.animationTiming;
-    },
-
-    /**
-     * Sets `transform` and `transformOrigin` properties along with the prefixed versions.
-     */
-    setPrefixedProperty: function(node, property, value) {
-      var map = {
-        'transform': ['webkitTransform'],
-        'transformOrigin': ['mozTransformOrigin', 'webkitTransformOrigin']
-      };
-      var prefixes = map[property];
-      for (var prefix, index = 0; prefix = prefixes[index]; index++) {
-        node.style[prefix] = value;
-      }
-      node.style[property] = value;
-    },
-
-    /**
-     * Called when the animation finishes.
-     */
-    complete: function() {
-      // FIXME not sure about non-bubbling event
-      this.fire(this.animationEndEvent, null, {bubbles: false});
-    }
-
-  };
-
-</script>
-<script src="../bower_components/web-animations-js/web-animations-next-lite.min.js"></script>
-
-
-<script>
-
-  Polymer({
-
-    is: 'opaque-animation',
-
-    behaviors: [
-      Polymer.NeonAnimationBehavior
-    ],
-
-    configure: function(config) {
-      var node = config.node;
-      node.style.opacity = '0';
-      this._effect = new KeyframeEffect(node, [
-        {'opacity': '1'},
-        {'opacity': '1'}
-      ], this.timingFromConfig(config));
-      return this._effect;
-    },
-
-    complete: function(config) {
-      config.node.style.opacity = '';
-    }
-
-  });
-
-</script>
-<script>
-
-  /**
-   * `Polymer.NeonAnimatableBehavior` is implemented by elements containing animations for use with
-   * elements implementing `Polymer.NeonAnimationRunnerBehavior`.
-   * @polymerBehavior
-   */
-  Polymer.NeonAnimatableBehavior = {
-
-    properties: {
-
-      /**
-       * Animation configuration. See README for more info.
-       */
-      animationConfig: {
-        type: Object
-      },
-
-      /**
-       * Convenience property for setting an 'entry' animation. Do not set `animationConfig.entry`
-       * manually if using this. The animated node is set to `this` if using this property.
-       */
-      entryAnimation: {
-        observer: '_entryAnimationChanged',
-        type: String
-      },
-
-      /**
-       * Convenience property for setting an 'exit' animation. Do not set `animationConfig.exit`
-       * manually if using this. The animated node is set to `this` if using this property.
-       */
-      exitAnimation: {
-        observer: '_exitAnimationChanged',
-        type: String
-      }
-
-    },
-
-    _entryAnimationChanged: function() {
-      this.animationConfig = this.animationConfig || {};
-      if (this.entryAnimation !== 'fade-in-animation') {
-        // insert polyfill hack
-        this.animationConfig['entry'] = [{
-          name: 'opaque-animation',
-          node: this
-        }, {
-          name: this.entryAnimation,
-          node: this
-        }];
-      } else {
-        this.animationConfig['entry'] = [{
-          name: this.entryAnimation,
-          node: this
-        }];
-      }
-    },
-
-    _exitAnimationChanged: function() {
-      this.animationConfig = this.animationConfig || {};
-      this.animationConfig['exit'] = [{
-        name: this.exitAnimation,
-        node: this
-      }];
-    },
-
-    _copyProperties: function(config1, config2) {
-      // shallowly copy properties from config2 to config1
-      for (var property in config2) {
-        config1[property] = config2[property];
-      }
-    },
-
-    _cloneConfig: function(config) {
-      var clone = {
-        isClone: true
-      };
-      this._copyProperties(clone, config);
-      return clone;
-    },
-
-    _getAnimationConfigRecursive: function(type, map, allConfigs) {
-      if (!this.animationConfig) {
-        return;
-      }
-
-      // type is optional
-      var thisConfig;
-      if (type) {
-        thisConfig = this.animationConfig[type];
-      } else {
-        thisConfig = this.animationConfig;
-      }
-
-      if (!Array.isArray(thisConfig)) {
-        thisConfig = [thisConfig];
-      }
-
-      // iterate animations and recurse to process configurations from child nodes
-      if (thisConfig) {
-        for (var config, index = 0; config = thisConfig[index]; index++) {
-          if (config.animatable) {
-            config.animatable._getAnimationConfigRecursive(config.type || type, map, allConfigs);
-          } else {
-            if (config.id) {
-              var cachedConfig = map[config.id];
-              if (cachedConfig) {
-                // merge configurations with the same id, making a clone lazily
-                if (!cachedConfig.isClone) {
-                  map[config.id] = this._cloneConfig(cachedConfig)
-                  cachedConfig = map[config.id];
-                }
-                this._copyProperties(cachedConfig, config);
-              } else {
-                // put any configs with an id into a map
-                map[config.id] = config;
-              }
-            } else {
-              allConfigs.push(config);
-            }
-          }
-        }
-      }
-    },
-
-    /**
-     * An element implementing `Polymer.NeonAnimationRunnerBehavior` calls this method to configure
-     * an animation with an optional type. Elements implementing `Polymer.NeonAnimatableBehavior`
-     * should define the property `animationConfig`, which is either a configuration object
-     * or a map of animation type to array of configuration objects.
-     */
-    getAnimationConfig: function(type) {
-      var map = [];
-      var allConfigs = [];
-      this._getAnimationConfigRecursive(type, map, allConfigs);
-      // append the configurations saved in the map to the array
-      for (var key in map) {
-        allConfigs.push(map[key]);
-      }
-      return allConfigs;
-    }
-
-  };
-
-</script>
-<script>
-  /**
-   * `IronResizableBehavior` is a behavior that can be used in Polymer elements to
-   * coordinate the flow of resize events between "resizers" (elements that control the
-   * size or hidden state of their children) and "resizables" (elements that need to be
-   * notified when they are resized or un-hidden by their parents in order to take
-   * action on their new measurements).
-   * Elements that perform measurement should add the `IronResizableBehavior` behavior to
-   * their element definition and listen for the `iron-resize` event on themselves.
-   * This event will be fired when they become showing after having been hidden,
-   * when they are resized explicitly by another resizable, or when the window has been
-   * resized.
-   * Note, the `iron-resize` event is non-bubbling.
-   *
-   * @polymerBehavior Polymer.IronResizableBehavior
-   * @demo demo/index.html
-   **/
-  Polymer.IronResizableBehavior = {
-    properties: {
-      _parentResizable: {
-        type: Object,
-        observer: '_parentResizableChanged'
-      }
-    },
-
-    listeners: {
-      'iron-request-resize-notifications': '_onIronRequestResizeNotifications'
-    },
-
-    created: function() {
-      // We don't really need property effects on these, and also we want them
-      // to be created before the `_parentResizable` observer fires:
-      this._interestedResizables = [];
-      this._boundNotifyResize = this.notifyResize.bind(this);
-    },
-
-    attached: function() {
-      this.fire('iron-request-resize-notifications', null, {
-        node: this,
-        bubbles: true
-      });
-
-      if (!this._parentResizable) {
-        window.addEventListener('resize', this._boundNotifyResize);
-        this.notifyResize();
-      }
-    },
-
-    detached: function() {
-      if (this._parentResizable) {
-        this._parentResizable.stopResizeNotificationsFor(this);
-      } else {
-        window.removeEventListener('resize', this._boundNotifyResize);
-      }
-
-      this._parentResizable = null;
-    },
-
-    /**
-     * Can be called to manually notify a resizable and its descendant
-     * resizables of a resize change.
-     */
-    notifyResize: function() {
-      if (!this.isAttached) {
-        return;
-      }
-
-      this._interestedResizables.forEach(function(resizable) {
-        // TODO(cdata): Currently behaviors cannot define "abstract" methods..
-        if (!this.resizerShouldNotify || this.resizerShouldNotify(resizable)) {
-          resizable.notifyResize();
-        }
-      }, this);
-
-      this.fire('iron-resize', null, {
-        node: this,
-        bubbles: false
-      });
-    },
-
-    /**
-     * Used to assign the closest resizable ancestor to this resizable
-     * if the ancestor detects a request for notifications.
-     */
-    assignParentResizable: function(parentResizable) {
-      this._parentResizable = parentResizable;
-    },
-
-    /**
-     * Used to remove a resizable descendant from the list of descendants
-     * that should be notified of a resize change.
-     */
-    stopResizeNotificationsFor: function(target) {
-      var index = this._interestedResizables.indexOf(target);
-
-      if (index > -1) {
-        this._interestedResizables.splice(index, 1);
-      }
-    },
-
-    // TODO(cdata): Currently behaviors cannot define "abstract" methods.
-    // resizerShouldNotify: function(el) { return true; },
-
-    _parentResizableChanged: function(parentResizable) {
-      if (parentResizable) {
-        window.removeEventListener('resize', this._boundNotifyResize);
-      }
-    },
-
-    _onIronRequestResizeNotifications: function(event) {
-      var target = event.path ? event.path[0] : event.target;
-
-      if (target === this) {
-        return;
-      }
-
-      if (this._interestedResizables.indexOf(target) === -1) {
-        this._interestedResizables.push(target);
-      }
-
-      target.assignParentResizable(this);
-
-      event.stopPropagation();
-    }
-  };
-</script>
-
-<script>
-
-  /**
-   * @param {!Function} selectCallback
-   * @constructor
-   */
-  Polymer.IronSelection = function(selectCallback) {
-    this.selection = [];
-    this.selectCallback = selectCallback;
-  };
-
-  Polymer.IronSelection.prototype = {
-
-    /**
-     * Retrieves the selected item(s).
-     *
-     * @method get
-     * @returns Returns the selected item(s). If the multi property is true,
-     * `get` will return an array, otherwise it will return
-     * the selected item or undefined if there is no selection.
-     */
-    get: function() {
-      return this.multi ? this.selection : this.selection[0];
-    },
-
-    /**
-     * Clears all the selection except the ones indicated.
-     *
-     * @method clear
-     * @param {Array} excludes items to be excluded.
-     */
-    clear: function(excludes) {
-      this.selection.slice().forEach(function(item) {
-        if (!excludes || excludes.indexOf(item) < 0) {
-          this.setItemSelected(item, false);
-        }
-      }, this);
-    },
-
-    /**
-     * Indicates if a given item is selected.
-     *
-     * @method isSelected
-     * @param {*} item The item whose selection state should be checked.
-     * @returns Returns true if `item` is selected.
-     */
-    isSelected: function(item) {
-      return this.selection.indexOf(item) >= 0;
-    },
-
-    /**
-     * Sets the selection state for a given item to either selected or deselected.
-     *
-     * @method setItemSelected
-     * @param {*} item The item to select.
-     * @param {boolean} isSelected True for selected, false for deselected.
-     */
-    setItemSelected: function(item, isSelected) {
-      if (item != null) {
-        if (isSelected) {
-          this.selection.push(item);
-        } else {
-          var i = this.selection.indexOf(item);
-          if (i >= 0) {
-            this.selection.splice(i, 1);
-          }
-        }
-        if (this.selectCallback) {
-          this.selectCallback(item, isSelected);
-        }
-      }
-    },
-
-    /**
-     * Sets the selection state for a given item. If the `multi` property
-     * is true, then the selected state of `item` will be toggled; otherwise
-     * the `item` will be selected.
-     *
-     * @method select
-     * @param {*} item The item to select.
-     */
-    select: function(item) {
-      if (this.multi) {
-        this.toggle(item);
-      } else if (this.get() !== item) {
-        this.setItemSelected(this.get(), false);
-        this.setItemSelected(item, true);
-      }
-    },
-
-    /**
-     * Toggles the selection state for `item`.
-     *
-     * @method toggle
-     * @param {*} item The item to toggle.
-     */
-    toggle: function(item) {
-      this.setItemSelected(item, !this.isSelected(item));
-    }
-
-  };
-
-</script>
-<script>
-
-  /** @polymerBehavior */
-  Polymer.IronSelectableBehavior = {
-
-    properties: {
-
-      /**
-       * If you want to use the attribute value of an element for `selected` instead of the index,
-       * set this to the name of the attribute.
-       *
-       * @attribute attrForSelected
-       * @type {string}
-       */
-      attrForSelected: {
-        type: String,
-        value: null
-      },
-
-      /**
-       * Gets or sets the selected element. The default is to use the index of the item.
-       *
-       * @attribute selected
-       * @type {string}
-       */
-      selected: {
-        type: String,
-        notify: true
-      },
-
-      /**
-       * Returns the currently selected item.
-       *
-       * @attribute selectedItem
-       * @type {Object}
-       */
-      selectedItem: {
-        type: Object,
-        readOnly: true,
-        notify: true
-      },
-
-      /**
-       * The event that fires from items when they are selected. Selectable
-       * will listen for this event from items and update the selection state.
-       * Set to empty string to listen to no events.
-       *
-       * @attribute activateEvent
-       * @type {string}
-       * @default 'tap'
-       */
-      activateEvent: {
-        type: String,
-        value: 'tap',
-        observer: '_activateEventChanged'
-      },
-
-      /**
-       * This is a CSS selector sting.  If this is set, only items that matches the CSS selector
-       * are selectable.
-       *
-       * @attribute selectable
-       * @type {string}
-       */
-      selectable: String,
-
-      /**
-       * The class to set on elements when selected.
-       *
-       * @attribute selectedClass
-       * @type {string}
-       */
-      selectedClass: {
-        type: String,
-        value: 'iron-selected'
-      },
-
-      /**
-       * The attribute to set on elements when selected.
-       *
-       * @attribute selectedAttribute
-       * @type {string}
-       */
-      selectedAttribute: {
-        type: String,
-        value: null
-      }
-
-    },
-
-    observers: [
-      '_updateSelected(attrForSelected, selected)'
-    ],
-
-    excludedLocalNames: {
-      'template': 1
-    },
-
-    created: function() {
-      this._bindFilterItem = this._filterItem.bind(this);
-      this._selection = new Polymer.IronSelection(this._applySelection.bind(this));
-    },
-
-    attached: function() {
-      this._observer = this._observeItems(this);
-      this._contentObserver = this._observeContent(this);
-    },
-
-    detached: function() {
-      if (this._observer) {
-        this._observer.disconnect();
-      }
-      if (this._contentObserver) {
-        this._contentObserver.disconnect();
-      }
-      this._removeListener(this.activateEvent);
-    },
-
-    /**
-     * Returns an array of selectable items.
-     *
-     * @property items
-     * @type Array
-     */
-    get items() {
-      var nodes = Polymer.dom(this).queryDistributedElements(this.selectable || '*');
-      return Array.prototype.filter.call(nodes, this._bindFilterItem);
-    },
-
-    /**
-     * Returns the index of the given item.
-     *
-     * @method indexOf
-     * @param {Object} item
-     * @returns Returns the index of the item
-     */
-    indexOf: function(item) {
-      return this.items.indexOf(item);
-    },
-
-    /**
-     * Selects the given value.
-     *
-     * @method select
-     * @param {string} value the value to select.
-     */
-    select: function(value) {
-      this.selected = value;
-    },
-
-    /**
-     * Selects the previous item.
-     *
-     * @method selectPrevious
-     */
-    selectPrevious: function() {
-      var length = this.items.length;
-      var index = (Number(this._valueToIndex(this.selected)) - 1 + length) % length;
-      this.selected = this._indexToValue(index);
-    },
-
-    /**
-     * Selects the next item.
-     *
-     * @method selectNext
-     */
-    selectNext: function() {
-      var index = (Number(this._valueToIndex(this.selected)) + 1) % this.items.length;
-      this.selected = this._indexToValue(index);
-    },
-
-    _addListener: function(eventName) {
-      this.listen(this, eventName, '_activateHandler');
-    },
-
-    _removeListener: function(eventName) {
-      // There is no unlisten yet...
-      // https://github.com/Polymer/polymer/issues/1639
-      //this.removeEventListener(eventName, this._bindActivateHandler);
-    },
-
-    _activateEventChanged: function(eventName, old) {
-      this._removeListener(old);
-      this._addListener(eventName);
-    },
-
-    _updateSelected: function() {
-      this._selectSelected(this.selected);
-    },
-
-    _selectSelected: function(selected) {
-      this._selection.select(this._valueToItem(this.selected));
-    },
-
-    _filterItem: function(node) {
-      return !this.excludedLocalNames[node.localName];
-    },
-
-    _valueToItem: function(value) {
-      return (value == null) ? null : this.items[this._valueToIndex(value)];
-    },
-
-    _valueToIndex: function(value) {
-      if (this.attrForSelected) {
-        for (var i = 0, item; item = this.items[i]; i++) {
-          if (this._valueForItem(item) == value) {
-            return i;
-          }
-        }
-      } else {
-        return Number(value);
-      }
-    },
-
-    _indexToValue: function(index) {
-      if (this.attrForSelected) {
-        var item = this.items[index];
-        if (item) {
-          return this._valueForItem(item);
-        }
-      } else {
-        return index;
-      }
-    },
-
-    _valueForItem: function(item) {
-      return item[this.attrForSelected] || item.getAttribute(this.attrForSelected);
-    },
-
-    _applySelection: function(item, isSelected) {
-      if (this.selectedClass) {
-        this.toggleClass(this.selectedClass, isSelected, item);
-      }
-      if (this.selectedAttribute) {
-        this.toggleAttribute(this.selectedAttribute, isSelected, item);
-      }
-      this._selectionChange();
-      this.fire('iron-' + (isSelected ? 'select' : 'deselect'), {item: item});
-    },
-
-    _selectionChange: function() {
-      this._setSelectedItem(this._selection.get());
-    },
-
-    // observe content changes under the given node.
-    _observeContent: function(node) {
-      var content = node.querySelector('content');
-      if (content && content.parentElement === node) {
-        return this._observeItems(node.domHost);
-      }
-    },
-
-    // observe items change under the given node.
-    _observeItems: function(node) {
-      var observer = new MutationObserver(function() {
-        if (this.selected != null) {
-          this._updateSelected();
-        }
-      }.bind(this));
-      observer.observe(node, {
-        childList: true,
-        subtree: true
-      });
-      return observer;
-    },
-
-    _activateHandler: function(e) {
-      // TODO: remove this when https://github.com/Polymer/polymer/issues/1639 is fixed so we
-      // can just remove the old event listener.
-      if (e.type !== this.activateEvent) {
-        return;
-      }
-      var t = e.target;
-      var items = this.items;
-      while (t && t != this) {
-        var i = items.indexOf(t);
-        if (i >= 0) {
-          var value = this._indexToValue(i);
-          this._itemActivate(value, t);
-          return;
-        }
-        t = t.parentNode;
-      }
-    },
-
-    _itemActivate: function(value, item) {
-      if (!this.fire('iron-activate',
-          {selected: value, item: item}, {cancelable: true}).defaultPrevented) {
-        this.select(value);
-      }
-    }
-
-  };
-
-</script>
-<link rel="stylesheet" href="//fonts.googleapis.com/css?family=Roboto:400,300,300italic,400italic,500,500italic,700,700italic">
-
-<style is="custom-style">
-
-  :root {
-
-    /* Shared Styles */
-
-    /*
-    Unfortunately, we can't make use of these yet - sibling properties aren't
-    evaluated. See https://github.com/Polymer/polymer/issues/1399
-
-    --paper-font-common-base: {
-      font-family: 'Roboto', 'Noto', sans-serif;
-      -webkit-font-smoothing: antialiased;
-    };
-
-    --paper-font-common-code: {
-      font-family: 'Inconsolata', 'Consolas', 'Source Code Pro', 'Monaco', 'Menlo', monospace;
-      -webkit-font-smoothing: antialiased;
-    };
-
-    --paper-font-common-expensive-kerning: {
-      text-rendering: optimizeLegibility;
-    };
-
-    --paper-font-common-nowrap: {
-      white-space: nowrap;
-      overflow: hidden;
-      text-overflow: ellipsis;
-    };
-    */
-
-    /* Material Font Styles */
-
-    --paper-font-display4: {
-      /* @apply(--paper-font-common-base) */
-      font-family: 'Roboto', 'Noto', sans-serif;
-      -webkit-font-smoothing: antialiased;
-      /* @apply(--paper-font-common-expensive-kerning); */
-      text-rendering: optimizeLegibility;
-      /* @apply(--paper-font-common-nowrap); */
-      white-space: nowrap;
-      overflow: hidden;
-      text-overflow: ellipsis;
-
-      font-size: 112px;
-      font-weight: 300;
-      letter-spacing: -.044em;
-      line-height: 120px;
-    };
-
-    --paper-font-display3: {
-      /* @apply(--paper-font-common-base) */
-      font-family: 'Roboto', 'Noto', sans-serif;
-      -webkit-font-smoothing: antialiased;
-      /* @apply(--paper-font-common-expensive-kerning); */
-      text-rendering: optimizeLegibility;
-      /* @apply(--paper-font-common-nowrap); */
-      white-space: nowrap;
-      overflow: hidden;
-      text-overflow: ellipsis;
-
-      font-size: 56px;
-      font-weight: 400;
-      letter-spacing: -.026em;
-      line-height: 60px;
-    };
-
-    --paper-font-display2: {
-      /* @apply(--paper-font-common-base) */
-      font-family: 'Roboto', 'Noto', sans-serif;
-      -webkit-font-smoothing: antialiased;
-      /* @apply(--paper-font-common-expensive-kerning); */
-      text-rendering: optimizeLegibility;
-
-      font-size: 45px;
-      font-weight: 400;
-      letter-spacing: -.018em;
-      line-height: 48px;
-    };
-
-    --paper-font-display1: {
-      /* @apply(--paper-font-common-base) */
-      font-family: 'Roboto', 'Noto', sans-serif;
-      -webkit-font-smoothing: antialiased;
-      /* @apply(--paper-font-common-expensive-kerning); */
-      text-rendering: optimizeLegibility;
-
-      font-size: 34px;
-      font-weight: 400;
-      letter-spacing: -.01em;
-      line-height: 40px;
-    };
-
-    --paper-font-headline: {
-      /* @apply(--paper-font-common-base) */
-      font-family: 'Roboto', 'Noto', sans-serif;
-      -webkit-font-smoothing: antialiased;
-      /* @apply(--paper-font-common-expensive-kerning); */
-      text-rendering: optimizeLegibility;
-
-      font-size: 24px;
-      font-weight: 400;
-      letter-spacing: -.012em;
-      line-height: 32px;
-    };
-
-    --paper-font-title: {
-      /* @apply(--paper-font-common-base) */
-      font-family: 'Roboto', 'Noto', sans-serif;
-      -webkit-font-smoothing: antialiased;
-      /* @apply(--paper-font-common-expensive-kerning); */
-      text-rendering: optimizeLegibility;
-      /* @apply(--paper-font-common-nowrap); */
-      white-space: nowrap;
-      overflow: hidden;
-      text-overflow: ellipsis;
-
-      font-size: 20px;
-      font-weight: 500;
-      line-height: 28px;
-    };
-
-    --paper-font-subhead: {
-      /* @apply(--paper-font-common-base) */
-      font-family: 'Roboto', 'Noto', sans-serif;
-      -webkit-font-smoothing: antialiased;
-      /* @apply(--paper-font-common-expensive-kerning); */
-      text-rendering: optimizeLegibility;
-
-      font-size: 16px;
-      font-weight: 400;
-      line-height: 24px;
-    };
-
-    --paper-font-body2: {
-      /* @apply(--paper-font-common-base) */
-      font-family: 'Roboto', 'Noto', sans-serif;
-      -webkit-font-smoothing: antialiased;
-
-      font-size: 14px;
-      font-weight: 500;
-      line-height: 24px;
-    };
-
-    --paper-font-body1: {
-      /* @apply(--paper-font-common-base) */
-      font-family: 'Roboto', 'Noto', sans-serif;
-      -webkit-font-smoothing: antialiased;
-
-      font-size: 14px;
-      font-weight: 400;
-      line-height: 20px;
-    };
-
-    --paper-font-caption: {
-      /* @apply(--paper-font-common-base) */
-      font-family: 'Roboto', 'Noto', sans-serif;
-      -webkit-font-smoothing: antialiased;
-      /* @apply(--paper-font-common-nowrap); */
-      white-space: nowrap;
-      overflow: hidden;
-      text-overflow: ellipsis;
-
-      font-size: 12px;
-      font-weight: 400;
-      letter-spacing: 0.011em;
-      line-height: 20px;
-    };
-
-    --paper-font-menu: {
-      /* @apply(--paper-font-common-base) */
-      font-family: 'Roboto', 'Noto', sans-serif;
-      -webkit-font-smoothing: antialiased;
-      /* @apply(--paper-font-common-expensive-kerning); */
-      text-rendering: optimizeLegibility;
-      /* @apply(--paper-font-common-nowrap); */
-      white-space: nowrap;
-      overflow: hidden;
-      text-overflow: ellipsis;
-
-      font-size: 13px;
-      font-weight: 500;
-      line-height: 24px;
-    };
-
-    --paper-font-button: {
-      /* @apply(--paper-font-common-base) */
-      font-family: 'Roboto', 'Noto', sans-serif;
-      -webkit-font-smoothing: antialiased;
-      /* @apply(--paper-font-common-expensive-kerning); */
-      text-rendering: optimizeLegibility;
-      /* @apply(--paper-font-common-nowrap); */
-      white-space: nowrap;
-      overflow: hidden;
-      text-overflow: ellipsis;
-
-      font-size: 14px;
-      font-weight: 500;
-      letter-spacing: 0.018em;
-      line-height: 24px;
-      text-transform: uppercase;
-    };
-
-    --paper-font-code2: {
-      /* @apply(--paper-font-common-code); */
-      font-family: 'Inconsolata', 'Consolas', 'Source Code Pro', 'Monaco', 'Menlo', monospace;
-      -webkit-font-smoothing: antialiased;
-
-      font-size: 14px;
-      font-weight: 700;
-      line-height: 20px;
-    };
-
-    --paper-font-code1: {
-      /* @apply(--paper-font-common-code); */
-      font-family: 'Inconsolata', 'Consolas', 'Source Code Pro', 'Monaco', 'Menlo', monospace;
-      -webkit-font-smoothing: antialiased;
-
-      font-size: 14px;
-      font-weight: 500;
-      line-height: 20px;
-    };
-
-  }
-
-</style>
-<script>
-
-  /**
-   * `Polymer.NeonAnimationRunnerBehavior` adds a method to run animations.
-   * @polymerBehavior
-   */
-  Polymer.NeonAnimationRunnerBehavior = [Polymer.NeonAnimatableBehavior, {
-
-    properties: {
-
-      _animationMeta: {
-        type: Object,
-        value: function() {
-          return new Polymer.IronMeta({type: 'animation'});
-        }
-      },
-
-      _player: {
-        type: Object
-      }
-
-    },
-
-    _configureAnimationEffects: function(allConfigs) {
-      var allAnimations = [];
-      if (allConfigs.length > 0) {
-        for (var config, index = 0; config = allConfigs[index]; index++) {
-          var animationConstructor = this._animationMeta.byKey(config.name);
-          if (animationConstructor) {
-            var animation = animationConstructor && new animationConstructor();
-            var effect = animation.configure(config);
-            if (effect) {
-              allAnimations.push({
-                animation: animation,
-                config: config,
-                effect: effect
-              });
-            }
-          } else {
-            console.warn(this.is + ':', config.name, 'not found!');
-          }
-        }
-      }
-      return allAnimations;
-    },
-
-    _runAnimationEffects: function(allEffects) {
-      return player = document.timeline.play(new GroupEffect(allEffects));
-    },
-
-    _completeAnimations: function(allAnimations) {
-      for (var animation, index = 0; animation = allAnimations[index]; index++) {
-        animation.animation.complete(animation.config);
-      }
-    },
-
-    /**
-     * Plays an animation with an optional `type`.
-     */
-    playAnimation: function(type, cookie) {
-      var allConfigs = this.getAnimationConfig(type);
-      if (!allConfigs) {
-        return;
-      }
-      var allAnimations = this._configureAnimationEffects(allConfigs);
-      var allEffects = allAnimations.map(function(animation) {
-        return animation.effect;
-      });
-
-      if (allEffects.length > 0) {
-        this._player = this._runAnimationEffects(allEffects);
-        this._player.onfinish = function() {
-          this._completeAnimations(allAnimations);
-
-          if (this._player) {
-            this._player.cancel();
-            this._player = null;
-          }
-
-          this.fire('neon-animation-finish', cookie, {bubbles: false});
-        }.bind(this);
-
-      } else {
-        this.fire('neon-animation-finish', cookie, {bubbles: false});
-      }
-    },
-
-    /**
-     * Cancels the currently running animation.
-     */
-    cancelAnimation: function() {
-      if (this._player) {
-        this._player.cancel();
-      }
-    }
-
-  }];
-</script>
-
-
-
-
-
-
-<script>
-
-  Polymer({
-
-    is: 'cascaded-animation',
-
-    behaviors: [
-      Polymer.NeonAnimationBehavior
-    ],
-
-    properties: {
-
-      _animationMeta: {
-        type: Object,
-        value: function() {
-          return new Polymer.IronMeta({type: 'animation'});
-        }
-      }
-
-    },
-
-    configure: function(config) {
-      var animationConstructor = this._animationMeta.byKey(config.animation);
-      if (!animationConstructor) {
-        console.warn(this.is + ':', 'constructor for', config.animation, 'not found!');
-        return;
-      }
-
-      var nodes = config.nodes;
-      var effects = [];
-      var nodeDelay = config.nodeDelay || 50;
-
-      config.timing = config.timing || {};
-      config.timing.delay = config.timing.delay || 0;
-
-      var oldDelay = config.timing.delay;
-      for (var node, index = 0; node = nodes[index]; index++) {
-        config.timing.delay += nodeDelay;
-        config.node = node;
-
-        var animation = new animationConstructor();
-        var effect = animation.configure(config);
-
-        effects.push(effect);
-      }
-      config.timing.delay = oldDelay;
-
-      this._effect = new GroupEffect(effects);
-      return this._effect;
-    }
-
-  });
-
-</script>
-
-
-<script>
-
-  Polymer({
-
-    is: 'fade-in-animation',
-
-    behaviors: [
-      Polymer.NeonAnimationBehavior
-    ],
-
-    configure: function(config) {
-      var node = config.node;
-      this._effect = new KeyframeEffect(node, [
-        {'opacity': '0'},
-        {'opacity': '1'}
-      ], this.timingFromConfig(config));
-      return this._effect;
-    }
-
-  });
-
-</script>
-
-
-<script>
-
-  Polymer({
-
-    is: 'fade-out-animation',
-
-    behaviors: [
-      Polymer.NeonAnimationBehavior
-    ],
-
-    configure: function(config) {
-      var node = config.node;
-      this._effect = new KeyframeEffect(node, [
-        {'opacity': '1'},
-        {'opacity': '0'}
-      ], this.timingFromConfig(config));
-      return this._effect;
-    }
-
-  });
-
-</script>
-<script>
-
-  /**
-   * Use `Polymer.NeonSharedElementAnimationBehavior` to implement shared element animations.
-   * @polymerBehavior
-   */
-  Polymer.NeonSharedElementAnimationBehavior = [Polymer.NeonAnimationBehavior, {
-
-    properties: {
-
-      /**
-       * Cached copy of shared elements.
-       */
-      sharedElements: {
-        type: Object
-      }
-
-    },
-
-    /**
-     * Finds shared elements based on `config`.
-     */
-    findSharedElements: function(config) {
-      var fromPage = config.fromPage;
-      var toPage = config.toPage;
-      if (!fromPage || !toPage) {
-        console.warn(this.is + ':', !fromPage ? 'fromPage' : 'toPage', 'is undefined!');
-        return null;
-      };
-
-      if (!fromPage.sharedElements || !toPage.sharedElements) {
-        console.warn(this.is + ':', 'sharedElements are undefined for', !fromPage.sharedElements ? fromPage : toPage);
-        return null;
-      };
-
-      var from = fromPage.sharedElements[config.id]
-      var to = toPage.sharedElements[config.id];
-
-      if (!from || !to) {
-        console.warn(this.is + ':', 'sharedElement with id', config.id, 'not found in', !from ? fromPage : toPage);
-        return null;
-      }
-
-      this.sharedElements = {
-        from: from,
-        to: to
-      };
-      return this.sharedElements;
-    }
-
-  }];
-
-</script>
-
-
-<script>
-
-  Polymer({
-
-    is: 'hero-animation',
-
-    behaviors: [
-      Polymer.NeonSharedElementAnimationBehavior
-    ],
-
-    configure: function(config) {
-      var shared = this.findSharedElements(config);
-      if (!shared) {
-        return null;
-      }
-
-      var fromRect = shared.from.getBoundingClientRect();
-      var toRect = shared.to.getBoundingClientRect();
-
-      var deltaLeft = fromRect.left - toRect.left;
-      var deltaTop = fromRect.top - toRect.top;
-      var deltaWidth = fromRect.width / toRect.width;
-      var deltaHeight = fromRect.height / toRect.height;
-
-      this.setPrefixedProperty(shared.to, 'transformOrigin', '0 0');
-      shared.to.style.zIndex = 10000;
-      shared.from.style.visibility = 'hidden';
-
-      this._effect = new KeyframeEffect(shared.to, [
-        {'transform': 'translate(' + deltaLeft + 'px,' + deltaTop + 'px) scale(' + deltaWidth + ',' + deltaHeight + ')'},
-        {'transform': 'none'}
-      ], this.timingFromConfig(config));
-
-      return this._effect;
-    },
-
-    complete: function(config) {
-      var shared = this.findSharedElements(config);
-      if (!shared) {
-        return null;
-      }
-      shared.to.style.zIndex = '';
-      shared.from.style.visibility = '';
-    }
-
-  });
-
-</script>
-
-
-<script>
-
-  Polymer({
-
-    is: 'ripple-animation',
-
-    behaviors: [
-      Polymer.NeonSharedElementAnimationBehavior
-    ],
-
-    configure: function(config, fromPage, toPage) {
-      var shared = this.findSharedElements(config, fromPage, toPage);
-      if (!shared) {
-        return null;
-      }
-
-      var translateX, translateY;
-      var toRect = shared.to.getBoundingClientRect();
-      if (config.gesture) {
-        translateX = config.gesture.x - (toRect.left + (toRect.width / 2));
-        translateY = config.gesture.y - (toRect.left + (toRect.height / 2));
-      } else {
-        var fromRect = shared.from.getBoundingClientRect();
-        translateX = (fromRect.left + (fromRect.width / 2)) - (toRect.left + (toRect.width / 2));
-        translateY = (fromRect.top + (fromRect.height / 2)) - (toRect.left + (toRect.height / 2));
-      }
-      var translate = 'translate(' + translateX + 'px,' + translateY + 'px)';
-
-      var size = Math.max(toRect.width + Math.abs(translateX) * 2, toRect.height + Math.abs(translateY) * 2);
-      var diameter = Math.sqrt(2 * size * size);
-      var scaleX = diameter / toRect.width;
-      var scaleY = diameter / toRect.height;
-      var scale = 'scale(' + scaleX + ',' + scaleY + ')';
-
-      this.setPrefixedProperty(shared.to, 'transformOrigin', '50% 50%');
-      shared.to.style.borderRadius = '50%';
-
-      this._effect = new KeyframeEffect(shared.to, [
-        {'transform': translate + ' scale(0)'},
-        {'transform': translate + ' ' + scale}
-      ], this.timingFromConfig(config));
-      return this._effect;
-    },
-
-    complete: function() {
-      if (this.sharedElements) {
-        this.setPrefixedProperty(this.sharedElements.to, 'transformOrigin', '');
-        this.sharedElements.to.style.borderRadius = '';
-      }
-    }
-
-  });
-
-</script>
-
-
-<script>
-
-  Polymer({
-
-    is: 'scale-down-animation',
-
-    behaviors: [
-      Polymer.NeonAnimationBehavior
-    ],
-
-    configure: function(config) {
-      var node = config.node;
-
-      if (config.transformOrigin) {
-        this.setPrefixedProperty(node, 'transformOrigin', config.transformOrigin);
-      }
-
-      var scaleProperty = 'scale(0, 0)';
-      if (config.axis === 'x') {
-        scaleProperty = 'scale(0, 1)';
-      } else if (config.axis === 'y') {
-        scaleProperty = 'scale(1, 0)';
-      }
-
-      this._effect = new KeyframeEffect(node, [
-        {'transform': 'scale(1,1)'},
-        {'transform': scaleProperty}
-      ], this.timingFromConfig(config));
-
-      return this._effect;
-    }
-
-  });
-
-</script>
-
-
-<script>
-
-  Polymer({
-
-    is: 'scale-up-animation',
-
-    behaviors: [
-      Polymer.NeonAnimationBehavior
-    ],
-
-    configure: function(config) {
-      var node = config.node;
-
-      if (config.transformOrigin) {
-        this.setPrefixedProperty(node, 'transformOrigin', config.transformOrigin);
-      }
-
-      this._effect = new KeyframeEffect(node, [
-        {'transform': 'scale(0)'},
-        {'transform': 'scale(1)'}
-      ], this.timingFromConfig(config));
-
-      return this._effect;
-    }
-
-  });
-
-</script>
-
-
-<script>
-
-  Polymer({
-
-    is: 'slide-from-left-animation',
-
-    behaviors: [
-      Polymer.NeonAnimationBehavior
-    ],
-
-    configure: function(config) {
-      var node = config.node;
-
-      if (config.transformOrigin) {
-        this.setPrefixedProperty(node, 'transformOrigin', config.transformOrigin);
-      } else {
-        this.setPrefixedProperty(node, 'transformOrigin', '0 50%');
-      }
-
-      this._effect = new KeyframeEffect(node, [
-        {'transform': 'translateX(-100%)'},
-        {'transform': 'none'}
-      ], this.timingFromConfig(config));
-
-      return this._effect;
-    }
-
-  });
-
-</script>
-
-
-<script>
-
-  Polymer({
-
-    is: 'slide-from-right-animation',
-
-    behaviors: [
-      Polymer.NeonAnimationBehavior
-    ],
-
-    configure: function(config) {
-      var node = config.node;
-
-      if (config.transformOrigin) {
-        this.setPrefixedProperty(node, 'transformOrigin', config.transformOrigin);
-      } else {
-        this.setPrefixedProperty(node, 'transformOrigin', '0 50%');
-      }
-
-      this._effect = new KeyframeEffect(node, [
-        {'transform': 'translateX(100%)'},
-        {'transform': 'none'}
-      ], this.timingFromConfig(config));
-
-      return this._effect;
-    }
-
-  });
-
-</script>
-
-
-<script>
-
-  Polymer({
-
-    is: 'slide-left-animation',
-
-    behaviors: [
-      Polymer.NeonAnimationBehavior
-    ],
-
-    configure: function(config) {
-      var node = config.node;
-
-      if (config.transformOrigin) {
-        this.setPrefixedProperty(node, 'transformOrigin', config.transformOrigin);
-      } else {
-        this.setPrefixedProperty(node, 'transformOrigin', '0 50%');
-      }
-
-      this._effect = new KeyframeEffect(node, [
-        {'transform': 'none'},
-        {'transform': 'translateX(-100%)'}
-      ], this.timingFromConfig(config));
-
-      return this._effect;
-    }
-
-  });
-
-</script>
-
-
-<script>
-
-  Polymer({
-
-    is: 'slide-right-animation',
-
-    behaviors: [
-      Polymer.NeonAnimationBehavior
-    ],
-
-    configure: function(config) {
-      var node = config.node;
-
-      if (config.transformOrigin) {
-        this.setPrefixedProperty(node, 'transformOrigin', config.transformOrigin);
-      } else {
-        this.setPrefixedProperty(node, 'transformOrigin', '0 50%');
-      }
-
-      this._effect = new KeyframeEffect(node, [
-        {'transform': 'none'},
-        {'transform': 'translateX(100%)'}
-      ], this.timingFromConfig(config));
-
-      return this._effect;
-    }
-
-  });
-
-</script>
-
-
-<script>
-
-  Polymer({
-
-    is: 'slide-up-animation',
-
-    behaviors: [
-      Polymer.NeonAnimationBehavior
-    ],
-
-    configure: function(config) {
-      var node = config.node;
-
-      if (config.transformOrigin) {
-        this.setPrefixedProperty(node, 'transformOrigin', config.transformOrigin);
-      } else {
-        this.setPrefixedProperty(node, 'transformOrigin', '50% 0');
-      }
-
-      this._effect = new KeyframeEffect(node, [
-        {'transform': 'translate(0)'},
-        {'transform': 'translateY(-100%)'}
-      ], this.timingFromConfig(config));
-
-      return this._effect;
-    }
-
-  });
-
-</script>
-
-
-<script>
-
-  Polymer({
-
-    is: 'slide-down-animation',
-
-    behaviors: [
-      Polymer.NeonAnimationBehavior
-    ],
-
-    configure: function(config) {
-      var node = config.node;
-
-      if (config.transformOrigin) {
-        this.setPrefixedProperty(node, 'transformOrigin', config.transformOrigin);
-      } else {
-        this.setPrefixedProperty(node, 'transformOrigin', '50% 0');
-      }
-
-      this._effect = new KeyframeEffect(node, [
-        {'transform': 'translateY(-100%)'},
-        {'transform': 'none'}
-      ], this.timingFromConfig(config));
-
-      return this._effect;
-    }
-
-  });
-
-</script>
-
-
-<script>
-
-  Polymer({
-
-    is: 'transform-animation',
-
-    behaviors: [
-      Polymer.NeonAnimationBehavior
-    ],
-
-    configure: function(config) {
-      var node = config.node;
-      var transformFrom = config.transformFrom || 'none';
-      var transformTo = config.transformTo || 'none';
-
-      if (config.transformOrigin) {
-        this.setPrefixedProperty(node, 'transformOrigin', config.transformOrigin);
-      }
-
-      this._effect = new KeyframeEffect(node, [
-        {'transform': transformFrom},
-        {'transform': transformTo}
-      ], this.timingFromConfig(config));
-
-      return this._effect;
-    }
-
-  });
-
-</script>
-<script>
-
-  /**
-   * Use `Polymer.NeonSharedElementAnimatableBehavior` to implement elements containing shared element
-   * animations.
-   * @polymerBehavior
-   */
-  Polymer.NeonSharedElementAnimatableBehavior = [Polymer.NeonAnimatableBehavior, {
-
-    properties: {
-
-      /**
-       * A map of shared element id to node.
-       */
-      sharedElements: {
-        type: Object,
-        value: {}
-      }
-
-    }
-
-  }];
-
-</script>
-
 <style is="custom-style" type="text/css">
     /* Custom properties that inherit down the document tree may be defined */
     /* https://www.polymer-project.org/1.0/docs/devguide/styling.html */
@@ -11677,218 +9994,6 @@ styles. All other styles should exist as single lines."
 
   });
 </script>
-<dom-module id="neon-animated-pages" assetpath="../bower_components/neon-animation/">
-
-  <style>
-
-    :host {
-      display: block;
-      position: relative;
-    }
-
-    :host > ::content > * {
-      @apply(--layout-fit);
-      height: 100%;
-    }
-
-    :host > ::content > :not(.iron-selected):not(.neon-animating) {
-      display: none !important;
-    }
-
-    :host > ::content > .neon-animating {
-      pointer-events: none;
-    }
-
-  </style>
-
-  <template>
-    <content id="content"></content>
-  </template>
-
-</dom-module>
-
-<script>
-(function() {
-
-  Polymer({
-
-    is: 'neon-animated-pages',
-
-    behaviors: [
-      Polymer.IronResizableBehavior,
-      Polymer.IronSelectableBehavior,
-      Polymer.NeonAnimationRunnerBehavior
-    ],
-
-    properties: {
-
-      activateEvent: {
-        type: String,
-        value: ''
-      },
-
-      // if true, the initial page selection will also be animated according to its animation config.
-      animateInitialSelection: {
-        type: Boolean,
-        value: false
-      }
-
-    },
-
-    observers: [
-      '_selectedChanged(selected)'
-    ],
-
-    listeners: {
-      'neon-animation-finish': '_onNeonAnimationFinish'
-    },
-
-    _selectedChanged: function(selected) {
-
-      var selectedPage = this.selectedItem;
-      var oldPage = this._prevSelected || false;
-      this._prevSelected = selectedPage;
-
-      // on initial load and if animateInitialSelection is negated, simply display selectedPage.
-      if (!oldPage && !this.animateInitialSelection) {
-        this._completeSelectedChanged();
-        return;
-      }
-
-      // insert safari fix.
-      this.animationConfig = [{
-        name: 'opaque-animation',
-        node: selectedPage
-      }];
-
-      // configure selectedPage animations.
-      if (this.entryAnimation) {
-        this.animationConfig.push({
-          name: this.entryAnimation,
-          node: selectedPage
-        });
-      } else {
-        if (selectedPage.getAnimationConfig) {
-          this.animationConfig.push({
-            animatable: selectedPage,
-            type: 'entry'
-          });
-        }
-      }
-
-      // configure oldPage animations iff exists.
-      if (oldPage) {
-
-        // cancel the currently running animation if one is ongoing.
-        if (oldPage.classList.contains('neon-animating')) {
-          this._squelchNextFinishEvent = true;
-          this.cancelAnimation();
-          this._completeSelectedChanged();
-        }
-
-        // configure the animation.
-        if (this.exitAnimation) {
-          this.animationConfig.push({
-            name: this.exitAnimation,
-            node: oldPage
-          });
-        } else {
-          if (oldPage.getAnimationConfig) {
-            this.animationConfig.push({
-              animatable: oldPage,
-              type: 'exit'
-            });
-          }
-        }
-
-        // display the oldPage during the transition.
-        oldPage.classList.add('neon-animating');
-      }
-
-      // display the selectedPage during the transition.
-      selectedPage.classList.add('neon-animating');
-
-      // actually run the animations.
-      if (this.animationConfig.length > 1) {
-
-        // on first load, ensure we run animations only after element is attached.
-        if (!this.isAttached) {
-          this.async(function () {
-            this.playAnimation(null, {
-              fromPage: null,
-              toPage: selectedPage
-            });
-          });
-
-        } else {
-          this.playAnimation(null, {
-            fromPage: oldPage,
-            toPage: selectedPage
-          });
-        }
-
-      } else {
-        this._completeSelectedChanged(oldPage, selectedPage);
-      }
-    },
-
-    _completeSelectedChanged: function(oldPage, selectedPage) {
-      if (selectedPage) {
-        selectedPage.classList.remove('neon-animating');
-      }
-      if (oldPage) {
-        oldPage.classList.remove('neon-animating');
-      }
-      if (!selectedPage || !oldPage) {
-        var nodes = Polymer.dom(this.$.content).getDistributedNodes();
-        for (var node, index = 0; node = nodes[index]; index++) {
-          node.classList && node.classList.remove('neon-animating');
-        }
-      }
-      this.async(this.notifyResize);
-    },
-
-    _onNeonAnimationFinish: function(event) {
-      if (this._squelchNextFinishEvent) {
-        this._squelchNextFinishEvent = false;
-        return;
-      }
-      this._completeSelectedChanged(event.detail.fromPage, event.detail.toPage);
-    }
-
-  })
-
-})();
-</script>
-<dom-module id="neon-animatable" assetpath="../bower_components/neon-animation/">
-
-  <style>
-
-    :host {
-      display: block;
-    }
-
-  </style>
-
-  <template>
-    <content></content>
-  </template>
-
-</dom-module>
-
-<script>
-
-  Polymer({
-
-    is: 'neon-animatable',
-
-    behaviors: [
-      Polymer.NeonAnimatableBehavior
-    ]
-
-  });
-
-</script>
 <dom-module id="step-block" assetpath="learn/">
 	<style>
 		h2 {
@@ -12560,7 +10665,7 @@ styles. All other styles should exist as single lines."
 			margin-right:50px;
 			position:relative;
 			background-color:#FFF;
-			
+
 			border-radius:4px;
 			width:100%;
 		}
@@ -12582,7 +10687,7 @@ styles. All other styles should exist as single lines."
 			width:100%;
 			height:175px;
 			overflow:hidden;
-			
+
 			position:relative;
 			z-index:1;
 		};
@@ -12610,7 +10715,7 @@ styles. All other styles should exist as single lines."
 			opacity:0.5;
 		};
 
-		
+
 
 		::content #capsule-title {
 			margin:0;
@@ -12622,22 +10727,22 @@ styles. All other styles should exist as single lines."
  			font-size: 24px;
 		};
 
-		
-		
+
+
 
 		::content #capsule-content {
 			display:none;
 			padding:20px;
 			padding-top:40px;
-			-webkit-transition: opacity 500ms ease-in-out; 
-			   -moz-transition: opacity 500ms ease-in-out; 
-			     -o-transition: opacity 500ms ease-in-out; 
-			        transition: opacity 500ms ease-in-out; 
+			-webkit-transition: opacity 500ms ease-in-out;
+			   -moz-transition: opacity 500ms ease-in-out;
+			     -o-transition: opacity 500ms ease-in-out;
+			        transition: opacity 500ms ease-in-out;
 
 
-			-webkit-transition-timing-function: cubic-bezier(0.770, 0.000, 0.175, 1.000); 
-			   -moz-transition-timing-function: cubic-bezier(0.770, 0.000, 0.175, 1.000); 
-			     -o-transition-timing-function: cubic-bezier(0.770, 0.000, 0.175, 1.000); 
+			-webkit-transition-timing-function: cubic-bezier(0.770, 0.000, 0.175, 1.000);
+			   -moz-transition-timing-function: cubic-bezier(0.770, 0.000, 0.175, 1.000);
+			     -o-transition-timing-function: cubic-bezier(0.770, 0.000, 0.175, 1.000);
 			        transition-timing-function: cubic-bezier(0.770, 0.000, 0.175, 1.000);
 		};
 
@@ -12659,7 +10764,7 @@ styles. All other styles should exist as single lines."
 		::content #capsule-content-container {
 			position:absolute;
 			background-color:#FFF;
-			
+
 			overflow-y:scroll;
 			z-index:99;
 			top:0;
@@ -12668,18 +10773,18 @@ styles. All other styles should exist as single lines."
 			height:100%;
 			visibility: hidden;
 			overflow:hidden;
-			-webkit-transition: all 750ms cubic-bezier(0.770, 0.000, 0.175, 1.000); 
-			   -moz-transition: all 750ms cubic-bezier(0.770, 0.000, 0.175, 1.000); 
+			-webkit-transition: all 750ms cubic-bezier(0.770, 0.000, 0.175, 1.000);
+			   -moz-transition: all 750ms cubic-bezier(0.770, 0.000, 0.175, 1.000);
 			     -o-transition: all 750ms cubic-bezier(0.770, 0.000, 0.175, 1.000);
 			        transition: all 750ms cubic-bezier(0.770, 0.000, 0.175, 1.000);
 
 
-			-webkit-transition-timing-function: cubic-bezier(0.770, 0.000, 0.175, 1.000); 
-			   -moz-transition-timing-function: cubic-bezier(0.770, 0.000, 0.175, 1.000); 
-			     -o-transition-timing-function: cubic-bezier(0.770, 0.000, 0.175, 1.000); 
+			-webkit-transition-timing-function: cubic-bezier(0.770, 0.000, 0.175, 1.000);
+			   -moz-transition-timing-function: cubic-bezier(0.770, 0.000, 0.175, 1.000);
+			     -o-transition-timing-function: cubic-bezier(0.770, 0.000, 0.175, 1.000);
 			        transition-timing-function: cubic-bezier(0.770, 0.000, 0.175, 1.000);
 		};
-		
+
 		::content #capsule-close-button {
 			position:absolute;
 			right:0;
@@ -12690,7 +10795,7 @@ styles. All other styles should exist as single lines."
 			width:100%;
 			height:100vh;
 			visibility:hidden;
-			
+
 			z-index:90;
 			top:0;
 			left:0;
@@ -12742,12 +10847,12 @@ styles. All other styles should exist as single lines."
 				<div id="capsule-image-container">
 					<div id="capsule-image-overlay"></div>
 					<div id="capsule-image"></div>
-					
+
 				</div>
 				<h2 id="capsule-title">{{ title }}</h2>
 				<paper-fab icon="content-copy"></paper-fab>
 			</div>
-			
+
 			<div id="capsule-content-container" class="material-shadow" elevation="1">
 				<paper-icon-button id="capsule-close-button" icon="clear"></paper-icon-button>
 				<div id="capsule-content">
@@ -12783,7 +10888,7 @@ styles. All other styles should exist as single lines."
 					return document.body;
 				}
 			}
-			
+
 		},
 
 		ready: function() {
@@ -12797,7 +10902,7 @@ styles. All other styles should exist as single lines."
 			this.capsule_page_block = this.$['capsule-page-block'];
 			this.default_width = 0;
 			this.window_open = false;
-			
+
 		},
 
 		attached: function() {
@@ -12823,11 +10928,11 @@ styles. All other styles should exist as single lines."
 			this.capsule_content_container.addEventListener("webkitTransitionEnd",function(e){
 				self._hideContentContainer();
 			},false);
-			
+
 		},
 
 		/* Using IronA11yKeysBehavior, listen for 'esc' key pressed
-		 * anywhere on the page (see keyEventTarget property). 
+		 * anywhere on the page (see keyEventTarget property).
 		 * escape will close an open capsule.
 		 */
 		_handleEscapeKey: function(e) {
@@ -12839,7 +10944,6 @@ styles. All other styles should exist as single lines."
 		},
 
 		_onCapsuleRefClick: function(e) {
-			console.log("_onCapsuleRefClick")
 			this.windowOn(e);
 		},
 
@@ -12847,18 +10951,14 @@ styles. All other styles should exist as single lines."
 			this.windowOff(e);
 		},
 
-		
+
 
 		_clickListener: function(e) {
-			console.log("CLICK");
-			
 		},
 
 		_hideContentContainer: function(e) {
-			console.log("_hideContentContainer");
 
 			if (this.window_open) {
-				console.log("window open");
 				var self = this;
 				// this.capsule_content_container.removeEventListener("transitionend",function(e){
 				// 	self._hideContentContainer();
@@ -12875,12 +10975,12 @@ styles. All other styles should exist as single lines."
 			} else {
 				console.log("window closed")
 			}
-			
-			
+
+
 		},
 
 		windowOn:function(e) {
-			
+
 			this.capsule_content.style.display = "block";
 			this.capsule_content.style.opacity = 1;
 			this.capsule_content_container.style.visibility = "visible";
@@ -12920,7 +11020,8 @@ styles. All other styles should exist as single lines."
 
 	});
 
-</script><dom-module id="info-block" assetpath="learn/">
+</script>
+<dom-module id="info-block" assetpath="learn/">
 	<style>
 		::content #info-block-wrapper {
 			background-color: #F5F4F4;
@@ -13063,38 +11164,38 @@ styles. All other styles should exist as single lines."
 		top:0px;
 		height:100%;
 		cursor:pointer;
-		-webkit-transition: all 750ms cubic-bezier(0.770, 0.000, 0.175, 1.000); 
-		   -moz-transition: all 750ms cubic-bezier(0.770, 0.000, 0.175, 1.000); 
-		     -o-transition: all 750ms cubic-bezier(0.770, 0.000, 0.175, 1.000); 
-		        transition: all 750ms cubic-bezier(0.770, 0.000, 0.175, 1.000); 
+		-webkit-transition: all 750ms cubic-bezier(0.770, 0.000, 0.175, 1.000);
+		   -moz-transition: all 750ms cubic-bezier(0.770, 0.000, 0.175, 1.000);
+		     -o-transition: all 750ms cubic-bezier(0.770, 0.000, 0.175, 1.000);
+		        transition: all 750ms cubic-bezier(0.770, 0.000, 0.175, 1.000);
 
 
-		-webkit-transition-timing-function: cubic-bezier(0.770, 0.000, 0.175, 1.000); 
-		   -moz-transition-timing-function: cubic-bezier(0.770, 0.000, 0.175, 1.000); 
-		     -o-transition-timing-function: cubic-bezier(0.770, 0.000, 0.175, 1.000); 
+		-webkit-transition-timing-function: cubic-bezier(0.770, 0.000, 0.175, 1.000);
+		   -moz-transition-timing-function: cubic-bezier(0.770, 0.000, 0.175, 1.000);
+		     -o-transition-timing-function: cubic-bezier(0.770, 0.000, 0.175, 1.000);
 		        transition-timing-function: cubic-bezier(0.770, 0.000, 0.175, 1.000);
 	}
 	::content #lesson-ref-container.animate {
-/*		-webkit-transition: all 750ms cubic-bezier(0.770, 0.000, 0.175, 1.000); 
-		   -moz-transition: all 750ms cubic-bezier(0.770, 0.000, 0.175, 1.000); 
-		     -o-transition: all 750ms cubic-bezier(0.770, 0.000, 0.175, 1.000); 
-		        transition: all 750ms cubic-bezier(0.770, 0.000, 0.175, 1.000); 
+/*		-webkit-transition: all 750ms cubic-bezier(0.770, 0.000, 0.175, 1.000);
+		   -moz-transition: all 750ms cubic-bezier(0.770, 0.000, 0.175, 1.000);
+		     -o-transition: all 750ms cubic-bezier(0.770, 0.000, 0.175, 1.000);
+		        transition: all 750ms cubic-bezier(0.770, 0.000, 0.175, 1.000);
 
 
-		-webkit-transition-timing-function: cubic-bezier(0.770, 0.000, 0.175, 1.000); 
-		   -moz-transition-timing-function: cubic-bezier(0.770, 0.000, 0.175, 1.000); 
-		     -o-transition-timing-function: cubic-bezier(0.770, 0.000, 0.175, 1.000); 
+		-webkit-transition-timing-function: cubic-bezier(0.770, 0.000, 0.175, 1.000);
+		   -moz-transition-timing-function: cubic-bezier(0.770, 0.000, 0.175, 1.000);
+		     -o-transition-timing-function: cubic-bezier(0.770, 0.000, 0.175, 1.000);
 		        transition-timing-function: cubic-bezier(0.770, 0.000, 0.175, 1.000);*/
 	}
-	
+
 	::content #image-container {
 		position: relative;
 	}
-	
+
 	::content #image-container img {
 		width: 100%;
 	}
-	
+
 	::content #title-el {
 		position: absolute;
 		bottom: 0;
@@ -13104,7 +11205,7 @@ styles. All other styles should exist as single lines."
 		font-size:26px;
 		font-weight:900;
 	}
-	
+
 	::content #image-container paper-fab {
 		position: absolute;
 		right: -30px;
@@ -13112,11 +11213,11 @@ styles. All other styles should exist as single lines."
 		background-color: #fff;
 		color: #000;
 	}
-	
+
 	::content #text-container {
 		padding: 10px;
 		padding:0px 10px 10px 10px;
-		
+
 
 	};
 
@@ -13201,17 +11302,16 @@ styles. All other styles should exist as single lines."
 			this.image_container = this.$['image-container'];
 			this.title_el = this.$['title-el'];
 
-			
+
 		},
 
 		attached: function() {
 			var self = this;
 			setTimeout(function(){
 				self.container.style.height = self.container.offsetHeight +"px";
-				console.log(self.container.offsetHeight)
 			}, 500);
-			
-			
+
+
 		},
 
 		_handleEscapeKey: function(e) {
@@ -13223,15 +11323,12 @@ styles. All other styles should exist as single lines."
 		},
 
 		_clickListener: function(e) {
-			console.log("_clickListener");
-			
-
 			if (this.url) {
-				
+
 				// var container_top = this.container.getBoundingClientRect().top;
 				// this.container.style.left = "150%";
 				// this.container.style.height = window.innerHeight + "px";
-				
+
 				// this.container.style.top = -container_top + "px";
 				// this.container.setAttribute("elevation", "5");
 				this.fire("page:add", {url:this.url});
@@ -13530,7 +11627,7 @@ Polymer({
 
 		request.onload = function() {
 			if (request.status >= 200 && request.status < 400) {
-	        // check on support for DOMParser 
+	        // check on support for DOMParser
 	        // maybe consult https://developer.mozilla.org/en-US/Add-ons/Code_snippets/HTML_to_DOM
 				dp = new DOMParser();
 				contentType = request.getResponseHeader('content-type');
@@ -13538,14 +11635,12 @@ Polymer({
 				var parsed = dp.parseFromString(request.responseText, contentType);
 				callback(parsed.querySelector('page-item'));
 			} else {
-				console.log("Error ["+ request.status +"] retrieving " + url);
-				console.log(request);
+				console.log("Error ["+ request.status +"] retrieving " + url, request);
 			}
 		};
 
 		request.onerror = function() {
-			console.log("Error ["+ request.status +"] retrieving " + url);
-			console.log(request);
+			console.log("Error ["+ request.status +"] retrieving " + url, request);
 		};
 
 		request.send();
@@ -13569,6 +11664,7 @@ Polymer({
 				for (var i = 0; i < pageItem.attributes.length; i++) {
 					clone.attributes.setNamedItem(pageItem.attributes[i].cloneNode())
 				};
+				clone.title = clone.attributes.title.value; // safari needs help here
 				var content = clone.$$('content');
 				content.innerHTML = pageItem.innerHTML;
 				clone.distributeContent();
@@ -13640,7 +11736,7 @@ Polymer({
 					} else {
 						to_page_out.push(this.page_stack[i].el);
 					}
-					
+
 				}
 			}
 
@@ -13669,12 +11765,13 @@ Polymer({
 			window.onpopstate = function(e) {
 				if (e.state && typeof(e.state.stack_end_index) == "number") {
 					if (e.state.stack_end_index < self.page_stack.length) {
-						self.selectPage(e.state.stack_end_index)	
+						self.selectPage(e.state.stack_end_index)
 					} else {
 						console.log("Forward not supported at this time.");
 					}
 				} else {
 					if (self.page_stack.length > 1) {
+						console.log('state has no stack_end_index so selecting page 0');
 						self.selectPage(0);
 					} else {
 						console.log("Don't know what to do with popped state");
@@ -13687,8 +11784,9 @@ Polymer({
 
 		},
 		page_stack: []
-	})    
-</script><dom-module id="page-item" assetpath="learn/">
+	})
+</script>
+<dom-module id="page-item" assetpath="learn/">
 	<style>
 		::content #page-container {
 			position:relative;
@@ -13698,7 +11796,7 @@ Polymer({
 		::content #page-cover {
 			width:100%;
 			height:100%;
-			
+
 			display:block;
 			height:0;
 			position:absolute;
@@ -13712,11 +11810,11 @@ Polymer({
 			-webkit-transition: margin-left 750ms cubic-bezier(0.770, 0.000, 0.175, 1.000),
 								width 750ms cubic-bezier(0.770, 0.000, 0.175, 1.000),
 								right 750ms cubic-bezier(0.770, 0.000, 0.175, 1.000),
-								opacity 750ms cubic-bezier(0.770, 0.000, 0.175, 1.000); 
+								opacity 750ms cubic-bezier(0.770, 0.000, 0.175, 1.000);
 			   -moz-transition: margin-left 750ms cubic-bezier(0.770, 0.000, 0.175, 1.000),
 			   					width 750ms cubic-bezier(0.770, 0.000, 0.175, 1.000),
 			   					right 750ms cubic-bezier(0.770, 0.000, 0.175, 1.000),
-			   					opacity 750ms cubic-bezier(0.770, 0.000, 0.175, 1.000); 
+			   					opacity 750ms cubic-bezier(0.770, 0.000, 0.175, 1.000);
 			     -o-transition: margin-left 750ms cubic-bezier(0.770, 0.000, 0.175, 1.000),
 			     				width 750ms cubic-bezier(0.770, 0.000, 0.175, 1.000),
 			     				right 750ms cubic-bezier(0.770, 0.000, 0.175, 1.000),
@@ -13727,9 +11825,9 @@ Polymer({
 			        			opacity 750ms cubic-bezier(0.770, 0.000, 0.175, 1.000);
 
 
-			-webkit-transition-timing-function: cubic-bezier(0.770, 0.000, 0.175, 1.000); 
-			   -moz-transition-timing-function: cubic-bezier(0.770, 0.000, 0.175, 1.000); 
-			     -o-transition-timing-function: cubic-bezier(0.770, 0.000, 0.175, 1.000); 
+			-webkit-transition-timing-function: cubic-bezier(0.770, 0.000, 0.175, 1.000);
+			   -moz-transition-timing-function: cubic-bezier(0.770, 0.000, 0.175, 1.000);
+			     -o-transition-timing-function: cubic-bezier(0.770, 0.000, 0.175, 1.000);
 			        transition-timing-function: cubic-bezier(0.770, 0.000, 0.175, 1.000);
 		};
 		::content #page-cover-background {
@@ -13750,8 +11848,15 @@ Polymer({
 			height:100vh;
 			width:100%;
 			display:flex;
+			display: -webkit-flex;
 			align-items: center;
+			-webkit-align-items: center;
+			-moz-align-items: center;
+			-ms-align-items: center;
 			justify-content: center;
+			-webkit-justify-content: center;
+			-moz-justify-content: center;
+			-ms-justify-content: center;
 		}
 		::content #page-cover-title-container {
 			text-align:center;
@@ -13788,7 +11893,7 @@ Polymer({
   -ms-transform-origin: 50% 50%;
   -o-transform-origin: 50% 50%;
   transform-origin: 50% 50%;*/
-/*			-webkit-transform: rotate(90deg); 
+/*			-webkit-transform: rotate(90deg);
 				-ms-transform: rotate(90deg);
 					transform: rotate(90deg);*/
 		}
@@ -13800,17 +11905,17 @@ Polymer({
 			background-color:#F4F4F4;
 			top:0;
 			margin-left:100%;
-			
+
 			/*overflow:hidden;*/
 			overflow-y: scroll;
 			-webkit-transition: margin-left 750ms cubic-bezier(0.770, 0.000, 0.175, 1.000),
 								width 750ms cubic-bezier(0.770, 0.000, 0.175, 1.000),
 								box-shadow 250ms ease-in-out,
-								opacity 750ms cubic-bezier(0.770, 0.000, 0.175, 1.000); 
+								opacity 750ms cubic-bezier(0.770, 0.000, 0.175, 1.000);
 			   -moz-transition: margin-left 750ms cubic-bezier(0.770, 0.000, 0.175, 1.000),
 			   					width 750ms cubic-bezier(0.770, 0.000, 0.175, 1.000),
 			   					box-shadow 250ms ease-in-out,
-			   					opacity 750ms cubic-bezier(0.770, 0.000, 0.175, 1.000); 
+			   					opacity 750ms cubic-bezier(0.770, 0.000, 0.175, 1.000);
 			     -o-transition: margin-left 750ms cubic-bezier(0.770, 0.000, 0.175, 1.000),
 			     				width 750ms cubic-bezier(0.770, 0.000, 0.175, 1.000),
 			     				box-shadow 250ms ease-in-out,
@@ -13822,9 +11927,9 @@ Polymer({
 
 
 
-			-webkit-transition-timing-function: cubic-bezier(0.770, 0.000, 0.175, 1.000); 
-			   -moz-transition-timing-function: cubic-bezier(0.770, 0.000, 0.175, 1.000); 
-			     -o-transition-timing-function: cubic-bezier(0.770, 0.000, 0.175, 1.000); 
+			-webkit-transition-timing-function: cubic-bezier(0.770, 0.000, 0.175, 1.000);
+			   -moz-transition-timing-function: cubic-bezier(0.770, 0.000, 0.175, 1.000);
+			     -o-transition-timing-function: cubic-bezier(0.770, 0.000, 0.175, 1.000);
 			        transition-timing-function: cubic-bezier(0.770, 0.000, 0.175, 1.000);
 		};
 
@@ -13897,15 +12002,15 @@ Polymer({
 			"click": "_clickListener"
 		},
 		page_stack: [],
-		
+
 
 		created: function() {
-			//console.log(this.localName + '#' + this.id + ' was created');
+
 		},
 
 		ready: function() {
-			//console.log("page-item ready");
-			//console.log(this.localName + '#' + this.id + ' is ready');
+			//
+			(this.localName + '#' + this.id + ' is ready');
 			// DOM OBJECTS
 			this.page_container = this.$['page-container'];
 			this.page_item = this.$['page-item'];
@@ -13915,22 +12020,13 @@ Polymer({
 			var self = this;
 			//this.page_item.style.marginLeft = "100%";
 			//this.page_item.style.opacity = "0";
-			console.log("TITLE " + this.title);
-			
+
   		},
 
 		attached: function() {
-			
-			//this.page_item.style.opacity = "0";
-			//console.log(this.localName + '#' + this.id + ' was attached');
-			
-
 			var self = this;
 
-			
-
 			this.page_item.style.marginLeft = "100%";
-			//this.page_item.setAttribute("class", "material-shadow loaded");
 
 			this.page_cover.addEventListener("click",function(e){
 				self._onCoverClick();
@@ -13940,26 +12036,23 @@ Polymer({
 		},
 
 		_onCoverClick: function(e) {
-			//console.log("_onCoverClick");
 			this.fire("page:out", {caller:this, index:this.index});
 		},
 
 		_removeSelf: function(e) {
-			//console.log("_removeSelf");
 			this.fire("page:remove", {caller:this, index:this.index});
 			// DESTROY
 		},
 
 		_onLoad: function(e) {
-			//console.log("_onLoad");
 		},
 
 		/* Using IronA11yKeysBehavior, listen for 'esc' key pressed
-		 * anywhere on the page (see keyEventTarget property). 
+		 * anywhere on the page (see keyEventTarget property).
 		 * escape will hide a zoomed image.
 		 */
 		_handleEscapeKey: function(e) {
-			
+
 		},
 
 		/* 	Click Listener
@@ -13975,7 +12068,6 @@ Polymer({
 		/* WHEN TRANSITION ENDS
 		================================================== */
 		_onBackgroundTransition: function(e) {
-			// console.log("transitionend");
 			// this.background.style.display = "none";
 			// this.zoom_container.classList.remove('container-zoomed');
 
@@ -13986,7 +12078,6 @@ Polymer({
 
 		// Removes page
 		pageOut: function() {
-			//console.log("PAGE OUT");
 			// TRANSITION LISTENERS
 			//this.page_item.setAttribute("class", "loaded");
 			var self = this;
@@ -14007,17 +12098,16 @@ Polymer({
 		// Page is no longer active but is visible in the page_stack
 		pageOff: function(stack_depth_position, stack_depth, index, stack_width) {
 
-			//console.log("pageOff");
 			var left_pos = 100 - stack_depth_position,
 				self = this;
 
 			this.index = index;
 
-			
+
 			this.page_cover.style.marginLeft = "0%";
 			this.page_cover.style.height = "100vh";
 			this.page_cover.style.width = "75%";
-			
+
 			this.page_cover.style.display = "block";
 			this.page_cover.style.zIndex = stack_depth + 1;
 			//this.page_cover.style.marginLeft = -left_pos + 25 + "%";
@@ -14044,15 +12134,12 @@ Polymer({
 				self.page_cover.style.opacity = "1";
 			}, 750);
 			//this.page_item.style.width = "100%";
-			
+
 		},
 
 		// Page is at the top of the page_stack
 		_pageOn: function(single) {
 
-			console.log("single? " + single);
-			//console.log("is single " + single);
-			//console.log(this.page_item.style.marginLeft)
 			if (single) {
 				this.page_item.style.marginLeft = "0%";
 				this.page_item.style.width = "100%";
@@ -14060,18 +12147,17 @@ Polymer({
 				this.page_item.style.marginLeft = "25%";
 				this.page_item.style.width = "75%";
 			}
-			
+
 			this.page_item.style.opacity = "1";
-			
+
 
 			this.page_cover.style.opacity = "0";
 			this.page_cover.style.height = "0px";
-			//console.log(this.page_item.style.marginLeft);
-			
+
 			var self = this;
 			setTimeout(function(){
 				self.page_container.style.zIndex = 10;
-				
+
 				self.page_item.setAttribute("elevation", "5");
 			}, 500);
 
@@ -14294,14 +12380,12 @@ function fetchGlossary(url, callback) {
         if (request.status >= 200 && request.status < 400) {
             callback(JSON.parse(request.responseText));
         } else {
-            console.log("Error ["+ request.status +"] retrieving " + url);
-            console.log(request);
+            console.log("Error ["+ request.status +"] retrieving " + url,request);
         }
     };
 
     request.onerror = function() {
-        console.log("Error ["+ request.status +"] retrieving " + url);
-        console.log(request);
+        console.log("Error ["+ request.status +"] retrieving " + url, request);
     };
 
     request.send();

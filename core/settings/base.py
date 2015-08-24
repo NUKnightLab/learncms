@@ -45,6 +45,8 @@ ADMINS = (
 MANAGERS = ADMINS
 
 INSTALLED_APPS = (
+    'grappelli',
+    'filebrowser',
     'django.contrib.admin',
     'django.contrib.auth',
     'django.contrib.contenttypes',
@@ -87,6 +89,8 @@ TEMPLATES = [
     },
 ]
 
+GRAPPELLI_ADMIN_TITLE = 'Learn.KnightLab.com'
+
 # boring standard stuff
 LANGUAGE_CODE = 'en-us'
 
@@ -97,3 +101,5 @@ USE_I18N = True
 USE_L10N = True
 
 USE_TZ = True
+
+FILEBROWSER_DEFAULT_SORTING_BY = 'name'
