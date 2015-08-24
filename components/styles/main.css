@@ -12,25 +12,3 @@ body {
   font-family: 'Roboto', 'Helvetica Neue', Helvetica, Arial, sans-serif;
   color: #333;
 }
-
-pre {
- white-space: pre-wrap;       /* css-3 */
- white-space: -moz-pre-wrap;  /* Mozilla, since 1999 */
- white-space: -pre-wrap;      /* Opera 4-6 */
- white-space: -o-pre-wrap;    /* Opera 7 */
- word-wrap: break-word;       /* Internet Explorer 5.5+ */
-}
-
-.code-snippet {
-  border-radius: 5px;
-  font-family: "Courier", monospace;
-  background-color: #eee;
-  color: #333;
-  font-weight: 400;
-  word-wrap: break-word;
-  padding-right: 20px;
-}
-
-.code-snippet p {
-  margin-left: 20px;
-}
