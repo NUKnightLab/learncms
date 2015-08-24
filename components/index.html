@@ -60,18 +60,18 @@ subject to an additional IP rights grant found at http://polymer.github.io/PATEN
 </head>
 
 <body unresolved class='fullbleed'>
-  <learn-nav></learn-nav>
+  <!-- <learn-nav></learn-nav> -->
   <section class="hero-banner">
     <div class='hero-header'>
       <h1>Learn</h1>
-      <h3>Join what might be one of many possible futures of journalism.</h3>
+      <h3>Join what may or may not be one of many possible futures of journalism (or don't, I'm not trying to tell you how to live your life).</h3>
       <p>
         Lorem ipsum dolor sit amet, consectetur adipiscing elit. Vivamus ut massa quis arcu fringilla pharetra eu sed ligula. In facilisis eros ac ante sodales cursus sit amet at risus. Nunc placerat in quam ut mattis.
       </p>
     </div>
 
     <div class="hero-lesson-container">
-      <a href="lesson.html">
+      <a href="lesson.html" class='lesson-link'>
         <lesson-ref title="Build a Basic Website" image="images/learn/source-code.png" url="lesson.html">
           <p>
             Wondering why your site’s looking so ugly? HTML just says what’s what and gives the page structure. CSS is where the real fun starts—it will fix things faster than Fix-It Felix.
@@ -80,7 +80,7 @@ subject to an additional IP rights grant found at http://polymer.github.io/PATEN
       </a>
     </div>
     <div class="arrow-down-container">
-      <a href="#gallery">
+      <a href="#gallery" class='arrow-down'>
         <div class="arrow-down">
           See the lessons
         </div>
@@ -88,60 +88,63 @@ subject to an additional IP rights grant found at http://polymer.github.io/PATEN
       </a>
     </div>
   </section>
-  <section class='gallery-container' id='gallery'>
-    <h2>Start Learning</h2>
-    <div class="lesson-container">
-      <lesson-ref title="Basic HTML" image="images/learn/source-code.png" url="lesson.html">
-        <p>
-          Wondering why your site’s looking so ugly? HTML just says what’s what and gives the page structure. CSS is where the real fun starts—it will fix things faster than Fix-It Felix.
-        </p>
-      </lesson-ref>
-    </div>
-    <div class="lesson-container">
-      <lesson-ref title="Basic CSS" image="images/learn/source-code.png" url="lesson.html">
-        <p>
-          Wondering why your site’s looking so ugly? HTML just says what’s what and gives the page structure. CSS is where the real fun starts—it will fix things faster than Fix-It Felix.
-        </p>
-      </lesson-ref>
-    </div>
-    <div class='lesson-container'>
-      <lesson-ref title="Build a Responsive Website" image="images/learn/source-code.png" url="lesson.html">
-        <p>
-          Wondering why your site’s looking so ugly? HTML just says what’s what and gives the page structure. CSS is where the real fun starts—it will fix things faster than Fix-It Felix.
-        </p>
-      </lesson-ref>
-    </div>
-  </section>
-  <section class='features-container'>
-    <h2>How it works</h2>
-    <div class="feature-set">
-      <div class="feature-text-left">
-        <h3>Carve your own path</h3>
-        <p>
-          Lorem ipsum dolor sit amet, consectetur adipiscing elit. Vivamus ut massa quis arcu fringilla pharetra eu sed ligula. In facilisis eros ac ante sodales cursus sit amet at risus. Nunc placerat in quam ut mattis.
-        </p>
+  <div class="content-wrapper">
+    <section class='gallery-container' id='gallery'>
+      <h2>Start Learning</h2>
+      <div class="lesson-container">
+        <lesson-ref title="Basic HTML" image="images/learn/source-code.png" url="lesson.html">
+          <p>
+            Wondering why your site’s looking so ugly? HTML just says what’s what and gives the page structure. CSS is where the real fun starts—it will fix things faster than Fix-It Felix.
+          </p>
+        </lesson-ref>
       </div>
-      <img class='feature-image-right' src="images/index/screen-feature.png" alt="" />
-    </div>
-    <div class="feature-set">
-      <img class='feature-image-left' src="images/index/screen-feature.png" alt="" />
-      <div class="feature-text-right">
-        <h3>Get definition</h3>
-        <p>
-          Lorem ipsum dolor sit amet, consectetur adipiscing elit. Vivamus ut massa quis arcu fringilla pharetra eu sed ligula. In facilisis eros ac ante sodales cursus sit amet at risus. Nunc placerat in quam ut mattis.
-        </p>
+      <div class="lesson-container">
+        <lesson-ref title="Basic CSS" image="images/learn/source-code.png" url="lesson.html">
+          <p>
+            Wondering why your site’s looking so ugly? HTML just says what’s what and gives the page structure. CSS is where the real fun starts—it will fix things faster than Fix-It Felix.
+          </p>
+        </lesson-ref>
       </div>
-    </div>
-    <div class="feature-set">
-      <div class="feature-text-left">
-        <h3>Some other feature</h3>
-        <p>
-          Lorem ipsum dolor sit amet, consectetur adipiscing elit. Vivamus ut massa quis arcu fringilla pharetra eu sed ligula. In facilisis eros ac ante sodales cursus sit amet at risus. Nunc placerat in quam ut mattis.
-        </p>
+      <div class='lesson-container'>
+        <lesson-ref title="Build a Responsive Website" image="images/learn/source-code.png" url="lesson.html">
+          <p>
+            Wondering why your site’s looking so ugly? HTML just says what’s what and gives the page structure. CSS is where the real fun starts—it will fix things faster than Fix-It Felix.
+          </p>
+        </lesson-ref>
       </div>
-      <img class='feature-image-right' src="images/index/screen-feature.png" alt="" />
-    </div>
-  </section>
+    </section>
+    <section class='features-container'>
+      <h2>How it works</h2>
+      <div class="feature-set">
+        <div class="feature-text-left">
+          <h3>Carve your own path</h3>
+          <p>
+            Lorem ipsum dolor sit amet, consectetur adipiscing elit. Vivamus ut massa quis arcu fringilla pharetra eu sed ligula. In facilisis eros ac ante sodales cursus sit amet at risus. Nunc placerat in quam ut mattis.
+          </p>
+        </div>
+        <img class='feature-image-right' src="images/index/screen-feature.png" alt="" />
+      </div>
+      <div class="feature-set">
+        <img class='feature-image-left' src="images/index/screen-feature.png" alt="" />
+        <div class="feature-text-right">
+          <h3>Get definition</h3>
+          <p>
+            Lorem ipsum dolor sit amet, consectetur adipiscing elit. Vivamus ut massa quis arcu fringilla pharetra eu sed ligula. In facilisis eros ac ante sodales cursus sit amet at risus. Nunc placerat in quam ut mattis.
+          </p>
+        </div>
+      </div>
+      <div class="feature-set">
+        <div class="feature-text-left">
+          <h3>Some other feature</h3>
+          <p>
+            Lorem ipsum dolor sit amet, consectetur adipiscing elit. Vivamus ut massa quis arcu fringilla pharetra eu sed ligula. In facilisis eros ac ante sodales cursus sit amet at risus. Nunc placerat in quam ut mattis.
+          </p>
+        </div>
+        <img class='feature-image-right' src="images/index/screen-feature.png" alt="" />
+      </div>
+    </section>
+  </div>
+
   <!-- build:js scripts/app.js -->
   <script src="scripts/app.js"></script>
   <!-- endbuild-->

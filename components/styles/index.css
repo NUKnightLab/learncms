@@ -15,10 +15,11 @@ section {
 
 .hero-banner {
   height: 100vh;
+  position: fixed;
 }
 
 .hero-header{
-  padding-top: 12%;
+  padding-top: 10%;
   margin-left: 5%;
   width: 40%;
   font-family: "Roboto";
@@ -47,17 +48,39 @@ section {
   top: -5%;
 }
 
+.lesson-link {
+  text-decoration: none;
+}
+
 .arrow-down-container {
   width: 100%;
   position: absolute;
-  bottom: 2%;
   text-align: center;
+  margin-top: 5%;
+}
+
+.arrow-down {
+  text-decoration: none;
+}
+
+.content-wrapper {
+  position: relative;
+  background: -webkit-linear-gradient(#607D8B, #263238); /* For Safari 5.1 to 6.0 */
+  background: -o-linear-gradient(#607D8B, #263238); /* For Opera 11.1 to 12.0 */
+  background: -moz-linear-gradient(#607D8B, #263238); /* For Firefox 3.6 to 15 */
+  background: linear-gradient(#607D8B, #263238); /* Standard syntax */
+  top: 100vh;
 }
 
 section h2 {
   margin-left: 5%;
   font-size:3em;
   margin-top: 5%;
+  color: #ECEFF1;
+}
+
+.features-container p{
+  color: #ECEFF1;
 }
 
 .lesson-container {
@@ -87,6 +110,10 @@ section h2 {
   color: #f2777a;
   font-weight: 300;
   font-size: 1.5em;
+}
+
+.feature-text-left {
+  padding-right: 20px;
 }
 
 .feature-text-left, .feature-text-right {
