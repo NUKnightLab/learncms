@@ -28,4 +28,15 @@ grp.jQuery(document).ready(function() {
     $('#btn-code-block').click(function() {
         editor.replaceRange('<code-block>\n</code-block>\n',editor.getCursor());
     });
+    $('#btn-fullscreen').click(function() {
+        editor.setOption('fullScreen',true);
+    })
+
+    editor.setOption("extraKeys", {
+      Esc: function(cm) {
+        cm.setOption('fullScreen',false);
+      }
+    });
+
+
 });
