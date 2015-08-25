@@ -1,0 +1,29 @@
+.lw-column {
+    display: -ms-flexbox;
+    display: -webkit-flex;
+    display: flex;
+
+    -ms-flex-direction: column;
+    -webkit-flex-direction: column;
+    flex-direction: column;
+}
+
+.lesson-widget  textarea {
+    /*width: 100%;*/
+    height: 500px;
+}
+
+.lw-row {
+    display: -ms-flexbox;
+    display: -webkit-flex;
+    display: flex;
+
+    -ms-flex-direction: row;
+    -webkit-flex-direction: row;
+    flex-direction: row;
+}
+
+.lw-controls input {
+    font-family: monospace;
+    margin: 2px 0 3px 5px;
+}
