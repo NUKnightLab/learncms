@@ -12,8 +12,15 @@ from storages.backends.s3boto import S3BotoStorage
 class S3FileBrowserStorage(S3BotoStorage,S3BotoStorageMixin):
     pass
 
+class LessonContentWidget(widgets.Widget):
+    def render(self, name, value, attrs={'rows': 30, 'columns': 30}):
+
+        template = get_template("admin/insert_markup.html")
+        return template.render(context={"content":value, "name":name})
+
 class LessonForm(forms.ModelForm):
     reference_blurb = forms.CharField(widget=forms.Textarea(attrs={'rows': 5}))
+    content = forms.CharField(widget=LessonContentWidget())
 
     class Meta:
         model = Lesson

@@ -1,0 +1,48 @@
+<style>
+ #messageBody {
+   display: flex;
+ }
+</style>
+   <script>
+   function insertAtCaret(areaId,text) {
+ var txtarea = document.getElementById(areaId);
+ var scrollPos = txtarea.scrollTop;
+ var strPos = 0;
+ var br = ((txtarea.selectionStart || txtarea.selectionStart == '0') ?
+   "ff" : (document.selection ? "ie" : false ) );
+ if (br == "ie") {
+   txtarea.focus();
+   var range = document.selection.createRange();
+   range.moveStart ('character', -txtarea.value.length);
+   strPos = range.text.length;
+ }
+ else if (br == "ff") strPos = txtarea.selectionStart;
+
+ var front = (txtarea.value).substring(0,strPos);
+ var back = (txtarea.value).substring(strPos,txtarea.value.length);
+ txtarea.value=front+text+back;
+ strPos = strPos + text.length;
+ if (br == "ie") {
+   txtarea.focus();
+   var range = document.selection.createRange();
+   range.moveStart ('character', -txtarea.value.length);
+   range.moveStart ('character', strPos);
+   range.moveEnd ('character', 0);
+   range.select();
+ }
+ else if (br == "ff") {
+   txtarea.selectionStart = strPos;
+   txtarea.selectionEnd = strPos;
+   txtarea.focus();
+ }
+ txtarea.scrollTop = scrollPos;
+}
+
+   </script>
+   <textarea name="{{name}}" id="messageBody">{{content}}</textarea>
+   <input type="button" value="Narrative Text" onclick="insertAtCaret('messageBody','<narrative-text></narrative-text>');" />
+   <input type="button" value="Capsule Unit" onclick="insertAtCaret('messageBody','<capsule-unit></capsule-unit>');" />
+   <input type="button" value="Step Block" onclick="insertAtCaret('messageBody','<narrative-text></narrative-text>');" />
+   <input type="button" value="Zooming Image" onclick="insertAtCaret('messageBody','<zooming-imaget></zooming-image>');" />
+   <input type="button" value="Code Block" onclick="insertAtCaret('messageBody','<code-block></code-block>');" />
+   <input type="button" value="Info Block" onclick="insertAtCaret('messageBody','<info-block></info-block>');" />
