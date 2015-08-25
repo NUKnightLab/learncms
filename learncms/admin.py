@@ -9,14 +9,25 @@ from filebrowser.widgets import FileInput
 from filebrowser.storage import S3BotoStorageMixin
 from storages.backends.s3boto import S3BotoStorage
 
+from django.template.loader import get_template
+
+
 class S3FileBrowserStorage(S3BotoStorage,S3BotoStorageMixin):
     pass
 
 class LessonContentWidget(widgets.Widget):
-    def render(self, name, value, attrs={'rows': 30, 'columns': 30}):
+    class Media:
+        css = {
+            'all': ('css/lesson_field.css',)
+        }
+        js = ('js/lesson_field.js',)
 
-        template = get_template("admin/insert_markup.html")
-        return template.render(context={"content":value, "name":name})
+    def render(self, name, value, attrs=None):
+        template = get_template("admin/lesson_field.html")
+        context = {"content":value, "name":name}
+        if attrs is not None:
+            context.update(attrs)
+        return template.render(context=context)
 
 class LessonForm(forms.ModelForm):
     reference_blurb = forms.CharField(widget=forms.Textarea(attrs={'rows': 5}))
