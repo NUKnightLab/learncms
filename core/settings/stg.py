@@ -78,7 +78,7 @@ STATIC_URL = '//{}/learncms/'.format(AWS_STORAGE_BUCKET_NAME)
 #django-filebrowser needs its own storage
 from django.core.files.storage import FileSystemStorage
 FILEBROWSER_ROOT=os.path.normpath(os.path.join(PROJECT_ROOT,'../../learn-media'))
-FILEBROWSER_URL="/imagelib/"
+FILEBROWSER_URL="/imagelib/" 
 FILEBROWSER_STORAGE = FileSystemStorage(location=FILEBROWSER_ROOT,base_url=FILEBROWSER_URL)
 from filebrowser.sites import site
 site.storage = FILEBROWSER_STORAGE
