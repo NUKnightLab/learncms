@@ -8364,8 +8364,10 @@ styles. All other styles should exist as single lines."
         }
     }
 
-</script><link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/prettify/r298/prettify.css" media="screen" title="Prettify" charset="utf-8">
+</script><link rel="stylesheet" href="../styles/tomorrow-night-eighties.css" media="screen" title="Prettify" charset="utf-8">
 <script src="//cdnjs.cloudflare.com/ajax/libs/prettify/r298/prettify.min.js"></script>
+
+<link href="https://fonts.googleapis.com/icon?family=Material+Icons" rel="stylesheet">
 </head><body><div hidden="" by-vulcanize=""><dom-module id="iron-icon" assetpath="../bower_components/iron-icon/">
 
   <style>
@@ -10005,6 +10007,8 @@ styles. All other styles should exist as single lines."
 		::content #step-content {
 			padding: 20px;
 			width: 70%;
+			/* for large screens */
+			max-width: 800px;
 			/*margin: 0 auto;*/
 			/*padding-top: 30px;*/
 			padding-top: 30px;
@@ -10027,8 +10031,8 @@ styles. All other styles should exist as single lines."
 			font-weight: bold;
 			margin: 0;
 		}
+		
 		/* Begin ordered list styling */
-
 		::content #step-content ol {
 			counter-reset: item;
 			padding-left: 0;
@@ -10042,7 +10046,6 @@ styles. All other styles should exist as single lines."
 
 		::content #step-content ol li p {
 			margin-top: 0em;
-			margin-left: 4em;
 		}
 
 		::content #step-content ol li:before {
@@ -10053,23 +10056,34 @@ styles. All other styles should exist as single lines."
 			height: 5em;
 			border-radius: 100%;
 			text-align: center;
-			background-color: #FFDDA7;
+			background-color: #455a64;
 			position: relative;
 			left: -1em;
 			line-height: 5em;
 			margin-bottom: -2.5em;
-			color: #E3B052;
+			color: #ffffff;
 		}
 		/* End ordered list styling */
+
+		::content #step-content p code {
+			background-color: #E0E0E0;
+			padding: 4px;
+			border-radius: 3px;
+			font-size: 85%;
+		}
 
 		step-number {
 			color: #ffffff;
 			background-color: #80CBC4;
-			padding: 45px 50px;
+			padding: 50px 50px;
+			height: 25px;
+			width: 25px;
+			text-align: center;
 			border-radius: 50%;
 			font-family: Roboto;
 			font-weight: 500;
 			margin-right: 20px;
+			margin-top: -.9em;
 		}
 
 		content-wrapper {
@@ -10098,32 +10112,26 @@ styles. All other styles should exist as single lines."
 			transition: box-shadow 0.28s cubic-bezier(0.4, 0, 0.2, 1);
 		}
 
-		;
 		.material-shadow[elevation="1"] {
 			box-shadow: 0 2px 2px 0 rgba(0, 0, 0, 0.14), 0 1px 5px 0 rgba(0, 0, 0, 0.12), 0 3px 1px -2px rgba(0, 0, 0, 0.2);
 		}
 
-		;
 		.material-shadow[elevation="2"] {
 			box-shadow: 0 4px 5px 0 rgba(0, 0, 0, 0.14), 0 1px 10px 0 rgba(0, 0, 0, 0.12), 0 2px 4px -1px rgba(0, 0, 0, 0.4);
 		}
 
-		;
 		.material-shadow[elevation="3"] {
 			box-shadow: 0 6px 10px 0 rgba(0, 0, 0, 0.14), 0 1px 18px 0 rgba(0, 0, 0, 0.12), 0 3px 5px -1px rgba(0, 0, 0, 0.4);
 		}
 
-		;
 		.material-shadow[elevation="4"] {
 			box-shadow: 0 8px 10px 1px rgba(0, 0, 0, 0.14), 0 3px 14px 2px rgba(0, 0, 0, 0.12), 0 5px 5px -3px rgba(0, 0, 0, 0.4);
 		}
 
-		;
 		.material-shadow[elevation="5"] {
 			box-shadow: 0 16px 24px 2px rgba(0, 0, 0, 0.14), 0 6px 30px 5px rgba(0, 0, 0, 0.12), 0 8px 10px -5px rgba(0, 0, 0, 0.4);
 		}
 
-		;
 	</style>
 	<template>
 		<content-wrapper>
@@ -10715,8 +10723,6 @@ styles. All other styles should exist as single lines."
 			opacity:0.5;
 		};
 
-
-
 		::content #capsule-title {
 			margin:0;
 			padding:20px;
@@ -10726,9 +10732,6 @@ styles. All other styles should exist as single lines."
  			line-height: 24px;
  			font-size: 24px;
 		};
-
-
-
 
 		::content #capsule-content {
 			display:none;
@@ -11033,17 +11036,13 @@ styles. All other styles should exist as single lines."
 
 		::content #info-block-content {
 			padding: 0 10px;
-			margin-left: 5.5em;
 		}
 
-		::content #info-block-content h2 {
-			margin-left: -4.1em;
-		}
-
+		/* Begin ordered list styling */
 		::content #info-block-content ol {
 			counter-reset: item;
-			margin-left: 0;
 			padding-left: 0;
+			margin-left: 6em;
 		}
 
 		::content #info-block-content ol li {
@@ -11064,12 +11063,14 @@ styles. All other styles should exist as single lines."
 			border-radius: 100%;
 			text-align: center;
 			margin-left: -5em;
-			background-color: #FFDDA7;
+			background-color: #455a64;
 			position: relative;
 			left: -1em;
 			line-height: 5em;
 			margin-bottom: -2.5em;
+			color: #ffffff;
 		}
+		/* End ordered list styling */
 
 		::content #info-block-content h2 {
 			color: #263238;
@@ -11077,14 +11078,16 @@ styles. All other styles should exist as single lines."
 			font-style: italic;
 			margin-top: 0;
 			margin-bottom: 10px;
+			display: inline;
+			margin-left: 1.5em;
 		}
 
 		::content #info-block-content p {
-			color: #9B9B9B;
+			color: #424242;
 			font-size: 16px;
 			line-height: 22px;
 			font-style: italic;
-			margin-top: 0;
+			margin-top: .5em;
 		}
 
 		#info-block-icon {
@@ -11093,14 +11096,8 @@ styles. All other styles should exist as single lines."
 			display: -ms-flexbox;
 			align-items: center;
 			-webkit-align-items: center;
-
 			justify-content: center;
 			-webkit-justify-content: center;
-
-			/*margin-bottom:50px;*/
-			/*			background-image: var(--info-icon-url);
-			background-repeat: no-repeat;
-			background-position: center;*/
 		}
 
 		::content #info-block-icon-background {
@@ -11111,7 +11108,6 @@ styles. All other styles should exist as single lines."
 			-webkit-align-items: center;
 			justify-content: center;
 			-webkit-justify-content: center;
-
 			font-family: Roboto, sans-serif;
 			color: #FAFAFA;
 			font-size: 38px;
@@ -11123,18 +11119,21 @@ styles. All other styles should exist as single lines."
 			color: #FFF;
 		}
 
-		;
+		.material-icons {
+			position: relative;
+			margin-right: -25px;
+			top: 3px;
+			align-items: center;
+			-webkit-align-items: center;
+		}
 	</style>
 	<template>
 		<paper-material elevation="0" class="paper-font-body2">
 			<div id="info-block-wrapper" class="layout horizontal">
-				<div id="info-block-icon" class="flex">
-					<div id="info-block-icon-background">
-						i
-					</div>
-				</div>
 				<div id="info-block-content" class="flex-4">
-					<content></content>
+					<i class="material-icons">info_outline</i>
+					<content>
+					</content>
 				</div>
 			</div>
 		</paper-material>
@@ -11145,10 +11144,6 @@ styles. All other styles should exist as single lines."
 		is: 'info-block',
 
 		properties: {
-			image: {
-				type: String,
-				value: "images/learn/info-icon.png"
-			}
 		}
 	});
 </script>
@@ -11217,8 +11212,6 @@ styles. All other styles should exist as single lines."
 	::content #text-container {
 		padding: 10px;
 		padding:0px 10px 10px 10px;
-
-
 	};
 
 	::content #text-container p {
@@ -11558,17 +11551,21 @@ Polymer({
 
 	<style>
 	::content .code-block {
-		background-color: var(--learn-secondary-color);
+		/*background-color: var(--learn-secondary-color);*/
 		/*background-color:#F5F4F4;*/
 	}
 	::content pre.prettyprint {
 		padding: 2px;
 		border: none !important;
 		margin:0;
+		padding-left: 2.3em;
 		white-space: pre-wrap;
+		font-size: 16px;
+		border-radius: 8px;
+		overflow-x: scroll;
 	}
 
-	::content .code-block-wrapper {
+	/*::content .code-block-wrapper {
 		padding: 10px;
 
 		-webkit-box-shadow: inset 3px 3px 10px -3px rgba(186, 167, 130 ,0.8);
@@ -11578,7 +11575,7 @@ Polymer({
 		border: 1px solid rgba(219, 206, 180 ,0.8);
 		border-radius: 4px;
 
-	}
+	}*/
 
 	::content .code-block-wrapper h2 { /* Free floating for any h2 inside */
 		color: #E3B052;
