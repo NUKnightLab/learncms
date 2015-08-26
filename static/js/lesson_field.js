@@ -1,4 +1,26 @@
 grp.jQuery(document).ready(function() {
+
+    tidy_opts = { // http://tidy.sourceforge.net/docs/quickref.html
+        "indent": "auto",
+        "indent-spaces": 2,
+        "markup": true,
+        "output-xml": false,
+        "numeric-entities": false,
+        "quote-marks": true,
+        "quote-nbsp": false,
+        "show-body-only": true,
+        "quote-ampersand": false,
+        "break-before-br": true,
+        "uppercase-tags": false,
+        "uppercase-attributes": false,
+        "drop-font-tags": true,
+        "tidy-mark": false,
+        "show-warnings": false,
+        "new-blocklevel-tags": ['lesson-ref', 'step-block', 'narrative-text', 'zooming-image', 'lesson-block', 'capsule-unit', 'media-group', 'info-block'],
+        "new-pre-tags": ['code-block'],
+        "new-inline-tags": ['glossary-term']
+    }
+
     var editor = CodeMirror.fromTextArea(document.getElementById('messageBody'), {
       mode: 'xml',
       lineNumbers: true,
@@ -30,6 +52,14 @@ grp.jQuery(document).ready(function() {
     });
     $('#btn-fullscreen').click(function() {
         editor.setOption('fullScreen',true);
+    })
+    $('#btn-format').click(function() {
+        var start = editor.getValue();
+        var tidied = tidy_html5(start,tidy_opts);
+        if (start == tidied) {
+            tidied = "<!-- formatter made no changes: check for invalid tags -->\n" + tidied;
+        }
+        editor.setValue(tidied);
     })
 
     editor.setOption("extraKeys", {
