@@ -30,29 +30,39 @@ grp.jQuery(document).ready(function() {
     window.lessonContentEditor = editor;
     var $ = grp.jQuery;
     $('#btn-narrative-text').click(function() {
-        editor.replaceRange('<narrative-text>\n</narrative-text>\n',editor.getCursor());
+        var cursor = editor.getCursor();
+        var note = '\t<!-- narrative-text can contain any HTML markup. It typically occurs once at the top of a lesson.-->';
+        editor.replaceSelection('<narrative-text>\n'+note+'\n</narrative-text>\n');
+        editor.setSelection({line: cursor.line + 1, ch: 1},{line: cursor.line+1, ch: note.length});
+        editor.focus();
     })
     $('#btn-lesson-block').click(function() {
-        editor.replaceRange('<lesson-block>\n</lesson-block>\n',editor.getCursor());
+        editor.replaceSelection('<lesson-block>\n</lesson-block>\n');
+        editor.focus();
     })
     $('#btn-step-block').click(function() {
-        editor.replaceRange('<step-block>\n</step-block>\n',editor.getCursor());
+        editor.replaceSelection('<step-block>\n</step-block>\n');
+        editor.focus();
     })
     $('#btn-info-block').click(function() {
-        editor.replaceRange('<info-block>\n</info-block>\n',editor.getCursor());
+        editor.replaceSelection('<info-block>\n</info-block>\n');
+        editor.focus();
     })
     $('#btn-capsule-unit').click(function() {
-        editor.replaceRange('<capsule-unit>\n</capsule-unit>\n',editor.getCursor());
+        editor.replaceSelection('<capsule-unit>\n</capsule-unit>\n');
+        editor.focus();
     })
     $('#btn-zooming-image').click(function() {
-        editor.replaceRange('<zooming-image>\n</zooming-image>\n',editor.getCursor());
+        editor.replaceSelection('<zooming-image>\n</zooming-image>\n');
+        editor.focus();
     })
     $('#btn-code-block').click(function() {
-        editor.replaceRange('<code-block>\n</code-block>\n',editor.getCursor());
+        editor.replaceSelection('<code-block>\n</code-block>\n');
+        editor.focus();
     });
-    $('#btn-fullscreen').click(function() {
-        editor.setOption('fullScreen',true);
-    })
+    // $('#btn-fullscreen').click(function() {
+    //     editor.setOption('fullScreen',true);
+    // })
     $('#btn-format').click(function() {
         var start = editor.getValue();
         var tidied = tidy_html5(start,tidy_opts);
@@ -60,6 +70,9 @@ grp.jQuery(document).ready(function() {
             tidied = "<!-- formatter made no changes: check for invalid tags -->\n" + tidied;
         }
         editor.setValue(tidied);
+        editor.setCursor({line: 0, ch: 0});
+        editor.focus();
+
     })
 
     editor.setOption("extraKeys", {
