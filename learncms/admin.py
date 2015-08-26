@@ -18,12 +18,12 @@ class S3FileBrowserStorage(S3BotoStorage,S3BotoStorageMixin):
 class LessonContentWidget(widgets.Widget):
     class Media:
         css = {
-            'all': ('css/lesson_field.css',)
+            'all': ('css/lesson_content_widget.css',)
         }
-        js = ('js/lesson_field.js',)
+        js = ('js/lesson_content_widget.js',)
 
     def render(self, name, value, attrs=None):
-        template = get_template("admin/lesson_field.html")
+        template = get_template("admin/lesson_content_widget.html")
         context = {"content":value, "name":name}
         if attrs is not None:
             context.update(attrs)
