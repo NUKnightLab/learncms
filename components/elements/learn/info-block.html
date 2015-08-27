@@ -117,7 +117,8 @@ Example:
 		<paper-material elevation="0" class="paper-font-body2">
 			<div id="info-block-wrapper" class="layout horizontal">
 				<div id="info-block-content" class="flex-4">
-					<i class="material-icons">info_outline</i>
+					<i class="material-icons">info_outline</i><h2> {{ header }} </h2>
+
 					<content>
 					</content>
 				</div>
@@ -130,6 +131,11 @@ Example:
 		is: 'info-block',
 
 		properties: {
+			}
+			header: {
+				type: String,
+				value: "" 
+			}
 		}
 	});
 </script>

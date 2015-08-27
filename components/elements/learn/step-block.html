@@ -1,7 +1,7 @@
 <!--
 
 `step-block` is a container that shows one of several steps in a typical lesson. It generally
-can contain any HTML. Each `step-block` should have a `title` attribute. Step blocks also
+can contain any HTML. Each `step-block` should have a `header` attribute. Step blocks also
 have step numbers-at this time, the goal is to have the numbers automatically applied. It
 might make sense to build them around `ol` (ordered list) tags, but if there are any elements
 that interrupt the steps, maintaining numbering continuity could be a hassle. Thinking about
@@ -44,7 +44,7 @@ Example:
 			margin-bottom: 20px;
 		}
 
-		::content h2#step-title {
+		::content h2#step-header {
 			font-family: 'Roboto', 'Noto', sans-serif;
 			color: #338D83;
 			font-size: 28px;
@@ -157,7 +157,7 @@ Example:
 		<content-wrapper>
 			<step-number>{{ stepnum }}</step-number>
 			<div id="step-content" class="material-shadow paper-font-body2" elevation="1">
-				<h2 id="step-title">{{ title }}</h2>
+				<h2 id="step-header">{{ header }}</h2>
 				<content></content>
 
 			</div>
@@ -190,11 +190,11 @@ Example:
 			/**
 			 * The primary label for this step.
 			 *
-			 * @attribute title
+			 * @attribute header
 			 * @type String
 			 * @default ""
 			 */
-			title: {
+			header: {
 				type: String,
 				value: ""
 			},
@@ -204,7 +204,7 @@ Example:
 			 * at the moment it gets set at page load time by analyzing all other steps
 			 * with the same parent.
 			 *
-			 * @attribute title
+			 * @attribute header
 			 * @type String
 			 * @default ""
 			 */
