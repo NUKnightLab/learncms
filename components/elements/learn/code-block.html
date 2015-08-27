@@ -11,25 +11,27 @@ Example:
 @group Learn Elements
 @class code-block
 -->
-<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/prettify/r298/prettify.css" media="screen" title="Prettify" charset="utf-8">
+<link rel="stylesheet" href="../../styles/tomorrow-night-eighties.css" media="screen" title="Prettify" charset="utf-8">
 <script src="//cdnjs.cloudflare.com/ajax/libs/prettify/r298/prettify.min.js"></script>
 <dom-module id="code-block">
 
 	<style>
 	::content .code-block {
-		background-color: var(--learn-secondary-color);
+		/*background-color: var(--learn-secondary-color);*/
 		/*background-color:#F5F4F4;*/
-
-
 	}
 	::content pre.prettyprint {
 		padding: 2px;
 		border: none !important;
 		margin:0;
-		white-space: pre-line;
-	};
+		padding-left: 2.3em;
+		white-space: pre-wrap;
+		font-size: 16px;
+		border-radius: 8px;
+		overflow-x: scroll;
+	}
 
-	::content .code-block-wrapper {
+	/*::content .code-block-wrapper {
 		padding: 10px;
 
 		-webkit-box-shadow: inset 3px 3px 10px -3px rgba(186, 167, 130 ,0.8);
@@ -39,21 +41,16 @@ Example:
 		border: 1px solid rgba(219, 206, 180 ,0.8);
 		border-radius: 4px;
 
-	};
+	}*/
 
 	::content .code-block-wrapper h2 { /* Free floating for any h2 inside */
 		color: #E3B052;
-
 	}
 	</style>
 
 	<template>
 		<div class="code-block paper-font-body2">
-			<div class="code-block-wrapper">
-				<pre class="prettyprint">
-					<content></content>
-				</pre>
-			</div>
+			<div class="code-block-wrapper"><pre class="prettyprint"><code><content></content></code></pre></div>
 		</div>
 	</template>
 
@@ -63,13 +60,19 @@ Example:
 		is: 'code-block',
 
 		attached: function() {
+			if (this.lang) {
+				this.$$('code').classList.add('language-' + this.lang);
+			}
 			this.async(function() {
 				prettyPrint()
 			})
 		},
 
 		properties: {
-
+			lang: {
+				type: String,
+				value: ""
+			}
 		}
 
 	});

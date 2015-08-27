@@ -45,6 +45,8 @@ ADMINS = (
 MANAGERS = ADMINS
 
 INSTALLED_APPS = (
+    'grappelli',
+    'filebrowser',
     'django.contrib.admin',
     'django.contrib.auth',
     'django.contrib.contenttypes',
@@ -78,6 +80,7 @@ TEMPLATES = [
             'context_processors': [
                 'django.template.context_processors.debug',
                 'django.template.context_processors.request',
+                'django.core.context_processors.static',
                 'django.contrib.auth.context_processors.auth',
                 'django.contrib.messages.context_processors.messages',
                 'django.template.context_processors.media'
@@ -85,6 +88,8 @@ TEMPLATES = [
         },
     },
 ]
+
+GRAPPELLI_ADMIN_TITLE = 'Learn.KnightLab.com'
 
 # boring standard stuff
 LANGUAGE_CODE = 'en-us'
@@ -96,3 +101,5 @@ USE_I18N = True
 USE_L10N = True
 
 USE_TZ = True
+
+FILEBROWSER_DEFAULT_SORTING_BY = 'name'

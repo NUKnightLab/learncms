@@ -7,19 +7,30 @@
 <style is="custom-style" type="text/css">
 
 :root {
-    --info-icon-url: url("{% static 'img/info-icon.png' %}");
+
 }
 
 </style>
-    
+<script type="text/javascript">
+    var rscs = []
+    function initGlossary() {
+
+    }
+    document.addEventListener('readystatechange', function(e) {
+        if (e.target.readyState == 'complete') {
+            initGlossary();
+        }
+    })
+</script>
 {% endblock extrahead %}
 {% block content %}
         <learn-nav logo="{% static 'img/banner-logo-white.png' %}"></learn-nav>
         <page-manager>
         <page-item title="{{ lesson.title }}">
-        <lesson-banner image="{{ MEDIA_URL }}{{ lesson.banner_image }}" title="{{ lesson.title }}"></lesson-banner>
+        <lesson-banner image="{{ lesson.banner_image.url }}" title="{{ lesson.title }}"></lesson-banner>
 
         {{ evaluated_content|safe }}
         </page-item>
         </page-manager>
+<glossary-manager json-url="/glossary.json"></glossary-manager>
 {% endblock content %}

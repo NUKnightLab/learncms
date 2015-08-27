@@ -26,40 +26,40 @@ Example:
 		top:0px;
 		height:100%;
 		cursor:pointer;
-		-webkit-transition: all 750ms cubic-bezier(0.770, 0.000, 0.175, 1.000); 
-		   -moz-transition: all 750ms cubic-bezier(0.770, 0.000, 0.175, 1.000); 
-		     -o-transition: all 750ms cubic-bezier(0.770, 0.000, 0.175, 1.000); 
-		        transition: all 750ms cubic-bezier(0.770, 0.000, 0.175, 1.000); 
+		-webkit-transition: all 750ms cubic-bezier(0.770, 0.000, 0.175, 1.000);
+		   -moz-transition: all 750ms cubic-bezier(0.770, 0.000, 0.175, 1.000);
+		     -o-transition: all 750ms cubic-bezier(0.770, 0.000, 0.175, 1.000);
+		        transition: all 750ms cubic-bezier(0.770, 0.000, 0.175, 1.000);
 
 
-		-webkit-transition-timing-function: cubic-bezier(0.770, 0.000, 0.175, 1.000); 
-		   -moz-transition-timing-function: cubic-bezier(0.770, 0.000, 0.175, 1.000); 
-		     -o-transition-timing-function: cubic-bezier(0.770, 0.000, 0.175, 1.000); 
+		-webkit-transition-timing-function: cubic-bezier(0.770, 0.000, 0.175, 1.000);
+		   -moz-transition-timing-function: cubic-bezier(0.770, 0.000, 0.175, 1.000);
+		     -o-transition-timing-function: cubic-bezier(0.770, 0.000, 0.175, 1.000);
 		        transition-timing-function: cubic-bezier(0.770, 0.000, 0.175, 1.000);
 	}
 	::content #lesson-ref-container.animate {
-/*		-webkit-transition: all 750ms cubic-bezier(0.770, 0.000, 0.175, 1.000); 
-		   -moz-transition: all 750ms cubic-bezier(0.770, 0.000, 0.175, 1.000); 
-		     -o-transition: all 750ms cubic-bezier(0.770, 0.000, 0.175, 1.000); 
-		        transition: all 750ms cubic-bezier(0.770, 0.000, 0.175, 1.000); 
+/*		-webkit-transition: all 750ms cubic-bezier(0.770, 0.000, 0.175, 1.000);
+		   -moz-transition: all 750ms cubic-bezier(0.770, 0.000, 0.175, 1.000);
+		     -o-transition: all 750ms cubic-bezier(0.770, 0.000, 0.175, 1.000);
+		        transition: all 750ms cubic-bezier(0.770, 0.000, 0.175, 1.000);
 
 
-		-webkit-transition-timing-function: cubic-bezier(0.770, 0.000, 0.175, 1.000); 
-		   -moz-transition-timing-function: cubic-bezier(0.770, 0.000, 0.175, 1.000); 
-		     -o-transition-timing-function: cubic-bezier(0.770, 0.000, 0.175, 1.000); 
+		-webkit-transition-timing-function: cubic-bezier(0.770, 0.000, 0.175, 1.000);
+		   -moz-transition-timing-function: cubic-bezier(0.770, 0.000, 0.175, 1.000);
+		     -o-transition-timing-function: cubic-bezier(0.770, 0.000, 0.175, 1.000);
 		        transition-timing-function: cubic-bezier(0.770, 0.000, 0.175, 1.000);*/
 	}
-	
+
 	::content #image-container {
 		position: relative;
 
 	}
-	
+
 	::content #image-container img {
 		width: 100%;
 		
 	}
-	
+
 	::content #title-el {
 		position: absolute;
 		bottom: 0;
@@ -69,7 +69,7 @@ Example:
 		font-size:26px;
 		font-weight:900;
 	}
-	
+
 	::content #image-container paper-fab {
 		position: absolute;
 		right: -30px;
@@ -77,12 +77,10 @@ Example:
 		background-color: #fff;
 		color: #000;
 	}
-	
+
 	::content #text-container {
 		padding: 10px;
 		padding:0px 10px 10px 10px;
-		
-
 	};
 
 	::content #text-container p {
@@ -166,17 +164,16 @@ Example:
 			this.image_container = this.$['image-container'];
 			this.title_el = this.$['title-el'];
 
-			
+
 		},
 
 		attached: function() {
 			var self = this;
 			setTimeout(function(){
 				self.container.style.height = self.container.offsetHeight +"px";
-				console.log(self.container.offsetHeight)
 			}, 500);
-			
-			
+
+
 		},
 
 		_handleEscapeKey: function(e) {
@@ -188,15 +185,12 @@ Example:
 		},
 
 		_clickListener: function(e) {
-			console.log("_clickListener");
-			
-
 			if (this.url) {
-				
+
 				// var container_top = this.container.getBoundingClientRect().top;
 				// this.container.style.left = "150%";
 				// this.container.style.height = window.innerHeight + "px";
-				
+
 				// this.container.style.top = -container_top + "px";
 				// this.container.setAttribute("elevation", "5");
 				this.fire("page:add", {url:this.url});

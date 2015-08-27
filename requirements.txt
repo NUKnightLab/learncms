@@ -7,3 +7,5 @@ django-imagekit==3.2.6
 lxml==3.4.4
 django-reversion==1.8.7
 django-storages-redux==1.2.3
+-e git+https://github.com/sehmaschine/django-filebrowser@febfad950774755ab215c48babc7822eb451ebee#egg=django_filebrowser-master
+django-concurrency==0.9

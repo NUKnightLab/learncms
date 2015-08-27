@@ -23,7 +23,7 @@ Example:
 			margin-right:50px;
 			position:relative;
 			background-color:#FFF;
-			
+
 			border-radius:4px;
 			width:100%;
 		}
@@ -45,7 +45,7 @@ Example:
 			width:100%;
 			height:175px;
 			overflow:hidden;
-			
+
 			position:relative;
 			z-index:1;
 		};
@@ -73,8 +73,6 @@ Example:
 			opacity:0.5;
 		};
 
-		
-
 		::content #capsule-title {
 			margin:0;
 			padding:20px;
@@ -85,22 +83,19 @@ Example:
  			font-size: 24px;
 		};
 
-		
-		
-
 		::content #capsule-content {
 			display:none;
 			padding:20px;
 			padding-top:40px;
-			-webkit-transition: opacity 500ms ease-in-out; 
-			   -moz-transition: opacity 500ms ease-in-out; 
-			     -o-transition: opacity 500ms ease-in-out; 
-			        transition: opacity 500ms ease-in-out; 
+			-webkit-transition: opacity 500ms ease-in-out;
+			   -moz-transition: opacity 500ms ease-in-out;
+			     -o-transition: opacity 500ms ease-in-out;
+			        transition: opacity 500ms ease-in-out;
 
 
-			-webkit-transition-timing-function: cubic-bezier(0.770, 0.000, 0.175, 1.000); 
-			   -moz-transition-timing-function: cubic-bezier(0.770, 0.000, 0.175, 1.000); 
-			     -o-transition-timing-function: cubic-bezier(0.770, 0.000, 0.175, 1.000); 
+			-webkit-transition-timing-function: cubic-bezier(0.770, 0.000, 0.175, 1.000);
+			   -moz-transition-timing-function: cubic-bezier(0.770, 0.000, 0.175, 1.000);
+			     -o-transition-timing-function: cubic-bezier(0.770, 0.000, 0.175, 1.000);
 			        transition-timing-function: cubic-bezier(0.770, 0.000, 0.175, 1.000);
 		};
 
@@ -122,7 +117,7 @@ Example:
 		::content #capsule-content-container {
 			position:absolute;
 			background-color:#FFF;
-			
+
 			overflow-y:scroll;
 			z-index:99;
 			top:0;
@@ -131,18 +126,18 @@ Example:
 			height:100%;
 			visibility: hidden;
 			overflow:hidden;
-			-webkit-transition: all 750ms cubic-bezier(0.770, 0.000, 0.175, 1.000); 
-			   -moz-transition: all 750ms cubic-bezier(0.770, 0.000, 0.175, 1.000); 
+			-webkit-transition: all 750ms cubic-bezier(0.770, 0.000, 0.175, 1.000);
+			   -moz-transition: all 750ms cubic-bezier(0.770, 0.000, 0.175, 1.000);
 			     -o-transition: all 750ms cubic-bezier(0.770, 0.000, 0.175, 1.000);
 			        transition: all 750ms cubic-bezier(0.770, 0.000, 0.175, 1.000);
 
 
-			-webkit-transition-timing-function: cubic-bezier(0.770, 0.000, 0.175, 1.000); 
-			   -moz-transition-timing-function: cubic-bezier(0.770, 0.000, 0.175, 1.000); 
-			     -o-transition-timing-function: cubic-bezier(0.770, 0.000, 0.175, 1.000); 
+			-webkit-transition-timing-function: cubic-bezier(0.770, 0.000, 0.175, 1.000);
+			   -moz-transition-timing-function: cubic-bezier(0.770, 0.000, 0.175, 1.000);
+			     -o-transition-timing-function: cubic-bezier(0.770, 0.000, 0.175, 1.000);
 			        transition-timing-function: cubic-bezier(0.770, 0.000, 0.175, 1.000);
 		};
-		
+
 		::content #capsule-close-button {
 			position:absolute;
 			right:0;
@@ -153,7 +148,7 @@ Example:
 			width:100%;
 			height:100vh;
 			visibility:hidden;
-			
+
 			z-index:90;
 			top:0;
 			left:0;
@@ -205,12 +200,12 @@ Example:
 				<div id="capsule-image-container">
 					<div id="capsule-image-overlay"></div>
 					<div id="capsule-image"></div>
-					
+
 				</div>
 				<h2 id="capsule-title">{{ title }}</h2>
 				<paper-fab icon="content-copy"></paper-fab>
 			</div>
-			
+
 			<div id="capsule-content-container" class="material-shadow" elevation="1">
 				<paper-icon-button id="capsule-close-button" icon="clear"></paper-icon-button>
 				<div id="capsule-content">
@@ -246,7 +241,7 @@ Example:
 					return document.body;
 				}
 			}
-			
+
 		},
 
 		ready: function() {
@@ -260,7 +255,7 @@ Example:
 			this.capsule_page_block = this.$['capsule-page-block'];
 			this.default_width = 0;
 			this.window_open = false;
-			
+
 		},
 
 		attached: function() {
@@ -286,11 +281,11 @@ Example:
 			this.capsule_content_container.addEventListener("webkitTransitionEnd",function(e){
 				self._hideContentContainer();
 			},false);
-			
+
 		},
 
 		/* Using IronA11yKeysBehavior, listen for 'esc' key pressed
-		 * anywhere on the page (see keyEventTarget property). 
+		 * anywhere on the page (see keyEventTarget property).
 		 * escape will close an open capsule.
 		 */
 		_handleEscapeKey: function(e) {
@@ -302,7 +297,6 @@ Example:
 		},
 
 		_onCapsuleRefClick: function(e) {
-			console.log("_onCapsuleRefClick")
 			this.windowOn(e);
 		},
 
@@ -310,18 +304,14 @@ Example:
 			this.windowOff(e);
 		},
 
-		
+
 
 		_clickListener: function(e) {
-			console.log("CLICK");
-			
 		},
 
 		_hideContentContainer: function(e) {
-			console.log("_hideContentContainer");
 
 			if (this.window_open) {
-				console.log("window open");
 				var self = this;
 				// this.capsule_content_container.removeEventListener("transitionend",function(e){
 				// 	self._hideContentContainer();
@@ -338,12 +328,12 @@ Example:
 			} else {
 				console.log("window closed")
 			}
-			
-			
+
+
 		},
 
 		windowOn:function(e) {
-			
+
 			this.capsule_content.style.display = "block";
 			this.capsule_content.style.opacity = 1;
 			this.capsule_content_container.style.visibility = "visible";

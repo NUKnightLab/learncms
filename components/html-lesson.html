@@ -25,441 +25,397 @@
 <body class="fullbleed">
 	<!-- Don't really know the details of these Material/Polymer classes -->
 
-	
+
 <page-manager>
 	<page-item>
 		<lesson-banner image="images/learn/basic-website-banner.png" title="Write Some HTML"></lesson-banner>
 		<narrative-text>
+		<p>
+			Every page on the Internet starts as a humble HTML file. HTML (HyperText Markup Language) is the backbone of the web, and the beginning of any website. In this standalone lesson, you'll learn the basics of HTML and be on your way in creating your very own website.
+		</p>
+	</narrative-text>
+
+	<lesson-block>
+		<h2>
+			You'll need to get started
+		</h2>
+		<div  class="horizontal layout">
+				<capsule-unit ref="text-editor"></capsule-unit>
+				<capsule-unit ref="modern-web-browser"></capsule-unit>
+		</div>
+	</lesson-block>
+
+<step-block title="The Bare Necessities">
+		<info-block image="images/learn/info-icon.png">
+			<h2>A quick word on syntax</h2>
 			<p>
-				Every page on the Internet starts as a humble HTML file. HTML (HyperText Markup Language) is the backbone of the web, and the beginning of any website. To break that down: “Hypertext” means the document contains text that has links to other text, like
-				stylesheets or scripts, for example. “Markup Language” is a way of formatting a file so that it distinguishes between content and structure—it “marks up” the text to make it easy for the browser to tell which words it should display on the screen,
-				vs. those that are there to tell it how to structure the page.
+				HTML’s syntax is based around tags, which are denoted by
+				<code>&lt;angle brackets&gt;</code>. Most tags open and close, like this:
+				<code>&lt;tag&gt; &lt;/tag&gt;</code>, with your content going in between. Some self-closing tags don’t have that second one—watch out for
+				<code>&lt;img&gt;</code> and
+				<code>&lt;br&gt;</code> in particular.
 			</p>
-		</narrative-text>
-
-		<lesson-block>
-			<h2>
-				You'll need to get started
-			</h2>
-			<div style="display:flex">
-				<capsule-unit image="images/learn/text-editor.png" label="Text Editor" style="padding-right: 25px" id="text-editor"></capsule-unit>
-				<capsule-unit image="images/learn/ftp-program.png" label="Modern Web Browser" style="padding-right: 25px"></capsule-unit>
-			</div>
-		</lesson-block>
-
-		<div style="clear: both"></div>
-
-		<step-block title="The Bare Necessities">
-			<info-block image="images/learn/info-icon.png">
-				<h2>A quick word on syntax</h2>
-				<p>
-					HTML’s syntax is based around tags, which are denoted by
-					<code>&lt;angle brackets&gt;</code>. Most tags open and close, like this:
-					<code>&lt;tag&gt; &lt;/tag&gt;</code>, with your content going in between. Some self-closing tags don’t have that second one—watch out for
-					<code>&lt;img&gt;</code> and
-					<code>&lt;br&gt;</code> in particular.
-				</p>
-			</info-block>
-			<p>
-				Open your text editor and paste in the following, which is the basic structure that all HTML files must have. Essentially, we’re telling the browser that we’re writing in HTML, and then dividing our page into two sections: a browser-related information
-				section (the &lt;head&gt;), and our visible content (the &lt;body&gt;).
-			</p>
-			<pre class='code-snippet'>
-				<p>
-					<code>
+		</info-block>
+		<p>
+			Open your text editor and paste in the following, which is the basic structure that all HTML files must have. Essentially, we’re telling the browser that we’re writing in HTML, and then dividing our page into two sections: a browser-related information
+			section (the <code>&lt;head&gt;</code>), and our visible content (the <code>&lt;body&gt;</code>).
+		</p>
+		<code-block>
 &lt;!DOCTYPE html&gt;
 &lt;html&gt;
 
-  &lt;head&gt;
-    &lt;meta charset="utf-8"&gt;
-    &lt;title&gt;&lt;/title&gt;
-  &lt;/head&gt;
+&lt;head&gt;
+  &lt;meta charset="utf-8"&gt;
+  &lt;title&gt;&lt;/title&gt;
+&lt;/head&gt;
 
-  &lt;body&gt;
-  &lt;/body&gt;
+&lt;body&gt;
+&lt;/body&gt;
 
 &lt;/html&gt;
-					</code>
-				</p>
-			</pre>
-			<info-block image="images/learn/info-icon.png">
-				<h2>Tags on tags on tags</h2>
-				<p>
-					Pay attention to how the tags are nested one inside of the other like weird, nerdy Matryoshka dolls. This gives an indication of how the page is structured and which elements of the page live inside other elements.
-				</p>
-			</info-block>
-			<!-- <div>
-				<h2>What do files and folders have to do with websites?</h2>
-				<p>
-					A website is just a collection of files that your browser reads and displays. Putting those files in organized folders enables us to give the browser exact directions to the locations of those files. So, no search or spotlight allowed—know where your
-					files are so you can send the browser down the right path. Broken paths, missing files, or imprecise directions is a common reason things break. Ever seen a 404 message? That’s why!
-				</p>
-			</div>
-			<media-group class="layout horizontal around-justified">
-				<zooming-image src="images/learn/mac-screenshot.png"></zooming-image>
-				<zooming-image src="images/learn/pc-screenshot.png"></zooming-image>
-			</media-group> -->
-		</step-block>
-
-		<step-block title="What's this site all about, anyway?">
+		</code-block>
+		<info-block image="images/learn/info-icon.png">
+			<h2>Tags on tags on tags</h2>
 			<p>
-				Edit the title of your web page by naming it inside the
-				<code>&lt;title&gt;</code> tags. Titles usually describe the purpose of your webpage, and can be anything from your name to “My Personal Website” to “My Online Shrine to Steve Buscemi.”
+				Pay attention to how the tags are nested one inside of the other like weird, nerdy Matryoshka dolls. This gives an indication of how the page is structured and which elements of the page live inside other elements.
 			</p>
-			<pre class='code-snippet'>
-				<p>
-					<code>
-&lt;title&gt;[Your Name]’s Personal Website&lt;/title&gt;
-					</code>
-				</p>
-			</pre>
-		</step-block>
+		</info-block>
+		<!-- <div>
+			<h2>What do files and folders have to do with websites?</h2>
+			<p>
+				A website is just a collection of files that your browser reads and displays. Putting those files in organized folders enables us to give the browser exact directions to the locations of those files. So, no search or spotlight allowed—know where your
+				files are so you can send the browser down the right path. Broken paths, missing files, or imprecise directions is a common reason things break. Ever seen a 404 message? That’s why!
+			</p>
+		</div>
+		<media-group class="layout horizontal around-justified">
+			<zooming-image src="images/learn/mac-screenshot.png"></zooming-image>
+			<zooming-image src="images/learn/pc-screenshot.png"></zooming-image>
+		</media-group> -->
+	</step-block>
 
-		<step-block title="Let the bodies hit the floor: Adding content">
-			<p>Inside the
-				<code>&lt;body&gt;</code> tag, create a
-				<code>&lt;h1&gt;</code> tag with your name. If you don’t know your name, that’s okay too. A little-known fact is that Steve Buscemi’s entity is in the public domain, so anyone can assume his identity without fear of copyright infringement. You can use his
-				name instead.</p>
-				<pre class='code-snippet'>
-					<p>
-						<code>
+	<step-block title="What's this site all about, anyway?">
+		<p>
+			Edit the title of your web page by naming it inside the
+			<code>&lt;title&gt;</code> tags. Titles usually describe the purpose of your webpage, and can be anything from your name to “My Personal Website” to “My Online Shrine to Steve Buscemi.”
+		</p>
+		<code-block>
+&lt;title&gt;[Your Name]’s Personal Website&lt;/title&gt;
+		</code-block>
+	</step-block>
+
+	<step-block title="Let the bodies hit the floor: Adding content">
+		<p>Inside the
+			<code>&lt;body&gt;</code> tag, create a
+			<code>&lt;h1&gt;</code> tag with your name. If you don’t know your name, that’s okay too. A little-known fact is that Steve Buscemi’s entity is in the public domain, so anyone can assume his identity without fear of copyright infringement. You can use his
+			name instead.</p>
+			<code-block>
 &lt;body&gt;
   &lt;h1&gt;Your Name&lt;/h1&gt;
 &lt;/body&gt;
-						</code>
-					</p>
-				</pre>
+			</code-block>
+		<p>
+			A good practice when building websites is to save and check your work often. Take a moment now to save your code and open your HTML file by launching your browser and selecting File > Open File, then selecting the file you just made. From now on, feel
+			free to save your code and refresh your browser whenever you make changes to your HTML file. If anything looks off, look through your code again and make sure it matches the examples.
+		</p>
+		<!-- <lesson-reference title="Basic HTML" image="images/learn/source-code.png">
 			<p>
-				A good practice when building websites is to save and check your work often. Take a moment now to save your code and open your HTML file by launching your browser and selecting File > Open File, then selecting the file you just made. From now on, feel
-				free to save your code and refresh your browser whenever you make changes to your HTML file. If anything looks off, look through your code again and make sure it matches the examples.
+				In this standalone lesson, we'll hit on the rules and regulations for writing solid HTML, as well as the top tags you’re likely to use. Head into this standalone lesson for a better understanding of how to markup your content.
 			</p>
-			<!-- <lesson-reference title="Basic HTML" image="images/learn/source-code.png">
-				<p>
-					In this standalone lesson, we'll hit on the rules and regulations for writing solid HTML, as well as the top tags you’re likely to use. Head into this standalone lesson for a better understanding of how to markup your content.
-				</p>
-			</lesson-reference>
+		</lesson-reference>
 
-			<info-block image="images/learn/info-icon.png">
-				<h2>HTML (HyperText Markup Language)</h2>
-				<p>HTML is the backbone of the web, and the beginning of any website. To break that down: “Hypertext” means the document contains text that has links to other text, like stylesheets or scripts, for example. “Markup Language” is a way of formatting a
-					file so that it distinguishes between content and structure—it “marks up” the text to make it easy for the browser to tell which words it should display on the screen, vs. those that are there to tell it how to structure the page.</p>
-			</info-block> -->
-		</step-block>
+		<info-block image="images/learn/info-icon.png">
+			<h2>HTML (HyperText Markup Language)</h2>
+			<p>HTML is the backbone of the web, and the beginning of any website. To break that down: “Hypertext” means the document contains text that has links to other text, like stylesheets or scripts, for example. “Markup Language” is a way of formatting a
+				file so that it distinguishes between content and structure—it “marks up” the text to make it easy for the browser to tell which words it should display on the screen, vs. those that are there to tell it how to structure the page.</p>
+		</info-block> -->
+	</step-block>
 
-		<step-block title='Picture perfect: Adding images'>
-			<p>
-				Using the self-closing
-				<code>&lt;img&gt;</code> tag, insert an image. Paste the image URL as the source attribute for the
-				<code>&lt;img&gt;</code> tag.
-			</p>
-			<pre class='code-snippet'>
-				<p>
-						<code>
+	<step-block title='Picture perfect: Adding images'>
+		<p>
+			Using the self-closing
+			<code>&lt;img&gt;</code> tag, insert an image. Paste the image URL as the source attribute for the
+			<code>&lt;img&gt;</code> tag.
+		</p>
+		<code-block>
 &lt;img src='url'&gt;
-						</code>
-				</p>
-			</pre>
-			<info-block image="images/learn/info-icon.png">
-				<h2>File Paths</h2>
-				<p>In the
-					<code>&lt;img&gt;</code> tag’s src attribute, you can use either a URL or a file path to tell the page what image you’d like to load. If you want to use an image off the web, you should right click the image you want and select an option along the lines
-					of “Copy Image URL” or “Copy Image Address.” If you’d like to use an image from your computer, you can just use that image’s full file name. Just make sure the image is in the same folder as you HTML file, or your computer won’t be able to find it.</p>
-			</info-block>
-		</step-block>
+		</code-block>
+		<info-block image="images/learn/info-icon.png">
+			<h2>File Paths</h2>
+			<p>In the
+				<code>&lt;img&gt;</code> tag’s src attribute, you can use either a URL or a file path to tell the page what image you’d like to load. If you want to use an image off the web, you should right click the image you want and select an option along the lines
+				of “Copy Image URL” or “Copy Image Address.” If you’d like to use an image from your computer, you can just use that image’s full file name. Just make sure the image is in the same folder as you HTML file, or your computer won’t be able to find it.</p>
+		</info-block>
+	</step-block>
 
-		<step-block title='<p> yourself'>
-			<p>
-				Below the
-				<code>&lt;h1&gt;</code> tag with your name, include a
-				<code>&lt;p&gt;</code> tag with a description of the image. Alternatively, you can use that space tell your readers about Steve Buscemi’s short stint as a fireman.
-			</p>
-			<pre class='code-snippet'>
-				<p>
-					<code>
+	<step-block title='<p> yourself'>
+		<p>
+			Below the
+			<code>&lt;h1&gt;</code> tag with your name, include a
+			<code>&lt;p&gt;</code> tag with a description of the image. Alternatively, you can use that space tell your readers about Steve Buscemi’s short stint as a fireman.
+		</p>
+		<code-block>
 &lt;p&gt;Here’s a paragraph. You can include as much or as little text as you want.&lt;/p&gt;
-					</code>
-				</p>
-			</pre>
-		</step-block>
+		</code-block>
+	</step-block>
 
-		<step-block title="You won't believe this unordered list">
-			<p>
-				Create an unordered list of your social media accounts with the
-				<code>&lt;ul&gt;</code> tag. Lists are more prevalent than you might think—they’re commonly used for site navigation. You can add entries to your list with
-				<code>&lt;li&gt;</code> tags.
-			</p>
-			<pre class='code-snippet'>
-				<p>
-					<code>
+	<step-block title="You won't believe this unordered list">
+		<p>
+			Create an unordered list of your social media accounts with the
+			<code>&lt;ul&gt;</code> tag. Lists are more prevalent than you might think—they’re commonly used for site navigation. You can add entries to your list with
+			<code>&lt;li&gt;</code> tags.
+		</p>
+		<code-block>
 &lt;ul&gt;
-  &lt;li&gt;Twitter&lt;/li&gt;
-  &lt;li&gt;Facebook&lt;/li&gt;
-  &lt;li&gt;LinkedIn&lt;/li&gt;
-  &lt;li&gt;Tumblr&lt;/li&gt;
-  &lt;li&gt;Email&lt;/li&gt;
+&lt;li&gt;Twitter&lt;/li&gt;
+&lt;li&gt;Facebook&lt;/li&gt;
+&lt;li&gt;LinkedIn&lt;/li&gt;
+&lt;li&gt;Tumblr&lt;/li&gt;
+&lt;li&gt;Email&lt;/li&gt;
 &lt;/ul&gt;
-					</code>
-				</p>
-			</pre>
+		</code-block>
 
-		</step-block>
+	</step-block>
 
-		<step-block title="Link it up">
-			<p>
-				Let’s go one level deeper with nesting. Using
-				<code>&lt;a&gt;</code> tags inside your
-				<code>&lt;li&gt;</code> tags, add links to send people directly to your social media accounts.
-			</p>
-			<pre class='code-snippet'>
-				<p>
-					<code>
+	<step-block title="Link it up">
+		<p>
+			Let’s go one level deeper with nesting. Using
+			<code>&lt;a&gt;</code> tags inside your
+			<code>&lt;li&gt;</code> tags, add links to send people directly to your social media accounts.
+		</p>
+		<code-block>
 &lt;ul&gt;
-  &lt;li&gt;&lt;a href='http://www.twitter.com'&gt;Twitter&lt;/a&gt;&lt;/li&gt;
-  &lt;li&gt;&lt;a href='http://www.facebook.com'&gt;Facebook&lt;/a&gt;&lt;/li&gt;
-  &lt;li&gt;&lt;a href='http://www.linkedin.com'&gt;LinkedIn&lt;/a&gt;&lt;/li&gt;
-  &lt;li&gt;&lt;a href='http://www.tumblr.com'&gt;Tumblr&lt;/a&gt;&lt;/li&gt;
-  &lt;li&gt;&lt;a href='mailto:you@you.com'&gt;Email&lt;/a&gt;&lt;/li&gt;
+&lt;li&gt;&lt;a href='http://www.twitter.com'&gt;Twitter&lt;/a&gt;&lt;/li&gt;
+&lt;li&gt;&lt;a href='http://www.facebook.com'&gt;Facebook&lt;/a&gt;&lt;/li&gt;
+&lt;li&gt;&lt;a href='http://www.linkedin.com'&gt;LinkedIn&lt;/a&gt;&lt;/li&gt;
+&lt;li&gt;&lt;a href='http://www.tumblr.com'&gt;Tumblr&lt;/a&gt;&lt;/li&gt;
+&lt;li&gt;&lt;a href='mailto:you@you.com'&gt;Email&lt;/a&gt;&lt;/li&gt;
 &lt;/ul&gt;
-					</code>
-				</p>
-			</pre>
+		</code-block>
 
-		</step-block>
+	</step-block>
 
-		<step-block title='Order! Order!'>
-			<p>
-				Create an ordered list for your favorite hobbies. It should look a little something like this:
-			</p>
-			<pre class='code-snippet'>
-				<p>
-					<code>
+	<step-block title='Order! Order!'>
+		<p>
+			Create an ordered list for your favorite hobbies. It should look a little something like this:
+		</p>
+		<code-block>
 &lt;ol&gt;
-  &lt;li&gt;Writing HTML&lt;/li&gt;
-  &lt;li&gt;Populating Lists&lt;/li&gt;
+&lt;li&gt;Writing HTML&lt;/li&gt;
+&lt;li&gt;Populating Lists&lt;/li&gt;
 &lt;/ol&gt;
-					</code>
-				</p>
-			</pre>
-			<info-block>
-				<h2>Tag 'n Bag</h2>
-				<p>There are a wide range of tags that serve a multitude of purposes. For a complete list, see the list of tags at <a href="http://www.w3schools.com/tags/">w3schools</a>. Some useful tags in journalistic contexts include
-					<code>&lt;article&gt;</code>,
-					<code>&lt;blockquote&gt;</code>, and
-					<code>&lt;cite&gt;</code>, among others. Don’t worry about memorizing them all--no one needs to know all the tags, and they’re all available for you to look up whenever you need it. Just take a look at the list and make a note of anything you see that
-					you think might come in handy later.</p>
-			</info-block>
-			<br>
-			<info-block>
-				<h2>The Top 20 Tags (at least according to us)</h2>
-				<ol>
-					<li>
-						<code>&lt;div&gt;</code>
-						<br>
-						<p>
-							used for structure, typically as a generic container for similar elements
-						</p>
-					</li>
-					<li>
-						<code>&lt;a&gt;</code>
-						<br>
-						<p>
-							used to add a link
-						</p>
-					</li>
-					<li>
-						<code>&lt;h1&gt;</code> to
-						<code>&lt;h6&gt;</code>
-						<br>
-						<p>
-							headers used to denote display type
-						</p>
-					</li>
-					<li>
-						<code>&lt;p&gt;</code>
-						<br>
-						<p>
-							used to contain paragraphs of text
-						</p>
-					</li>
-					<li>
-						<code>&lt;img&gt;</code>
-						<br>
-						<p>
-							used to contain paragraphs of text</p>
-					</li>
-					<li>
-						<code>&lt;ul&gt;</code>/
-						<code>&lt;li&gt;</code>
-						<br>
-						<p>
-							used to create and populate an unordered list, most commonly used for navigation bars</p>
-					</li>
-					<li>
-						<code>&lt;form&gt;</code>
-						<br>
-						<p>
-							uused to create a submittable form </p>
-					</li>
-					<li>
-						<code>&lt;input&gt;</code>
-						<br>
-						<p>
-							used to create an element on the page through which the user can insert input; comes in a variety of types </p>
-					</li>
-					<li>
-						<code>&lt;button&gt;</code>
-						<br>
-						<p>
-							used to create a button on the page</p>
-					</li>
-					<li>
-						<code>&lt;span&gt;</code>
-						<br>
-						<p>
-							used to create a button on the page</p>
-					</li>
-					<li>
-						<code>&lt;article&gt;</code>
-						<br>
-						<p>
-							used to contain an article </p>
-					</li>
-					<li>
-						<code>&lt;figure&gt;</code>
-						<br>
-						<p>
-							used to contain an article </p>
-					</li>
-					<li>
-						<code>&lt;blockquote&gt;</code>
-						<br>
-						<p>
-							used to contain a quote from a source </p>
-					</li>
-					<li>
-						<code>&lt;cite&gt;</code>
-						<br>
-						<p>
-							used to cite a blockquote
-						</p>
-					</li>
-					<li>
-						<code>&lt;code&gt;</code>
-						<br>
-						<p>
-							used to denote a code snippet appearing on the screen</p>
-					</li>
-					<li>
-						<code>&lt;section&gt;</code>
-						<br>
-						<p>
-							used to denote a section of the page, such as a chapter
-						</p>
-					</li>
-					<li>
-						<code>&lt;title&gt;</code>
-						<br>
-						<p>
-							used to give the webpage a title, which typically appears at the top of the tab or window
-						</p>
-					</li>
-					<li>
-						<code>&lt;script&gt;</code>
-						<br>
-						<p>
-							used to link client-side scripts to the document
-						</p>
-					</li>
-					<li>
-						<code>&lt;link&gt;</code>
-						<br>
-						<p>
-							used mostly to link stylesheets to the document </p>
-					</li>
-					<li>
-						<code>&lt;!--...--&gt;</code>
-						<br>
-						<p>
-							used to comment out sections of HTML
-						</p>
-					</li>
-				</ol>
-			</info-block>
-		</step-block>
-
-		<step-block title='The great divide'>
-			<info-block>
-				<h2>Total Recall</h2>
-				<p>
-					HTML deals with two things: content and structure. All the tags we’ve seen so far deal with actual content, but there are also some very useful tags that are used to structure your HTML, like the
-					<code>&lt;div&gt;</code> tag. While it may not seem too useful now, divs will come very much in handy when it comes time to style our HTML.
-				</p>
-			</info-block>
-			<p>
-				Use a &lt;div&gt; tag to group all your introductory material together. That’ll include your &lt;h1&gt;, &lt;img&gt;, and &lt;p&gt; tags at the beginning of your body. When it’s done it should look like this:
-			</p>
-			<pre class='code-snippet'>
-				<p>
-					<code>
-&lt;div&gt;
-  &lt;h1&gt;My Personal Website&lt;/h1&gt;
-  &lt;img src='https://upload.wikimedia.org/wikipedia/commons/thumb/9/90/Steve_Buscemi_2009_portrait.jpg/220px-Steve_Buscemi_2009_portrait.jpg'&gt;
-  &lt;p&gt;Hi! This is my personal website!&lt;/p&gt;
-&lt;/div&gt;
-					</code>
-				</p>
-			</pre>
-			<p>
-				If you refresh your page at this point, you’ll notice that it doesn’t look any different than it did without the
-				<code>&lt;div&gt;</code> tag. And you’re totally correct! While adding
-				<code>&lt;div&gt;</code>s don’t visually affect the page when applied (aside from creating a break if you added a
-				<code>&lt;div&gt;</code> within an inline element), they will become extremely useful when it comes time to organize and style your website. If you don’t understand it 100 percent right now, that’s fine. Just trust us. We would never steer you wrong.
-			</p>
-		</step-block>
-
-		<step-block title="That's all, folks">
-			<p>
-				And that's it! Open the index.html file on your browser and make sure that everything is showing up. If something isn't appearing, check your code to see if there are any syntax errors or if you forgot to close any tags. Be sure to also write a thank-you
-				letter to Steve Buscemi, creator of the Internet, for his amazing invention!
-			</p>
-			<info-block>
-				<h2>Code Summary</h2>
-				<pre class='code-snippet'>
+		</code-block>
+		<info-block>
+			<h2>Tag 'n Bag</h2>
+			<p>There are a wide range of tags that serve a multitude of purposes. For a complete list, see the list of tags at <a href="http://www.w3schools.com/tags/">w3schools</a>. Some useful tags in journalistic contexts include
+				<code>&lt;article&gt;</code>,
+				<code>&lt;blockquote&gt;</code>, and
+				<code>&lt;cite&gt;</code>, among others. Don’t worry about memorizing them all--no one needs to know all the tags, and they’re all available for you to look up whenever you need it. Just take a look at the list and make a note of anything you see that
+				you think might come in handy later.</p>
+		</info-block>
+		<br>
+		<info-block>
+			<h2>The Top 20 Tags (at least according to us)</h2>
+			<ol>
+				<li>
+					<code>&lt;div&gt;</code>
+					<br>
 					<p>
-						<code>
+						used for structure, typically as a generic container for similar elements
+					</p>
+				</li>
+				<li>
+					<code>&lt;a&gt;</code>
+					<br>
+					<p>
+						used to add a link
+					</p>
+				</li>
+				<li>
+					<code>&lt;h1&gt;</code> to
+					<code>&lt;h6&gt;</code>
+					<br>
+					<p>
+						headers used to denote display type
+					</p>
+				</li>
+				<li>
+					<code>&lt;p&gt;</code>
+					<br>
+					<p>
+						used to contain paragraphs of text
+					</p>
+				</li>
+				<li>
+					<code>&lt;img&gt;</code>
+					<br>
+					<p>
+						used to contain paragraphs of text</p>
+				</li>
+				<li>
+					<code>&lt;ul&gt;</code> and
+					<code>&lt;li&gt;</code>
+					<br>
+					<p>
+						used to create and populate an unordered list, most commonly used for navigation bars</p>
+				</li>
+				<li>
+					<code>&lt;form&gt;</code>
+					<br>
+					<p>
+						used to create a submittable form </p>
+				</li>
+				<li>
+					<code>&lt;input&gt;</code>
+					<br>
+					<p>
+						used to create an element on the page through which the user can insert input; comes in a variety of types </p>
+				</li>
+				<li>
+					<code>&lt;button&gt;</code>
+					<br>
+					<p>
+						used to create a button on the page</p>
+				</li>
+				<li>
+					<code>&lt;span&gt;</code>
+					<br>
+					<p>
+						used to create a button on the page</p>
+				</li>
+				<li>
+					<code>&lt;article&gt;</code>
+					<br>
+					<p>
+						used to contain an article </p>
+				</li>
+				<li>
+					<code>&lt;figure&gt;</code>
+					<br>
+					<p>
+						used to contain an article </p>
+				</li>
+				<li>
+					<code>&lt;blockquote&gt;</code>
+					<br>
+					<p>
+						used to contain a quote from a source </p>
+				</li>
+				<li>
+					<code>&lt;cite&gt;</code>
+					<br>
+					<p>
+						used to cite a blockquote
+					</p>
+				</li>
+				<li>
+					<code>&lt;code&gt;</code>
+					<br>
+					<p>
+						used to denote a code snippet appearing on the screen</p>
+				</li>
+				<li>
+					<code>&lt;section&gt;</code>
+					<br>
+					<p>
+						used to denote a section of the page, such as a chapter
+					</p>
+				</li>
+				<li>
+					<code>&lt;title&gt;</code>
+					<br>
+					<p>
+						used to give the webpage a title, which typically appears at the top of the tab or window
+					</p>
+				</li>
+				<li>
+					<code>&lt;script&gt;</code>
+					<br>
+					<p>
+						used to link client-side scripts to the document
+					</p>
+				</li>
+				<li>
+					<code>&lt;link&gt;</code>
+					<br>
+					<p>
+						used mostly to link stylesheets to the document </p>
+				</li>
+				<li>
+					<code>&lt;!--...--&gt;</code>
+					<br>
+					<p>
+						used to comment out sections of HTML
+					</p>
+				</li>
+			</ol>
+		</info-block>
+	</step-block>
+
+	<step-block title='The great divide'>
+		<info-block>
+			<h2>Total Recall</h2>
+			<p>
+				HTML deals with two things: content and structure. All the tags we’ve seen so far deal with actual content, but there are also some very useful tags that are used to structure your HTML, like the
+				<code>&lt;div&gt;</code> tag. While it may not seem too useful now, divs will come very much in handy when it comes time to style our HTML.
+			</p>
+		</info-block>
+		<p>
+			Use a <code>&lt;div&gt;</code> tag to group all your introductory material together. That’ll include your <code>&lt;h1&gt;</code>, <code>&lt;img&gt;</code>, and <code>&lt;p&gt;</code> tags at the beginning of your body. When it’s done it should look like this:
+		</p>
+		<code-block>
+&lt;div&gt;
+&lt;h1&gt;My Personal Website&lt;/h1&gt;
+&lt;img src='https://upload.wikimedia.org/wikipedia/commons/thumb/9/90/Steve_Buscemi_2009_portrait.jpg/220px-Steve_Buscemi_2009_portrait.jpg'&gt;
+&lt;p&gt;Hi! This is my personal website!&lt;/p&gt;
+&lt;/div&gt;
+		</code-block>
+		<p>
+			If you refresh your page at this point, you’ll notice that it doesn’t look any different than it did without the
+			<code>&lt;div&gt;</code> tag. And you’re totally correct! While adding
+			<code>&lt;div&gt;</code>s don’t visually affect the page when applied (aside from creating a break if you added a
+			<code>&lt;div&gt;</code> within an inline element), they will become extremely useful when it comes time to organize and style your website. If you don’t understand it 100 percent right now, that’s fine. Just trust us. We would never steer you wrong.
+		</p>
+	</step-block>
+
+	<step-block title="That's all, folks">
+		<p>
+			And that's it! Open the index.html file on your browser and make sure that everything is showing up. If something isn't appearing, check your code to see if there are any syntax errors or if you forgot to close any tags. Be sure to also write a thank-you
+			letter to Steve Buscemi, creator of the Internet, for his amazing invention!
+		</p>
+		<info-block>
+			<h2>Code Summary</h2>
+			<code-block>
 &lt;!doctype html&gt;
 &lt;html&gt;
-  &lt;head&gt;
-    &lt;meta charset='utf8'&gt;
-    &lt;title&gt;My Personal Website&lt;/title&gt;
-    &lt;link rel='stylesheet' href='styles.css'&gt;
-    &lt;script src='main.js'&gt;&lt;/script&gt;
-  &lt;/head&gt;
+&lt;head&gt;
+	&lt;meta charset='utf8'&gt;
+	&lt;title&gt;My Personal Website&lt;/title&gt;
+	&lt;link rel='stylesheet' href='styles.css'&gt;
+	&lt;script src='main.js'&gt;&lt;/script&gt;
+&lt;/head&gt;
 
-  &lt;body&gt;
-    &lt;ul&gt;
-      &lt;li&gt;&lt;a href='http://www.twitter.com'&gt;Twitter&lt;/a&gt;&lt;/li&gt;
-      &lt;li&gt;&lt;a href='http://www.facebook.com'&gt;Facebook&lt;/a&gt;&lt;/li&gt;
-      &lt;li&gt;&lt;a href='http://www.linkedin.com'&gt;LinkedIn&lt;/a&gt;&lt;/li&gt;
-      &lt;li&gt;&lt;a href='http://www.tumblr.com'&gt;Tumblr&lt;/a&gt;&lt;/li&gt;
-      &lt;li&gt;&lt;a href='mailto:you@you.com'&gt;Email&lt;/a&gt;&lt;/li&gt;
-    &lt;/ul&gt;
-    &lt;div&gt;
-      &lt;h1&gt;My Personal Website&lt;/h1&gt;
-      &lt;img src='https://upload.wikimedia.org/wikipedia/commons/thumb/9/90/Steve_Buscemi_2009_portrait.jpg/220px-Steve_Buscemi_2009_portrait.jpg'&gt;
-      &lt;p&gt;Hi! This is my personal website!&lt;/p&gt;
-    &lt;/div&gt;
-    &lt;ol&gt;
-      &lt;li&gt;Writing HTML&lt;/li&gt;
-      &lt;li&gt;Populating Lists&lt;/li&gt;
-    &lt;/ol&gt;
-  &lt;/body&gt;
+&lt;body&gt;
+	&lt;ul&gt;
+		&lt;li&gt;&lt;a href='http://www.twitter.com'&gt;Twitter&lt;/a&gt;&lt;/li&gt;
+		&lt;li&gt;&lt;a href='http://www.facebook.com'&gt;Facebook&lt;/a&gt;&lt;/li&gt;
+		&lt;li&gt;&lt;a href='http://www.linkedin.com'&gt;LinkedIn&lt;/a&gt;&lt;/li&gt;
+		&lt;li&gt;&lt;a href='http://www.tumblr.com'&gt;Tumblr&lt;/a&gt;&lt;/li&gt;
+		&lt;li&gt;&lt;a href='mailto:you@you.com'&gt;Email&lt;/a&gt;&lt;/li&gt;
+	&lt;/ul&gt;
+	&lt;div&gt;
+		&lt;h1&gt;My Personal Website&lt;/h1&gt;
+		&lt;img src='https://upload.wikimedia.org/wikipedia/commons/thumb/9/90/Steve_Buscemi_2009_portrait.jpg/220px-Steve_Buscemi_2009_portrait.jpg'&gt;
+		&lt;p&gt;Hi! This is my personal website!&lt;/p&gt;
+	&lt;/div&gt;
+	&lt;ol&gt;
+		&lt;li&gt;Writing HTML&lt;/li&gt;
+		&lt;li&gt;Populating Lists&lt;/li&gt;
+	&lt;/ol&gt;
+&lt;/body&gt;
 &lt;/html&gt;
-						</code>
-					</p>
-				</pre>
-			</info-block>
-		</step-block>
+			</code-block>
+		</info-block>
+	</step-block>
 </page-item>
 </page-manager>
 </body>
