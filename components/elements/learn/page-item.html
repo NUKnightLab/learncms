@@ -53,7 +53,7 @@
 			left:0;
 		};
 
-		::content #page-cover-title {
+		::content #page-cover-header {
 			position:absolute;
 			top:0;
 			right:0;
@@ -70,14 +70,14 @@
 			-moz-justify-content: center;
 			-ms-justify-content: center;
 		}
-		::content #page-cover-title-container {
+		::content #page-cover-header-container {
 			text-align:center;
 			padding-left:10px;
 			padding-right:10px;
 			z-index:1;
 		};
 
-		::content #page-cover-title-container paper-fab {
+		::content #page-cover-header-container paper-fab {
 			/*background-color:#273238;
 			color:#FFF;*/
 			background-color:#80CBC4;
@@ -85,7 +85,7 @@
 
 		};
 
-		::content #page-cover-title h2 {
+		::content #page-cover-header h2 {
 			display: block;
 			text-align:center;
 			font-family: Roboto, sans-serif;
@@ -190,10 +190,10 @@
 	<template>
 		<div id="page-container">
 			<div id="page-cover" class="material-shadow" elevation="3">
-				<div id="page-cover-title">
-					<div id="page-cover-title-container">
+				<div id="page-cover-header">
+					<div id="page-cover-header-container">
 						<paper-fab icon="arrow-back"></paper-fab><br>
-						<h2>{{title}}</h2>
+						<h2>{{header}}</h2>
 					</div>
 				</div>
 				<div id="page-cover-background"></div>
@@ -386,9 +386,9 @@
 		/* PROPERTIES
 		================================================== */
 		properties: {
-			title: {
+			header: {
 				type: String,
-				value: "Title"
+				value: "Header"
 			}
 		}
 

@@ -5,9 +5,10 @@
 `capsule-unit` is a polymer component made up of two other polymer components, `capsule-ref` and `capsule-card`. It acts as a container for these two sub components and handles the hero-animation transition between the two sub components.
 Example:
 
-	<capsule-unit img="path/to/image.png" title="Title for both the reference and the card">
+	<capsule-unit img="path/to/image.png" header="Header for both the reference and the card">
 	  Put the conent of your card here in regular text.
 	</capsule-unit>
+
 
 @group Learn Elements
 @class capsule-unit
@@ -75,7 +76,7 @@ Example:
 
 
 
-		::content #capsule-title {
+		::content #capsule-header {
 			margin:0;
 			padding:20px;
 			padding-top:12px;
@@ -110,7 +111,7 @@ Example:
 			line-height:26px;
 		}
 
-		::content #capsule-content-title {
+		::content #capsule-content-header {
 			color:#338D83;
 			line-height: 32px;
  			font-size: 32px;
@@ -207,14 +208,14 @@ Example:
 					<div id="capsule-image"></div>
 
 				</div>
-				<h2 id="capsule-title">{{ title }}</h2>
+				<h2 id="capsule-header">{{ header }}</h2>
 				<paper-fab icon="content-copy"></paper-fab>
 			</div>
 
 			<div id="capsule-content-container" class="material-shadow" elevation="1">
 				<paper-icon-button id="capsule-close-button" icon="clear"></paper-icon-button>
 				<div id="capsule-content">
-					<h2 id="capsule-content-title">{{ title }}</h2>
+					<h2 id="capsule-content-header">{{ header }}</h2>
 					<content></content>
 				</div>
 			</div>
@@ -236,7 +237,7 @@ Example:
 				type: String,
 				value: ""
 			},
-			title: {
+			header: {
 				type: String,
 				value: "See also"
 			},
@@ -253,7 +254,7 @@ Example:
 			// DOM OBJECTS
 			this.capsule_image = this.$['capsule-image'];
 			this.capsule_ref = this.$['capsule-ref'];
-			this.capsule_title = this.$['capsule-title'];
+			this.capsule_header = this.$['capsule-header'];
 			this.capsule_content = this.$['capsule-content'];
 			this.capsule_content_container = this.$['capsule-content-container'];
 			this.capsule_close_btn = this.$['capsule-close-button'];
