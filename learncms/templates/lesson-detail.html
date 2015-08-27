@@ -26,8 +26,8 @@
 {% block content %}
         <learn-nav logo="{% static 'img/banner-logo-white.png' %}"></learn-nav>
         <page-manager>
-        <page-item title="{{ lesson.title }}">
-        <lesson-banner image="{{ lesson.banner_image.url }}" title="{{ lesson.title }}"></lesson-banner>
+        <page-item header="{{ lesson.title }}">
+        <lesson-banner image="{{ lesson.banner_image.url }}" header="{{ lesson.title }}"></lesson-banner>
 
         {{ evaluated_content|safe }}
         </page-item>

@@ -57,7 +57,7 @@ class LessonRefResolver(ReferenceResolver):
 
     def update_element(self, elem, obj):
         elem.attrib['image'] = obj.banner_image.url
-        elem.attrib['title'] = obj.title
+        elem.attrib['header'] = obj.title
         elem.attrib['url'] = obj.get_absolute_url()
         elem.text = obj.reference_blurb
 
@@ -70,12 +70,12 @@ class ZoomingImageRefResolver(ReferenceResolver):
 
 
 class CapsuleRefResolver(ReferenceResolver):
-    """A Capsule Unit has a title, an image URL, and HTML content."""
+    """A Capsule Unit has a header, an image URL, and HTML content."""
     klass = CapsuleUnit
 
     def update_element(self, elem, obj):
         elem.attrib['image'] = obj.image.url
-        elem.attrib['title'] = obj.title
+        elem.attrib['header'] = obj.title
         elem.append(fromstring(obj.content))
 
 REF_RESOLVERS = {
