@@ -1,1 +1,6 @@
-{"CSS": "Cascading Style Sheets make it look pretty without insanity.", "HTML": "The internet\u2019s bread and butter. It stands for HyperText Markup Language, and gives sites their structure."}
+{
+    "CSS": "Cascading Style Sheets make it look pretty without insanity.",
+    "HTML": "The internet\u2019s bread and butter. It stands for HyperText Markup Language, and gives sites their structure.",
+    "slug": "A human-readable but unchanging string used to uniquely identify a resource. Generally restricted to lowercase ASCII letters, numbers, and hyphens.",
+    "lemma": "The canonical form of a term defined in a dictionary. For our purposes, most specifically, a key in the glossary JSON."
+}

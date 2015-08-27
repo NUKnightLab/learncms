@@ -33,52 +33,75 @@
             <step-block header="Primary Components">
                 <h2></h2>
                 <p>
-                    These are the components you're likely to actually use when writing a lesson.
+                    These are the basic components you're likely to actually use when writing a lesson.
                     <dl>
                         <dt><code>&lt;narrative-text&gt;</code></dt>
-				        <dd>Belongs once at the top of any lesson. Sets the stage. No attributes. Use any basic HTML markup inside.</dd>
-                        <dt><code>&lt;step-block&gt;</code></dt>
-				        <dd></dd>
+				        <dd>Belongs once at the top of any lesson. Sets the stage. No attributes. Use any basic HTML markup inside. Not meant to be nested in other components.</dd>
                         <dt><code>&lt;lesson-block&gt;</code></dt>
-				        <dd></dd>
+				        <dd>An unnumbered piece of the lesson. Generally used at the beginning and the end, but technically may be used at any point. Use any basic HTML markup inside. Not meant to be nested in other components.</dd>
+                        <dt><code>&lt;step-block&gt;</code></dt>
+				        <dd>A numbered piece of the lesson, usually specifying a distinct action to take. Should have a <code>header</code> attribute to present the top level label. Use any basic HTML markup inside. Not meant to be nested in other components.</dd>
                         <dt><code>&lt;info-block&gt;</code></dt>
-				        <dd></dd>
-                        <dt><code>&lt;zooming-image&gt;</code></dt>
-				        <dd></dd>
-                        <dt><code>&lt;capsule-unit&gt;</code></dt>
-				        <dd></dd>
-                        <dt><code>&lt;lesson-ref&gt;</code></dt>
-				        <dd></dd>
-                        <dt><code>&lt;link-ref&gt;</code></dt>
-				        <dd></dd>
+				        <dd>Meant as an aside to the main content of a <code>step-block</code> or <code>lesson-block.</code>. Should have a <code>header</code> attribute. Use any basic HTML inside. Not generally meant for the top level.</dd>
                         <dt><code>&lt;code-block&gt;</code></dt>
-				        <dd></dd>
+				        <dd>Use to show syntax highlighted HTML, CSS, or other code. Generally meant to be used inside a <code>step-block.</code>. Can take a <code>lang</code> attribute to give a clue as to which kind of syntax highlighting to use.</dd>
+                        <dt><code>&lt;unit-group&gt;</code></dt>
+                        <dd>
+                            Somewhat experimental. Meant to organize a collection of <code>capsule-unit</code>s, <code>link-ref</code>s, or similar.
+                        </dd>
                     </dl>
 
                 </p>
             </step-block>
+            <step-block header="Reference components">
+                <p>
+                    When using the CMS, these components will generally be managed as separate content items, and you'll use a special syntax to tell the CMS to fill in the details by looking up those content items. For all of these, to refer to a specific instance of the content type, use the <code>ref</code> attribute with a <glossary-term>slug</glossary-term> which matches the appropriate instance.
+                </p>
+                <p>
+                    For purposes of developing and testing the components, it's also possible to fill in the component details "manually"—details below—but don't do that in the CMS!
+                    <dl>
+                        <dt><code>&lt;zooming-image&gt;</code></dt>
+				        <dd>Presents a thumbnail which, when clicked, shows a large view of the image. For testing purposes, use the <code>src</code> attribute to provide a URL to the thumbnail image, and the <code>fullSrc</code> attribute to provide a URL to the full size image. While it's mostly used internally, it is also technically possible to specify a <code>zoomed</code> <a href="http://www.w3.org/html/wg/drafts/html/master/infrastructure.html#boolean-attributes">boolean attribute</a> to force the component into it's large display mode.</dd>
+                        <dt><code>&lt;capsule-unit&gt;</code></dt>
+				        <dd>Presents a more detailed block of information about a concept. Takes two attributes: <code>image</code>, which should be the URL to an image which illustrates the block, and <code>header</code>, which is a string label. The content of the <code>capsule-unit</code> tags can be any basic HTML, and is shown after the unit is clicked on.</dd>
+                        <dt><code>&lt;lesson-ref&gt;</code></dt>
+				        <dd>For use when another lesson provides in-depth instruction about a concept which, in the context of the current lesson, is given a briefer treatment. Takes two attributes: <code>image</code>, which should be the URL to the <em>banner image</em> of the target lesson, and <code>header</code>, which is the title of the target lesson. The content of the <code>lesson-ref</code> tags can be any basic HTML, and provides a brief introduction to what the lesson covers.</dd>
+                        <dt><code>&lt;link-ref&gt;</code></dt>
+				        <dd>Used to link to an external resource. Takes three attributes: <code>image</code>, which should be the URL to an image which illustrates the link, <code>header</code>, which is a string label, and <code>link</code>, which is the external URL.</dd>
+                        <dt><code>&lt;glossary-term&gt;</code></dt>
+                        <dd>A mechanism for providing a definition of a complex term. If the contents of the tag are a valid glossary term (see <code>glossary-manager</code> for more), then you only need to wrap the term in these tags. If stylistic concerns mean that the actual term isn't inside the tags, use the <glossary-term><code>lemma</code></glossary-term> attribute to indicate which specific term is meant to show in the definition. If there is no <code>glossary-manager</code> on the page, or if the term isn't found in the glossary, the styling and behavior are suppressed.</dd>
+                    </dl>
+                </p>
+            </step-block>
             <step-block header="Other components and support">
-                <dt><code>styles.html</code></dt>
-                <dd></dd>
-                <dt><code>behaviors.html</code></dt>
-                <dd></dd>
-                <dt><code>&lt;lesson-banner&gt;</code></dt>
-                <dd></dd>
+                <p>
+                    This section documents the other pieces which are loaded in our web component initialization. Generally, you won't do a lot with these.
+                </p>
                 <dt><code>&lt;learn-nav&gt;</code></dt>
-                <dd></dd>
+                <dd>
+                    The nav bar for every page on the site. Typically managed by the CMS.
+                </dd>
+                <dt><code>&lt;lesson-banner&gt;</code></dt>
+                <dd>
+                    An illustration at the top of the page. Typically managed by the CMS.
+                </dd>
                 <dt><code>&lt;page-manager&gt;</code></dt>
-                <dd></dd>
+                <dd>
+                    Component used to manage stacking lessons called in via the <code>lesson-ref</code> tag. Managed by the CMS.
+                </dd>
                 <dt><code>&lt;page-item&gt;</code></dt>
-                <dd></dd>
-                <dt><code>&lt;unit-group&gt;</code></dt>
-                <dd></dd>
-                <dt><code>&lt;glossary-term&gt;</code></dt>
-                <dd></dd>
+                <dd>
+                    Component used in support of the stacking effect used when <code>lesson-ref</code>s are followed. Managed by the CMS and the <code>page-manager</code>.
+                </dd>
                 <dt><code>&lt;glossary-manager&gt;</code></dt>
-                <dd></dd>
+                <dd>Responsible for retrieving a JSON dictionary of glossary terms and their definitions, and scanning the page to activate valid <code>glossary-term</code>s. Use the <code>json-url</code> attribute to indicate the source of the glossary. In the context of the CMS, glossary terms are managed as separate Django models, and page templates are responsible for making the manager available if the content includes <code>glossary-term</code> elements.</dd>
+                <dt><code>styles.html</code></dt>
+                <dd>Mostly experimental. Meant to provide a place to define common styles, and if it makes sense, to establish <a href="https://www.polymer-project.org/1.0/docs/devguide/styling.html#custom-style">CSS</a> variables for common use across components.</dd>
+                <dt><code>behaviors.html</code></dt>
+                <dd>Mostly experimental. Used to test understanding of Polymer's behavior mechanism for sharing <a href="https://www.polymer-project.org/1.0/docs/devguide/behaviors.html">behavior</a> among components.</dd>
 
             </step-block>
-
+            <glossary-manager json-url="/glossary.json"></glossary-manager>
 	</body>
 
 </html>
