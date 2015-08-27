@@ -10024,7 +10024,7 @@ styles. All other styles should exist as single lines."
 			margin-bottom: 20px;
 		}
 
-		::content h2#step-title {
+		::content h2#step-header {
 			font-family: 'Roboto', 'Noto', sans-serif;
 			color: #338D83;
 			font-size: 28px;
@@ -10137,7 +10137,7 @@ styles. All other styles should exist as single lines."
 		<content-wrapper>
 			<step-number>{{ stepnum }}</step-number>
 			<div id="step-content" class="material-shadow paper-font-body2" elevation="1">
-				<h2 id="step-title">{{ title }}</h2>
+				<h2 id="step-header">{{ header }}</h2>
 				<content></content>
 
 			</div>
@@ -10170,11 +10170,11 @@ styles. All other styles should exist as single lines."
 			/**
 			 * The primary label for this step.
 			 *
-			 * @attribute title
+			 * @attribute header
 			 * @type String
 			 * @default ""
 			 */
-			title: {
+			header: {
 				type: String,
 				value: ""
 			},
@@ -10184,7 +10184,7 @@ styles. All other styles should exist as single lines."
 			 * at the moment it gets set at page load time by analyzing all other steps
 			 * with the same parent.
 			 *
-			 * @attribute title
+			 * @attribute header
 			 * @type String
 			 * @default ""
 			 */
@@ -10723,7 +10723,9 @@ styles. All other styles should exist as single lines."
 			opacity:0.5;
 		};
 
-		::content #capsule-title {
+
+
+		::content #capsule-header {
 			margin:0;
 			padding:20px;
 			padding-top:12px;
@@ -10755,7 +10757,7 @@ styles. All other styles should exist as single lines."
 			line-height:26px;
 		}
 
-		::content #capsule-content-title {
+		::content #capsule-content-header {
 			color:#338D83;
 			line-height: 32px;
  			font-size: 32px;
@@ -10852,14 +10854,14 @@ styles. All other styles should exist as single lines."
 					<div id="capsule-image"></div>
 
 				</div>
-				<h2 id="capsule-title">{{ title }}</h2>
+				<h2 id="capsule-header">{{ header }}</h2>
 				<paper-fab icon="content-copy"></paper-fab>
 			</div>
 
 			<div id="capsule-content-container" class="material-shadow" elevation="1">
 				<paper-icon-button id="capsule-close-button" icon="clear"></paper-icon-button>
 				<div id="capsule-content">
-					<h2 id="capsule-content-title">{{ title }}</h2>
+					<h2 id="capsule-content-header">{{ header }}</h2>
 					<content></content>
 				</div>
 			</div>
@@ -10881,7 +10883,7 @@ styles. All other styles should exist as single lines."
 				type: String,
 				value: ""
 			},
-			title: {
+			header: {
 				type: String,
 				value: "See also"
 			},
@@ -10898,7 +10900,7 @@ styles. All other styles should exist as single lines."
 			// DOM OBJECTS
 			this.capsule_image = this.$['capsule-image'];
 			this.capsule_ref = this.$['capsule-ref'];
-			this.capsule_title = this.$['capsule-title'];
+			this.capsule_header = this.$['capsule-header'];
 			this.capsule_content = this.$['capsule-content'];
 			this.capsule_content_container = this.$['capsule-content-container'];
 			this.capsule_close_btn = this.$['capsule-close-button'];
@@ -11131,7 +11133,7 @@ styles. All other styles should exist as single lines."
 		<paper-material elevation="0" class="paper-font-body2">
 			<div id="info-block-wrapper" class="layout horizontal">
 				<div id="info-block-content" class="flex-4">
-					<i class="material-icons">info_outline</i>
+					<i class="material-icons">info_outline</i><h2>{{header}}</h2>
 					<content>
 					</content>
 				</div>
@@ -11142,8 +11144,8 @@ styles. All other styles should exist as single lines."
 <script>
 	Polymer({
 		is: 'info-block',
-
 		properties: {
+			header: String
 		}
 	});
 </script>
@@ -11153,7 +11155,10 @@ styles. All other styles should exist as single lines."
 		position: relative;
 		/*right: -30px;*/
 		background-color: #fff;
+		/*background-color:#E7E6E6;*/
+		border-radius: 6px;
 		margin-bottom: 20px;
+
 		margin-top:20px;
 		left: 30px;
 		top:0px;
@@ -11185,10 +11190,12 @@ styles. All other styles should exist as single lines."
 
 	::content #image-container {
 		position: relative;
+
 	}
 
 	::content #image-container img {
 		width: 100%;
+		
 	}
 
 	::content #title-el {
@@ -11281,7 +11288,7 @@ styles. All other styles should exist as single lines."
 			},
 			image: {
 				type: String,
-				value: ""
+				value: "http://lorempixel.com/1440/291/"
 			},
 			url: {
 				type: String,
@@ -11838,7 +11845,7 @@ Polymer({
 			left:0;
 		};
 
-		::content #page-cover-title {
+		::content #page-cover-header {
 			position:absolute;
 			top:0;
 			right:0;
@@ -11855,14 +11862,14 @@ Polymer({
 			-moz-justify-content: center;
 			-ms-justify-content: center;
 		}
-		::content #page-cover-title-container {
+		::content #page-cover-header-container {
 			text-align:center;
 			padding-left:10px;
 			padding-right:10px;
 			z-index:1;
 		};
 
-		::content #page-cover-title-container paper-fab {
+		::content #page-cover-header-container paper-fab {
 			/*background-color:#273238;
 			color:#FFF;*/
 			background-color:#80CBC4;
@@ -11870,7 +11877,7 @@ Polymer({
 
 		};
 
-		::content #page-cover-title h2 {
+		::content #page-cover-header h2 {
 			display: block;
 			text-align:center;
 			font-family: Roboto, sans-serif;
@@ -11975,10 +11982,10 @@ Polymer({
 	<template>
 		<div id="page-container">
 			<div id="page-cover" class="material-shadow" elevation="3">
-				<div id="page-cover-title">
-					<div id="page-cover-title-container">
+				<div id="page-cover-header">
+					<div id="page-cover-header-container">
 						<paper-fab icon="arrow-back"></paper-fab><br>
-						<h2>{{title}}</h2>
+						<h2>{{header}}</h2>
 					</div>
 				</div>
 				<div id="page-cover-background"></div>
@@ -12171,9 +12178,9 @@ Polymer({
 		/* PROPERTIES
 		================================================== */
 		properties: {
-			title: {
+			header: {
 				type: String,
-				value: "Title"
+				value: "Header"
 			}
 		}
 
@@ -12420,8 +12427,4 @@ function fetchGlossary(url, callback) {
         }
     })
 </script>
-&lt;&lt;&lt;&lt;&lt;&lt;&lt; HEAD
-=======
-
-&gt;&gt;&gt;&gt;&gt;&gt;&gt; NUKnightLab/master
 </div></body></html>
