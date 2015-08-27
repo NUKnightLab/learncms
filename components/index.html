@@ -1,153 +1,84 @@
-<!--
-@license
-Copyright (c) 2015 The Polymer Project Authors. All rights reserved.
-This code may only be used under the BSD style license found at http://polymer.github.io/LICENSE.txt
-The complete set of authors may be found at http://polymer.github.io/AUTHORS.txt
-The complete set of contributors may be found at http://polymer.github.io/CONTRIBUTORS.txt
-Code distributed by Google as part of the polymer project is also
-subject to an additional IP rights grant found at http://polymer.github.io/PATENTS.txt
--->
+<!DOCTYPE html>
+<html>
 
-<!doctype html>
-<html lang="">
+	<head>
+		<meta charset="UTF-8">
+		<title>Developing web components for Learn.knightlab.com</title>
+		<script src="bower_components/webcomponentsjs/webcomponents-lite.min.js">
+		</script>
+        <link rel="import" href="elements/elements.html">
+	</head>
 
-<head>
-  <meta charset="utf-8">
-  <meta name="description" content="">
-  <meta name="viewport" content="width=device-width, initial-scale=1">
-  <meta name="generator" content="Polymer Starter Kit" />
-  <title>Polymer Starter Kit</title>
-  <!-- Place favicon.ico and apple-touch-icon.png in the root directory -->
+	<body class="fullbleed">
+		<learn-nav></learn-nav>
+			<narrative-text>
+				<p>
+					The new <a href="http://learn.knightlab.com">Learn.KnightLab.com</a> website makes extensive use of <a href="http://webcomponents.org/">web components</a>, an emerging standard for managing presentation and behavior on websites. Specifically, we use Google's <a href="https://www.polymer-project.org/1.0/">Polymer</a> project, which provides a "polyfill" to help older browsers catch up to the standard, and which also provides some web components we use, although we've also developed many of our own.
+				</p>
+				<p>
+                    When working on components, make sure that your changes work correctly on all of the lessons referenced in this page, for consistency's sake.
+				</p>
+			</narrative-text>
 
-  <!-- Chrome for Android theme color -->
-  <meta name="theme-color" content="#303F9F">
+			<lesson-block>
+                <h2>Prototype lessons</h2>
+                <ul>
+                    <li><a href="lesson.html">Create a Basic Website</a></li>
+                    <li><a href="html-lesson.html">Basic HTML</a></li>
+                    <li><a href="css-lesson.html">Write some CSS</a></li>
+                    <li><a href="webhosting-lesson.html">Web Hosting</a></li>
+                </ul>
+            </lesson-block>
 
-  <!-- Web Application Manifest -->
-  <link rel="manifest" href="manifest.json">
+            <step-block header="Primary Components">
+                <h2></h2>
+                <p>
+                    These are the components you're likely to actually use when writing a lesson.
+                    <dl>
+                        <dt><code>&lt;narrative-text&gt;</code></dt>
+				        <dd>Belongs once at the top of any lesson. Sets the stage. No attributes. Use any basic HTML markup inside.</dd>
+                        <dt><code>&lt;step-block&gt;</code></dt>
+				        <dd></dd>
+                        <dt><code>&lt;lesson-block&gt;</code></dt>
+				        <dd></dd>
+                        <dt><code>&lt;info-block&gt;</code></dt>
+				        <dd></dd>
+                        <dt><code>&lt;zooming-image&gt;</code></dt>
+				        <dd></dd>
+                        <dt><code>&lt;capsule-unit&gt;</code></dt>
+				        <dd></dd>
+                        <dt><code>&lt;lesson-ref&gt;</code></dt>
+				        <dd></dd>
+                        <dt><code>&lt;link-ref&gt;</code></dt>
+				        <dd></dd>
+                        <dt><code>&lt;code-block&gt;</code></dt>
+				        <dd></dd>
+                    </dl>
 
-  <!-- Tile color for Win8 -->
-  <meta name="msapplication-TileColor" content="#3372DF">
+                </p>
+            </step-block>
+            <step-block header="Other components and support">
+                <dt><code>styles.html</code></dt>
+                <dd></dd>
+                <dt><code>behaviors.html</code></dt>
+                <dd></dd>
+                <dt><code>&lt;lesson-banner&gt;</code></dt>
+                <dd></dd>
+                <dt><code>&lt;learn-nav&gt;</code></dt>
+                <dd></dd>
+                <dt><code>&lt;page-manager&gt;</code></dt>
+                <dd></dd>
+                <dt><code>&lt;page-item&gt;</code></dt>
+                <dd></dd>
+                <dt><code>&lt;unit-group&gt;</code></dt>
+                <dd></dd>
+                <dt><code>&lt;glossary-term&gt;</code></dt>
+                <dd></dd>
+                <dt><code>&lt;glossary-manager&gt;</code></dt>
+                <dd></dd>
 
-  <!-- Add to homescreen for Chrome on Android -->
-  <meta name="mobile-web-app-capable" content="yes">
-  <meta name="application-name" content="Polymer Starter Kit">
-  <link rel="icon" sizes="192x192" href="images/touch/chrome-touch-icon-192x192.png">
+            </step-block>
 
-  <!-- Add to homescreen for Safari on iOS -->
-  <meta name="apple-mobile-web-app-capable" content="yes">
-  <meta name="apple-mobile-web-app-status-bar-style" content="black">
-  <meta name="apple-mobile-web-app-title" content="Polymer Starter Kit">
-  <link rel="apple-touch-icon" href="images/touch/apple-touch-icon.png">
-
-  <!-- Tile icon for Win8 (144x144) -->
-  <meta name="msapplication-TileImage" content="images/touch/ms-touch-icon-144x144-precomposed.png">
-
-  <!-- build:css styles/main.css -->
-  <link rel="stylesheet" href="styles/main.css">
-  <link rel="stylesheet" href="styles/index.css">
-  <!-- endbuild-->
-
-  <!-- build:js bower_components/webcomponentsjs/webcomponents-lite.min.js -->
-  <script src="bower_components/webcomponentsjs/webcomponents-lite.js"></script>
-  <!-- endbuild -->
-
-  <!-- will be replaced with elements/elements.vulcanized.html -->
-  <link rel="import" href="elements/elements.html">
-  <!-- endreplace-->
-
-  <!-- Droid Serif -->
-  <link href='http://fonts.googleapis.com/css?family=Droid+Serif:700italic' rel='stylesheet' type='text/css'>
-</head>
-
-<body unresolved class='fullbleed'>
-  <!-- <learn-nav></learn-nav> -->
-  <section class="hero-banner">
-    <div class='hero-header'>
-      <h1>Learn</h1>
-      <h3>Join what may or may not be one of many possible futures of journalism (or don't, I'm not trying to tell you how to live your life).</h3>
-      <p>
-        Lorem ipsum dolor sit amet, consectetur adipiscing elit. Vivamus ut massa quis arcu fringilla pharetra eu sed ligula. In facilisis eros ac ante sodales cursus sit amet at risus. Nunc placerat in quam ut mattis.
-      </p>
-    </div>
-
-    <div class="hero-lesson-container">
-      <a href="lesson.html" class='lesson-link'>
-        <lesson-ref title="Build a Basic Website" image="images/learn/source-code.png" url="lesson.html">
-          <p>
-            Wondering why your site’s looking so ugly? HTML just says what’s what and gives the page structure. CSS is where the real fun starts—it will fix things faster than Fix-It Felix.
-          </p>
-        </lesson-ref>
-      </a>
-    </div>
-    <div class="arrow-down-container">
-      <a href="#gallery" class='arrow-down'>
-        <div class="arrow-down">
-          See the lessons
-        </div>
-        <i class='material-icons'>keyboard_arrow_down</i>
-      </a>
-    </div>
-  </section>
-  <div class="content-wrapper">
-    <section class='gallery-container' id='gallery'>
-      <h2>Start Learning</h2>
-      <div class="lesson-container">
-        <lesson-ref title="Basic HTML" image="images/learn/source-code.png" url="lesson.html">
-          <p>
-            Wondering why your site’s looking so ugly? HTML just says what’s what and gives the page structure. CSS is where the real fun starts—it will fix things faster than Fix-It Felix.
-          </p>
-        </lesson-ref>
-      </div>
-      <div class="lesson-container">
-        <lesson-ref title="Basic CSS" image="images/learn/source-code.png" url="lesson.html">
-          <p>
-            Wondering why your site’s looking so ugly? HTML just says what’s what and gives the page structure. CSS is where the real fun starts—it will fix things faster than Fix-It Felix.
-          </p>
-        </lesson-ref>
-      </div>
-      <div class='lesson-container'>
-        <lesson-ref title="Build a Responsive Website" image="images/learn/source-code.png" url="lesson.html">
-          <p>
-            Wondering why your site’s looking so ugly? HTML just says what’s what and gives the page structure. CSS is where the real fun starts—it will fix things faster than Fix-It Felix.
-          </p>
-        </lesson-ref>
-      </div>
-    </section>
-    <section class='features-container'>
-      <h2>How it works</h2>
-      <div class="feature-set">
-        <div class="feature-text-left">
-          <h3>Carve your own path</h3>
-          <p>
-            Lorem ipsum dolor sit amet, consectetur adipiscing elit. Vivamus ut massa quis arcu fringilla pharetra eu sed ligula. In facilisis eros ac ante sodales cursus sit amet at risus. Nunc placerat in quam ut mattis.
-          </p>
-        </div>
-        <img class='feature-image-right' src="images/index/screen-feature.png" alt="" />
-      </div>
-      <div class="feature-set">
-        <img class='feature-image-left' src="images/index/screen-feature.png" alt="" />
-        <div class="feature-text-right">
-          <h3>Get definition</h3>
-          <p>
-            Lorem ipsum dolor sit amet, consectetur adipiscing elit. Vivamus ut massa quis arcu fringilla pharetra eu sed ligula. In facilisis eros ac ante sodales cursus sit amet at risus. Nunc placerat in quam ut mattis.
-          </p>
-        </div>
-      </div>
-      <div class="feature-set">
-        <div class="feature-text-left">
-          <h3>Some other feature</h3>
-          <p>
-            Lorem ipsum dolor sit amet, consectetur adipiscing elit. Vivamus ut massa quis arcu fringilla pharetra eu sed ligula. In facilisis eros ac ante sodales cursus sit amet at risus. Nunc placerat in quam ut mattis.
-          </p>
-        </div>
-        <img class='feature-image-right' src="images/index/screen-feature.png" alt="" />
-      </div>
-    </section>
-  </div>
-
-  <!-- build:js scripts/app.js -->
-  <script src="scripts/app.js"></script>
-  <!-- endbuild-->
-</body>
+	</body>
 
 </html>
