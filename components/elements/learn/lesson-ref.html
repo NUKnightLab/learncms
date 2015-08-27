@@ -57,10 +57,10 @@ Example:
 
 	::content #image-container img {
 		width: 100%;
-		
+
 	}
 
-	::content #title-el {
+	::content #header-el {
 		position: absolute;
 		bottom: 0;
 		left: 0;
@@ -126,7 +126,7 @@ Example:
 		<div id="lesson-ref-container" elevation="1" class="material-shadow">
 			<div id="image-container">
 				<img src="{{ image }}">
-				<h2 id="title-el">{{ title }}</h2>
+				<h2 id="header-el">{{ header }}</h2>
 				<paper-fab icon="arrow-forward"></paper-fab>
 			</div>
 			<div id="text-container">
@@ -144,9 +144,9 @@ Example:
 			"click": "_clickListener"
 		},
 		properties: {
-			title: {
+			header: {
 				type: String,
-				value: "Lesson Title"
+				value: "Lesson Header"
 			},
 			image: {
 				type: String,
@@ -162,7 +162,7 @@ Example:
 			this.container =  this.$['lesson-ref-container'];
 			this.text_container = this.$['text-container'];
 			this.image_container = this.$['image-container'];
-			this.title_el = this.$['title-el'];
+			this.header_el = this.$['header-el'];
 
 
 		},
