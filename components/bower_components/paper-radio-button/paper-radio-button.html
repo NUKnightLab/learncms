@@ -14,15 +14,16 @@ subject to an additional IP rights grant found at http://polymer.github.io/PATEN
 
 <!--
 `paper-radio-button` is a button that can be either checked or unchecked.
-User can tap the radio button to check it.  But it cannot be unchecked by
-tapping once checked.
+User can tap the radio button to check or uncheck it.
 
-Use `paper-radio-group` to group a set of radio buttons.  When radio buttons
-are inside a radio group, only one radio button in the group can be checked.
+Use a `<paper-radio-group>` to group a set of radio buttons.  When radio buttons
+are inside a radio group, exactly one radio button in the group can be checked
+at any time.
 
 Example:
 
     <paper-radio-button></paper-radio-button>
+    <paper-radio-button>Item label</paper-radio-button>
 
 ### Styling
 
@@ -30,6 +31,7 @@ The following custom properties and mixins are available for styling:
 
 Custom property | Description | Default
 ----------------|-------------|----------
+`--paper-radio-button-unchecked-background-color` | Radio button background color when the input is not checked | `transparent`
 `--paper-radio-button-unchecked-color` | Radio button color when the input is not checked | `--primary-text-color`
 `--paper-radio-button-unchecked-ink-color` | Selected/focus ripple color when the input is not checked | `--primary-text-color`
 `--paper-radio-button-checked-color` | Radio button color when the input is checked | `--default-primary-color`
@@ -41,18 +43,6 @@ Custom property | Description | Default
 @hero hero.svg
 @demo demo/index.html
 -->
-
-<style is="custom-style">
-  :root {
-    --paper-radio-button-unchecked-color: var(--primary-text-color);
-    --paper-radio-button-unchecked-ink-color: var(--primary-text-color);
-
-    --paper-radio-button-checked-color: var(--default-primary-color);
-    --paper-radio-button-checked-ink-color: var(--default-primary-color);
-
-    --paper-radio-button-label-color: var(--primary-text-color);
-  }
-</style>
 
 <dom-module id="paper-radio-button">
 
@@ -119,11 +109,14 @@ Custom property | Description | Default
         }
       },
 
-      ready: function() {
-        if (Polymer.dom(this).textContent == '') {
+      attached: function() {
+        var trimmedText = Polymer.dom(this).textContent.trim();
+        if (trimmedText === '') {
           this.$.radioLabel.hidden = true;
-        } else {
-          this.setAttribute('aria-label', Polymer.dom(this).textContent);
+        }
+        // Don't stomp over a user-set aria-label.
+        if (trimmedText !== '' && !this.getAttribute('aria-label')) {
+          this.setAttribute('aria-label', trimmedText);
         }
         this._isReady = true;
       },

@@ -21,27 +21,31 @@ subject to an additional IP rights grant found at http://polymer.github.io/PATEN
 }
 
 :host .toggle-bar {
-  background-color: var(--paper-toggle-button-unchecked-bar-color);
+  background-color: var(--paper-toggle-button-unchecked-bar-color, #000000);
+  @apply(--paper-toggle-button-unchecked-bar);
 }
 
 :host .toggle-button {
-  background-color: var(--paper-toggle-button-unchecked-button-color);
+  background-color: var(--paper-toggle-button-unchecked-button-color, --paper-grey-50);
+  @apply(--paper-toggle-button-unchecked-button);
 }
 
 :host([checked]) .toggle-bar {
-  background-color: var(--paper-toggle-button-checked-bar-color);
+  background-color: var(--paper-toggle-button-checked-bar-color, --google-green-500);
+  @apply(--paper-toggle-button-checked-bar);
 }
 
 :host([checked]) .toggle-button {
-  background-color: var(--paper-toggle-button-checked-button-color);
+  background-color: var(--paper-toggle-button-checked-button-color, --google-green-500);
+  @apply(--paper-toggle-button-checked-button);
 }
 
 :host .toggle-ink {
-  color: var(--paper-toggle-button-unchecked-ink-color);
+  color: var(--paper-toggle-button-unchecked-ink-color, --primary-text-color);
 }
 
 :host([checked]) .toggle-ink {
-  color: var(--paper-toggle-button-checked-ink-color);
+  color: var(--paper-toggle-button-checked-ink-color, --google-green-500);
 }
 
 /* ID selectors should not be overriden by users. */
@@ -105,4 +109,5 @@ subject to an additional IP rights grant found at http://polymer.github.io/PATEN
   width: 48px;
   height: 48px;
   opacity: 0.5;
+  pointer-events: none;
 }
