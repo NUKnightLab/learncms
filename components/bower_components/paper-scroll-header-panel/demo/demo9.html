@@ -61,17 +61,14 @@ subject to an additional IP rights grant found at http://polymer.github.io/PATEN
       height: 40px;
     }
 
-    .field iron-icon {
+    .field  iron-icon {
       color: var(--google-grey-700);
       fill: var(--google-grey-700);
       margin: 0 8px;
     }
     
-    .field input {
-      font-size: 20px;
-      outline: 0;
-      border: none;
-      margin-left: 20px;
+    .field  paper-input {
+      height: 40px;
     }
 
     .content {
@@ -81,7 +78,7 @@ subject to an additional IP rights grant found at http://polymer.github.io/PATEN
   </style>
 
 </head>
-<body unresolved>
+<body>
 
   <!-- Instead of using 1/3 of the header's height, we want to manually set the
        condensed header's height to 64px -->
@@ -91,7 +88,7 @@ subject to an additional IP rights grant found at http://polymer.github.io/PATEN
       
       <div class="flex center horizontal layout bottom field">
         <iron-icon icon="menu"></iron-icon>
-        <input class="flex">
+        <paper-input class="flex"></paper-input>
         <iron-icon icon="av:mic"></iron-icon>
       </div>
     </paper-toolbar>

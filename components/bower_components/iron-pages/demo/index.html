@@ -18,45 +18,28 @@ subject to an additional IP rights grant found at http://polymer.github.io/PATEN
   <meta name="viewport" content="width=device-width, minimum-scale=1.0, initial-scale=1, user-scalable=yes">
 
   <script src="../../webcomponentsjs/webcomponents-lite.js"></script>
-
-  <link href="../../paper-styles/paper-styles.html" rel="import">
   <link rel="import" href="../iron-pages.html">
 
-  <style is="custom-style">
-    iron-pages {
-      @apply(--layout-fit);
-      
-      color: white;
-      margin: auto;
-      cursor: default;
-    }
+  <style>
 
-    iron-pages div {
-      @apply(--layout);
-      @apply(--layout-center);
-      @apply(--layout-center-justified);
-      @apply(--paper-font-display1);
-
-      width: 100%;
+    html, body {
       height: 100%;
+    }
+
+    body {
+      margin: 0;
+    }
+
+    iron-pages > * {
+      height: 100%;
+      padding: 100px 0;
       font-size: 50px;
-    }
-
-    iron-pages div:nth-child(1) {
-      background-color: var(--google-blue-500);
-    }
-
-    iron-pages div:nth-child(2) {
-      background-color: var(--google-red-500);
-    }
-
-    iron-pages div:nth-child(3) {
-      background-color: var(--google-green-500);
+      text-align: center;
     }
 
   </style>
 </head>
-<body class="fullbleed" unresolved>
+<body>
 
   <iron-pages selected="0">
     <div>Page One</div>

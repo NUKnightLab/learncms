@@ -16,58 +16,43 @@
 			'psm1': 'powershell'
 		};
 
-		if(Array.prototype.forEach) { // Check to prevent error in IE8
-			Array.prototype.slice.call(document.querySelectorAll('pre[data-src]')).forEach(function (pre) {
-				var src = pre.getAttribute('data-src');
+		Array.prototype.slice.call(document.querySelectorAll('pre[data-src]')).forEach(function(pre) {
+			var src = pre.getAttribute('data-src');
+			var extension = (src.match(/\.(\w+)$/) || [,''])[1];
+			var language = Extensions[extension] || extension;
 
-				var language, parent = pre;
-				var lang = /\blang(?:uage)?-(?!\*)(\w+)\b/i;
-				while (parent && !lang.test(parent.className)) {
-					parent = parent.parentNode;
-				}
+			var code = document.createElement('code');
+			code.className = 'language-' + language;
 
-				if (parent) {
-					language = (pre.className.match(lang) || [, ''])[1];
-				}
+			pre.textContent = '';
 
-				if (!language) {
-					var extension = (src.match(/\.(\w+)$/) || [, ''])[1];
-					language = Extensions[extension] || extension;
-				}
+			code.textContent = 'Loading…';
 
-				var code = document.createElement('code');
-				code.className = 'language-' + language;
+			pre.appendChild(code);
 
-				pre.textContent = '';
+			var xhr = new XMLHttpRequest();
 
-				code.textContent = 'Loading…';
+			xhr.open('GET', src, true);
 
-				pre.appendChild(code);
+			xhr.onreadystatechange = function() {
+				if (xhr.readyState == 4) {
 
-				var xhr = new XMLHttpRequest();
+					if (xhr.status < 400 && xhr.responseText) {
+						code.textContent = xhr.responseText;
 
-				xhr.open('GET', src, true);
-
-				xhr.onreadystatechange = function () {
-					if (xhr.readyState == 4) {
-
-						if (xhr.status < 400 && xhr.responseText) {
-							code.textContent = xhr.responseText;
-
-							Prism.highlightElement(code);
-						}
-						else if (xhr.status >= 400) {
-							code.textContent = '✖ Error ' + xhr.status + ' while fetching file: ' + xhr.statusText;
-						}
-						else {
-							code.textContent = '✖ Error: File does not exist or is empty';
-						}
+						Prism.highlightElement(code);
 					}
-				};
+					else if (xhr.status >= 400) {
+						code.textContent = '✖ Error ' + xhr.status + ' while fetching file: ' + xhr.statusText;
+					}
+					else {
+						code.textContent = '✖ Error: File does not exist or is empty';
+					}
+				}
+			};
 
-				xhr.send(null);
-			});
-		}
+			xhr.send(null);
+		});
 
 	};
 

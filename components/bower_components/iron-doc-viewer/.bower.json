@@ -1,6 +1,6 @@
 {
   "name": "iron-doc-viewer",
-  "version": "1.0.4",
+  "version": "1.0.2",
   "authors": [
     "The Polymer Authors"
   ],
@@ -10,16 +10,13 @@
     "web-components",
     "polymer"
   ],
-  "repository": {
-    "type": "git",
-    "url": "git://github.com/PolymerElements/iron-doc-viewer.git"
-  },
   "main": "iron-doc-viewer.html",
   "license": "http://polymer.github.io/LICENSE.txt",
   "homepage": "https://github.com/PolymerElements/iron-doc-viewer/",
   "ignore": [
     "/.*",
-    "/tests/"
+    "/tests/",
+    "/demo/"
   ],
   "dependencies": {
     "marked-element": "PolymerElements/marked-element#^1.0.0",
@@ -34,13 +31,13 @@
     "webcomponentsjs": "webcomponents/webcomponentsjs#^0.7.0",
     "web-component-tester": "*"
   },
-  "_release": "1.0.4",
+  "_release": "1.0.2",
   "_resolution": {
     "type": "version",
-    "tag": "v1.0.4",
-    "commit": "65dda889216b4fbf8cf4ab1fef8efc2ad15b59d3"
+    "tag": "v1.0.2",
+    "commit": "e922acda2d5217f3ae48b7c4f882f5fd8dafe929"
   },
   "_source": "git://github.com/PolymerElements/iron-doc-viewer.git",
-  "_target": "^1.0.1",
+  "_target": "^1.0.0",
   "_originalSource": "PolymerElements/iron-doc-viewer"
 }

@@ -11,9 +11,8 @@ subject to an additional IP rights grant found at http://polymer.github.io/PATEN
 <link rel="import" href="../polymer/polymer.html">
 <link rel="import" href="../paper-ripple/paper-ripple.html">
 <link rel="import" href="../paper-styles/default-theme.html">
-<link rel="import" href="../paper-styles/color.html">
 <link rel="import" href="../paper-behaviors/paper-inky-focus-behavior.html">
-<link rel="import" href="../iron-checked-element-behavior/iron-checked-element-behavior.html">
+
 <!--
 
 `paper-checkbox` is a button that can be either checked or unchecked.  User
@@ -34,17 +33,26 @@ The following custom properties and mixins are available for styling:
 
 Custom property | Description | Default
 ----------------|-------------|----------
-`--paper-checkbox-unchecked-background-color` | Checkbox background color when the input is not checked | `transparent`
-`--paper-checkbox-unchecked-color` | Checkbox border color when the input is not checked | `--primary-text-color`
+`--paper-checkbox-unchecked-color` | Checkbox color when the input is not checked | `--primary-text-color`
 `--paper-checkbox-unchecked-ink-color` | Selected/focus ripple color when the input is not checked | `--primary-text-color`
 `--paper-checkbox-checked-color` | Checkbox color when the input is checked | `--default-primary-color`
 `--paper-checkbox-checked-ink-color` | Selected/focus ripple color when the input is checked | `--default-primary-color`
-`--paper-checkbox-checkmark-color` | Checkmark color | `white`
 `--paper-checkbox-label-color` | Label color | `--primary-text-color`
-`--paper-checkbox-error-color` | Checkbox color when invalid | `--google-red-500`
 
 @demo demo/index.html
 -->
+
+<style is="custom-style">
+  :root {
+    --paper-checkbox-unchecked-color: var(--primary-text-color);
+    --paper-checkbox-unchecked-ink-color: var(--primary-text-color);
+
+    --paper-checkbox-checked-color: var(--default-primary-color);
+    --paper-checkbox-checked-ink-color: var(--default-primary-color);
+
+    --paper-checkbox-label-color: var(--primary-text-color);
+  }
+</style>
 
 <dom-module id="paper-checkbox">
   <link rel="import" type="css" href="paper-checkbox.css">
@@ -53,7 +61,7 @@ Custom property | Description | Default
 
     <div id="checkboxContainer">
       <paper-ripple id="ink" class="circle" center checked$="[[checked]]"></paper-ripple>
-      <div id="checkbox" class$="[[_computeCheckboxClass(checked, invalid)]]">
+      <div id="checkbox" class$="[[_computeCheckboxClass(checked)]]">
         <div id="checkmark" class$="[[_computeCheckmarkClass(checked)]]"></div>
       </div>
     </div>
@@ -67,8 +75,7 @@ Custom property | Description | Default
       is: 'paper-checkbox',
 
       behaviors: [
-        Polymer.PaperInkyFocusBehavior,
-        Polymer.IronCheckedElementBehavior
+        Polymer.PaperInkyFocusBehavior
       ],
 
       hostAttributes: {
@@ -90,31 +97,35 @@ Custom property | Description | Default
          * @event iron-change
          */
 
-        ariaActiveAttribute: {
-          value: 'aria-checked'
+        /**
+         * Gets or sets the state, `true` is checked and `false` is unchecked.
+         */
+        checked: {
+          type: Boolean,
+          value: false,
+          reflectToAttribute: true,
+          notify: true,
+          observer: '_checkedChanged'
+        },
+
+        /**
+         * If true, the button toggles the active state with each tap or press
+         * of the spacebar.
+         */
+        toggles: {
+          type: Boolean,
+          value: true,
+          reflectToAttribute: true
         }
       },
 
-      attached: function() {
+      ready: function() {
+        if (Polymer.dom(this).textContent == '') {
+          this.$.checkboxLabel.hidden = true;
+        } else {
+          this.setAttribute('aria-label', Polymer.dom(this).textContent);
+        }
         this._isReady = true;
-
-        // Don't stomp over a user-set aria-label.
-        if (!this.getAttribute('aria-label')) {
-          this.updateAriaLabel();
-        }
-      },
-
-
-      /**
-       * Update the checkbox aria-label. This is a temporary workaround not
-       * being able to observe changes in <content>
-       * (see: https://github.com/Polymer/polymer/issues/1773)
-       *
-       * Call this if you manually change the contents of the checkbox
-       * and want the aria-label to match the new contents.
-       */
-      updateAriaLabel: function() {
-        this.setAttribute('aria-label', Polymer.dom(this).textContent.trim());
       },
 
       // button-behavior hook
@@ -127,19 +138,24 @@ Custom property | Description | Default
         }
       },
 
-      _computeCheckboxClass: function(checked, invalid) {
-        var className = '';
+      _checkedChanged: function(checked) {
+        this.setAttribute('aria-checked', this.checked ? 'true' : 'false');
+        this.active = this.checked;
+        this.fire('iron-change');
+      },
+
+      _computeCheckboxClass: function(checked) {
         if (checked) {
-          className += 'checked ';
+          return 'checked';
         }
-        if (invalid) {
-          className += 'invalid';
-        }
-        return className;
+        return '';
       },
 
       _computeCheckmarkClass: function(checked) {
-        return checked ? '' : 'hidden';
+        if (!checked) {
+          return 'hidden';
+        }
+        return '';
       }
     })
   </script>

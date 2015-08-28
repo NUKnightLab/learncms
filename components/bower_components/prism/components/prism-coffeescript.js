@@ -12,11 +12,11 @@ Prism.languages.coffeescript = Prism.languages.extend('javascript', {
 	'string': [
 
 		// Strings are multiline
-		/'(?:\\?[^\\])*?'/,
+		/'(?:\\?[\s\S])*?'/,
 
 		{
 			// Strings are multiline
-			pattern: /"(?:\\?[^\\])*?"/,
+			pattern: /"(?:\\?[\s\S])*?"/,
 			inside: {
 				'interpolation': interpolation
 			}
