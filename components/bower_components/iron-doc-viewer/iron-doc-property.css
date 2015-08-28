@@ -24,6 +24,7 @@ subject to an additional IP rights grant found at http://polymer.github.io/PATEN
 #transitionMask {
   position: relative;
   overflow: hidden;
+  padding-left: 160px;
 }
 
 [hidden] {
@@ -35,7 +36,9 @@ subject to an additional IP rights grant found at http://polymer.github.io/PATEN
   width: 160px;
   overflow: hidden;
   text-overflow: ellipsis;
-  float: left;
+  position: absolute;
+  left: 0;
+  top: 0;
 }
 
 #signature .name {
@@ -44,6 +47,7 @@ subject to an additional IP rights grant found at http://polymer.github.io/PATEN
 
 :host([function]) #signature {
   position: static;
+  margin-left: -160px;
   width: 100%;
 }
 
@@ -56,7 +60,6 @@ subject to an additional IP rights grant found at http://polymer.github.io/PATEN
 }
 
 #details {
-  margin-left: 160px;
   flex: 1;
 }
 

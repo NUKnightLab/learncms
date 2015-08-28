@@ -23,7 +23,6 @@ subject to an additional IP rights grant found at http://polymer.github.io/PATEN
     when possible instead of using this element.
 
     @hero hero.svg
-    @demo demo/index.html
     @polymerBehavior
    */
   Polymer.IronJsonpLibraryBehavior = {
@@ -72,16 +71,6 @@ subject to an additional IP rights grant found at http://polymer.github.io/PATEN
        */
     },
 
-    observers: [
-      '_libraryUrlChanged(libraryUrl)'
-    ],
-
-    _libraryUrlChanged: function(libraryUrl) {
-      // can't load before ready because notifyEvent might not be set
-      if (this._isReady && this.libraryUrl)
-        this._loadLibrary();
-    },
-
     _libraryLoadCallback: function(err, result) {
       if (err) {
         console.warn("Library load failed:", err.message);
@@ -91,7 +80,7 @@ subject to an additional IP rights grant found at http://polymer.github.io/PATEN
         this._setLibraryErrorMessage(null);
         this._setLibraryLoaded(true);
         if (this.notifyEvent)
-          this.fire(this.notifyEvent, result);
+          this.fire( this.notifyEvent, result);
       }
     },
 
@@ -105,20 +94,18 @@ subject to an additional IP rights grant found at http://polymer.github.io/PATEN
     },
 
     ready: function() {
-      this._isReady = true;
-      if (this.libraryUrl)
-        this._loadLibrary();
+      this._loadLibrary();
     }
   };
 
-  /**
+  /*
    * LoaderMap keeps track of all Loaders
    */
   var LoaderMap = {
     apiMap: {}, // { hash -> Loader }
 
-    /**
-     * @param {Function} notifyCallback loaded callback fn(result)
+    /*
+     * @param {function} notifyCallback loaded callback fn(result)
      * @param {string} jsonpCallbackName name of jsonpcallback. If API does not provide it, leave empty. Optional.
      */
     require: function(url, notifyCallback, jsonpCallbackName) {
@@ -139,7 +126,6 @@ subject to an additional IP rights grant found at http://polymer.github.io/PATEN
     }
   };
 
-  /** @constructor */
   var Loader = function(name, url, callbackName) {
     this.notifiers = [];  // array of notifyFn [ notifyFn* ]
 
@@ -198,7 +184,7 @@ subject to an additional IP rights grant found at http://polymer.github.io/PATEN
       delete window[this.callbackName];
     },
 
-    notifyAll: function() {
+    notifyAll: function(notifyCallback) {
       this.notifiers.forEach( function(notifyCallback) {
         notifyCallback(this.error, this.result);
       }.bind(this));

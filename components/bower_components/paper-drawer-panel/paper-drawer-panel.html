@@ -74,31 +74,29 @@ To position the drawer to the right, add `right-drawer` attribute.
       <div main> Main panel... </div>
     </paper-drawer-panel>
 
-Styling `paper-drawer-panel`
+Styling paper-drawer-panel:
 
 To change the main container:
-
-    paper-drawer-panel {
-      --paper-drawer-panel-main-container: {
-        background-color: gray;
-      };
-    }
+  paper-drawer-panel {
+    --paper-drawer-panel-main-container: {
+      background-color: gray;
+    };
+  }
 
 To change the drawer container when it's in the left side:
-
-    paper-drawer-panel {
-      --paper-drawer-panel-left-drawer-container: {
-        background-color: white;
-      };
-    }
+  paper-drawer-panel {
+    --paper-drawer-panel-left-drawer-container: {
+      background-color: white;
+    };
+  }
 
 To change the drawer container when it's in the right side:
 
-    paper-drawer-panel {
-      --paper-drawer-panel-right-drawer-container: {
-        background-color: white;
-      };
-    }
+  paper-drawer-panel {
+    --paper-drawer-panel-right-drawer-container: {
+      background-color: white;
+    };
+  }
 
 @group Paper elements
 @element paper-drawer-panel
@@ -118,7 +116,7 @@ To change the drawer container when it's in the right side:
 
     <iron-selector
         attr-for-selected="id"
-        class$="[[_computeIronSelectorClass(narrow, transition, dragging, rightDrawer, peeking)]]"
+        class$="[[_computeIronSelectorClass(narrow, transition, dragging, rightDrawer)]]"
         activate-event=""
         selected="[[selected]]">
 
@@ -169,24 +167,17 @@ To change the drawer container when it's in the right side:
        */
 
       /**
-       * Fired when the a panel is selected.
+       * Fired when the selected panel changes.
        *
        * Listening for this event is an alternative to observing changes in the `selected` attribute.
-       * This event is fired both when a panel is selected.
+       * This event is fired both when a panel is selected and deselected.
+       * The `isSelected` detail property contains the selection state.
        *
-       * @event iron-select {{item: Object}} detail -
+       * @event paper-select {{isSelected: boolean, item: Object}} detail -
+       *     isSelected: True for selection and false for deselection.
        *     item: The panel that the event refers to.
        */
 
-      /**
-       * Fired when a panel is deselected.
-       *
-       * Listening for this event is an alternative to observing changes in the `selected` attribute.
-       * This event is fired both when a panel is deselected.
-       *
-       * @event iron-deselect {{item: Object}} detail -
-       *     item: The panel that the event refers to.
-       */
       properties: {
 
         /**
@@ -219,9 +210,7 @@ To change the drawer container when it's in the right side:
          */
         dragging: {
           type: Boolean,
-          value: false,
-          readOnly: true,
-          notify: true
+          value: false
         },
 
         /**
@@ -277,7 +266,6 @@ To change the drawer container when it's in the right side:
           reflectToAttribute: true,
           type: Boolean,
           value: false,
-          readOnly: true,
           notify: true
         },
 
@@ -286,9 +274,7 @@ To change the drawer container when it's in the right side:
          */
         peeking: {
           type: Boolean,
-          value: false,
-          readOnly: true,
-          notify: true
+          value: false
         },
 
         /**
@@ -313,7 +299,6 @@ To change the drawer container when it's in the right side:
          */
         selected: {
           reflectToAttribute: true,
-          notify: true,
           type: String,
           value: null
         },
@@ -385,14 +370,13 @@ To change the drawer container when it's in the right side:
         this.transition = true;
       },
 
-      _computeIronSelectorClass: function(narrow, transition, dragging, rightDrawer, peeking) {
+      _computeIronSelectorClass: function(narrow, transition, dragging, rightDrawer) {
         return classNames({
           dragging: dragging,
           'narrow-layout': narrow,
           'right-drawer': rightDrawer,
           'left-drawer': !rightDrawer,
-          transition: transition,
-          peeking: peeking
+          transition: transition
         });
       },
 
@@ -407,6 +391,8 @@ To change the drawer container when it's in the right side:
 
         if (rightDrawer) {
           style += 'right:' + (narrow ? '' : drawerWidth) + ';';
+        } else {
+          style += 'right:;';
         }
 
         return style;
@@ -420,26 +406,26 @@ To change the drawer container when it's in the right side:
         return !narrow || disableEdgeSwipe;
       },
 
-      _onTrack: function(event) {
+      _onTrack: function(e) {
         if (sharedPanel && this !== sharedPanel) {
           return;
         }
-        switch (event.detail.state) {
+        switch (e.detail.state) {
           case 'start':
-            this._trackStart(event);
+            this._trackStart(e);
             break;
           case 'track':
-            this._trackX(event);
+            this._trackX(e);
             break;
           case 'end':
-            this._trackEnd(event);
+            this._trackEnd(e);
             break;
         }
 
       },
 
       _responsiveChange: function(narrow) {
-        this._setNarrow(narrow);
+        this.narrow = narrow;
 
         if (this.narrow) {
           this.selected = this.defaultSelected;
@@ -449,8 +435,8 @@ To change the drawer container when it's in the right side:
         this.fire('paper-responsive-change', {narrow: this.narrow});
       },
 
-      _onQueryMatchesChanged: function(event) {
-        this._responsiveChange(event.detail.value);
+      _onQueryMatchesChanged: function(e) {
+        this._responsiveChange(e.detail.value);
       },
 
       _forceNarrowChanged: function() {
@@ -470,21 +456,19 @@ To change the drawer container when it's in the right side:
         this.width = this.$.drawer.offsetWidth;
         this._moveDrawer(this._translateXForDeltaX(this.rightDrawer ?
             -this.edgeSwipeSensitivity : this.edgeSwipeSensitivity));
-        this._setPeeking(true);
+        this.peeking = true;
       },
 
       _stopEdgePeek: function() {
         if (this.peeking) {
-          this._setPeeking(false);
+          this.peeking = false;
           this._moveDrawer(null);
         }
       },
 
-      _downHandler: function(event) {
-        if (!this.dragging && this._isMainSelected() && this._isEdgeTouch(event) && !sharedPanel) {
+      _downHandler: function(e) {
+        if (!this.dragging && this._isMainSelected() && this._isEdgeTouch(e) && !sharedPanel) {
           this._startEdgePeek();
-          // cancel selection
-          event.preventDefault();
           // grab this panel
           sharedPanel = this;
         }
@@ -496,8 +480,8 @@ To change the drawer container when it's in the right side:
         sharedPanel = null;
       },
 
-      _onTap: function(event) {
-        var targetElement = Polymer.dom(event).localTarget;
+      _onTap: function(e) {
+        var targetElement = Polymer.dom(e).localTarget;
         var isTargetToggleElement = targetElement &&
           this.drawerToggleAttribute &&
           targetElement.hasAttribute(this.drawerToggleAttribute);
@@ -507,8 +491,8 @@ To change the drawer container when it's in the right side:
         }
       },
 
-      _isEdgeTouch: function(event) {
-        var x = event.detail.x;
+      _isEdgeTouch: function(e) {
+        var x = e.detail.x;
 
         return !this.disableEdgeSwipe && this._swipeAllowed() &&
           (this.rightDrawer ?
@@ -516,13 +500,13 @@ To change the drawer container when it's in the right side:
             x <= this.edgeSwipeSensitivity);
       },
 
-      _trackStart: function(event) {
+      _trackStart: function() {
         if (this._swipeAllowed()) {
           sharedPanel = this;
-          this._setDragging(true);
+          this.dragging = true;
 
           if (this._isMainSelected()) {
-            this._setDragging(this.peeking || this._isEdgeTouch(event));
+            this.dragging = this.peeking || this._isEdgeTouch(event);
           }
 
           if (this.dragging) {
@@ -542,27 +526,27 @@ To change the drawer container when it's in the right side:
         }
       },
 
-      _trackX: function(event) {
+      _trackX: function(e) {
         if (this.dragging) {
-          var dx = event.detail.dx;
+          var dx = e.detail.dx;
 
           if (this.peeking) {
             if (Math.abs(dx) <= this.edgeSwipeSensitivity) {
               // Ignore trackx until we move past the edge peek.
               return;
             }
-            this._setPeeking(false);
+            this.peeking = false;
           }
 
           this._moveDrawer(this._translateXForDeltaX(dx));
         }
       },
 
-      _trackEnd: function(event) {
+      _trackEnd: function(e) {
         if (this.dragging) {
-          var xDirection = event.detail.dx > 0;
+          var xDirection = e.detail.dx > 0;
 
-          this._setDragging(false);
+          this.dragging = false;
           this.transition = true;
           sharedPanel = null;
           this._moveDrawer(null);
@@ -585,7 +569,13 @@ To change the drawer container when it's in the right side:
       },
 
       _moveDrawer: function(translateX) {
-        this.transform(this._transformForTranslateX(translateX), this.$.drawer);
+        var s = this.$.drawer.style;
+
+        if (this.hasTransform) {
+          s.transform = this._transformForTranslateX(translateX);
+        } else {
+          s.webkitTransform = this._transformForTranslateX(translateX);
+        }
       }
 
     });

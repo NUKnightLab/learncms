@@ -16,7 +16,7 @@ subject to an additional IP rights grant found at http://polymer.github.io/PATEN
 
 <script>
 
-/**
+/*
 Use `Polymer.IronOverlayBehavior` to implement an element that can be hidden or shown, and displays
 on top of other content. It includes an optional backdrop, and can be used to implement a variety
 of UI controls including dialogs and drop downs. Multiple overlays may be displayed at once.
@@ -61,8 +61,7 @@ context. You should place this element as a child of `<body>` whenever possible.
       opened: {
         observer: '_openedChanged',
         type: Boolean,
-        value: false,
-        notify: true
+        value: false
       },
 
       /**
@@ -239,7 +238,7 @@ context. You should place this element as a child of `<body>` whenever possible.
         // overlay becomes visible here
         this.style.display = '';
         // force layout to ensure transitions will go
-        /** @suppress {suspiciousCode} */ this.offsetWidth;
+        this.offsetWidth;
         if (this.opened) {
           this._renderOpened();
         } else {
@@ -359,11 +358,11 @@ context. You should place this element as a child of `<body>` whenever possible.
       this.style.display = '';
     },
 
-    _finishPositioning: function() {
+    _finishPositioning: function(target) {
       this.style.display = 'none';
       this.style.transform = this.style.webkitTransform = '';
       // force layout to avoid application of transform
-      /** @suppress {suspiciousCode} */ this.offsetWidth;
+      this.offsetWidth;
       this.style.transition = this.style.webkitTransition = '';
     },
 
@@ -414,20 +413,20 @@ context. You should place this element as a child of `<body>` whenever possible.
       }
     }
 
-/**
- * Fired after the `iron-overlay` opens.
- * @event iron-overlay-opened
- */
-
-/**
- * Fired after the `iron-overlay` closes.
- * @event iron-overlay-closed
- * @param {{canceled: (boolean|undefined)}} set to the `closingReason` attribute
- */
   };
 
   /** @polymerBehavior */
   Polymer.IronOverlayBehavior = [Polymer.IronFitBehavior, Polymer.IronResizableBehavior, Polymer.IronOverlayBehaviorImpl];
 
+/*
+ * Fired after the `iron-overlay` opens.
+ * @event iron-overlay-opened
+ */
+
+/*
+ * Fired after the `iron-overlay` closes.
+ * @event iron-overlay-closed {{canceled: boolean}} detail -
+ *     canceled: True if the overlay was canceled.
+ */
 
 </script>

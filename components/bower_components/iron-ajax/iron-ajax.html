@@ -32,11 +32,9 @@ You can trigger a request explicitly by calling `generateRequest` on the
 element.
 
 @demo demo/index.html
-@hero hero.svg
 -->
 
 <script>
-  'use strict';
 
   Polymer({
 
@@ -100,7 +98,8 @@ element.
        *         auto
        *         url="http://somesite.com"
        *         headers='{"X-Requested-With": "XMLHttpRequest"}'
-       *         handle-as="json"></iron-ajax>
+       *         handle-as="json"
+       *         last-response-changed="{{handleResponse}}"></iron-ajax>
        *
        * Note: setting a `Content-Type` header here will override the value
        * specified by the `contentType` property of this element.
@@ -119,31 +118,21 @@ element.
        */
       contentType: {
         type: String,
-        value: null
+        value: 'application/x-www-form-urlencoded'
       },
 
       /**
-       * Body content to send with the request, typically used with "POST"
-       * requests.
+       * Optional raw body content to send when method === "POST".
        *
-       * If body is a string it will be sent unmodified.
+       * Example:
        *
-       * If Content-Type is set to a value listed below, then
-       * the body will be encoded accordingly.
-       *
-       *    * `content-type="application/json"`
-       *      * body is encoded like `{"foo":"bar baz","x":1}`
-       *    * `content-type="application/x-www-form-urlencoded"`
-       *      * body is encoded like `foo=bar+baz&x=1`
-       *
-       * Otherwise the body will be passed to the browser unmodified, and it
-       * will handle any encoding (e.g. for FormData, Blob, ArrayBuffer).
-       *
-       * @type (ArrayBuffer|ArrayBufferView|Blob|Document|FormData|null|string|undefined|Object)
+       *     <iron-ajax method="POST" auto url="http://somesite.com"
+       *         body='{"foo":1, "bar":2}'>
+       *     </iron-ajax>
        */
       body: {
-        type: Object,
-        value: null
+        type: String,
+        value: ''
       },
 
       /**
@@ -157,7 +146,7 @@ element.
 
       /**
        * Specifies what data to store in the `response` property, and
-       * to deliver as `event.detail.response` in `response` events.
+       * to deliver as `event.response` in `response` events.
        *
        * One of:
        *
@@ -253,7 +242,7 @@ element.
         notify: true,
         readOnly: true,
         value: function() {
-          return [];
+          this._setActiveRequests([]);
         }
       },
 
@@ -328,14 +317,9 @@ element.
      * @return {Object}
      */
     get requestHeaders() {
-      var headers = {};
-      var contentType = this.contentType;
-      if (contentType == null && (typeof this.body === 'string')) {
-        contentType = 'application/x-www-form-urlencoded';
-      }
-      if (contentType) {
-        headers['Content-Type'] = contentType;
-      }
+      var headers = {
+        'Content-Type': this.contentType
+      };
       var header;
 
       if (this.headers instanceof Object) {
@@ -351,14 +335,7 @@ element.
      * Request options suitable for generating an `iron-request` instance based
      * on the current state of the `iron-ajax` instance's properties.
      *
-     * @return {{
-     *   url: string,
-     *   method: (string|undefined),
-     *   async: (boolean|undefined),
-     *   body: (ArrayBuffer|ArrayBufferView|Blob|Document|FormData|null|string|undefined|Object),
-     *   headers: (Object|undefined),
-     *   handleAs: (string|undefined),
-     *   withCredentials: (boolean|undefined)}}
+     * @return {Object}
      */
     toRequestOptions: function() {
       return {
@@ -375,10 +352,10 @@ element.
     /**
      * Performs an AJAX request to the specified URL.
      *
-     * @return {!IronRequestElement}
+     * @return {iron-request}
      */
     generateRequest: function() {
-      var request = /** @type {!IronRequestElement} */ (document.createElement('iron-request'));
+      var request = document.createElement('iron-request');
       var requestOptions = this.toRequestOptions();
 
       this.activeRequests.push(request);

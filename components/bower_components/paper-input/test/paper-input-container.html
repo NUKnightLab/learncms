@@ -21,8 +21,6 @@ subject to an additional IP rights grant found at http://polymer.github.io/PATEN
   <script src="../../web-component-tester/browser.js"></script>
   <script src="../../test-fixture/test-fixture-mocha.js"></script>
 
-  <script src="../../iron-test-helpers/mock-interactions.js"></script>
-
   <link rel="import" href="../../test-fixture/test-fixture.html">
   <link rel="import" href="../../iron-input/iron-input.html">
   <link rel="import" href="../paper-input-container.html">
@@ -143,8 +141,11 @@ subject to an additional IP rights grant found at http://polymer.github.io/PATEN
         var label = Polymer.dom(container).querySelector('#l');
         var input = Polymer.dom(container).querySelector('#i');
         var inputContent = Polymer.dom(container.root).querySelector('.input-content');
-        MockInteractions.focus(input);
+        input.focus();
+        // 'focus' event isn't firing on windows ff for some reason when you call focus()
+        container._onFocus();
         requestAnimationFrame(function() {
+          assert.equal(document.activeElement, input, 'input is focused');
           assert.isTrue(container.focused, 'focused is true');
           assert.isTrue(inputContent.classList.contains('label-is-highlighted'), 'label is highlighted when input has focus');
           done();
@@ -156,7 +157,8 @@ subject to an additional IP rights grant found at http://polymer.github.io/PATEN
         var label = Polymer.dom(container).querySelector('#l');
         var input = Polymer.dom(container).querySelector('#i');
         var inputContent = Polymer.dom(container.root).querySelector('.input-content');
-        MockInteractions.focus(input);
+        input.focus();
+        container._onFocus();
         requestAnimationFrame(function() {
           assert.isFalse(inputContent.classList.contains('label-is-highlighted'), 'label is not highlighted when input has focus and has null value');
           done();
@@ -168,8 +170,10 @@ subject to an additional IP rights grant found at http://polymer.github.io/PATEN
         var input = Polymer.dom(container).querySelector('#i');
         var line = Polymer.dom(container.root).querySelector('.underline');
         assert.isFalse(line.classList.contains('is-highlighted'), 'line is not highlighted when input is not focused');
-        MockInteractions.focus(input);
+        input.focus();
+        container._onFocus();
         requestAnimationFrame(function() {
+          assert.equal(document.activeElement, input, 'input is focused');
           assert.isTrue(line.classList.contains('is-highlighted'), 'line is highlighted when input is focused');
           done();
         });

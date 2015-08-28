@@ -9,8 +9,7 @@
   "ignore": [
     "*",
     "!/browser.js",
-    "!/browser.js.map",
-    "!/runtime-helpers/*"
+    "!/browser.js.map"
   ],
   "keywords": [
     "browser",
@@ -30,8 +29,6 @@
     "chai": "^2.3.0",
     "lodash": "^3.7.0",
     "sinon-chai": "^2.7.0",
-    "sinonjs": "^1.14.1",
-    "accessibility-developer-tools": "GoogleChrome/accessibility-developer-tools#^2.7.0"
-  },
-  "version": "3.3.15"
+    "sinonjs": "^1.14.1"
+  }
 }

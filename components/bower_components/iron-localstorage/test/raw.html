@@ -41,7 +41,6 @@ subject to an additional IP rights grant found at http://polymer.github.io/PATEN
         window.localStorage.setItem('iron-localstorage-test', 'hello world');
         document.getElementById('fixture').create();
         storage = document.getElementById('localstorage');
-        storage.flushDebouncer('reload');
       });
 
       teardown(function() {
@@ -55,7 +54,6 @@ subject to an additional IP rights grant found at http://polymer.github.io/PATEN
       test('save', function() {
         var m = 'goodbye';
         storage.value = m;
-        storage.flushDebouncer('save');
         var v = window.localStorage.getItem(storage.name);
         assert.equal(v, m);
       });

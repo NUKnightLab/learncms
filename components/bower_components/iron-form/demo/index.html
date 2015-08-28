@@ -23,7 +23,6 @@ subject to an additional IP rights grant found at http://polymer.github.io/PATEN
   <link rel="import" href="../../paper-styles/paper-styles.html">
   <link rel="import" href="../../paper-styles/demo-pages.html">
   <link rel="import" href="../iron-form.html">
-  <link rel="import" href="simple-element.html">
 </head>
 <style>
   .wide {
@@ -41,23 +40,18 @@ subject to an additional IP rights grant found at http://polymer.github.io/PATEN
           <br>
 
           <input type="checkbox" name="food" value="donuts" checked> I like donuts<br>
-          <input type="checkbox" name="food" value="pizza" required> I like pizza<br>
+          <input type="checkbox" name="food" value="pizza"> I like pizza<br>
           <br>
 
-          <p>
-            Sample custom element, not required: <br>
-            <simple-element name="custom-one"></simple-element>
-          </p>
-
-          <p>
-            Sample custom element, required: (look, styling!)<br>
-            <simple-element required name="custom-two"></simple-element><br>
-          </p>
+          <input type="radio" name="color" value="red" checked>Red<br>
+          <input type="radio" name="color" value="blue" checked>Blue<br>
+          <input type="radio" name="color" value="green">Green<br>
 
           <br><br>
 
           <paper-button raised
               onclick="clickHandler(event)">Submit</paper-button>
+          <button type="submit">Native Submit</button>
         </form>
       </div>
     </div>
@@ -67,12 +61,8 @@ subject to an additional IP rights grant found at http://polymer.github.io/PATEN
       <div class="horizontal-section">
         <form is="iron-form" id="formPost" method="post" action="/">
           <paper-input name="name" label="Name" required></paper-input>
-          <br>
-          <p>Duplicate name <input name="name" required></p>
-
-          <input type="radio" name="color" value="red" checked>Red<br>
-          <input type="radio" name="color" value="blue" checked>Blue<br>
-          <input type="radio" name="color" value="green">Green<br>
+          <paper-input name="name" label="Duplicate name" required></paper-input>
+          <paper-input name="animal" label="Favourite animal" required></paper-input>
           <br>
 
           <label>Cars</label>
@@ -85,7 +75,7 @@ subject to an additional IP rights grant found at http://polymer.github.io/PATEN
 
           <br><br>
           <label>Browsers</label>
-          <input list="browsers" name="browsers" required>
+          <input list="browsers" name="browsers">
             <datalist id="browsers">
               <option value="Internet Explorer">
               <option value="Firefox">
@@ -93,10 +83,6 @@ subject to an additional IP rights grant found at http://polymer.github.io/PATEN
               <option value="Opera">
               <option value="Safari">
             </datalist>
-          <br><br>
-
-          <label>Pick a number</label>
-          <input type="range" name="number" min="1" max="100">
 
           <br><br><br>
           <paper-button raised

@@ -12,7 +12,6 @@ subject to an additional IP rights grant found at http://polymer.github.io/PATEN
 <link rel="import" href="../iron-flex-layout/classes/iron-flex-layout.html">
 <link rel="import" href="../iron-flex-layout/iron-flex-layout.html">
 <link rel="import" href="../iron-behaviors/iron-control-state.html">
-<link rel="import" href="../iron-behaviors/iron-button-state.html">
 <link rel="import" href="../paper-ripple/paper-ripple.html">
 
 <!--
@@ -121,8 +120,7 @@ Custom property | Description | Default
     is: 'paper-tab',
 
     behaviors: [
-      Polymer.IronControlState,
-      Polymer.IronButtonState
+      Polymer.IronControlState
     ],
 
     properties: {
@@ -144,11 +142,7 @@ Custom property | Description | Default
     },
 
     listeners: {
-      down: '_updateNoink'
-    },
-
-    attached: function() {
-      this._updateNoink();
+      down: '_onDown'
     },
 
     get _parentNoink () {
@@ -156,7 +150,7 @@ Custom property | Description | Default
       return !!parent && !!parent.noink;
     },
 
-    _updateNoink: function() {
+    _onDown: function(e) {
       this.noink = !!this.noink || !!this._parentNoink;
     }
   });

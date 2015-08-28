@@ -101,7 +101,7 @@ Polymer({
   hide: function() {
     this.opened = false;
     // run fade-out-animation
-    this.playAnimation('exit');
+    this.playAnimation('fade-out-animation');
   },
   _onNeonAnimationFinish: function() {
     if (!this.opened) {

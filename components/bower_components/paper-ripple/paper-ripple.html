@@ -392,7 +392,6 @@ Apply `circle` class to make the rippling effect within a circle.
         this.wave.style.transform = 'scale3d(' + scale + ',' + scale + ',1)';
       },
 
-      /** @param {Event=} event */
       downAction: function(event) {
         var xCenter = this.containerMetrics.width / 2;
         var yCenter = this.containerMetrics.height / 2;
@@ -437,7 +436,6 @@ Apply `circle` class to make the rippling effect within a circle.
         this.waveContainer.style.height = this.containerMetrics.size + 'px';
       },
 
-      /** @param {Event=} event */
       upAction: function(event) {
         if (!this.isMouseDown) {
           return;
@@ -561,9 +559,11 @@ Apply `circle` class to make the rippling effect within a circle.
         var ownerRoot = Polymer.dom(this).getOwnerRoot();
         var target;
 
-        if (this.parentNode.nodeType == 11) { // DOCUMENT_FRAGMENT_NODE
+        if (ownerRoot) {
           target = ownerRoot.host;
-        } else {
+        }
+
+        if (!target) {
           target = this.parentNode;
         }
 
@@ -577,8 +577,8 @@ Apply `circle` class to make the rippling effect within a circle.
       },
 
       attached: function() {
-        this.listen(this.target, 'up', 'upAction');
-        this.listen(this.target, 'down', 'downAction');
+        this._listen(this.target, 'up', this.upAction.bind(this));
+        this._listen(this.target, 'down', this.downAction.bind(this));
 
         if (!this.target.hasAttribute('noink')) {
           this.keyEventTarget = this.target;
@@ -604,7 +604,6 @@ Apply `circle` class to make the rippling effect within a circle.
         }, 1);
       },
 
-      /** @param {Event=} event */
       downAction: function(event) {
         if (this.holdDown && this.ripples.length > 0) {
           return;
@@ -619,7 +618,6 @@ Apply `circle` class to make the rippling effect within a circle.
         }
       },
 
-      /** @param {Event=} event */
       upAction: function(event) {
         if (this.holdDown) {
           return;

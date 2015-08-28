@@ -1,6 +1,6 @@
 {
   "name": "iron-ajax",
-  "version": "1.0.4",
+  "version": "1.0.1",
   "description": "Makes it easy to make ajax calls and parse the response",
   "private": true,
   "authors": [
@@ -8,8 +8,8 @@
   ],
   "keywords": [
     "web-components",
-    "polymer",
-    "ajax"
+    "web-component",
+    "polymer"
   ],
   "main": [
     "iron-ajax.html",
