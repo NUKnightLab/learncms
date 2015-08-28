@@ -11669,7 +11669,7 @@ Polymer({
 				for (var i = 0; i < pageItem.attributes.length; i++) {
 					clone.attributes.setNamedItem(pageItem.attributes[i].cloneNode())
 				};
-				clone.title = clone.attributes.title.value; // safari needs help here
+				clone.header = clone.attributes.header.value; // safari needs help here
 				var content = clone.$$('content');
 				content.innerHTML = pageItem.innerHTML;
 				clone.distributeContent();
@@ -11688,7 +11688,7 @@ Polymer({
 		addPage: function(pageItem, caller, url) {
 			if (pageItem.tagName == 'PAGE-ITEM') {
 				if (this.page_stack.length > 0) {
-					history.pushState({ stack_end_index: this.page_stack.length }, pageItem.title, url);
+					history.pushState({ stack_end_index: this.page_stack.length }, pageItem.header, url);
 
 				}
 				this.page_stack.push({el:pageItem, caller:caller});
