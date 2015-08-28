@@ -1,12 +1,12 @@
 <!--
 
-a `lesson-banner` is the top part of the page. The element is intended to be empty, and all necessary variable data is specified in attributes. 
+a `lesson-banner` is the top part of the page. The element is intended to be empty, and all necessary variable data is specified in attributes.
 
 For now, trying to implement it as an extension of <paper-header-panel> https://elements.polymer-project.org/elements/paper-header-panel but that's not deeply founded.
 
-TK: 
-	* a hamburger menu for the top left. 
-	* less amateur positioning of the h1#title
+TK:
+	* a hamburger menu for the top left.
+	* less amateur positioning of the h1#header
 	* the teal filter (#80CBC4)
 
 Example:
@@ -64,7 +64,7 @@ Example:
 			opacity:0.5;
 		};
 
-		::content #title {
+		::content #header {
 			font-family: Roboto, sans-serif;
 			color: #273238;
 			font-size: 64px;
@@ -78,14 +78,10 @@ Example:
 		}
 	</style>
 	<template>
-<!-- 		<div id="container" class="">
-			<img id='image' src="{{ image }}">
-			<h1 id="title">{{title}}</h1>
-		</div> -->
 		<div id="lesson-banner-container">
 			<div id="lesson-banner-image-overlay"></div>
 			<div id="lesson-banner-image"></div>
-			<h1 id="title">{{title}}</h1>
+			<h1 id="header">{{header}}</h1>
 		</div>
 	</template>
 </dom-module>
@@ -97,16 +93,16 @@ Example:
 						type: String,
 						value: ""
 				},
-				title: {
+				header: {
 						type: String,
-						value: "Lesson Title"
+						value: "Lesson header"
 				}
 		},
 		ready: function() {
 			// DOM OBJECTS
 			this.lesson_banner_image = this.$['lesson-banner-image'];
 			this.content_container = this.$['lesson-banner-container'];
-			
+
 		},
 		attached: function() {
 			this.lesson_banner_image.style.backgroundImage = "url(" + this.image + ")";
