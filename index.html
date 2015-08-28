@@ -1,0 +1,1456 @@
+<!doctype html>
+<html class="no-js" lang="en">
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Learn.KnightLab.com Technical Guide -- Northwestern University Knight Lab</title>
+    <link rel="icon" type="image/png" href="//cdn.knightlab.com/libs/purpleline/latest/img/favicon.ico">
+    <link href="//cloud.webtype.com/css/d4767ecb-457a-4677-8761-72f890add836.css" rel="stylesheet" type="text/css">
+    <link rel="stylesheet" href="//cdn.knightlab.com/libs/purpleline/latest/css/purpleline.min.css" />
+    <link rel="stylesheet" href="//cdn.knightlab.com/libs/purpleline/latest/css/navigation.css" />
+    <link rel="stylesheet" href="//cdn.knightlab.com/libs/purpleline/latest/css/font-awesome/font-awesome.css" />
+    <script src="//cdnjs.cloudflare.com/ajax/libs/modernizr/2.8.3/modernizr.min.js"></script>
+  </head>
+  <body>
+  <div data-magellan-expedition="fixed">
+    <nav class="top-bar" data-topbar role="navigation">
+      <div class="row">
+        <ul class="title-area">
+          <li class="name">
+            <h1><a href="#">Learn.KnightLab.com Technical Guide</a></h1>
+          </li>
+          <li class="toggle-topbar menu-icon"><a href="#"><span>Menu</span></a></li>
+        </ul>
+
+        <section class="top-bar-section">
+          <!-- Right Nav Section -->
+          <ul class="right">
+            <li class="logo"><a href="//knightlab.northwestern.edu/" alt="Northwestern University Knight Lab"><img width="130" src="http://cdn.knightlab.com/libs/purpleline/latest/img/logos/logo_horizontal_NOtagline_383x91_transparent_NOpadding.png"></a></li>
+          </ul>
+
+          <!-- Left Nav Section -->
+          <ul class="left">
+            <li><a href="/index.html">Components</a></li>
+            <!-- Not yet developed -->
+            <!--<li><a href="/templates.html">Project templates</a></li>
+            <li><a href="/usage.html">Style guide</a></li>-->
+            <li class="active"><a href="http://foundation.zurb.com/docs/">Foundation docs</a></li>
+          </ul>
+        </section>
+      </div>
+    </nav>
+    <dl id="change-view" class="sub-nav">
+      <div class="row">
+        <dt>Preview viewport size:</dt>
+        <dd class="small-view">Small</dd>
+        <dd class="medium-view">Medium</dd>
+        <dd class="large-view">Large</dd>
+        <dd class="auto-view">Auto</dd>
+      </div>
+    </dl>
+    </div>
+
+    <div class="row">
+      <div class="medium-3 columns">
+          <ul class="side-nav" role="navigation">
+            <li>TYPOGRAPHY</li>
+            <li role="menuitem"><a href="#headlines">Headlines</a></li>
+            <li role="menuitem"><a href="#paragraph-styles">Paragraphs</a></li>
+            <li role="menuitem"><a href="#lists">Lists</a></li>
+            <li role="menuitem"><a href="#icons">Icons by FontAwesome <i class="fa fa-link"></i></a></li>
+            <li role="menuitem"><a href="#horizontal-rule">Horizontal Rule</a></li>
+            <li role="menuitem"><a href="#blockquotes">Block Quote</a></li>
+            <li role="menuitem"><a href="#pullquotes">Pull Quote</a></li>
+            <li role="menuitem"><a href="#ed-note">Editor's Note</a></li>
+
+            <li class="divider"></li>
+
+            <li>NAVIGATION</li>
+            <li role="menuitem"><a href="#top-bar">Static Top Bar</i></a></li>
+            <li role="menuitem"><a href="#sticky-top-bar">Sticky Top Bar <i class="fa fa-link"></i></a></li>
+            <li role="menuitem"><a href="#subnav">Subnav</a></li>
+            <li role="menuitem"><a href="#side-nav">Side Nav</a></li>
+            <li role="menuitem"><a href="#offcanvas">Off-Canvas Nav <i class="fa fa-link"></i></a></li>
+            <li role="menuitem"><a href="#tabs">Tabs <i class="fa fa-link"></i></a></li>
+            <li role="menuitem"><a href="#pagination">Pagination <i class="fa fa-link"></i></a></li>
+            <li role="menuitem"><a href="#icon-bar">Icon Bar</a></li>
+            <li role="menuitem"><a href="#joyride">Joyride <i class="fa fa-link"></i></a></li>
+
+            <li class="divider"></li>
+
+            <li>DESIGN PATTERNS</li>
+            <li role="menuitem"><a href="#story-headings">Story Headings</a></li>
+            <li role="menuitem"><a href="#thumbnail-grid">Thumbnail grid</a></li>
+            <li role="menuitem"><a href="#footer-example">Footer</a></li>
+
+            <li class="divider"></li>
+
+            <li>MEDIA & MODULES</li>
+            <li role="menuitem"><a href="#accordion">Accordion</a></li>
+            <li role="menuitem"><a href="#flex-video">Flex Video <i class="fa fa-link"></i></a></li>
+            <li role="menuitem"><a href="#image-slider">Image Slider <i class="fa fa-link"></i></a></li>
+            <li role="menuitem"><a href="#lightbox">Lightbox <i class="fa fa-link"></i></a></li>
+
+            <li class="divider"></li>
+
+            <li>UTILITY</li>
+            <li role="menuitem"><a href="#alerts">Alerts <i class="fa fa-link"></i></a></li>
+            <li role="menuitem"><a href="#alignment">Alignment</a></li>
+            <li role="menuitem"><a href="#buttons">Buttons</a></li>
+            <li role="menuitem"><a href="#forms">Forms</a></li>
+            <li role="menuitem"><a href="#grid-system">Grid system</a></li>
+
+            <li>BRAND</li>
+            <li role="menuitem"><a href="#colors">Colors</a></li>
+            <li role="menuitem"><a href="#favicon">Favicon <i class="fa fa-link"></i></a></li>
+            <li role="menuitem"><a href="#horizontal-logos">Horizontal logos <i class="fa fa-link"></i></a></li>
+            <li role="menuitem"><a href="#vertical-logos">Vertical logos <i class="fa fa-link"></i></a></li>
+            <li role="menuitem"><a href="#diamond">Diamond logo <i class="fa fa-link"></i></a></li>
+            <li role="menuitem"><a href="#logo-mark">Product Logo Mark <i class="fa fa-link"></i></a></li>
+          </ul>
+      </div>
+      <div class="medium-9 columns">
+        <div class="row">
+          <div class="medium-12 columns">
+            <p>PurpleLine is a CSS and JavaScript framework for Knight Lab web pages, apps and projects. It is based on <a href="http://foundation.zurb.com/docs/">Foundation 5 <i class="fa fa-external-link"></i></a>. This page itself is built with PurpleLine and Foundation.</p>
+            <p>To use PurpleLine in your project, simply include the below links in your project. See the rest of this guide for proper usage of the included components. (To develop on PurpleLine, <a href="//github.com/NUKnightLab/purpleline/blob/master/README.md">see the README on GitHub. <i class="fa fa-external-link"></i></a>)</p>
+            <h4>What's included</h4>
+            <p>When you include PurpleLine on your page, you will have access to most of the things listed in the menu to your left. Those features not part of the core library are marked with an icon.</p>
+            <h4>What's not included</h4>
+            <p>In an effort to keep PurpleLine as lightweight as possible, some less-used JavaScript and CSS libraries are factored out of the core PurpleLine library. These are denoted with a <i class="fa fa-link"></i> icon. The JavaScript components are also available in the "Complete JavaScript" include.</p>
+            <h4>Versions</h4>
+            <p>PurpleLine is available in the following versions. The most recent changes will be in both the highest version number and in <code>latest</code>. You should almost always use the most recent version number, though all of the URLs used throughout this guide reference the <code>latest</code> branch.</p>
+            <ul>
+              <li><a href="http://cdn.knightlab.com/libs/purpleline/latest/css/purpleline.css">latest</a></li>
+              <li><a href="http://cdn.knightlab.com/libs/purpleline/1.0.1/css/purpleline.css">1.0.1</a></li>
+              <li><a href="http://cdn.knightlab.com/libs/purpleline/1.0.0/css/purpleline.css">1.0.0</a></li>
+            </ul>
+            <h6>CSS</h6>
+              <div class="row collapse code-snippet">
+              <div class="small-3 medium-2 columns"><span class="prefix">Full version</span></div>
+              <div class="small-9 medium-10 columns">
+                <input type="text" value="//cdn.knightlab.com/libs/purpleline/latest/css/purpleline.css"></input>
+              </div>
+            </div>
+            <div class="row collapse code-snippet">
+              <div class="small-3 medium-2 columns"><span class="prefix">Minified version</span></div>
+              <div class="small-9 medium-10 columns">
+                <input type="text" value="//cdn.knightlab.com/libs/purpleline/latest/css/purpleline.min.css"></input>
+              </div>
+            </div>
+
+            <h6>Core JavaScript</h6>
+            <div class="row collapse code-snippet">
+              <div class="small-3 medium-2 columns"><span class="prefix">Full version</span></div>
+              <div class="small-9 medium-10 columns">
+                <input type="text" value="//cdn.knightlab.com/libs/purpleline/latest/js/purpleline.js"></input>
+              </div>
+            </div>
+            <div class="row collapse code-snippet">
+              <div class="small-3 medium-2 columns"><span class="prefix">Minified version</span></div>
+              <div class="small-9 medium-10 columns">
+                <input type="text" value="//cdn.knightlab.com/libs/purpleline/latest/js/purpleline.min.js"></input>
+              </div>
+            </div>
+
+            <h6>Complete JavaScript (not recommended)</h6>
+            <div class="row collapse code-snippet">
+              <div class="small-3 medium-2 columns"><span class="prefix">Full version</span></div>
+              <div class="small-9 medium-10 columns">
+                <input type="text" value="//cdn.knightlab.com/libs/purpleline/latest/js/purpleline-plus.js"></input>
+              </div>
+            </div>
+            <div class="row collapse code-snippet">
+              <div class="small-3 medium-2 columns"><span class="prefix">Minified version</span></div>
+              <div class="small-9 medium-10 columns">
+                <input type="text" value="//cdn.knightlab.com/libs/purpleline/latest/js/purpleline-plus.min.js"></input>
+              </div>
+            </div>
+
+
+          </div>
+        </div>
+        <div class="row" id="style-guide">
+          <div class="small-12 columns">
+            <!-- TYPOGRAPHY -->
+            <section class="clearfix"><hr />
+              <h2>Typography</h2>
+              <h4 id="headlines">Headlines</h4>
+              <p>See the <a href="http://soundcite.knightlab.com">Soundcite project page <i class="fa fa-external-link"></i></a> for an example of how to use each heading.</p>
+              <p>Use <code>h2.intro</code> in conjunction with the <a href="#logo-mark">logo mark</a> for project taglines.</p>
+              <div class="panel">
+                <h6 class="label">Headline styles</h6>
+                <h1>h1. Used on the homepage, no more than two lines long.</h1>
+                <h2>h2. Used for section breaks within articles. </h2>
+                <h2 class="intro">h2.intro Catchy intro that's less than ten words.</h2>
+                <h3>h3. Used for calls to action.</h3>
+                <h4>h4. Used for smaller subheads.</h4>
+                <h5>h5. Heading 5</h5>
+                <h6>h6. Heading 6</h6>
+  <h6 class="label">HTML</h6>
+  <pre><code class="html">
+  &lt;h1&gt;h1. Used on the homepage, no more than two lines long.&lt;/h1&gt;
+  &lt;h2&gt;h2. Used for section breaks within articles. &lt;/h2&gt;
+  &lt;h2 class="intro"&gt;h2.intro Catchy intro that's less than ten words. &lt;/h2&gt;
+  &lt;h3&gt;h3. Used for calls to action.&lt;/h3&gt;
+  &lt;h4&gt;h4. Used for smaller subheads.&lt;/h4&gt;
+  &lt;h5&gt;h5. Heading 5&lt;/h5&gt;
+  &lt;h6&gt;h6. Heading 6&lt;/h6&gt;
+  </code></pre>
+              </div>
+            </section>
+            <section class="clearfix"><hr />
+              <h4 id="paragraph-styles">Paragraph styles</h4>
+              <p>Foundation calculates font sizes, margins, padding and other attributes in <code>rem</code>s, or <em>root ems</em>. By default, Foundation defines <code>1 rem</code> as 16px. All attributes calculated as <code>rem</code>s are derived from this 16px base size. Media queries change the base body text size and, by relation, all other sizes of everything sized <code>rems</code>. (This includes not only font sizes, but padding and margin as well.)</p>
+              <div class="panel">
+                <h6 class="label">Paragraph styles</h6>
+                <p class="lead">Lead paragraphs are used as introductions to projects or other large pages.</p>
+                 <p>By default, body text (like this) is 16px. This 16px base size is what all font sizes are calculated from.</p>
+  <h6 class="label">HTML</h6>
+<pre><code class="html">
+  &lt;p class="lead"&gt;Lead paragraphs are used as introductions to projects or other large pages.&lt;/p&gt;
+  &lt;p&gt;By default body text, like this, is 16px. This 16px base size is what all font sizes are calculated from.&lt;/p&gt;
+
+</code></pre>
+
+              </div>
+            </section>
+            <section class="clearfix">
+            <hr />
+              <h4 id="lists">Lists</h4>
+              <div class="medium-6 columns panel">
+                <h6 class="label">Unordered lists</h6>
+                <ul>
+                  <li>This is an unordered list.</li>
+                  <li>Use it for bullet points in a story.</li>
+                  <li>This is still an unordered list.</li>
+                </ul>
+<h6 class="label">HTML</h6>
+<pre><code class="html">
+  &lt;ul&gt;
+    &lt;li&gt;This is an unordered list.&lt;/li&gt;
+    &lt;li&gt;Use it for bullet points in a story.&lt;/li&gt;
+    &lt;li&gt;This is still an unordered list.&lt;/li&gt;
+  &lt;/ul&gt;
+
+</code></pre>
+              </div>
+              <div class="medium-6 columns panel">
+                <h6 class="label">Ordered lists</h6>
+                <ol>
+                  <li>This is an ordered list.</li>
+                  <li>Use it for steps in a process.</li>
+                  <li>Please don't make listicles.</li>
+                </ol>
+<h6 class="label">HTML</h6>
+<pre><code class="html">
+  &lt;ul&gt;
+    &lt;li&gt;This is an ordered list.&lt;/li&gt;
+    &lt;li&gt;Use it for steps in a process.&lt;/li&gt;
+    &lt;li&gt;Please don't make listicles.&lt;/li&gt;
+  &lt;/ul&gt;
+
+</code></pre>
+              </div>
+            </section>
+            <section class="clearfix">
+              <hr />
+              <h4 id="icons">Icons by FontAwesome</h4>
+              <label for="code-snippet"><i class="fa fa-link"></i> To use this module, include the following stylesheet in your document's <code>head</code>.</label>
+              <div class="row collapse code-snippet">
+                <div class="small-3 medium-1 columns"><span class="prefix">CSS</span></div>
+                <div class="small-9 medium-11 columns">
+                  <input type="text" value="//cdn.knightlab.com/libs/purpleline/latest/css/font-awesome/font-awesome.css"></input>
+                </div>
+              </div>
+              <p>Details on available icons and how to use them can be found on the <a href="//fortawesome.github.io/Font-Awesome/examples/">FontAwesome website <i class="fa fa-external-link"></i></a>. Some of the Knight Lab's commonly used icons are below.</p>
+              <div class="medium-6 columns panel">
+                <h6 class="label">Icon examples</h6>
+                <i class="fa fa-chevron-right"></i>
+                <i class="fa fa-chevron-left"></i>
+                <i class="fa fa-plus"></i>
+                <i class="fa fa-minus"></i>
+<h6 class="label">HTML</h6>
+<pre><code class="html">
+  &lt;i class="fa fa-chevron-right"&gt;&lt;/i&gt;
+  &lt;i class="fa fa-chevron-left"&gt;&lt;/i&gt;
+  &lt;i class="fa fa-plus"&gt;&lt;/i&gt;
+  &lt;i class="fa fa-minus"&gt;&lt;/i&gt;
+
+</code></pre>
+              </div>
+              <div class="medium-6 columns panel">
+                <h6 class="label">Social media icon grouping</h6>
+                <ul class="contact-icons">
+                  <li><a title="follow @knightlab on Twitter" href="//www.twitter.com/knightlab"><i class="fa fa-twitter"></i></a></li>
+                  <li><a title="Knight Lab on Facebook" href="//www.facebook.com/knightlab"><i class="fa fa-facebook"></i></a></li>
+                  <li><a title="email Knight Lab" href="mailto:Knightlab@northwestern.edu"><i class="fa fa-envelope-o"></i></a></li>
+                  <li><a title="Knight Lab on GitHub" href="//github.com/NUKnightLab/"><i class="fa fa-github-alt"></i></a></li>
+                </ul>
+
+<h6 class="label">HTML</h6>
+<pre><code class="html">
+  &lt;ul class="contact-icons"&gt;
+    &lt;li&gt;&lt;a title="follow @knightlab on Twitter" href="//www.twitter.com/knightlab"&gt;&lt;i class="fa fa-twitter"&gt;&lt;/i&gt;&lt;/a&gt;&lt;/li&gt;
+    &lt;li&gt;&lt;a title="Knight Lab on Facebook" href="//www.facebook.com/knightlab"&gt;&lt;i class="fa fa-facebook"&gt;&lt;/i&gt;&lt;/a&gt;&lt;/li&gt;
+    &lt;li&gt;&lt;a title="email Knight Lab" href="mailto:Knightlab@northwestern.edu"&gt;&lt;i class="fa fa-envelope-o"&gt;&lt;/i&gt;&lt;/a&gt;&lt;/li&gt;
+    &lt;li&gt;&lt;a title="Knight Lab on GitHub" href="//github.com/NUKnightLab/"&gt;&lt;i class="fa fa-github-alt"&gt;&lt;/i&gt;&lt;/a&gt;&lt;/li&gt;
+  &lt;/ul&gt;
+
+</code></pre>
+              </div>
+            </section>
+            <section class="clearfix"><hr />
+              <h4 id="horizontal-rule">Horizontal rule</h4>
+              <div class="panel">
+                <h6 class="label">Horizontal rule</h6>
+                <hr />
+<h6 class="label">HTML</h6>
+<pre><code class="html">
+  &lt;hr /&gt;
+</code></pre>
+              </div>
+            </section>
+            <section class="clearfix"><hr />
+              <h4 id="blockquote">Quotes</h4>
+              <p>Quotes come in two varieties: the inline quote (<code>q</code>)and the <code>blockquote</code>.</p>
+              <p>Use <code>q</code> for short quotes less than a paragraph long. This is not necessary when quoting an interview you've done, but should be used to point back to source material that lives elsewhere on the Internet. Note that <code>q</code> will insert quotation marks for you but does not create a link back to the original source.</p>
+              <div class="panel">
+                <h6 class="label">Inline quote</h6>
+                <p><q cite="http://michelleminkoff.com/2013/07/17/why-i-develop-in-the-newsroom/">Journalists love learning and sharing,</q> wrote Michelle Minkoff in a blog post about why she develops in a newsroom.</p>
+<h6 class="label">HTML</h6>
+<pre><code class="html">
+  &lt;p&gt;&lt;q cite="http://michelleminkoff.com/2013/07/17/why-i-develop-in-the-newsroom/"&gt;Journalists love learning and sharing,&lt;/q&gt; wrote Michelle Minkoff in a blog post about why she develops in a newsroom.&lt;/p&gt;
+</code></pre>
+              </div>
+              <p>Use <code>blockquote</code> to set apart a long quote. If applicable, include the <code>cite</code> attribute to link back to the original source. Always include the source in the text, whether in the <code>blockquote</code> itself or in the surrounding text.</p>
+              <div class="panel white">
+                <h6 class="label">Blockquote</h6>
+                  <blockquote cite="http://michelleminkoff.com/2013/07/17/why-i-develop-in-the-newsroom/"><p>Journalists love learning and sharing. While, yes, there is a certain extent of sitting quietly and writing at one’s desk, there’s also a lot of fervent collaboration. No detail is too small to merit a second (or hundredth) glance. When you get excited over an intricate problem you solved, you’ll have people to share it with. And you’ll hear interesting stories from them.</p>
+                  <p class="source">—Michelle Minkoff</p></blockquote>
+<h6 class="label">HTML</h6>
+<pre><code class="html">
+  &lt;blockquote cite="http://michelleminkoff.com/2013/07/17/why-i-develop-in-the-newsroom/"&gt;&lt;p&gt;Journalists love learning and sharing. While, yes, there is a certain extent of sitting quietly and writing at one’s desk, there’s also a lot of fervent collaboration. No detail is too small to merit a second (or hundredth) glance. When you get excited over an intricate problem you solved, you’ll have people to share it with. And you’ll hear interesting stories from them.&lt;/p&gt;
+  &lt;p&gt;—Michelle Minkoff&lt;/p&gt;&lt;/blockquote&gt;
+</code></pre>
+              </div>
+
+            </section>
+            <section class="clearfix"><hr />
+              <h4 id="pullquotes">Pull quotes</h4>
+              <p data-pullquote="This is some content that will show up as a pull quote.">Pull quotes are formed with <code>data</code> attributes. Advantages to this method include no duplicated HTML, and being able to separate the pull quote from its physical location. (You can <a href="http://themindfulbit.com/blog/css-pullquotes">read more about the advantages of this method here <i class="fa fa-external-link"></i></a>.) Simply paste your pull quote text into a <code>data-pullquote</code> attribute (you can use any element).</p>
+              <p>Note that pull quotes will not show up on mobile screens.</p>
+              <div class="panel">
+<h6 class="label">HTML</h6>
+<pre><code class="html">
+  &lt;p data-pullquote="This is some content that will show up as a pull quote."&gt;Pull quotes are formed with data attributes.&lt;/p&gt;
+</code></pre>
+              </div>
+            </section>
+            <section class="clearfix"><hr />
+              <h4 id="ed-note">Editor's note</h4>
+              <p>Mostly used on the blog. Note that the words "Editor's Note:" are prepended to the content.</p>
+              <div class="panel">
+                <h6 class="label">Editor's note</h6>
+                <p class="editors-note">Occasionally we’ll do a Q&A with an impressive maker or strategist from media and its fringes. Each person brings a unique perspective on journalism, publishing and technology. Catch up and/or follow the series here.</p>
+<h6 class="label">HTML</h6>
+<pre><code class="html">
+  &lt;p class="editors-note"&gt;Occasionally we’ll do a Q&A with an impressive maker or strategist from media and its fringes. Each person brings a unique perspective on journalism, publishing and technology. Catch up and/or follow the series here.&lt;/p&gt;
+
+</code></pre>
+              </div>
+            </section>
+
+            <section class="clearfix"><hr />
+              <h2>Navigation</h2>
+              <h4 id="top-bar">Static top bar</h4>
+              <div id="panel">
+                <h6 class="label">Static top bar</h6>
+                    <nav class="top-bar" data-topbar role="navigation">
+      <ul class="title-area">
+        <li class="name">
+          <h1><a href="#">PurpleLine</a></h1>
+        </li>
+         <!-- Remove the class "menu-icon" to get rid of menu icon. Take out "Menu" to just have icon alone -->
+        <li class="toggle-topbar menu-icon"><a href="#"><span>Menu</span></a></li>
+      </ul>
+
+      <section class="top-bar-section" style="margin: 0; clear: none;">
+        <!-- Right Nav Section -->
+        <ul class="right">
+          <li><a href="http://knightlab.northwestern.edu/">Northwestern University Knight Lab</a></li>
+        </ul>
+
+        <!-- Left Nav Section -->
+        <ul class="left">
+          <li class="active"><a href="/index.html">Components</a></li>
+          <li><a href="/usage.html">Style & usage guide</a></li>
+        </ul>
+      </section>
+    </nav>
+<h6 class="label" style="clear: both;">HTML</h6>
+<pre><code class="html">
+   &lt;div data-magellan-expedition="fixed"&gt; &lt;!-- Use this to make the navbar stick to the top. --&gt;
+     &lt;!-- Add the class "sticky" to "top-bar" to make the navbar sticky. --&gt;
+     &lt;nav class="top-bar" data-topbar role="navigation"&gt;
+      &lt;ul class="title-area"&gt;
+        &lt;li class="name"&gt;
+          &lt;h1&gt;&lt;a href="#"&gt;PurpleLine&lt;/a&gt;&lt;/h1&gt;
+        &lt;/li&gt;
+         &lt;!-- Remove the class "menu-icon" to get rid of menu icon. Take out "Menu" to just have icon alone --&gt;
+        &lt;li class="toggle-topbar menu-icon"&gt;&lt;a href="#"&gt;&lt;span&gt;Menu&lt;/span&gt;&lt;/a&gt;&lt;/li&gt;
+      &lt;/ul&gt;
+
+      &lt;section class="top-bar-section"&gt;
+        &lt;!-- Right Nav Section --&gt;
+        &lt;ul class="right"&gt;
+          &lt;li&gt;&lt;a href="http://knightlab.northwestern.edu/"&gt;Northwestern University Knight Lab&lt;/a&gt;&lt;/li&gt;
+        &lt;/ul&gt;
+
+        &lt;!-- Left Nav Section --&gt;
+        &lt;ul class="left"&gt;
+          &lt;li class="active"&gt;&lt;a href="/index.html"&gt;Components&lt;/a&gt;&lt;/li&gt;
+          &lt;li&gt;&lt;a href="/usage.html"&gt;Style guide&lt;/a&gt;&lt;/li&gt;
+        &lt;/ul&gt;
+      &lt;/section&gt;
+    &lt;/nav&gt;
+  &lt;/div&gt;
+
+</code></pre>
+              </div>
+              <h6 id="sticky-top-bar">Sticky top bar</h6>
+              <label for="code-snippet"><i class="fa fa-link"></i>To use this module's functionality, include the following script before your document's closing <code>body</code> tag.</label>
+              <div class="row collapse code-snippet">
+                <div class="small-3 medium-2 columns"><span class="prefix">JavaScript</span></div>
+                <div class="small-9 medium-10 columns">
+                  <input type="text" value="//cdn.knightlab.com/libs/purpleline/latest/js/foundation.magellan.js"></input>
+                </div>
+              </div>
+              <p>To make the top bar <a href="//foundation.zurb.com/docs/components/magellan.html">sticky <i class="fa fa-external-link"></i></a> you must first add the class <code>sticky</code> to the <code>nav</code> element. Then enclose the code above in a <code>div data-magellan-expedition="fixed"</code>.</p>
+          </section>
+          <section class="clearfix">
+            <hr />
+            <h4>Sub nav</h4>
+            <p>Used in conjunction with the navbar to provide <a href="//foundation.zurb.com/docs/components/subnav.html">in-page navigation or options <i class="fa fa-external-link"></i></a>.</p>
+            <div class="panel">
+              <h6 class="label">Sub nav</h6>
+              <dl id="change-view" class="sub-nav">
+                <dt>Preview viewport size:</dt>
+                <dd class="small-view">Small</dd>
+                <dd class="medium-view">Medium</dd>
+                <dd class="large-view">Large</dd>
+                <dd class="auto-view">Auto</dd>
+              </dl>
+<h6 class="label">HTML</h6>
+<pre><code class="html">
+  &lt;dl id="change-view" class="sub-nav"&gt;
+    &lt;dt&gt;Preview viewport size:&lt;/dt&gt;
+    &lt;dd class="small-view"&gt;Small&lt;/dd&gt;
+    &lt;dd class="medium-view"&gt;Medium&lt;/dd&gt;
+    &lt;dd class="large-view"&gt;Large&lt;/dd&gt;
+    &lt;dd class="auto-view"&gt;Auto&lt;/dd&gt;
+  &lt;/dl&gt;
+</code></pre>
+              </div>
+          </section>
+          <section class="clearfix">
+            <hr/>
+              <h4 id="side-nav">Side nav</h4>
+              <p>The side nav panel will take up 100% of the width of its parent.</p>
+              <div class="panel">
+                <h6 class="label">Side nav</h6>
+                <ul class="side-nav">
+                  <li>TYPOGRAPHY</li>
+                  <li class="divider"></li>
+                  <li role="menuitem"><a href="#headlines">Headlines</a></li>
+                  <li role="menuitem"><a href="#paragraph-styles">Paragraphs</a></li>
+                  <li role="menuitem"><a href="#lists">Lists</a></li>
+                  <li role="menuitem"><a href="#icons">Icons</a></li>
+                </ul>
+<h6 class="label">HTML</h6>
+<pre><code class="html">
+  &lt;ul class="side-nav"&gt;
+    &lt;li&gt;TYPOGRAPHY&lt;/li&gt;
+    &lt;li class="divider"&gt;&lt;/li&gt;
+    &lt;li role="menuitem"&gt;&lt;a href="#headlines"&gt;Headlines&lt;/a&gt;&lt;/li&gt;
+    &lt;li role="menuitem"&gt;&lt;a href="#paragraph-styles"&gt;Paragraphs&lt;/a&gt;&lt;/li&gt;
+    &lt;li role="menuitem"&gt;&lt;a href="#lists"&gt;Lists&lt;/a&gt;&lt;/li&gt;
+    &lt;li role="menuitem"&gt;&lt;a href="#icons"&gt;Icons&lt;/a&gt;&lt;/li&gt;
+  &lt;/ul&gt;
+</code></pre>
+              </div>
+          </section>
+          <section class="clearfix">
+              <hr />
+              <h4 id="offcanvas">Off-canvas nav</h4>
+              <label for="code-snippet"><i class="fa fa-link"></i>To use this module, include the following stylesheet in your document's <code>head</code> and the following script before your document's closing <code>body</code> tag.</label>
+              <div class="row collapse code-snippet">
+                <div class="small-3 medium-2 columns"><span class="prefix">CSS</span></div>
+                <div class="small-9 medium-10 columns">
+                  <input type="text" value="//cdn.knightlab.com/libs/purpleline/latest/css/navigation.css"></input>
+                </div>
+              </div>
+              <div class="row collapse code-snippet">
+                <div class="small-3 medium-2 columns"><span class="prefix">JavaScript</span></div>
+                <div class="small-9 medium-10 columns">
+                  <input type="text" value="//cdn.knightlab.com/libs/purpleline/latest/js/foundation.offcanvas.js"></input>
+                </div>
+              </div>
+              <p>Primarily used for mobile devices, <a href="//foundation.zurb.com/docs/components/offcanvas.html">Foundation's off-canvas nav <i class="fa fa-external-link"></i></a> provides a slide-out side panel for navigation. It has yet to be styled for PurpleLine.</p>
+
+          </section>
+          <section class="clearfix">
+            <hr />
+            <h4 id="tabs">Tabs</h4>
+            <label for="code-snippet"><i class="fa fa-link"></i>To use this module, include the following script before your document's closing <code>body</code> tag.</label>
+            <div class="row collapse code-snippet">
+              <div class="small-3 medium-2 columns"><span class="prefix">JavaScript</span></div>
+              <div class="small-9 medium-10 columns">
+                <input type="text" value="//cdn.knightlab.com/libs/purpleline/latest/js/foundation.tab.js"></input>
+              </div>
+            </div>
+
+            <p>Assumes that the background of the page they are placed on will be white.</p>
+            <div class="panel">
+              <h6 class="label">Tabs</h6>
+              <ul class="tabs" data-tab>
+                <li class="tab-title active">
+                  <a href="#panel1">Tab 1</a>
+                </li>
+                <li class="tab-title">
+                    <a href="#panel2">Tab 2</a>
+                </li>
+              </ul>
+              <div class="tabs-content">
+                <div class="content active" id="panel1">
+                  <p>This is the first panel of the basic tab example. You can place all sorts of content here including a grid.</p>
+                </div>
+                <div class="content" id="panel2">
+                  <p>This is the second panel of the basic tab example. This is the second panel of the basic tab example.</p>
+                </div>
+              </div>
+
+  <h6 class="label">HTML</h6>
+<pre><code class="html">
+  &lt;ul class="tabs" data-tab&gt;
+    &lt;li class="tab-title active"&gt;
+      &lt;a href="#first-panel"&gt;Tab 1&lt;/a&gt;
+    &lt;/li&gt;
+    &lt;li class="tab-title"&gt;
+        &lt;a href="#second-panel"&gt;Tab 2&lt;/a&gt;
+    &lt;/li&gt;
+  &lt;/ul&gt;
+  &lt;div class="tabs-content"&gt;
+    &lt;div class="content active" id="first-panel"&gt;
+      &lt;p&gt;This is the first panel of the basic tab example. You can place all sorts of content here including a grid.&lt;/p&gt;
+    &lt;/div&gt;
+    &lt;div class="content" id="second-panel"&gt;
+      &lt;p&gt;This is the second panel of the basic tab example. This is the second panel of the basic tab example.&lt;/p&gt;
+    &lt;/div&gt;
+  &lt;/div&gt;
+
+</pre></code>
+</div>
+          </section>
+          <section class="clearfix">
+            <hr />
+            <h4 id="pagination">Pagination</h4>
+            <label for="code-snippet"><i class="fa fa-link"></i>To use this module, include the following stylesheet in your document's <code>head</code>.</label>
+              <div class="row collapse code-snippet">
+                <div class="small-3 medium-2 columns"><span class="prefix">CSS</span></div>
+                <div class="small-9 medium-10 columns">
+                  <input type="text" value="//cdn.knightlab.com/libs/purpleline/latest/css/navigation.css"></input>
+                </div>
+              </div>
+              <p><a href="//foundation.zurb.com/docs/components/pagination.html">Pagination <i class="fa fa-external-link"></i></a> is useful for building blogs and search.</p>
+
+          </section>
+          <section class="clearfix">
+            <hr />
+            <h4 id="icon-bar">Icon bar</h4>
+            <p>Primarily used for mobile devices, <a href="//foundation.zurb.com/docs/components/icon-bar.html">Foundation's icon bar <i class="fa fa-external-link"></i></a> provides an icon-driven menu with a mobile-native feel. It has yet to be styled for PurpleLine.  Guidelines for usage can be found on the "Usage" page.</p>
+          </section>
+          <section class="clearfix">
+            <hr />
+            <h4 id="joyride">Joyride</h4>
+            <label for="code-snippet"><i class="fa fa-link"></i>To use this module, include the following script before your document's closing <code>body</code> tag.</label>
+            <div class="row collapse code-snippet">
+              <div class="small-3 medium-2 columns"><span class="prefix">JavaScript</span></div>
+              <div class="small-9 medium-10 columns">
+                <input type="text" value="//cdn.knightlab.com/libs/purpleline/latest/js/foundation.joyride.js"></input>
+              </div>
+            </div>
+            <p><a href="http://foundation.zurb.com/docs/components/joyride.html">Joyride <i class="fa fa-external-link"></i></a> is tooltip-based page-tour navigation.</p>
+            </section>
+
+
+
+            <section class="clearfix"><hr />
+              <h2>Common Design Patterns</h2>
+              <h4 id="story-headings">Story headings</h4>
+              <p>Story headings on the blog use three components.</p>
+              <h6>Drop heds</h6>
+              <p>A <code>p</code> tag with a class of <code>.drop-hed</code>. Usually used before an <code>h1</code> story heading to display the date and/or blog category. Outside of story headings, use above <code>h1</code>, <code>h2</code> or <code>h3</code> to provide context.</p>
+              <h6>Hed</h6>
+              <p>Create story headlines with <code>h1.post-title</code>. Note that the <code>h1</code> is not italicized, as it is in other cases.</p>
+              <h6>Byline</h6>
+              <p>The author, designated with <code>.byline</code>. If possible, the name should link to the author's WordPress archive page.</p>
+              <div class="panel">
+                <h6 class="label">Story headings</h6>
+                <p class="drop-hed"><a href="knightlab.com/profiles">Profiles</a> | March 16, 2015</p>
+                <h1 class="post-title">Andrew Golis on launching This.cm and creating a social "magazine experience" on the web</h1>
+                <p class="byline">Posted by <a href="knightlab.com/nicole-zhu">Nicole Zhu</a></p>
+<h6 class="label">HTML</h6>
+<pre><code class="html">
+  &lt;p class="drop-hed"&gt;&lt;a href="knightlab.com/profiles"&gt;Profiles&lt;/a&gt; | March 16, 2015&lt;/p&gt;
+  &lt;h1 class="post-title"&gt;Andrew Golis on launching This.com and creating a social "magazine experience" on the web&lt;/h1&gt;
+  &lt;p class="byline"&gt;Posted by &lt;a href="knightlab.com/nicole-zhu"&gt;Nicole Zhu&lt;/a&gt;&lt;/p&gt;
+
+</code></pre>
+              </div>
+
+            </section>
+            <section class="clearfix"><hr />
+              <h4 id="thumbnail-grid">Thumbnail grid</h4>
+              <p>Used to create showcases on product pages (see <a href="http://timeline.knightlab.com/">TimelineJS <i class="fa fa-external-link"></i></a> for an example). Make sure to add <code>.th</code> to each image to create the border.</p>
+              <p>It is also possible to specify breakpoints at which the number of items per row changes. To learn more, <a href="http://foundation.zurb.com/docs/components/block_grid.html">see the Foundation docs <i class="fa fa-external-link"></i></a>.</p>
+              <div class="panel">
+              <h6 class="label">Block grids for thumbnails</h6>
+              <ul class="small-block-grid-3">
+                <li><img class="th" src="http://timeline.knightlab.com/static/img/examples/thumbs/thumb_lemonde.jpg"</li>
+                <li><img class="th" src="http://timeline.knightlab.com/static/img/examples/thumbs/thumb_mandela.jpg"></li>
+                <li><img class="th" src="http://timeline.knightlab.com/static/img/examples/thumbs/thumb_aljazeera.jpg"></li>
+              </ul>
+<h6 class="label">HTML</h6>
+<pre><code class="html">
+  &lt;ul class="small-block-grid-3"&gt;
+    &lt;li&gt;&lt;img class="th" src="http://timeline.knightlab.com/static/img/examples/thumbs/thumb_lemonde.jpg"&lt;/li&gt;
+    &lt;li&gt;&lt;img class="th" src="http://timeline.knightlab.com/static/img/examples/thumbs/thumb_mandela.jpg"&gt;&lt;/li&gt;
+    &lt;li&gt;&lt;img class="th" src="http://timeline.knightlab.com/static/img/examples/thumbs/thumb_aljazeera.jpg"&gt;&lt;/li&gt;
+  &lt;/ul&gt;
+</code></pre>
+</div>
+            </section>
+            <section class="clearfix"><hr />
+              <h4 id="footer-example">Footer</h4>
+              <p>The footer used on all Knight Lab pages and products. Usually created as a partial template.</p>
+              <div class="panel">
+                <h6 class="label">Footer</h6>
+                  <footer>
+                    <div class="about-knightlab">
+                      <div id="knightlab-logo-column">
+                        <a href="http://knightlab.northwestern.edu" target="_blank"><img src="http://knightlab.northwestern.edu/wp-content/uploads/2014/12/logo_stacked.png" class="img-responsive"></a>
+                        <ul class="contact-icons">
+                          <li><a title="follow @knightlab on Twitter" href="//www.twitter.com/knightlab"><i class="fa fa-twitter"></i></a></li>
+                          <li><a title="Knight Lab on Facebook" href="//www.facebook.com/knightlab"><i class="fa fa-facebook"></i></a></li>
+                          <li><a title="email Knight Lab" href="mailto:Knightlab@northwestern.edu"><i class="fa fa-envelope-o"></i></a></li>
+                          <li><a title="Knight Lab on GitHub" href="//github.com/NUKnightLab/"><i class="fa fa-github-alt"></i></a></li>
+                        </ul>
+                      </div>
+                      <div id="knightlab-description">
+                        <p>The <a title="Northwestern University" href="http://www.northwestern.edu/" target="_blank">Northwestern University</a> Knight Lab is a team of technologists and journalists working at advancing news media innovation through exploration and experimentation.</p>
+                        <p>A joint initiative of the <a href="http://www.mccormick.northwestern.edu/" target="_blank">Robert R. McCormick School of Engineering and Applied Science</a> and the<a href="http://www.medill.northwestern.edu/" target="_blank"> Medill School of Journalism, Media, Integrated Marketing Communications</a>.</p><img src="http://knightlab.northwestern.edu/wp-content/uploads/2014/12/Logos-Horizontal.png" class="img-responsive logos">
+                      </div>
+                      <div class="contact">
+                        <address itemscope="" itemtype="http://data-vocabulary.org/Organization">
+                          <span style="display:none;" itemprop="name" title="Knight Lab | Advancing news media innovation through exploration and experimentation." class="address-name">Knight Lab</span>
+                          <span itemprop="tel" class="tel">(847) 467-4971 | </span>
+                          <span itemprop="address" itemscope="" itemtype="http://data-vocabulary.org/Address" class="address">
+                            <span itemprop="street-address" class="street-address"><a href="//maps.google.com/maps?q=1845+Sheridan+Road+Evanston+IL+6020&amp;hl=en&amp;ll=42.050942,-87.673511&amp;spn=0.003059,0.004898&amp;sll=42.050647,-87.674246&amp;sspn=0.012237,0.019591&amp;gl=us&amp;hnear=1845+Sheridan+Rd,+Evanston,+Cook,+Illinois+60201&amp;t=m&amp;z=18&amp;iwloc=A" target="_blank">1845 Sheridan Road Fisk #109 & #111</span>,
+                            <span itemprop="locality">Evanston,</span>
+                            <span itemprop="region">IL</span>
+                            <span itemprop="postal-code">60208 |</span>
+                            <span itemprop="country-name" class="address-country">United States</span>
+                          </span>
+                          <span style="display:none;" itemprop="geo" itemscope="" itemtype="http://www.data-vocabulary.org/Geo/" class="geo">
+                            Latitude: <span itemprop="latitude">42.056893</span><br>
+                            Longitude: <span itemprop="longitude">-87.676735</span>
+                          </span>
+                          <a style="display:none;" href="http://knightlab.northwestern.edu" itemprop="url" class="url">Northwestern University Knight Lab | Advancing media innovation through exploration and experimentation.</a>
+                        </address>
+                        <span class="copyright">| Copyright 2015, Northwestern University</span>
+                      </div>
+                    </div><!-- end .about-knightlab -->
+                  </footer>
+<h6 class="label">HTML</h6>
+<pre><code class="html">
+  &lt;footer&gt;
+    &lt;div class="about-knightlab"&gt;
+      &lt;div id="knightlab-logo-column"&gt;
+        &lt;a href="http://knightlab.northwestern.edu" target="_blank"&gt;&lt;img src="http://knightlab.northwestern.edu/wp-content/uploads/2014/12/logo_stacked.png" class="img-responsive"&gt;&lt;/a&gt;
+        &lt;ul class="contact-icons"&gt;
+          &lt;li&gt;&lt;a title="follow @knightlab on Twitter" href="http://www.twitter.com/knightlab"&gt;&lt;i class="fa fa-twitter"&gt;&lt;/i&gt;&lt;/a&gt;&lt;/li&gt;
+          &lt;li&gt;&lt;a title="Knight Lab on Facebook" href="//www.facebook.com/knightlab"&gt;&lt;i class="fa fa-facebook"&gt;&lt;/i&gt;&lt;/a&gt;&lt;/li&gt;
+          &lt;li&gt;&lt;a title="email Knight Lab" href="mailto:Knightlab@northwestern.edu"&gt;&lt;i class="fa fa-envelope-o"&gt;&lt;/i&gt;&lt;/a&gt;&lt;/li&gt;
+          &lt;li&gt;&lt;a title="Knight Lab on GitHub" href="//github.com/NUKnightLab/"&gt;&lt;i class="fa fa-github-alt"&gt;&lt;/i&gt;&lt;/a&gt;&lt;/li&gt;
+        &lt;/ul&gt;
+      &lt;/div&gt;
+      &lt;div id="knightlab-description"&gt;
+        &lt;p&gt;The &lt;a title="Northwestern University" href="http://www.northwestern.edu/" target="_blank"&gt;Northwestern University&lt;/a&gt; Knight Lab is a team of technologists and journalists working at advancing news media innovation through exploration and experimentation.&lt;/p&gt;
+        &lt;p&gt;A joint initiative of the &lt;a href="http://www.mccormick.northwestern.edu/" target="_blank"&gt;Robert R. McCormick School of Engineering and Applied Science&lt;/a&gt; and the&lt;a href="http://www.medill.northwestern.edu/" target="_blank"&gt; Medill School of Journalism, Media, Integrated Marketing Communications&lt;/a&gt;.&lt;/p&gt;&lt;img src="http://knightlab.northwestern.edu/wp-content/uploads/2014/12/Logos-Horizontal.png" class="img-responsive logos"&gt;
+      &lt;/div&gt;
+      &lt;div class="contact"&gt;
+        &lt;address itemscope="" itemtype="http://data-vocabulary.org/Organization"&gt;
+          &lt;span style="display:none;" itemprop="name" title="Knight Lab | Advancing news media innovation through exploration and experimentation." class="address-name"&gt;Knight Lab&lt;/span&gt;
+          &lt;span itemprop="tel" class="tel"&gt;(847) 467-4971 | &lt;/span&gt;
+          &lt;span itemprop="address" itemscope="" itemtype="http://data-vocabulary.org/Address" class="address"&gt;
+            &lt;span itemprop="street-address" class="street-address"&gt;&lt;a href="//maps.google.com/maps?q=1845+Sheridan+Road+Evanston+IL+6020&amp;hl=en&amp;ll=42.050942,-87.673511&amp;spn=0.003059,0.004898&amp;sll=42.050647,-87.674246&amp;sspn=0.012237,0.019591&amp;gl=us&amp;hnear=1845+Sheridan+Rd,+Evanston,+Cook,+Illinois+60201&amp;t=m&amp;z=18&amp;iwloc=A" target="_blank"&gt;1845 Sheridan Road Fisk #109 & #111&lt;/span&gt;,
+            &lt;span itemprop="locality"&gt;Evanston,&lt;/span&gt;
+            &lt;span itemprop="region"&gt;IL&lt;/span&gt;
+            &lt;span itemprop="postal-code"&gt;60208 |&lt;/span&gt;
+            &lt;span itemprop="country-name" class="address-country"&gt;United States&lt;/span&gt;
+          &lt;/span&gt;
+          &lt;span style="display:none;" itemprop="geo" itemscope="" itemtype="http://www.data-vocabulary.org/Geo/" class="geo"&gt;
+            Latitude: &lt;span itemprop="latitude"&gt;42.056893&lt;/span&gt;&lt;br&gt;
+            Longitude: &lt;span itemprop="longitude"&gt;-87.676735&lt;/span&gt;
+          &lt;/span&gt;
+          &lt;a style="display:none;" href="http://knightlab.northwestern.edu" itemprop="url" class="url"&gt;Northwestern University Knight Lab | Advancing media innovation through exploration and experimentation.&lt;/a&gt;
+        &lt;/address&gt;
+        &lt;span class="copyright"&gt;| Copyright 2015, Northwestern University&lt;/span&gt;
+      &lt;/div&gt;
+    &lt;/div&gt;&lt;!-- end .about-knightlab --&gt;
+  &lt;/footer&gt;
+</pre></code>
+              </div>
+            </section>
+
+            <section class="clearfix"><hr />
+              <h2>MEDIA & MODULES</h2>
+              <h4 id="accordion">Accordion</h4>
+              <p>Frequently used for FAQ sections. Sections are collapsed by default, but adding the class <code>active</code> to the desired <code>li.accordion-navigation</code> element and the corresponding child <code>div.content</code> will open it on load. (Only one accordion component can be open at a time.)</p>
+              <div class="panel">
+                <h6 class="label">Accordion</h6>
+                <ul class="accordion" data-accordion>
+                  <li class="accordion-navigation active">
+                    <a href="#panel1a">Accordion 1</a>
+                    <div id="panel1a" class="content active">
+                      Panel 1. Lorem ipsum dolor sit amet, consectetur adipisicing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat.
+                    </div>
+                  </li>
+                  <li class="accordion-navigation">
+                    <a href="#panel2a">Accordion 2</a>
+                    <div id="panel2a" class="content">
+                      Panel 2. Lorem ipsum dolor sit amet, consectetur adipisicing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat.
+                    </div>
+                  </li>
+                  <li class="accordion-navigation">
+                    <a href="#panel3a">Accordion 3</a>
+                    <div id="panel3a" class="content">
+                      Panel 3. Lorem ipsum dolor sit amet, consectetur adipisicing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat.
+                    </div>
+                  </li>
+                </ul>
+<h6 class="label">HTML</h6>
+<pre><code class="html">
+  &lt;ul class="accordion" data-accordion&gt;
+    &lt;li class="accordion-navigation active"&gt;
+      &lt;a href="#panel1a"&gt;Accordion 1&lt;/a&gt;
+      &lt;div id="panel1a" class="content active"&gt;
+        Panel 1. Lorem ipsum dolor sit amet, consectetur adipisicing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat.
+      &lt;/div&gt;
+    &lt;/li&gt;
+    &lt;li class="accordion-navigation"&gt;
+      &lt;a href="#panel2a"&gt;Accordion 2&lt;/a&gt;
+      &lt;div id="panel2a" class="content"&gt;
+        Panel 2. Lorem ipsum dolor sit amet, consectetur adipisicing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat.
+      &lt;/div&gt;
+    &lt;/li&gt;
+    &lt;li class="accordion-navigation"&gt;
+      &lt;a href="#panel3a"&gt;Accordion 3&lt;/a&gt;
+      &lt;div id="panel3a" class="content"&gt;
+        Panel 3. Lorem ipsum dolor sit amet, consectetur adipisicing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat.
+      &lt;/div&gt;
+    &lt;/li&gt;
+  &lt;/ul&gt;
+</code></pre>
+</div>
+            </section>
+            <section class="clearfix"><hr />
+              <h4 id="flex-video">Flex Video</h4>
+              <label for="code-snippet"><i class="fa fa-link"></i> To use this module, include the following stylesheet in your document's <code>head</code>.</label>
+              <div class="row collapse code-snippet">
+                <div class="small-3 medium-2 columns"><span class="prefix">CSS</span></div>
+                <div class="small-9 medium-10 columns">
+                  <input type="text" value="//cdn.knightlab.com/libs/purpleline/latest/css/flex-video.css"></input>
+                </div>
+              </div>
+              <p>Responsive <a href="http://foundation.zurb.com/docs/components/flex_video.html">video players <i class="fa fa-external-link"></i></a> for your viewing pleasure.</p>
+            </section>
+            <section class="clearfix"><hr />
+              <h4 id="image-slider">Image Slider</h4>
+              <label for="code-snippet"><i class="fa fa-link"></i>To use this module, include the following stylesheet in your document's <code>head</code> and the following script before your document's closing <code>body</code> tag.</label>
+              <div class="row collapse code-snippet">
+                <div class="small-3 medium-2 columns"><span class="prefix">CSS</span></div>
+                <div class="small-9 medium-10 columns">
+                  <input type="text" value="//cdn.jsdelivr.net/jquery.slick/1.5.7/slick.css"></input>
+                </div>
+              </div>
+              <div class="row collapse code-snippet">
+                <div class="small-3 medium-2 columns"><span class="prefix">JavaScript</span></div>
+                <div class="small-9 medium-10 columns">
+                  <input type="text" value="//cdn.jsdelivr.net/jquery.slick/1.5.7/slick.min.js"></input>
+                </div>
+
+              <p>Foundation's image slider, Orbit, has been deprecated in favor of <a href="http://kenwheeler.github.io/slick/">Slick <i class="fa fa-external-link"></i></a>.</p>
+            </section>
+
+            <section class="clearfix">
+              <hr />
+              <h4 id="lightbox">Lightbox</h4>
+              <label for="code-snippet"><i class="fa fa-link"></i>To use this module, include the following stylesheet in your document's <code>head</code> and the following script before your document's closing <code>body</code> tag.</label>
+              <div class="row collapse code-snippet">
+                <div class="small-3 medium-2 columns"><span class="prefix">CSS</span></div>
+                <div class="small-9 medium-10 columns">
+                  <input type="text" value="//cdn.knightlab.com/libs/purpleline/latest/css/lightbox.css"></input>
+                </div>
+              </div>
+              <div class="row collapse code-snippet">
+                <div class="small-3 medium-2 columns"><span class="prefix">JavaScript</span></div>
+                <div class="small-9 medium-10 columns">
+                  <input type="text" value="//cdn.knightlab.com/libs/purpleline/latest/js/foundation.clearing.js"></input>
+                </div>
+              </div>
+              <p>A responsive media <a href="//foundation.zurb.com/docs/components/clearing.html">lightbox <i class="fa fa-external-link"></i></a>.</p>
+            </section>
+            <section class="clearfix"><hr />
+              <h2>Utility</h2>
+              <h4 id="alerts">Alerts</h4>
+              <label for="code-snippet"><i class="fa fa-link"></i>To use this module, include the following script before your document's closing <code>body</code> tag.</label>
+              <div class="row collapse code-snippet">
+                <div class="small-3 medium-2 columns"><span class="prefix">JavaScript</span></div>
+                <div class="small-9 medium-10 columns">
+                  <input type="text" value="//cdn.knightlab.com/libs/purpleline/latest/js/foundation.alert.js"></input>
+                </div>
+              </div>
+
+              <p>While the CSS for <a href="//foundation.zurb.com/docs/components/alert_boxes.html">alert boxes <i class="fa fa-external-link"></i></a> is available, you must include the Javascript to enable the dismissable properties of alert boxes.</p>
+
+            </section>
+
+            <section class="clearfix">
+            <hr />
+            <h4 id="alignment">Alignment Helpers</h4>
+            <p>Foundation includes some nifty <a href="//foundation.zurb.com/docs/utility-classes.html">helper classes <i class="fa fa-external-link"></i></a> for aligning and sizing text, adding rounded corners, clearing floats, and hiding elements.</p>
+            </section>
+
+            <section class="clearfix">
+             <hr />
+             <h4 id="buttons">Buttons</h4>
+              <p>You can create a button in two ways: with the <code>button</code> element or by adding the <code>.button</code> class to an <code>a</code> tag. With either variation, the button text should be wrapped in <code>span</code> See Foundation's <a href="http://foundation.zurb.com/docs/components/buttons.html">documentation about buttons <i class="fa fa-external-link"></i></a> for more. Especially note the accessibility information.</p>
+              <div class="panel">
+                <h6 class="label">Buttons</h6>
+                <button><span>Default Button</span></button>
+                <button class="inverse"><span>Inverse Button</span></button>
+                <a href="#" class="button success" role="button"><span>Success Button</span></a>
+                <a href="#" class="button alert" role="button"><span>Alert Button</span></a>
+                <a href="#" class="button warning" role="button"><span>Warning Button</span></a>
+                <a href="#" class="button info" role="button"><span>Info Button</span></a>
+                <a href="#" class="button disabled" role="button"><span>Disabled Button</span></a>
+<h6 class="label">HTML</h6>
+<pre><code class="html">
+   &lt;!-- Button syntax --&gt;
+  &lt;button&gt;&lt;span&gt;Default Button&lt;/span&gt;&lt;/button&gt;
+  &lt;!-- Anchor tag syntax --&gt;
+  &lt;a href="#" class="button success" role="button"&gt;&lt;span&gt;Success Button&lt;/span&gt;&lt;/a&gt;
+  &lt;a href="#" class="button alert" role="button"&gt;&lt;span&gt;Alert Button&lt;/span&gt;&lt;/a&gt;
+  &lt;a href="#" class="button warning" role="button"&gt;&lt;span&gt;Warning Button&lt;/span&gt;&lt;/a&gt;
+  &lt;a href="#" class="button info" role="button"&gt;&lt;span&gt;Info Button&lt;/span&gt;&lt;/a&gt;
+  &lt;a href="#" class="button disabled" role="button"&gt;&lt;span&gt;Disabled Button&lt;/span&gt;&lt;/a&gt;
+
+</code></pre>
+            </div>
+            <p>Buttons can also be rendered in different sizes.</p>
+              <div class="panel">
+                <h6 class="label">Buttons</h6>
+                <button class="expand"><span>Full-width Button</span></button>
+                <button class="large"><span>Large Button</span></button><br/>
+                <button><span>Default Button</span></button><br/>
+                <button class="small"><span>Small Button</span></button><br/>
+                <button class="tiny"><span>Tiny Button</span></button><br/>
+<h6 class="label">HTML</h6>
+<pre><code class="html">
+  &lt;button class="expand"&gt;&lt;span&gt;Full-width Button&lt;/span&gt;&lt;/button&gt;
+  &lt;button class="large"&gt;&lt;span&gt;Large Button&lt;/span&gt;&lt;/button&gt;
+  &lt;button&gt;&lt;span&gt;Default Button&lt;/span&gt;&lt;/button&gt;
+  &lt;button class="small"&gt;&lt;span&gt;Small Button&lt;/span&gt;&lt;/button&gt;
+  &lt;button class="tiny"&gt;&lt;span&gt;Tiny Button&lt;/span&gt;&lt;/button&gt;
+
+</code></pre>
+
+              </div>
+              <h6>Split and dropdown buttons</h6>
+              <label for="code-snippet"><i class="fa fa-link"></i>To use this module, include the following script before your document's closing <code>body</code> tag.</label>
+              <div class="row collapse code-snippet">
+                <div class="small-3 medium-2 columns"><span class="prefix">JavaScript</span></div>
+                <div class="small-9 medium-10 columns">
+                  <input type="text" value="//cdn.knightlab.com/libs/purpleline/latest/js/foundation.dropdown.js"></input>
+                </div>
+              </div>
+              <div class="panel">
+                <h6 class="label">Split and dropdown buttons</h6>
+                  <a href="#buttons" class="button split">Split Button <span data-dropdown="drop"></span></a><br>
+                  <ul id="drop" class="f-dropdown" data-dropdown-content>
+                    <li><a href="#">This is a link</a></li>
+                    <li><a href="#">This is another</a></li>
+                    <li><a href="#">Yet another</a></li>
+                  </ul>
+                  <button href="#buttons" data-dropdown="drop1" aria-controls="drop1" aria-expanded="false" class="button dropdown">Dropdown Button</button><br>
+                  <ul id="drop1" data-dropdown-content class="f-dropdown" aria-hidden="true">
+                    <li><a href="#">This is a link</a></li>
+                    <li><a href="#">This is another</a></li>
+                    <li><a href="#">Yet another</a></li>
+                  </ul>
+<h6 class="label">HTML</h6>
+<pre><code class="html">
+  &lt;a href="#" class="button split"&gt;Split Button &lt;span data-dropdown="drop"&gt;&lt;/span&gt;&lt;/a&gt;&lt;br&gt;
+  &lt;ul id="drop" class="f-dropdown" data-dropdown-content&gt;
+    &lt;li&gt;&lt;a href="#"&gt;This is a link&lt;/a&gt;&lt;/li&gt;
+    &lt;li&gt;&lt;a href="#"&gt;This is another&lt;/a&gt;&lt;/li&gt;
+    &lt;li&gt;&lt;a href="#"&gt;Yet another&lt;/a&gt;&lt;/li&gt;
+  &lt;/ul&gt;
+
+  &lt;button href="#" data-dropdown="drop1" aria-controls="drop1" aria-expanded="false" class="button dropdown"&gt;Dropdown Button&lt;/button&gt;&lt;br&gt;
+  &lt;ul id="drop1" data-dropdown-content class="f-dropdown" aria-hidden="true"&gt;
+    &lt;li&gt;&lt;a href="#"&gt;This is a link&lt;/a&gt;&lt;/li&gt;
+    &lt;li&gt;&lt;a href="#"&gt;This is another&lt;/a&gt;&lt;/li&gt;
+    &lt;li&gt;&lt;a href="#"&gt;Yet another&lt;/a&gt;&lt;/li&gt;
+  &lt;/ul&gt;
+</code></pre>
+            </div>
+            </section>
+            <section class="clearfix"><hr />
+              <h4 id="forms">Forms</h4>
+              <p>Basic <a href="http://foundation.zurb.com/docs/components/forms.html">forms <i class="fa fa-external-link"></i></a> are included with PurpleLine. Some modules must be included separately (see below).</p>
+              <div class="panel">
+              <h6 class="label">Sample fields</h6>
+              <form>
+                <div class="row">
+                  <div class="large-12 columns">
+                    <label>Input Label</label>
+                    <input type="text" placeholder="large-12.columns" />
+                  </div>
+                </div>
+                <div class="row">
+                  <div class="large-4 medium-4 columns">
+                    <label>Input Label</label>
+                    <input type="text" placeholder="large-4.columns" />
+                  </div>
+                  <div class="large-4 medium-4 columns">
+                    <label>Input Label</label>
+                    <input type="text" placeholder="large-4.columns" />
+                  </div>
+                  <div class="large-4 medium-4 columns">
+                    <div class="row collapse">
+                      <label>Input Label</label>
+                      <div class="small-9 columns">
+                        <input type="text" placeholder="small-9.columns" />
+                      </div>
+                      <div class="small-3 columns">
+                        <span class="postfix">.com</span>
+                      </div>
+                    </div>
+                  </div>
+                </div>
+                <div class="row">
+                  <div class="large-12 columns">
+                    <label>Select Box</label>
+                    <select>
+                      <option value="husker">Husker</option>
+                      <option value="starbuck">Starbuck</option>
+                      <option value="hotdog">Hot Dog</option>
+                      <option value="apollo">Apollo</option>
+                    </select>
+                  </div>
+                </div>
+                <div class="row">
+                  <div class="large-6 medium-6 columns">
+                    <label>Choose Your Favorite</label>
+                    <input type="radio" name="pokemon" value="Red" id="pokemonRed"><label for="pokemonRed">Radio 1</label>
+                    <input type="radio" name="pokemon" value="Blue" id="pokemonBlue"><label for="pokemonBlue">Radio 2</label>
+                  </div>
+                  <div class="large-6 medium-6 columns">
+                    <label>Check these out</label>
+                    <input id="checkbox1" type="checkbox"><label for="checkbox1">Checkbox 1</label>
+                    <input id="checkbox2" type="checkbox"><label for="checkbox2">Checkbox 2</label>
+                  </div>
+                </div>
+                <div class="row">
+                  <div class="large-12 columns">
+                    <label>Textarea Label</label>
+                    <textarea placeholder="small-12.columns"></textarea>
+                  </div>
+                </div>
+              </form>
+
+
+<h6 class="label">HTML</h6>
+<pre><code class="html">
+  &lt;form&gt;
+    &lt;div class="row"&gt;
+      &lt;div class="large-12 columns"&gt;
+        &lt;label&gt;Input Label&lt;/label&gt;
+        &lt;input type="text" placeholder="large-12.columns" /&gt;
+      &lt;/div&gt;
+    &lt;/div&gt;
+    &lt;div class="row"&gt;
+      &lt;div class="large-4 medium-4 columns"&gt;
+        &lt;label&gt;Input Label&lt;/label&gt;
+        &lt;input type="text" placeholder="large-4.columns" /&gt;
+      &lt;/div&gt;
+      &lt;div class="large-4 medium-4 columns"&gt;
+        &lt;label&gt;Input Label&lt;/label&gt;
+        &lt;input type="text" placeholder="large-4.columns" /&gt;
+      &lt;/div&gt;
+      &lt;div class="large-4 medium-4 columns"&gt;
+        &lt;div class="row collapse"&gt;
+          &lt;label&gt;Input Label&lt;/label&gt;
+          &lt;div class="small-9 columns"&gt;
+            &lt;input type="text" placeholder="small-9.columns" /&gt;
+          &lt;/div&gt;
+          &lt;div class="small-3 columns"&gt;
+            &lt;span class="postfix"&gt;.com&lt;/span&gt;
+          &lt;/div&gt;
+        &lt;/div&gt;
+      &lt;/div&gt;
+    &lt;/div&gt;
+    &lt;div class="row"&gt;
+      &lt;div class="large-12 columns"&gt;
+        &lt;label&gt;Select Box&lt;/label&gt;
+        &lt;select&gt;
+          &lt;option value="husker"&gt;Husker&lt;/option&gt;
+          &lt;option value="starbuck"&gt;Starbuck&lt;/option&gt;
+          &lt;option value="hotdog"&gt;Hot Dog&lt;/option&gt;
+          &lt;option value="apollo"&gt;Apollo&lt;/option&gt;
+        &lt;/select&gt;
+      &lt;/div&gt;
+    &lt;/div&gt;
+    &lt;div class="row"&gt;
+      &lt;div class="large-6 medium-6 columns"&gt;
+        &lt;label&gt;Choose Your Favorite&lt;/label&gt;
+        &lt;input type="radio" name="pokemon" value="Red" id="pokemonRed"&gt;&lt;label for="pokemonRed"&gt;Radio 1&lt;/label&gt;
+        &lt;input type="radio" name="pokemon" value="Blue" id="pokemonBlue"&gt;&lt;label for="pokemonBlue"&gt;Radio 2&lt;/label&gt;
+      &lt;/div&gt;
+      &lt;div class="large-6 medium-6 columns"&gt;
+        &lt;label&gt;Check these out&lt;/label&gt;
+        &lt;input id="checkbox1" type="checkbox"&gt;&lt;label for="checkbox1"&gt;Checkbox 1&lt;/label&gt;
+        &lt;input id="checkbox2" type="checkbox"&gt;&lt;label for="checkbox2"&gt;Checkbox 2&lt;/label&gt;
+      &lt;/div&gt;
+    &lt;/div&gt;
+    &lt;div class="row"&gt;
+      &lt;div class="large-12 columns"&gt;
+        &lt;label&gt;Textarea Label&lt;/label&gt;
+        &lt;textarea placeholder="small-12.columns"&gt;&lt;/textarea&gt;
+      &lt;/div&gt;
+    &lt;/div&gt;
+  &lt;/form&gt;
+</code></pre>
+              </div>
+              <h6>Form validation</h6>
+              <label for="code-snippet"><i class="fa fa-link"></i>To use this module, include the following script before your document's closing <code>body</code> tag.</label>
+              <div class="row collapse code-snippet">
+                <div class="small-3 medium-2 columns"><span class="prefix">JavaScript</span></div>
+                <div class="small-9 medium-10 columns">
+                  <input type="text" value="//cdn.knightlab.com/libs/purpleline/latest/js/foundation.abide.js"></input>
+                </div>
+              </div>
+              <p>Prevent submission of invalid forms with <a href="http://foundation.zurb.com/docs/components/abide.html">form validation <i class="fa fa-external-link"></i></a>.</p>
+
+              <h6 id="sliders-switches">Sliders and switches</h6>
+              <label for="code-snippet"><i class="fa fa-link"></i>To use this module, include the following stylesheet in your document's <code>head</code> and the following script before your document's closing <code>body</code> tag.</label>
+              <div class="row collapse code-snippet">
+                <div class="small-3 medium-2 columns"><span class="prefix">CSS</span></div>
+                <div class="small-9 medium-10 columns">
+                  <input type="text" value="//cdn.knightlab.com/libs/purpleline/latest/css/inputs.css"></input>
+                </div>
+              </div>
+              <div class="row collapse code-snippet">
+                <div class="small-3 medium-2 columns"><span class="prefix">JavaScript</span></div>
+                <div class="small-9 medium-10 columns">
+                  <input type="text" value="//cdn.knightlab.com/libs/purpleline/latest/js/foundation.slider.js"></input>
+                </div>
+              </div>
+              <p>Foundation's <a href="http://foundation.zurb.com/docs/components/range_slider.html">range slider <i class="fa fa-external-link"></i></a> and <a href="http://foundation.zurb.com/docs/components/switch.html">switch <i class="fa fa-external-link"></i></a> (or toggle) styles must be included separately. Use of switches should be carefully considered, as they are <a href="http://ux.stackexchange.com/questions/63884/checkbox-vs-toggle">often considered less usable than checkboxes. <i class="fa fa-external-link"></i></a></p>
+
+            </section>
+            <section class="clearfix">
+              <hr />
+              <h4 id="grid-system">Grid system</h4>
+              <p><a href="http://foundation.zurb.com/docs/components/grid.html">Foundation's grid system <i class="fa fa-external-link"></i></a> is based on rows and columns. *PurpleLine's rows have a <code>max-width</code> of <code>1200px</code>. If you want to allow your content to be wider than 1200px, simply omit the use of the <code>row</code> div and use only the column classes. You do not need to use columns within rows. *However, you may find it helpful to use <code>.row.full-width</code> if you are having difficulty aligning columns.</p>
+            <div class="panel">
+              <h6 class="label">Grid system</h6>
+                <div class="row">
+                  <div class="large-12 columns">
+                    <div class="callout panel">
+                      <p><strong>This is a twelve column section in a row.</strong> Each of these includes a div.panel element so you can see where the columns are - it's not required at all for the grid.</p>
+                    </div>
+                  </div>
+                </div>
+                <div class="row">
+                  <div class="large-6 medium-6 columns">
+                    <div class="callout panel">
+                      <p>Six columns</p>
+                    </div>
+                  </div>
+                  <div class="large-6 medium-6 columns">
+                    <div class="callout panel">
+                      <p>Six columns</p>
+                    </div>
+                  </div>
+                </div>
+                <div class="row">
+                  <div class="large-4 medium-4 small-4 columns">
+                    <div class="callout panel">
+                      <p>Four columns</p>
+                    </div>
+                  </div>
+                  <div class="large-4 medium-4 small-4 columns">
+                    <div class="callout panel">
+                      <p>Four columns</p>
+                    </div>
+                  </div>
+                  <div class="large-4 medium-4 small-4 columns">
+                    <div class="callout panel">
+                      <p>Four columns</p>
+                    </div>
+                  </div>
+                </div>
+<h6 class="label">HTML</h6>
+<pre><code>
+  &lt;div class="row"&gt;
+    &lt;div class="large-12 columns"&gt;
+      &lt;div class="callout panel"&gt;
+        &lt;p&gt;&lt;strong&gt;This is a twelve column section in a row.&lt;/strong&gt; Each of these includes a div.panel element so you can see where the columns are - it's not required at all for the grid.&lt;/p&gt;
+      &lt;/div&gt;
+    &lt;/div&gt;
+  &lt;/div&gt;
+  &lt;div class="row"&gt;
+    &lt;div class="large-6 medium-6 columns"&gt;
+      &lt;div class="callout panel"&gt;
+        &lt;p&gt;Six columns&lt;/p&gt;
+      &lt;/div&gt;
+    &lt;/div&gt;
+    &lt;div class="large-6 medium-6 columns"&gt;
+      &lt;div class="callout panel"&gt;
+        &lt;p&gt;Six columns&lt;/p&gt;
+      &lt;/div&gt;
+    &lt;/div&gt;
+  &lt;/div&gt;
+  &lt;div class="row"&gt;
+    &lt;div class="large-4 medium-4 small-4 columns"&gt;
+      &lt;div class="callout panel"&gt;
+        &lt;p&gt;Four columns&lt;/p&gt;
+      &lt;/div&gt;
+    &lt;/div&gt;
+    &lt;div class="large-4 medium-4 small-4 columns"&gt;
+      &lt;div class="callout panel"&gt;
+        &lt;p&gt;Four columns&lt;/p&gt;
+      &lt;/div&gt;
+    &lt;/div&gt;
+    &lt;div class="large-4 medium-4 small-4 columns"&gt;
+      &lt;div class="callout panel"&gt;
+        &lt;p&gt;Four columns&lt;/p&gt;
+      &lt;/div&gt;
+    &lt;/div&gt;
+  &lt;/div&gt;
+</pre></code>
+              </div>
+            </section>
+
+
+            <section class="clearfix"><hr />
+              <h2>Brand</h2>
+              <h4 id="colors">Colors</h4>
+              <p>This is the Knight Lab palette. Each color is available as a CSS class. Use the suffix <code>-bg</code> to create an element with a select background color, or <code>-text</code> to create an element with that color text. (E.g., <code>.orange-bg</code> or <code>.orange-text</code>.)</p>
+              <p>When used for text, <span class="dark-orange-text">dark orange</span> yields best readability. Links are <span class="dark-blue-text">dark blue</span> by default and become <span class="light-blue-text">light blue</span> when hovered over. <span class="yellow-bg">Yellow</span> is best used sparingly as an accent color.</p>
+              <div class="panel">
+                <div class="paint-chip dark-blue-bg">
+                  <div class="color-deets">
+                    <p><strong>Dark blue</strong></p>
+                    <p>.dark-blue-bg</p>
+                    <p>#147693</p>
+                  </div>
+                </div>
+                <div class="paint-chip medium-blue-bg">
+                  <div class="color-deets">
+                    <p><strong>Medium blue</strong></p>
+                    <p>.medium-blue-bg</p>
+                    <p>#0f9bd1</p>
+                  </div>
+                </div>
+                <div class="paint-chip light-blue-bg">
+                  <div class="color-deets">
+                    <p><strong>Light blue</strong></p>
+                    <p>.light-blue-bg</p>
+                    <p>#1dacd6</p>
+                  </div>
+                </div>
+                <div class="paint-chip yellow-bg">
+                  <div class="color-deets">
+                    <p><strong>Yellow</strong></p>
+                    <p>.yellow-bg</p>
+                    <p>#eae34a</p>
+                  </div>
+                </div>
+                <div class="paint-chip dark-orange-bg">
+                  <div class="color-deets">
+                    <p><strong>Dark orange</strong></p>
+                    <p>.dark-orange-bg</p>
+                    <p>#c34528</p>
+                  </div>
+                </div>
+                <div class="paint-chip orange-bg">
+                  <div class="color-deets">
+                    <p><strong>Orange</strong></p>
+                    <p>.orange-bg</p>
+                    <p>#ce4d28</p>
+                  </div>
+                </div>
+                <div class="paint-chip light-orange-bg">
+                  <div class="color-deets">
+                    <p><strong>Light orange</strong></p>
+                    <p>.light-orange-bg</p>
+                    <p>#e35a25</p>
+                  </div>
+                </div>
+                <div class="paint-chip lightest-orange-bg">
+                  <div class="color-deets">
+                    <p><strong>Lightest orange</strong></p>
+                    <p>.lightest-orange-bg</p>
+                    <p>#f7ccb2</p>
+                  </div>
+                </div>
+              </div>
+            </section>
+            <section class="clearfix">
+              <hr />
+              <h4 id="favicon">Favicon</h4>
+              <div class="row collapse code-snippet">
+                <div class="small-3 medium-2 columns"><span class="prefix">Image SRC</span></div>
+                <div class="small-9 medium-10 columns">
+                  <input type="text" value="//cdn.knightlab.com/libs/purpleline/latest/img/favicon.ico"></input>
+                </div>
+              </div>
+              <p>The favicon is the small icon that appears in the browser tab containing your website. Include it in the <code>head</code> of your document as shown below.</p>
+              <div class="panel">
+                <h6 class="label">Favicon</h6>
+                  <img src="//cdn.knightlab.com/libs/purpleline/latest/img/favicon.png">
+                <h6 class="label">HTML</h6>
+<pre><code class="html">
+   &lt;link rel="icon" type="image/png" href="//cdn.knightlab.com/libs/purpleline/latest/img/favicon.ico"&gt;
+</code></pre>
+</div>
+
+            </section>
+            <section class="clearfix">
+              <hr />
+              <h4 id="horizontal-logos">Horizontal logos</h4>
+              <p>Available with and without taglines, padding (useful for colored backgrounds or crowded layouts), and transparent backgrounds.</p>
+              <h6>With tagline</h6>
+              <p><img src="//cdn.knightlab.com/libs/purpleline/latest/img/logos/logo_horizontal_400x120_transparent_NOpadding.png"></p>
+              <label>Transparent background, no padding, 400px by 120px</label>
+              <div class="row collapse code-snippet">
+                <div class="small-3 medium-2 columns"><span class="prefix">Image SRC</span></div>
+                <div class="small-9 medium-10 columns">
+                  <input type="text" value="//cdn.knightlab.com/libs/purpleline/latest/img/logos/logo_horizontal_400x120_transparent_NOpadding.png"></input>
+                </div>
+              </div>
+              <label>Transparent background, no padding, 691px by 206px</label>
+              <div class="row collapse code-snippet">
+                <div class="small-3 medium-2 columns"><span class="prefix">Image SRC</span></div>
+                <div class="small-9 medium-10 columns">
+                  <input type="text" value="//cdn.knightlab.com/libs/purpleline/latest/img/logos/logo_horizontal_691x206_transparent_NOpadding.png"></input>
+                </div>
+              </div>
+              <label>Transparent background, padding, 800px by 300px</label>
+              <div class="row collapse code-snippet">
+                <div class="small-3 medium-2 columns"><span class="prefix">Image SRC</span></div>
+                <div class="small-9 medium-10 columns">
+                  <input type="text" value="//cdn.knightlab.com/libs/purpleline/latest/img/logos/logo_horizontal_800x300_transparent_padded.png"></input>
+                </div>
+              </div>
+              <label>White background, no padding, 691px by 206px</label>
+              <div class="row collapse code-snippet">
+                <div class="small-3 medium-2 columns"><span class="prefix">Image SRC</span></div>
+                <div class="small-9 medium-10 columns">
+                  <input type="text" value="//cdn.knightlab.com/libs/purpleline/latest/img/logos/logo_horizontal_691x206_white_NOpadding.png"></input>
+                </div>
+              </div>
+              <label>White background, padding, 800px by 300px</label>
+              <div class="row collapse code-snippet">
+                <div class="small-3 medium-2 columns"><span class="prefix">Image SRC</span></div>
+                <div class="small-9 medium-10 columns">
+                  <input type="text" value="//cdn.knightlab.com/libs/purpleline/latest/img/logos/logo_horizontal_800x300_white_padded.png"></input>
+                </div>
+              </div>
+              <h6>Without tagline</h6>
+              <p><img src="//cdn.knightlab.com/libs/purpleline/latest/img/logos/logo_horizontal_NOtagline_383x91_transparent_NOpadding.png"></p>
+              <label>Transparent background, no padding, 383px by 91px</label>
+              <div class="row collapse code-snippet">
+                <div class="small-3 medium-2 columns"><span class="prefix">Image SRC</span></div>
+                <div class="small-9 medium-10 columns">
+                  <input type="text" value="//cdn.knightlab.com/libs/purpleline/latest/img/logos/logo_horizontal_NOtagline_383x91_transparent_NOpadding.png"></input>
+                </div>
+              </div>
+              <label>Transparent background, no padding, 542px by 130px</label>
+              <div class="row collapse code-snippet">
+                <div class="small-3 medium-2 columns"><span class="prefix">Image SRC</span></div>
+                <div class="small-9 medium-10 columns">
+                  <input type="text" value="//cdn.knightlab.com/libs/purpleline/latest/img/logos/logo_horizontal_NOtagline_542x130_transparent_NOpadding.png"></input>
+                </div>
+              </div>
+              <label>Transparent background, padding, 615px by 205px</label>
+              <div class="row collapse code-snippet">
+                <div class="small-3 medium-2 columns"><span class="prefix">Image SRC</span></div>
+                <div class="small-9 medium-10 columns">
+                  <input type="text" value="//cdn.knightlab.com/libs/purpleline/latest/img/logos/logo_horizontal_NOtagline_615x205_transparent_padded.png"></input>
+                </div>
+              </div>
+              <label>White background, no padding, 542px by 130px</label>
+              <div class="row collapse code-snippet">
+                <div class="small-3 medium-2 columns"><span class="prefix">Image SRC</span></div>
+                <div class="small-9 medium-10 columns">
+                  <input type="text" value="//cdn.knightlab.com/libs/purpleline/latest/img/logos/logo_horizontal_NOtagline_542x130_white_NOpadding.png"></input>
+                </div>
+              </div>
+              <label>White background, padding, 615px by 205px</label>
+              <div class="row collapse code-snippet">
+                <div class="small-3 medium-2 columns"><span class="prefix">Image SRC</span></div>
+                <div class="small-9 medium-10 columns">
+                  <input type="text" value="//cdn.knightlab.com/libs/purpleline/latest/img/logos/logo_horizontal_NOtagline_615x205_white_padded.png"></input>
+                </div>
+              </div>
+
+            </section>
+            <section class="clearfix">
+              <hr />
+              <h4 id="vertical-logos">Vertical logos</h4>
+              <p>Available with and without taglines, padding (useful for colored backgrounds or crowded layouts), and transparent backgrounds.</p>
+              <h6>With tagline</h6>
+              <p><img src="//cdn.knightlab.com/libs/purpleline/latest/img/logos/logo_stacked_320x350_transparent_padded.png"></p>
+              <label>Transparent background, padding, 320px by 350px</label>
+              <div class="row collapse code-snippet">
+                <div class="small-3 medium-2 columns"><span class="prefix">Image SRC</span></div>
+                <div class="small-9 medium-10 columns">
+                  <input type="text" value="//cdn.knightlab.com/libs/purpleline/latest/img/logos/logo_stacked_320x350_transparent_padded.png"></input>
+                </div>
+              </div>
+              <label>Transparent background, no padding, 505px by 394px</label>
+              <div class="row collapse code-snippet">
+                <div class="small-3 medium-2 columns"><span class="prefix">Image SRC</span></div>
+                <div class="small-9 medium-10 columns">
+                  <input type="text" value="//cdn.knightlab.com/libs/purpleline/latest/img/logos/logo_stacked_505x394_transparent_NOpadding.png"></input>
+                </div>
+              </div>
+              <label>Transparent background, no padding, 600px by 548px</label>
+              <div class="row collapse code-snippet">
+                <div class="small-3 medium-2 columns"><span class="prefix">Image SRC</span></div>
+                <div class="small-9 medium-10 columns">
+                  <input type="text" value="//cdn.knightlab.com/libs/purpleline/latest/img/logos/logo_stacked_600x548_transparent_padded.png"></input>
+                </div>
+              </div>
+              <label>White background, no padding, 600px by 548px</label>
+              <div class="row collapse code-snippet">
+                <div class="small-3 medium-2 columns"><span class="prefix">Image SRC</span></div>
+                <div class="small-9 medium-10 columns">
+                  <input type="text" value="//cdn.knightlab.com/libs/purpleline/latest/img/logos/logo_stacked_600x548_white_padded.png"></input>
+                </div>
+              </div>
+
+              <h6>Without tagline</h6>
+              <p><img src="//cdn.knightlab.com/libs/purpleline/latest/img/logos/logo_stacked_256x256_NOtagline_transparent_padded.png"></p>
+              <label>Transparent background, padding, 256px by 256px</label>
+              <div class="row collapse code-snippet">
+                <div class="small-3 medium-2 columns"><span class="prefix">Image SRC</span></div>
+                <div class="small-9 medium-10 columns">
+                  <input type="text" value="//cdn.knightlab.com/libs/purpleline/latest/img/logos/logo_stacked_256x256_NOtagline_transparent_padded.png"></input>
+                </div>
+              </div>
+              <label>Transparent background, padding, 600px by 600px</label>
+              <div class="row collapse code-snippet">
+                <div class="small-3 medium-2 columns"><span class="prefix">Image SRC</span></div>
+                <div class="small-9 medium-10 columns">
+                  <input type="text" value="//cdn.knightlab.com/libs/purpleline/latest/img/logos/logo_stacked_600x600_NOtagline_transparent_padded.png"></input>
+                </div>
+              </div>
+              <label>White background, padding, 600px by 600px</label>
+              <div class="row collapse code-snippet">
+                <div class="small-3 medium-2 columns"><span class="prefix">Image SRC</span></div>
+                <div class="small-9 medium-10 columns">
+                  <input type="text" value="//cdn.knightlab.com/libs/purpleline/latest/img/logos/logo_stacked_600x600_NOtagline_white_padded.png"></input>
+                </div>
+              </div>
+
+            </section>
+            <section class="clearfix">
+              <hr />
+              <h4 id="diamond">Diamond logo</h4>
+              <p>Available in one size, 256px square. This logo has a transparent background.</p>
+              <img src="//cdn.knightlab.com/libs/purpleline/latest/img/logos/logo_diamond_256x256_transparent_padded.png">
+              <div class="row collapse code-snippet">
+                <div class="small-3 medium-2 columns"><span class="prefix">Image SRC</span></div>
+                <div class="small-9 medium-10 columns">
+                  <input type="text" value="//cdn.knightlab.com/libs/purpleline/latest/img/logos/logo_diamond_256x256_transparent_padded.png"></input>
+                </div>
+              </div>
+
+            </section>
+            <section class="clearfix"><hr />
+              <h4 id="logo-mark">Product logo mark</h4>
+              <p>The product logo mark is used on Knight Lab software, such as <a href="http://timeline.knightlab.com">TimelineJS <i class="fa fa-external-link"></i></a>. It is usually used in conjunction with the <code>h2.intro</code> and can be rendered in three size. The default size (and smallest it should be) is <code>60px</code>. Adding a class of <code>.xl</code> to <code>.logo-mark</code> increases the size to <code>90px</code>, and adding a class of <code>.xxl</code> increases it to <code>120px</code>.</p>
+              <div class="panel">
+                <h6 class="label">Logo mark</h6>
+                <h1 class="logo-mark">Timeline <span><em>JS</em></span></h1>
+                <h1 class="logo-mark xl">Timeline <span><em>JS</em></span></h1>
+                <h1 class="logo-mark xxl">Timeline <span><em>JS</em></span></h1>
+                <h6 class="label">HTML</h6>
+                <pre><code class="html">
+  &lt;h1 class="logo-mark"&gt;Timeline &lt;span&gt;&lt;em&gt;JS&lt;/em&gt;&lt;/span&gt;&lt;/h1&gt;
+  &lt;h1 class="logo-mark xl"&gt;Timeline &lt;span&gt;&lt;em&gt;JS&lt;/em&gt;&lt;/span&gt;&lt;/h1&gt;
+  &lt;h1 class="logo-mark xxl"&gt;Timeline &lt;span&gt;&lt;em&gt;JS&lt;/em&gt;&lt;/span&gt;&lt;/h1&gt;
+                </code></pre>
+              </div>
+            </section>
+          </div>
+        </div>
+      </div>
+    </div>
+    <footer>
+      <div class="about-knightlab">
+        <div id="knightlab-logo-column">
+          <a href="http://knightlab.northwestern.edu" target="_blank"><img src="http://knightlab.northwestern.edu/wp-content/uploads/2014/12/logo_stacked.png" class="img-responsive"></a>
+          <ul class="contact-icons">
+            <li><a title="follow @knightlab on Twitter" href="//www.twitter.com/knightlab"><i class="fa fa-twitter"></i></a></li>
+            <li><a title="Knight Lab on Facebook" href="//www.facebook.com/knightlab"><i class="fa fa-facebook"></i></a></li>
+            <li><a title="email Knight Lab" href="mailto:Knightlab@northwestern.edu"><i class="fa fa-envelope-o"></i></a></li>
+            <li><a title="Knight Lab on GitHub" href="//github.com/NUKnightLab/"><i class="fa fa-github-alt"></i></a></li>
+          </ul>
+        </div>
+        <div id="knightlab-description">
+          <p>The <a title="Northwestern University" href="http://www.northwestern.edu/" target="_blank">Northwestern University</a> Knight Lab is a team of technologists and journalists working at advancing news media innovation through exploration and experimentation.</p>
+          <p>A joint initiative of the <a href="http://www.mccormick.northwestern.edu/" target="_blank">Robert R. McCormick School of Engineering and Applied Science</a> and the<a href="http://www.medill.northwestern.edu/" target="_blank"> Medill School of Journalism, Media, Integrated Marketing Communications</a>.</p><img src="http://knightlab.northwestern.edu/wp-content/uploads/2014/12/Logos-Horizontal.png" class="img-responsive logos">
+        </div>
+        <div class="contact">
+          <address itemscope="" itemtype="http://data-vocabulary.org/Organization">
+            <span style="display:none;" itemprop="name" title="Knight Lab | Advancing news media innovation through exploration and experimentation." class="address-name">Knight Lab</span>
+            <span itemprop="tel" class="tel">(847) 467-4971 | </span>
+            <span itemprop="address" itemscope="" itemtype="http://data-vocabulary.org/Address" class="address">
+              <span itemprop="street-address" class="street-address"><a href="//maps.google.com/maps?q=1845+Sheridan+Road+Evanston+IL+6020&amp;hl=en&amp;ll=42.050942,-87.673511&amp;spn=0.003059,0.004898&amp;sll=42.050647,-87.674246&amp;sspn=0.012237,0.019591&amp;gl=us&amp;hnear=1845+Sheridan+Rd,+Evanston,+Cook,+Illinois+60201&amp;t=m&amp;z=18&amp;iwloc=A" target="_blank">1845 Sheridan Road Fisk #109 & #111</span>,
+              <span itemprop="locality">Evanston,</span>
+              <span itemprop="region">IL</span>
+              <span itemprop="postal-code">60208 |</span>
+              <span itemprop="country-name" class="address-country">United States</span>
+            </span>
+            <span style="display:none;" itemprop="geo" itemscope="" itemtype="http://www.data-vocabulary.org/Geo/" class="geo">
+              Latitude: <span itemprop="latitude">42.056893</span><br>
+              Longitude: <span itemprop="longitude">-87.676735</span>
+            </span>
+            <a style="display:none;" href="http://knightlab.northwestern.edu" itemprop="url" class="url">Northwestern University Knight Lab | Advancing media innovation through exploration and experimentation.</a>
+          </address>
+          <span class="copyright">| Copyright 2015, Northwestern University</span>
+        </div>
+      </div><!-- end .about-knightlab -->
+    </footer>
+    <script src="//ajax.googleapis.com/ajax/libs/jquery/2.1.3/jquery.min.js"></script>
+    <script src="//cdn.knightlab.com/libs/purpleline/latest/js/purpleline.min.js"></script>
+  </body>
+</html>
