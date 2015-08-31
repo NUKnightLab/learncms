@@ -46,6 +46,9 @@ subject to an additional IP rights grant found at http://polymer.github.io/PATEN
   <link rel="stylesheet" href="styles/main.css">
   <!-- endbuild-->
 
+  <link rel="stylesheet" href="styles/footer.css" media="screen" title="no title" charset="utf-8">
+  <link rel="stylesheet" href="styles/home.css" media="screen" title="no title" charset="utf-8">
+
   <!-- build:js bower_components/webcomponentsjs/webcomponents-lite.min.js -->
   <script src="bower_components/webcomponentsjs/webcomponents-lite.js"></script>
   <!-- endbuild -->
@@ -56,131 +59,112 @@ subject to an additional IP rights grant found at http://polymer.github.io/PATEN
 </head>
 
 <body unresolved class="fullbleed layout vertical">
-  <span id="browser-sync-binding"></span>
-  <template is="dom-bind" id="app">
-
-    <paper-drawer-panel id="paperDrawerPanel">
-      <div drawer>
-
-        <!-- Drawer Toolbar -->
-        <paper-toolbar id="drawerToolbar">
-          <span class="paper-font-title">Menu</span>
-        </paper-toolbar>
-
-        <!-- Drawer Content -->
-          <paper-menu class="list" attr-for-selected="data-route" selected="{{route}}" on-iron-select="onMenuSelect">
-              <a data-route="home" href="/">
-                <iron-icon icon="home"></iron-icon>
-                <span>Home</span>
-              </a>
-
-              <a data-route="users" href="/users">
-                <iron-icon icon="info"></iron-icon>
-                <span>Users</span>
-              </a>
-
-              <a data-route="contact" href="/contact">
-                <iron-icon icon="mail"></iron-icon>
-                <span>Contact</span>
-              </a>
-          </paper-menu>
+  <section class="header-section">
+    <div class="splash-section">
+      <div class="header-container">
+        <h1 class='header'>Learn</h1>
       </div>
-      <paper-header-panel main mode="waterfall-tall">
+      <h2 class='subhead'>Learn at your own pace, in your own order</h2>
+      <div class="intro-graph">
 
-        <!-- Main Toolbar -->
-        <paper-toolbar id="mainToolbar">
-          <paper-icon-button id="paperToggle" icon="menu" paper-drawer-toggle></paper-icon-button>
-          <span class="flex"></span>
+      </div>
 
-          <!-- Toolbar icons -->
-          <paper-icon-button icon="refresh"></paper-icon-button>
-          <paper-icon-button icon="search"></paper-icon-button>
+      <div class="lesson-container">
+        <p class='lesson-primer'>
+          Start here:
+        </p>
+        <lesson-ref header="Basic HTML" image="images/learn/source-code.png" url="lesson.html">
+          <p>
+            In this standalone lesson, we'll hit on the rules and regulations for writing solid HTML, as well as the top tags you’re likely to use. Head into this standalone lesson for a better understanding of how to markup your content.
+          </p>
+        </lesson-ref>
+      </div>
 
-          <!-- Application name -->
-          <div class="middle paper-font-display2 app-name">Polymer Starter Kit</div>
-
-          <!-- Application sub title -->
-          <div class="bottom title"></div>
-
-        </paper-toolbar>
-
-        <!-- Main Content -->
-        <div class="content">
-          <iron-pages attr-for-selected="data-route" selected="{{route}}">
-
-            <section data-route="home">
-
-              <paper-material elevation="1" class="paper-font-body2">
-                <p>For now, leaving the "polymer starter kit" index page mostly intact.
-                You may be looking for the <a href="lesson.html">Prototype lesson.</a></p>
-              </paper-material>
-
-
-              <paper-material elevation="1">
-                <my-greeting greeting='hooooooo'></my-greeting>
-
-                <p class="paper-font-subhead">You now have:</p>
-                <my-list></my-list>
-
-                <p class="paper-font-body2">Looking for more Web App layouts? Check out our <a href="https://github.com/PolymerElements/app-layout-templates">layouts</a> collection. You can also <a href="http://polymerelements.github.io/app-layout-templates/">preview</a> them live.</p>
-              </paper-material>
-              <paper-material elevation="1">
-                <p class="paper-font-body2">This is another card.</p>
-              </paper-material>
-            
-
-              <paper-material elevation="1" class="paper-font-body2">
-                <h1 id="license">License</h1>
-                <p>Everything in this repo is BSD style license unless otherwise specified.</p>
-                <p>Copyright (c) 2015 The Polymer Authors. All rights reserved.</p>
-                <p>Redistribution and use in source and binary forms, with or without modification, are permitted provided that the following conditions are met:</p>
-                <ul>
-                <li>Redistributions of source code must retain the above copyright
-                notice, this list of conditions and the following disclaimer.</li>
-                <li>Redistributions in binary form must reproduce the above
-                copyright notice, this list of conditions and the following disclaimer
-                in the documentation and/or other materials provided with the
-                distribution.</li>
-                <li>Neither the name of Google Inc. nor the names of its
-                contributors may be used to endorse or promote products derived from
-                this software without specific prior written permission.</li>
-                </ul>
-                <p>THIS SOFTWARE IS PROVIDED BY THE COPYRIGHT HOLDERS AND CONTRIBUTORS &quot;AS IS&quot; AND ANY EXPRESS OR IMPLIED WARRANTIES, INCLUDING, BUT NOT LIMITED TO, THE IMPLIED WARRANTIES OF MERCHANTABILITY AND FITNESS FOR A PARTICULAR PURPOSE ARE DISCLAIMED. IN NO EVENT SHALL THE COPYRIGHT OWNER OR CONTRIBUTORS BE LIABLE FOR ANY DIRECT, INDIRECT, INCIDENTAL, SPECIAL, EXEMPLARY, OR CONSEQUENTIAL DAMAGES (INCLUDING, BUT NOT LIMITED TO, PROCUREMENT OF SUBSTITUTE GOODS OR SERVICES; LOSS OF USE, DATA, OR PROFITS; OR BUSINESS INTERRUPTION) HOWEVER CAUSED AND ON ANY THEORY OF LIABILITY, WHETHER IN CONTRACT, STRICT LIABILITY, OR TORT (INCLUDING NEGLIGENCE OR OTHERWISE) ARISING IN ANY WAY OUT OF THE USE OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.</p>
-              </paper-material>
-
-            </section>
-
-            <section data-route="users">
-              <paper-material elevation="1">
-                <h2 class="paper-font-display2">Users</h2>
-                <p>This is the users section</p>
-                <a href="/users/Rob">Rob</a>
-              </paper-material>
-            </section>
-
-            <section data-route="user-info">
-              <paper-material elevation="1">
-                <h2 class="paper-font-display2">
-                User:<span>{{params.name}}</span>
-                </h2>
-                <div>This is <span>{{params.name}}</span>'s section</div>
-              </paper-material>
-            </section>
-
-            <section data-route="contact">
-              <paper-material elevation="1">
-                <h2 class="paper-font-display2">Contact</h2>
-                <p>This is the contact section</p>
-              </paper-material>
-            </section>
-
-          </iron-pages>
+      <a href="#lessons" class='learn'>
+        <div class="learn-more" id='lessons'>
+          Want to Learn More?
         </div>
-      </paper-header-panel>
-    </paper-drawer-panel>
+      </a>
+    </div>
+    <h2 class='lessons-subhead'>Lessons</h2>
+    <div class="link-refs-container">
+      <div class="lesson-grid">
+        <link-ref class='link'></link-ref>
+        <link-ref class='link'></link-ref>
+        <link-ref class='link'></link-ref>
+        <link-ref class='link'></link-ref>
+        <link-ref class='link'></link-ref>
+        <link-ref class='link'></link-ref>
+      </div>
+    </div>
 
-  </template>
+    <a href="#">
+      <div class="what-else">
+        What else would you like to learn?
+      </div>
+    </a>
+  </section>
+  <section class='about-section'>
+    <div class="headshot-container">
+      <p class='headshot-tagline'>
+        For students, by students
+      </p>
+      <div class="headshot">
 
+      </div>
+      <div class="headshot">
+
+      </div>
+      <div class="headshot">
+
+      </div>
+      <div class="headshot">
+
+      </div>
+      <div class="headshot">
+
+      </div>
+    </div>
+    <div class="about-copy">
+      <h2 class='about-subhead'>About</h2>
+      <p class='about-graph'>
+        Lorem ipsum dolor sit amet, consectetur adipiscing elit. Ut efficitur est eu risus bibendum, nec aliquet dolor mattis. Vestibulum vulputate cursus ligula sed sodales. Morbi tempor malesuada tempus. Lorem ipsum dolor sit amet, consectetur adipiscing elit. Ut efficitur est eu risus bibendum, nec aliquet dolor mattis. Vestibulum vulputate cursus ligula sed sodales. Morbi tempor malesuada tempus.
+      </p>
+    </div>
+  </section>
+  <!-- <footer>
+    <div class="about-knightlab">
+      <div id="knightlab-logo-column">
+        <a href="./Knight Lab _ Northwestern University_files/Knight Lab _ Northwestern University.html" target="_blank"><img src="images/index/logo_stacked.png" class="img-responsive"></a>
+        <ul class="social list-inline">
+           <li><a href="http://www.twitter.com/knightlab" target="_blank" title="Knight Lab on Twitter"><span class="icon-twitter"></span></a></li>
+          <li><a href="https://www.facebook.com/knightlab" target="_blank" title="Knight Lab on Facebook"><span class="icon-facebook"></span></a></li>
+          <li><a href="https://github.com/NUKnightLab/" target="_blank" title="Knight Lab on GitHub"><span class="icon-github"></span></a></li>
+        </ul>
+
+            </div>
+      <div id="knightlab-description">
+      <p>The <a title="Northwestern University" href="http://www.northwestern.edu/" target="_blank">Northwestern University</a> Knight Lab is a team of technologists and journalists working at advancing news media innovation through exploration and experimentation.</p>
+      <p>A joint initiative of the <a href="http://www.mccormick.northwestern.edu/" target="_blank">Robert R. McCormick School of Engineering and Applied Science</a> and the<a href="http://www.medill.northwestern.edu/" target="_blank"> Medill School of Journalism, Media, Integrated Marketing Communications</a>.</p><img src="images/index/Logos-Horizontal.png" class="img-responsive logos">
+      </div>
+      <div class="copyright">
+        <address itemscope="" itemtype="http://data-vocabulary.org/Organization">
+          <span style="display:none;" itemprop="name" title="Knight Lab | Advancing news media innovation through exploration and experimentation." class="address-name">Knight Lab</span>
+          <span itemprop="tel" class="tel">(847) 467-4971</span>
+          <span itemprop="address" itemscope="" itemtype="http://data-vocabulary.org/Address" class="address"><span itemprop="street-address" class="street-address">1845 Sheridan Road</span><span class="room-num">Fisk #109 &amp; #111</span>
+          <div class="address-group">
+          <span itemprop="locality">Evanston,</span> <span itemprop="region">IL</span> <span itemprop="postal-code">60208 </span>
+          <span style="display:none;" itemprop="geo" itemscope="" itemtype="http://www.data-vocabulary.org/Geo/" class="geo">Latitude: <span itemprop="latitude">42.056893</span><br>Longitude: <span itemprop="longitude">-87.676735</span></span><a style="display:none;" href="./Knight Lab _ Northwestern University_files/Knight Lab _ Northwestern University.html" itemprop="url" class="url">Northwesten University Knight Lab | Advancing media innovation through exploration and experimentation.</a>
+        </div></span></address>
+        © Copyright  2015            <span title="Knight Lab">
+                 Northwestern University
+              </span>
+          </div>
+          </div>
+
+
+        <!-- end #footer-wrapper -->
+  </footer> -->
   <!-- build:js scripts/app.js -->
   <script src="scripts/app.js"></script>
   <!-- endbuild-->
