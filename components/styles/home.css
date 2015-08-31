@@ -107,11 +107,13 @@ body {
 .link-refs-container {
   display: block;
   width: 80vw;
+  max-width: 1000px;
   margin: 0 auto;
 }
 
 
 link-ref {
+  width: 30%;
   margin-right: 0;
 }
 
@@ -120,7 +122,6 @@ link-ref {
   display: flex;
   display: -webkit-flex;
   flex-direction: row;
-  max-width: 1000px;
   -webkit-flex-direction: row;
   flex-wrap: wrap;
   -webkit-flex-wrap: wrap;
@@ -141,7 +142,9 @@ link-ref {
 
 .about-section {
   width: 100vw;
+  min-height: 100vh;
   background: #fff;
+  position: relative;
 }
 
 
@@ -165,7 +168,8 @@ link-ref {
 .headshot-tagline {
   font-weight: 300;
   position: absolute;
-  margin-top: 10px;
+  top: 10px;
+  margin-left: 5%;
   color: white;
 }
 
