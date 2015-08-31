@@ -1,166 +1,194 @@
 body {
-  background-color: #F4F4F4;
+  background-color: #f4f4f4;
 }
+
 
 .splash-section {
   min-height: 100vh;
 }
 
+
 .header-section {
   width: 100vw;
 }
 
+
 .header-container {
-  margin-top: 0;
   width: 100%;
   height: 20vh;
-  background: #273238;
-  padding-top:5%;
+  margin-top: 0;
   margin-bottom: 0;
+  padding-top: 5%;
   padding-bottom: 0;
+  background: #273238;
 }
+
 
 .header {
   font-size: 6em;
-  margin-bottom: 0;
-  margin-top: 0;
-  color: #80CBC4;
-  text-align: center;
   font-weight: 300;
+  margin-top: 0;
+  margin-bottom: 0;
+  text-align: center;
+  color: #80cbc4;
 }
+
 
 .subhead {
-  margin-top: 0;
-  margin-bottom: 0;
+  font-size: 2.5em;
   font-weight: 400;
+  margin-top: 0;
+  margin-top: 20px;
+  margin-bottom: 0;
   text-align: center;
   color: #f2777a;
-  margin-top: 20px;
-  font-size: 2.5em;
 }
 
+
 .intro-graph {
-  max-width: 600px;
   display: block;
+  max-width: 600px;
   margin: 0 auto;
   text-align: center;
 }
 
+
 .lesson-container {
+  position: relative;
+  right: 30px;
   display: block;
   width: 80%;
   max-width: 600px;
   margin: 0 auto;
-  position: relative;
-  right: 30px;
 }
 
+
 .lesson-primer {
-  padding-left: 30px;
-  padding-bottom: 0;
   margin-bottom: -10px;
+  padding-bottom: 0;
+  padding-left: 30px;
 }
+
 
 .learn-more,
 .what-else {
-  height: 50px;
-  width: 400px;
   line-height: 50px;
-  border: #f2777a solid;
-  border-radius: 10px;
   bottom: 50px;
   display: block;
+  width: 400px;
+  height: 50px;
   margin: 0 auto;
   text-align: center;
   text-transform: uppercase;
   color: #f2777a;
+  border: solid #f2777a;
+  border-radius: 10px;
 }
+
 
 .learn-more:hover,
 .what-else:hover {
-  background-color: #f2777a;
   transition: all .5s ease;
   color: white;
+  background-color: #f2777a;
 }
+
 
 .learn-more {
   margin-top: 20px;
 }
 
+
 .what-else {
   margin-bottom: 50px;
 }
 
+
 .link-refs-container {
   display: block;
-  margin: 0 auto;
   width: 80vw;
+  margin: 0 auto;
 }
+
 
 link-ref {
   margin-right: 0;
 }
 
+
 .lesson-grid {
-    display: flex;
-    display: -webkit-flex;
-    flex-direction: row;
-    flex-wrap: wrap;
-    max-width: 1000px;
-    align-content: center;
-    align-items: center;
-    justify-content: space-between;
+  display: flex;
+  display: -webkit-flex;
+  flex-direction: row;
+  max-width: 1000px;
+  -webkit-flex-direction: row;
+  flex-wrap: wrap;
+  -webkit-flex-wrap: wrap;
+  align-content: center;
+  -webkit-align-content: center;
+  align-items: center;
+  -webkit-align-items: center;
+  justify-content: space-between;
+  -webkit-justify-content: space-between;
 }
+
 
 .link {
-  margin-bottom: 40px;
   max-width: 30%;
+  margin-bottom: 40px;
 }
 
+
 .about-section {
-  min-height: 100vh;
+  width: 100vw;
   background: #fff;
 }
 
+
 .headshot-container {
+  display: flex;
+  display: -webkit-flex;
   width: 100%;
   height: 150px;
   background-color: #273238;
-      display: flex;
-      flex-direction: row;
-      align-content: center;
-      align-items: center;
-      justify-content: space-around;
+  flex-direction: row;
+  -webkit-flex-direction: row;
+  align-content: center;
+  -webkit-align-content: center;
+  align-items: center;
+  -webkit-align-items: center;
+  justify-content: space-around;
+  -webkit-justify-content: space-around;
 }
+
 
 .headshot-tagline {
-  position: absolute;
-  color: white;
-  margin-top: 10px;
   font-weight: 300;
+  position: absolute;
+  margin-top: 10px;
+  color: white;
 }
+
 
 .headshot {
-  height: 80px;
   width: 80px;
+  height: 80px;
+  margin-top: 25px;
   border-radius: 100%;
   background-color: #f2777a;
-  margin-top: 25px;
 }
 
+
 .about-copy {
+  display: block;
   width: 80%;
   max-width: 600px;
-  display: block;
   margin: 0 auto;
 }
 
+
 .about-subhead,
 .lessons-subhead {
-  text-align: center;
   font-size: 3em;
-}
-
-.about-graph {
-
+  text-align: center;
 }
