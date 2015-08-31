@@ -1,9 +1,9 @@
 <!--
 
-`learn-nav` is the consistent navigation bar at the top of every page. The element is intended to be empty and no attributes are needed.. 
+`learn-nav` is the consistent navigation bar at the top of every page. The element is intended to be empty and no attributes are needed..
 
-TK: 
-    * a hamburger menu for the top left. 
+TK:
+    * a hamburger menu for the top left.
 
 Example:
 
@@ -17,7 +17,12 @@ Example:
     <style>
 
         ::content {
-           
+
+        }
+
+        ::content a {
+            color: inherit;
+            text-decoration: inherit;
         }
 
         ::content #navigation {
@@ -47,11 +52,11 @@ Example:
             <!-- TK: hamburger menu? -->
             <div id="navigation-container">
 
-                Learn
+                <a href="/">Learn</a>
                 <a id="kl-link" href="http://knightlab.northwestern.edu"><img src="{{ logo }}"></a>
             </div>
         </div>
-    
+
     </template>
 </dom-module>
 <script type="text/javascript">
