@@ -27,6 +27,7 @@ admin.site.site_header = "Learn.KnightLab.com admin"
 
 from filebrowser.sites import site
 from grappelli import urls as grapelli_urls
+from os.path import abspath, dirname, join, normpath
 
 urlpatterns = patterns(
     '',
@@ -43,4 +44,6 @@ urlpatterns = patterns(
 # otherwise, Django will save us
 urlpatterns += static(settings.STATIC_URL, document_root=settings.STATIC_ROOT)
 urlpatterns += static(settings.MEDIA_URL, document_root=settings.MEDIA_ROOT)
+# these two need to be managed with nginx in AWS.
 urlpatterns += static(settings.FILEBROWSER_URL, document_root=settings.FILEBROWSER_ROOT)
+urlpatterns += static('/legacy/', document_root=normpath(join(settings.PROJECT_ROOT, 'legacy')))
