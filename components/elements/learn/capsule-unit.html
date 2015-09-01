@@ -196,6 +196,11 @@ Example:
 			max-width:400px;
 			min-width:200px;
 		}
+
+		paper-fab::shadow > paper-material {
+		    @apply(--shadow-elevation-8dp);
+		}
+
 	</style>
 	<template>
 		<div id="capsule-container" class="material-shadow" elevation="1">
@@ -206,7 +211,7 @@ Example:
 
 				</div>
 				<h2 id="capsule-header">{{ header }}</h2>
-				<paper-fab icon="content-copy"></paper-fab>
+				<paper-fab elevation="10" icon="content-copy"></paper-fab>
 			</div>
 
 			<div id="capsule-content-container" class="material-shadow" elevation="1">

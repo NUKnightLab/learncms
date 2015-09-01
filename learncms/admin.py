@@ -38,8 +38,20 @@ class LessonForm(forms.ModelForm):
         exclude = ('created_at', 'updated_at', 'created_by', 'updated_by')
 
 class LessonAdmin(reversion.VersionAdmin):
+    def view_link(obj):
+      return u"<a href='{}' target='_blank' style='word-wrap:none'><span class='ui-icon ui-icon-extlink'>View</span></a>".format(obj.get_absolute_url())
+
+    view_link.short_description = 'View'
+    view_link.allow_tags = True
+
+    def save_model(self, request, obj, form, change):
+        if obj.created_by is None:
+            obj.created_by = request.user
+        obj.updated_by = request.user
+        obj.save()
+
     form = LessonForm
-    list_display = ('title', 'slug', 'status', 'updated_at', 'updated_by')
+    list_display = ('title', view_link, 'slug', 'status', 'updated_at', 'updated_by')
     prepopulated_fields = {"slug": ("title",)}
     search_fields = ['title', 'reference_blurb', 'content']
     save_on_top = True
@@ -47,11 +59,6 @@ class LessonAdmin(reversion.VersionAdmin):
         models.ImageField: {'widget': FileInput},
     }
 
-    def save_model(self, request, obj, form, change):
-        if obj.created_by is None:
-            obj.created_by = request.user
-        obj.updated_by = request.user
-        obj.save()
 
 class ZoomingImageAdmin(admin.ModelAdmin):
     list_display = ('slug',)
