@@ -327,29 +327,28 @@ Example:
 				this.capsule_content_container.style.visibility = "hidden";
 				this.capsule_ref.style.zIndex = "4";
 				this.window_open = false;
-			} else {
-				console.log("window closed")
 			}
 
 
 		},
 
 		windowOn:function(e) {
-			function findContainerRect(e) {
+			function findPageItemRect(e) {
 				if (e.tagName == 'PAGE-ITEM') return e.getContainerRect();
 				if (e.parentElement == null) return e.getBoundingClientRect();
-				return findContainerRect(e.parentElement);
+				return findPageItemRect(e.parentElement);
 			}
 
-			var container_rect = findContainerRect(this);
+			var page_item_rect = findPageItemRect(this);
+
 			this.capsule_content.style.display = "block";
 			this.capsule_content.style.opacity = 1;
 			this.capsule_content_container.style.visibility = "visible";
-			this.capsule_content_container.style.width = container_rect.width - 100 + "px";
-			this.capsule_content_container.style.height = container_rect.height - 150 + "px";
+			this.capsule_content_container.style.width = page_item_rect.width - 100 + "px";
+			this.capsule_content_container.style.height = page_item_rect.height - 150 + "px";
 
 			var container_top = this.capsule_content_container.getBoundingClientRect();
-			//this.capsule_content_container.style.left = -container_top.left + 50 + "px";
+			this.capsule_content_container.style.left = (-container_top.left + 50 + page_item_rect.left) + "px";
 			this.capsule_content_container.style.top = -container_top.top + 100 + "px";
 			this.capsule_content_container.style.opacity = "1";
 			this.capsule_content_container.setAttribute("elevation", "5");
