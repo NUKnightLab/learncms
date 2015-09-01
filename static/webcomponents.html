@@ -10994,6 +10994,8 @@ li.L9 {
 			min-width:200px;
 		}
 
+		/* Not sure how to share this, maybe can't because of ::shadow?
+		   Should we do this for all paper-fab elements? (See github #21) */
 		paper-fab::shadow > paper-material {
 		    @apply(--shadow-elevation-8dp);
 		}
@@ -11118,17 +11120,9 @@ li.L9 {
 
 			if (this.window_open) {
 				var self = this;
-				// this.capsule_content_container.removeEventListener("transitionend",function(e){
-				// 	self._hideContentContainer();
-				// },false);
-
-				// this.capsule_content_container.removeEventListener("webkitTransitionEnd",function(e){
-				// 	self._hideContentContainer();
-				// },false);
 
 				this.capsule_content_container.style.visibility = "hidden";
 				this.capsule_ref.style.zIndex = "4";
-				//this.capsule_content_container.style.opacity = "1";
 				this.window_open = false;
 			} else {
 				console.log("window closed")
@@ -11138,15 +11132,21 @@ li.L9 {
 		},
 
 		windowOn:function(e) {
+			function findContainerRect(e) {
+				if (e.tagName == 'PAGE-ITEM') return e.getContainerRect();
+				if (e.parentElement == null) return e.getBoundingClientRect();
+				return findContainerRect(e.parentElement);
+			}
 
+			var container_rect = findContainerRect(this);
 			this.capsule_content.style.display = "block";
 			this.capsule_content.style.opacity = 1;
 			this.capsule_content_container.style.visibility = "visible";
-			this.capsule_content_container.style.width = window.innerWidth - 100 + "px";
-			this.capsule_content_container.style.height = window.innerHeight - 150 + "px";
+			this.capsule_content_container.style.width = container_rect.width - 100 + "px";
+			this.capsule_content_container.style.height = container_rect.height - 150 + "px";
 
 			var container_top = this.capsule_content_container.getBoundingClientRect();
-			this.capsule_content_container.style.left = -container_top.left + 50 + "px";
+			//this.capsule_content_container.style.left = -container_top.left + 50 + "px";
 			this.capsule_content_container.style.top = -container_top.top + 100 + "px";
 			this.capsule_content_container.style.opacity = "1";
 			this.capsule_content_container.setAttribute("elevation", "5");
@@ -12327,7 +12327,9 @@ Polymer({
 			}, 100);
 		},
 
-
+		getContainerRect: function() {
+		  return this.page_item.getBoundingClientRect();		
+		},
 		/* PROPERTIES
 		================================================== */
 		properties: {
