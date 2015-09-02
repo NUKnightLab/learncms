@@ -29,7 +29,7 @@ section {
 	margin-bottom:100px;
 }
 
-#splash p {
+.description {
 	width: 70%;
 	margin: 0 auto;
 	margin-bottom:40px;
