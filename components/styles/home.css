@@ -1,18 +1,48 @@
 body {
   background-color: #f4f4f4;
+  font-size: 16px;
 }
 
 
-.splash-section {
-  min-height: 100vh;
+header {
+	width: 100%;
+	height: 20vh;
+	margin-top: 0;
+	margin-bottom: 0;
+	padding-top: 5%;
+	padding-bottom: 0;
+	background: #273238;
+	text-align:center;
 }
 
-
-.header-section {
-  width: 100vw;
+section {
+	margin-top:50px;
+	margin-bottom:50px;
 }
 
+#about {
+	display: block;
+    width: 80%;
+    max-width: 600px;
+    margin: 0 auto;
+    margin-bottom:100px;
+}
 
+#lessons {
+	background: #DDD;
+	padding-bottom:100px;
+	margin-top:0px;
+}
+
+#student {
+	background: #80cbc4;
+	padding-bottom:100px;
+	margin-bottom:0px;
+}
+
+footer p {
+	font-size: 14px;
+}
 .header-container {
   width: 100%;
   height: 20vh;
@@ -23,18 +53,35 @@ body {
   background: #273238;
 }
 
+p {
+	font-family: Roboto, sans-serif;
+	font-size: 20px;
+	line-height: 26px;
+	font-weight: 300;
 
-.header {
-  font-size: 6em;
-  font-weight: 300;
-  margin-top: 0;
-  margin-bottom: 0;
-  text-align: center;
-  color: #80cbc4;
 }
 
+h1 {
+	font-family: Roboto, sans-serif;
+	color: #80cbc4;
+	font-size: 64px;
+	font-weight: normal;
+	width: 100%;
+	text-align: center;
+	margin:0;
+	z-index:2;
 
-.subhead {
+}
+
+h2 {
+	font-family: Roboto, sans-serif;
+	font-size: 38px;
+    text-align: center;
+    color: #338D83;
+    font-weight: 400;
+}
+
+/*.subhead {
   font-size: 2.5em;
   font-weight: 400;
   margin-top: 0;
@@ -42,7 +89,7 @@ body {
   margin-bottom: 0;
   text-align: center;
   color: #f2777a;
-}
+}*/
 
 
 .intro-graph {
@@ -63,15 +110,8 @@ body {
 }
 
 
-.lesson-primer {
-  margin-bottom: -10px;
-  padding-bottom: 0;
-  padding-left: 30px;
-}
 
-
-.learn-more,
-.what-else {
+.ghost-button {
   line-height: 50px;
   bottom: 50px;
   display: block;
@@ -86,22 +126,19 @@ body {
 }
 
 
-.learn-more:hover,
-.what-else:hover {
+.ghost-button:hover {
   transition: all .5s ease;
   color: white;
   background-color: #f2777a;
 }
 
 
-.learn-more {
-  margin-top: 20px;
+.ghost-button {
+  margin-top: 50px;
 }
 
 
-.what-else {
-  margin-bottom: 50px;
-}
+
 
 
 .link-refs-container {
@@ -140,20 +177,12 @@ link-ref {
 }
 
 
-.about-section {
-  width: 100vw;
-  min-height: 100vh;
-  background: #fff;
-  position: relative;
-}
-
-
 .headshot-container {
   display: flex;
   display: -webkit-flex;
   width: 100%;
   height: 150px;
-  background-color: #273238;
+ /* background-color: #273238;*/
   flex-direction: row;
   -webkit-flex-direction: row;
   align-content: center;
@@ -164,35 +193,12 @@ link-ref {
   -webkit-justify-content: space-around;
 }
 
-
-.headshot-tagline {
-  font-weight: 300;
-  position: absolute;
-  top: 10px;
-  margin-left: 5%;
-  color: white;
-}
-
-
-.headshot {
-  width: 80px;
-  height: 80px;
-  margin-top: 25px;
-  border-radius: 100%;
-  background-color: #f2777a;
-}
-
-
-.about-copy {
-  display: block;
-  width: 80%;
-  max-width: 600px;
-  margin: 0 auto;
-}
-
-
-.about-subhead,
-.lessons-subhead {
-  font-size: 3em;
-  text-align: center;
+.headshot-container img {
+	width: 120px;
+	height: 120px;
+	/*margin-top: 25px;*/
+	border-radius: 100%;
+	background-color: #f2777a;
+	display:block;
+	z-index:20;
 }
