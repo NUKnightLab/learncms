@@ -1,0 +1,32 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+	<meta charset="UTF-8">
+	<title>Write Some CSS -- Learn.knightlab.com</title>
+
+	<script src="bower_components/webcomponentsjs/webcomponents-lite.min.js">
+	</script>
+	<link rel="import" href="elements/elements.html">
+	<link rel="stylesheet" href="styles/main.css">
+	<style type="text/css">
+		/* Eventually this will migrate to an external CSS file */
+
+		narrative-text {
+			/* Does narrative-text need to be a polymer/web component?
+				Or if it is just a matter of CSS, can we get away with a custom element name
+				and corresponding CSS selectors?
+				**/
+			font-family: "Roboto Light", sans-serif;
+		}
+	</style>
+
+	<link rel="stylesheet" href="styles/error.css">
+</head>
+
+<body class="fullbleed">
+    <h1 class='error-code'>404</h1>
+    <h2 class='error-subhead'>Where do you think you're going?</h2>
+    <h3 class='error-message'>It looks like the page you're trying to access doesn't actually exist. Fortunately, this one sure does.</h3>
+    <h3 class='error-message'>You can try hitting the back button or you can <a href="home-iteration.html">make like E.T.</a></h3>
+</body>
