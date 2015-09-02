@@ -6,7 +6,7 @@ body {
 
 header {
 	width: 100%;
-	height: 20vh;
+	
 	margin-top: 0;
 	margin-bottom: 0;
 	padding-top: 5%;
@@ -23,10 +23,16 @@ section {
 
 #about {
 	display: block;
-    width: 80%;
-    max-width: 600px;
-    margin: 0 auto;
-    margin-bottom:100px;
+	width: 80%;
+	max-width: 600px;
+	margin: 0 auto;
+	margin-bottom:100px;
+}
+
+#splash p {
+	width: 70%;
+	margin: 0 auto;
+	margin-bottom:40px;
 }
 
 #lessons {
@@ -79,9 +85,9 @@ h1 {
 h2 {
 	font-family: Roboto, sans-serif;
 	font-size: 38px;
-    text-align: center;
-    color: #338D83;
-    font-weight: 400;
+	text-align: center;
+	color: #338D83;
+	font-weight: 400;
 }
 
 /*.subhead {
