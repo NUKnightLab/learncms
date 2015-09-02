@@ -20,7 +20,10 @@ section {
 	margin-bottom:50px;
   display:block;
 }
-
+#lessons lesson-ref {
+	display:block;
+	max-width: 300px;
+}
 #about {
 	display: block;
 	width: 80%;
