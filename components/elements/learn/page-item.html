@@ -1,11 +1,11 @@
 <dom-module id="page-item">
 	<style>
-		::content #page-container {
+		#page-container {
 			position:relative;
 			z-index:20;
 		};
 
-		::content #page-cover {
+		#page-cover {
 			width:100%;
 			height:100%;
 
@@ -42,7 +42,7 @@
 			     -o-transition-timing-function: cubic-bezier(0.770, 0.000, 0.175, 1.000);
 			        transition-timing-function: cubic-bezier(0.770, 0.000, 0.175, 1.000);
 		};
-		::content #page-cover-background {
+		#page-cover-background {
 			/*background-color:#338D83;*/
 			background-color:#273238;
 			opacity:0.6;
@@ -53,7 +53,7 @@
 			left:0;
 		};
 
-		::content #page-cover-header {
+		#page-cover-header {
 			position:absolute;
 			top:0;
 			right:0;
@@ -70,14 +70,14 @@
 			-moz-justify-content: center;
 			-ms-justify-content: center;
 		}
-		::content #page-cover-header-container {
+		#page-cover-header-container {
 			text-align:center;
 			padding-left:10px;
 			padding-right:10px;
 			z-index:1;
 		};
 
-		::content #page-cover-header-container paper-fab {
+		#page-cover-header-container paper-fab {
 			/*background-color:#273238;
 			color:#FFF;*/
 			background-color:#80CBC4;
@@ -85,7 +85,7 @@
 
 		};
 
-		::content #page-cover-header h2 {
+		#page-cover-header h2 {
 			display: block;
 			text-align:center;
 			font-family: Roboto, sans-serif;
@@ -110,7 +110,7 @@
 					transform: rotate(90deg);*/
 		}
 
-		::content #page-item {
+		#page-item {
 			width:100%;
 			height:100vh;
 			position:absolute;
@@ -145,7 +145,7 @@
 			        transition-timing-function: cubic-bezier(0.770, 0.000, 0.175, 1.000);
 		};
 
-		::content #page-item.loaded {
+		#page-item.loaded {
 			width:75%;
 			margin-left:25%;
 
@@ -383,7 +383,7 @@
 		},
 
 		getContainerRect: function() {
-		  return this.page_item.getBoundingClientRect();		
+		  return this.page_item.getBoundingClientRect();
 		},
 		/* PROPERTIES
 		================================================== */

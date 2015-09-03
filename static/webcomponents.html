@@ -10148,7 +10148,7 @@ li.L9 {
 			font-weight: bold;
 		}
 
-		::content #step-content {
+		:host ::content #step-content {
 			padding: 20px;
 			width: 70%;
 			/* for large screens */
@@ -10159,7 +10159,7 @@ li.L9 {
 			background-color: #FFF;
 		}
 
-		::content #step-content p {
+		:host ::content #step-content p {
 			font-family: 'Roboto', 'Noto', sans-serif;
 			font-size: 18px;
 			line-height: 26px;
@@ -10168,7 +10168,7 @@ li.L9 {
 			margin-bottom: 20px;
 		}
 
-		::content h2#step-header {
+		:host ::content h2#step-header {
 			font-family: 'Roboto', 'Noto', sans-serif;
 			color: #338D83;
 			font-size: 28px;
@@ -10177,22 +10177,22 @@ li.L9 {
 		}
 
 		/* Begin ordered list styling */
-		::content #step-content ol {
+		:host ::content #step-content ol {
 			counter-reset: item;
 			padding-left: 0;
 			margin-left: 6em;
 		}
 
-		::content #step-content ol li {
+		:host ::content #step-content ol li {
 			display: block;
 			margin-bottom: 3em;
 		}
 
-		::content #step-content ol li p {
+		:host ::content #step-content ol li p {
 			margin-top: 0em;
 		}
 
-		::content #step-content ol li:before {
+		:host ::content #step-content ol li:before {
 			display: inline-block;
 			content: counter(item);
 			counter-increment: item;
@@ -10210,7 +10210,7 @@ li.L9 {
 		}
 		/* End ordered list styling */
 
-		::content #step-content p code {
+		:host ::content #step-content p code {
 			background-color: #E0E0E0;
 			padding: 4px;
 			border-radius: 3px;
@@ -10343,18 +10343,18 @@ li.L9 {
 </script>
 <dom-module id="lesson-block" assetpath="learn/">
 	<style>
-		::content paper-material.lesson-block {
+		paper-material {
 			background-color: var(--learn-secondary-color);
 		}
 
-		::content .lesson-block-wrapper {
+		.lesson-block-wrapper {
 			padding: 25px;
 			margin-left: 50px;
 			margin-right: 50px;
 			margin-bottom: 50px;
 		}
 
-		::content .lesson-block-wrapper h2 { /* Free floating for any h2 inside */
+		:host ::content .lesson-block-wrapper h2 { /* Free floating for any h2 inside */
 			color: #E3B052;
 			font-size:28px;
 			font-weight:500;
@@ -10382,13 +10382,13 @@ li.L9 {
 </script>
 <dom-module id="zooming-image" assetpath="learn/">
 	<style>
-		::content #zooming-image {
+		#zooming-image {
 			position: relative;
 			cursor:pointer;
 			height: 100%;
 		}
 
-		::content #zooming-image-tag {
+		#zooming-image-tag {
 			position: absolute;
 			top: 0;
 			left: 0;
@@ -10397,7 +10397,7 @@ li.L9 {
 			z-index: 10;
 		};
 
-		::content #zoom-image-container {
+		#zoom-image-container {
 			position: relative;
 			top:0;
 			left:0;
@@ -10436,12 +10436,12 @@ li.L9 {
 		                  0  6px 30px 5px rgba(0, 0, 0, 0.12),
 		                  0  8px 10px -5px rgba(0, 0, 0, 0.4);
 		}
-		::content #zoom-image-container.container-zoomed {
+		#zoom-image-container.container-zoomed {
 
 			z-index:1001;
 		};
 
-		::content #zoom-image-background {
+		#zoom-image-background {
 			background-color: #FFF;
 			width:100%;
 			height:100%;
@@ -10465,14 +10465,14 @@ li.L9 {
 		}
 
 
-		::content #zoom-image-container {
+		#zoom-image-container {
 			-webkit-transition: all 250ms ease-in-out;
 			   -moz-transition: all 250ms ease-in-out;
 			     -o-transition: all 250ms ease-in-out;
 			        transition: all 250ms ease-in-out;
 		};
 
-		::content #thumbnail {
+		#thumbnail {
 			width: 100%;
 			position:relative;
 			top:0;
@@ -10480,7 +10480,7 @@ li.L9 {
 			z-index:1;
 		};
 
-		::content #fullsize {
+		#fullsize {
 			/* also set display:none using style attribute so the to-small
 		 * doesn't happen on page load
 		*/
@@ -10677,7 +10677,7 @@ li.L9 {
 			left: 0;
 			top: 0;
 		}
-		::content #lesson-banner-container {
+		#lesson-banner-container {
 			width:100%;
 			height:200px;
 			overflow:hidden;
@@ -10686,7 +10686,7 @@ li.L9 {
 			z-index:1;
 		};
 
-		::content #lesson-banner-image {
+		#lesson-banner-image {
 			background-size: cover;
 			background-position: center center;
 			width:100%;
@@ -10698,7 +10698,7 @@ li.L9 {
 			opacity:0.25;
 		};
 
-		::content #lesson-banner-image-overlay {
+		#lesson-banner-image-overlay {
 			background-color:#80CBC4;
 			width:100%;
 			height:100%;
@@ -10710,7 +10710,7 @@ li.L9 {
 			opacity:0.5;
 		};
 
-		::content #header {
+		#header {
 			font-family: Roboto, sans-serif;
 			color: #273238;
 			font-size: 64px;
@@ -10758,16 +10758,12 @@ li.L9 {
 <dom-module id="learn-nav" assetpath="learn/">
     <style>
 
-        ::content {
-
-        }
-
-        ::content a#learn-nav-home-link {
+        a {
             color: inherit;
             text-decoration: inherit;
         }
 
-        ::content #navigation {
+        #navigation {
             background-color: #263238;
             z-index:11;
             color: var(--learn-primary-color);
@@ -10780,7 +10776,7 @@ li.L9 {
             position: relative;
         }
 
-        ::content #navigation-container {
+        #navigation-container {
             padding: 10px;
         }
 
@@ -10815,7 +10811,7 @@ li.L9 {
 </script>
 <dom-module id="capsule-unit" assetpath="learn/">
 	<style>
-		::content #capsule-container {
+		#capsule-container {
 /*			height: 300px;
 			width: 300px;
 			padding-right: 100px;*/
@@ -10827,12 +10823,12 @@ li.L9 {
 			width:100%;
 		}
 
-		::content #capsule-ref {
+		#capsule-ref {
 			position:relative;
 			z-index:4;
 			cursor:pointer;
 		};
-		::content #capsule-ref paper-fab {
+		#capsule-ref paper-fab {
 			color: #80CBC4;
 			background-color: #273238;
 			right: 20px;
@@ -10840,7 +10836,7 @@ li.L9 {
 			position: absolute;
 			z-index: 3;
 		};
-		::content #capsule-image-container {
+		#capsule-image-container {
 			width:100%;
 			height:175px;
 			overflow:hidden;
@@ -10849,7 +10845,7 @@ li.L9 {
 			z-index:1;
 		};
 
-		::content #capsule-image {
+		#capsule-image {
 			background-size: cover;
 			background-position: center center;
 			width:100%;
@@ -10860,7 +10856,7 @@ li.L9 {
 			left: 0;
 		};
 
-		::content #capsule-image-overlay {
+		#capsule-image-overlay {
 			background-color:#80CBC4;
 			width:100%;
 			height:100%;
@@ -10874,7 +10870,7 @@ li.L9 {
 
 
 
-		::content #capsule-header {
+		#capsule-header {
 			margin:0;
 			padding:20px;
 			padding-top:12px;
@@ -10884,7 +10880,7 @@ li.L9 {
  			font-size: 24px;
 		};
 
-		::content #capsule-content {
+		#capsule-content {
 			display:none;
 			padding:20px;
 			padding-top:40px;
@@ -10900,13 +10896,13 @@ li.L9 {
 			        transition-timing-function: cubic-bezier(0.770, 0.000, 0.175, 1.000);
 		};
 
-		::content #capsule-content p{
+		#capsule-content p{
 			font-weight:300;
 			font-size:20px;
 			line-height:26px;
 		}
 
-		::content #capsule-content-header {
+		#capsule-content-header {
 			color:#338D83;
 			line-height: 32px;
  			font-size: 32px;
@@ -10915,7 +10911,7 @@ li.L9 {
  			margin:0;
 		}
 
-		::content #capsule-content-container {
+		#capsule-content-container {
 			position:absolute;
 			background-color:#FFF;
 
@@ -10939,12 +10935,12 @@ li.L9 {
 			        transition-timing-function: cubic-bezier(0.770, 0.000, 0.175, 1.000);
 		};
 
-		::content #capsule-close-button {
+		#capsule-close-button {
 			position:absolute;
 			right:0;
 		};
 
-		::content #capsule-page-block {
+		#capsule-page-block {
 			position:fixed;
 			width:100%;
 			height:100vh;
@@ -11181,7 +11177,7 @@ li.L9 {
 </script>
 <dom-module id="info-block" assetpath="learn/">
 	<style>
-		::content #info-block-wrapper {
+		#info-block-wrapper {
 			background-color: #F5F4F4;
 			padding: 0 10px;
 			margin-top: 20px;
@@ -11189,27 +11185,27 @@ li.L9 {
 			padding-top: 30px;
 		}
 
-		::content #info-block-content {
+		#info-block-content {
 			padding: 0 10px;
 		}
 
 		/* Begin ordered list styling */
-		::content #info-block-content ol {
+		:host ::content ol {
 			counter-reset: item;
 			padding-left: 0;
 			margin-left: 6em;
 		}
 
-		::content #info-block-content ol li {
+		:host ::content ol li {
 			display: block;
 			margin-bottom: 3em;
 		}
 
-		::content #info-block-content ol li p {
+		:host ::content ol li p {
 			margin-top: 0em;
 		}
 
-		::content #info-block-content ol li:before {
+		:host ::content ol li:before {
 			display: inline-block;
 			content: counter(item);
 			counter-increment: item;
@@ -11227,17 +11223,17 @@ li.L9 {
 		}
 		/* End ordered list styling */
 
-		::content #info-block-content h2 {
+		:host h2 {
 			color: #263238;
 			font-weight: 500;
 			font-style: italic;
 			margin-top: 0;
 			margin-bottom: 10px;
 			display: inline;
-			margin-left: .7em;
+			margin-left: 1.5em;
 		}
 
-		::content #info-block-content p {
+		:host ::content p {
 			color: #424242;
 			font-size: 16px;
 			line-height: 22px;
@@ -11255,7 +11251,7 @@ li.L9 {
 			-webkit-justify-content: center;
 		}
 
-		::content #info-block-icon-background {
+		#info-block-icon-background {
 			display: flex;
 			display: -webkit-flex;
 			display: -ms-flexbox;
@@ -11304,7 +11300,7 @@ li.L9 {
 </script>
 <dom-module id="lesson-ref" assetpath="learn/">
 	<style>
-	::content #lesson-ref-container {
+	#lesson-ref-container {
 		position: relative;
 		/*right: -30px;*/
 		background-color: #fff;
@@ -11328,7 +11324,7 @@ li.L9 {
 		     -o-transition-timing-function: cubic-bezier(0.770, 0.000, 0.175, 1.000);
 		        transition-timing-function: cubic-bezier(0.770, 0.000, 0.175, 1.000);
 	}
-	::content #lesson-ref-container.animate {
+	#lesson-ref-container.animate {
 /*		-webkit-transition: all 750ms cubic-bezier(0.770, 0.000, 0.175, 1.000);
 		   -moz-transition: all 750ms cubic-bezier(0.770, 0.000, 0.175, 1.000);
 		     -o-transition: all 750ms cubic-bezier(0.770, 0.000, 0.175, 1.000);
@@ -11341,17 +11337,17 @@ li.L9 {
 		        transition-timing-function: cubic-bezier(0.770, 0.000, 0.175, 1.000);*/
 	}
 
-	::content #image-container {
+	#image-container {
 		position: relative;
 
 	}
 
-	::content #image-container img {
+	#image-container img {
 		width: 100%;
 
 	}
 
-	::content #header-el {
+	#header-el {
 		position: absolute;
 		bottom: 0;
 		left: 0;
@@ -11361,7 +11357,7 @@ li.L9 {
 		font-weight:900;
 	}
 
-	::content #image-container paper-fab {
+	#image-container paper-fab {
 		position: absolute;
 		right: -30px;
 		bottom: -20px;
@@ -11369,12 +11365,12 @@ li.L9 {
 		color: #000;
 	}
 
-	::content #text-container {
+	#text-container {
 		padding: 10px;
 		padding:0px 10px 10px 10px;
 	};
 
-	::content #text-container p {
+	#text-container p {
 		font-size:14px;
 		line-height:22px;
 	}
@@ -11498,14 +11494,14 @@ li.L9 {
 </script>
 <dom-module id="narrative-text" assetpath="learn/">
     <style>
-        ::content #narritive-text-copy p{
+        :host ::content #narrative-text-copy p{
             font-family: Roboto, sans-serif;
             font-size:20px;
             line-height: 26px;
             font-weight:300;
         };
 
-        ::content #narrative-text-container {
+        :host ::content #narrative-text-container {
         	margin-top:50px;
         	margin-bottom:50px;
         };
@@ -11513,7 +11509,7 @@ li.L9 {
 	<template>
 		<div id="narrative-text-container" class="horizontal layout center-justified">
 			<div class="flex"></div>
-			<paper-material elevation="0" id="narritive-text-copy" class="paper-font-body2 flex-4">
+			<paper-material elevation="0" id="narrative-text-copy" class="paper-font-body2 flex-4">
 				<content></content>
 			</paper-material>
 			<div class="flex"></div>
@@ -11531,7 +11527,7 @@ li.L9 {
 	<style>
 
 
-		::content #link-container {
+		#link-container {
 /*			height: 300px;
 			width: 300px;
 			padding-right: 100px;*/
@@ -11543,12 +11539,12 @@ li.L9 {
 			width:100%;
 		}
 
-		::content #link-ref {
+		#link-ref {
 			position:relative;
 			z-index:4;
 			cursor:pointer;
 		};
-		::content #link-ref paper-fab {
+		#link-ref paper-fab {
 			color: #E3B052;
 			background-color: #273238;
 			right: 20px;
@@ -11556,7 +11552,7 @@ li.L9 {
 			position: absolute;
 			z-index: 3;
 		};
-		::content #link-image-container {
+		#link-image-container {
 			width:100%;
 			height:175px;
 			overflow:hidden;
@@ -11565,7 +11561,7 @@ li.L9 {
 			z-index:1;
 		};
 
-		::content #link-image {
+		#link-image {
 			background-size: cover;
 			background-position: center center;
 			width:100%;
@@ -11576,7 +11572,7 @@ li.L9 {
 			left: 0;
 		};
 
-		::content #link-image-overlay {
+		#link-image-overlay {
 			background-color:#FFF7E8;
 			width:100%;
 			height:100%;
@@ -11590,7 +11586,7 @@ li.L9 {
 
 
 
-		::content #link-header {
+		#link-header {
 			margin:0;
 			padding:20px;
 			padding-top:12px;
@@ -11710,11 +11706,11 @@ Polymer({
 <dom-module id="code-block" assetpath="learn/">
 
 	<style>
-	::content .code-block {
+	.code-block {
 		/*background-color: var(--learn-secondary-color);*/
 		/*background-color:#F5F4F4;*/
 	}
-	::content pre.prettyprint {
+	pre.prettyprint {
 		padding: 2px;
 		border: none !important;
 		margin:0;
@@ -11725,19 +11721,7 @@ Polymer({
 		overflow-x: scroll;
 	}
 
-	/*::content .code-block-wrapper {
-		padding: 10px;
-
-		-webkit-box-shadow: inset 3px 3px 10px -3px rgba(186, 167, 130 ,0.8);
-		   -moz-box-shadow: inset 3px 3px 10px -3px rgba(186, 167, 130 ,0.8);
-				box-shadow: inset 3px 3px 10px -3px rgba(186, 167, 130 ,0.8);
-
-		border: 1px solid rgba(219, 206, 180 ,0.8);
-		border-radius: 4px;
-
-	}*/
-
-	::content .code-block-wrapper h2 { /* Free floating for any h2 inside */
+	.code-block-wrapper h2 { /* Free floating for any h2 inside */
 		color: #E3B052;
 	}
 	</style>
@@ -11945,12 +11929,12 @@ Polymer({
 </script>
 <dom-module id="page-item" assetpath="learn/">
 	<style>
-		::content #page-container {
+		#page-container {
 			position:relative;
 			z-index:20;
 		};
 
-		::content #page-cover {
+		#page-cover {
 			width:100%;
 			height:100%;
 
@@ -11987,7 +11971,7 @@ Polymer({
 			     -o-transition-timing-function: cubic-bezier(0.770, 0.000, 0.175, 1.000);
 			        transition-timing-function: cubic-bezier(0.770, 0.000, 0.175, 1.000);
 		};
-		::content #page-cover-background {
+		#page-cover-background {
 			/*background-color:#338D83;*/
 			background-color:#273238;
 			opacity:0.6;
@@ -11998,7 +11982,7 @@ Polymer({
 			left:0;
 		};
 
-		::content #page-cover-header {
+		#page-cover-header {
 			position:absolute;
 			top:0;
 			right:0;
@@ -12015,14 +11999,14 @@ Polymer({
 			-moz-justify-content: center;
 			-ms-justify-content: center;
 		}
-		::content #page-cover-header-container {
+		#page-cover-header-container {
 			text-align:center;
 			padding-left:10px;
 			padding-right:10px;
 			z-index:1;
 		};
 
-		::content #page-cover-header-container paper-fab {
+		#page-cover-header-container paper-fab {
 			/*background-color:#273238;
 			color:#FFF;*/
 			background-color:#80CBC4;
@@ -12030,7 +12014,7 @@ Polymer({
 
 		};
 
-		::content #page-cover-header h2 {
+		#page-cover-header h2 {
 			display: block;
 			text-align:center;
 			font-family: Roboto, sans-serif;
@@ -12055,7 +12039,7 @@ Polymer({
 					transform: rotate(90deg);*/
 		}
 
-		::content #page-item {
+		#page-item {
 			width:100%;
 			height:100vh;
 			position:absolute;
@@ -12090,7 +12074,7 @@ Polymer({
 			        transition-timing-function: cubic-bezier(0.770, 0.000, 0.175, 1.000);
 		};
 
-		::content #page-item.loaded {
+		#page-item.loaded {
 			width:75%;
 			margin-left:25%;
 
@@ -12328,7 +12312,7 @@ Polymer({
 		},
 
 		getContainerRect: function() {
-		  return this.page_item.getBoundingClientRect();		
+		  return this.page_item.getBoundingClientRect();
 		},
 		/* PROPERTIES
 		================================================== */
@@ -12373,10 +12357,6 @@ Polymer({
       background-color: var(--learn-secondary-color);
       border-bottom: '1px dotted #999';
       cursor: pointer;
-    }
-
-    ::content {
-      display: inline;
     }
 
     #popup {

@@ -1,12 +1,12 @@
 <dom-module id="zooming-image">
 	<style>
-		::content #zooming-image {
+		#zooming-image {
 			position: relative;
 			cursor:pointer;
 			height: 100%;
 		}
 
-		::content #zooming-image-tag {
+		#zooming-image-tag {
 			position: absolute;
 			top: 0;
 			left: 0;
@@ -15,7 +15,7 @@
 			z-index: 10;
 		};
 
-		::content #zoom-image-container {
+		#zoom-image-container {
 			position: relative;
 			top:0;
 			left:0;
@@ -54,12 +54,12 @@
 		                  0  6px 30px 5px rgba(0, 0, 0, 0.12),
 		                  0  8px 10px -5px rgba(0, 0, 0, 0.4);
 		}
-		::content #zoom-image-container.container-zoomed {
+		#zoom-image-container.container-zoomed {
 
 			z-index:1001;
 		};
 
-		::content #zoom-image-background {
+		#zoom-image-background {
 			background-color: #FFF;
 			width:100%;
 			height:100%;
@@ -83,14 +83,14 @@
 		}
 
 
-		::content #zoom-image-container {
+		#zoom-image-container {
 			-webkit-transition: all 250ms ease-in-out;
 			   -moz-transition: all 250ms ease-in-out;
 			     -o-transition: all 250ms ease-in-out;
 			        transition: all 250ms ease-in-out;
 		};
 
-		::content #thumbnail {
+		#thumbnail {
 			width: 100%;
 			position:relative;
 			top:0;
@@ -98,7 +98,7 @@
 			z-index:1;
 		};
 
-		::content #fullsize {
+		#fullsize {
 			/* also set display:none using style attribute so the to-small
 		 * doesn't happen on page load
 		*/

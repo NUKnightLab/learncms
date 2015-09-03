@@ -24,7 +24,7 @@ Example:
 			font-weight: bold;
 		}
 
-		::content #step-content {
+		:host ::content #step-content {
 			padding: 20px;
 			width: 70%;
 			/* for large screens */
@@ -35,7 +35,7 @@ Example:
 			background-color: #FFF;
 		}
 
-		::content #step-content p {
+		:host ::content #step-content p {
 			font-family: 'Roboto', 'Noto', sans-serif;
 			font-size: 18px;
 			line-height: 26px;
@@ -44,7 +44,7 @@ Example:
 			margin-bottom: 20px;
 		}
 
-		::content h2#step-header {
+		:host ::content h2#step-header {
 			font-family: 'Roboto', 'Noto', sans-serif;
 			color: #338D83;
 			font-size: 28px;
@@ -53,22 +53,22 @@ Example:
 		}
 
 		/* Begin ordered list styling */
-		::content #step-content ol {
+		:host ::content #step-content ol {
 			counter-reset: item;
 			padding-left: 0;
 			margin-left: 6em;
 		}
 
-		::content #step-content ol li {
+		:host ::content #step-content ol li {
 			display: block;
 			margin-bottom: 3em;
 		}
 
-		::content #step-content ol li p {
+		:host ::content #step-content ol li p {
 			margin-top: 0em;
 		}
 
-		::content #step-content ol li:before {
+		:host ::content #step-content ol li:before {
 			display: inline-block;
 			content: counter(item);
 			counter-increment: item;
@@ -86,7 +86,7 @@ Example:
 		}
 		/* End ordered list styling */
 
-		::content #step-content p code {
+		:host ::content #step-content p code {
 			background-color: #E0E0E0;
 			padding: 4px;
 			border-radius: 3px;

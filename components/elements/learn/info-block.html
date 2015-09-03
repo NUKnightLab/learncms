@@ -12,7 +12,7 @@ Example:
 -->
 <dom-module id="info-block">
 	<style>
-		::content #info-block-wrapper {
+		#info-block-wrapper {
 			background-color: #F5F4F4;
 			padding: 0 10px;
 			margin-top: 20px;
@@ -20,27 +20,27 @@ Example:
 			padding-top: 30px;
 		}
 
-		::content #info-block-content {
+		#info-block-content {
 			padding: 0 10px;
 		}
 
 		/* Begin ordered list styling */
-		::content #info-block-content ol {
+		:host ::content ol {
 			counter-reset: item;
 			padding-left: 0;
 			margin-left: 6em;
 		}
 
-		::content #info-block-content ol li {
+		:host ::content ol li {
 			display: block;
 			margin-bottom: 3em;
 		}
 
-		::content #info-block-content ol li p {
+		:host ::content ol li p {
 			margin-top: 0em;
 		}
 
-		::content #info-block-content ol li:before {
+		:host ::content ol li:before {
 			display: inline-block;
 			content: counter(item);
 			counter-increment: item;
@@ -58,17 +58,17 @@ Example:
 		}
 		/* End ordered list styling */
 
-		::content #info-block-content h2 {
+		:host h2 {
 			color: #263238;
 			font-weight: 500;
 			font-style: italic;
 			margin-top: 0;
 			margin-bottom: 10px;
 			display: inline;
-			margin-left: .7em;
+			margin-left: 1.5em;
 		}
 
-		::content #info-block-content p {
+		:host ::content p {
 			color: #424242;
 			font-size: 16px;
 			line-height: 22px;
@@ -86,7 +86,7 @@ Example:
 			-webkit-justify-content: center;
 		}
 
-		::content #info-block-icon-background {
+		#info-block-icon-background {
 			display: flex;
 			display: -webkit-flex;
 			display: -ms-flexbox;

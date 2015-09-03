@@ -17,11 +17,11 @@ Example:
 <dom-module id="code-block">
 
 	<style>
-	::content .code-block {
+	.code-block {
 		/*background-color: var(--learn-secondary-color);*/
 		/*background-color:#F5F4F4;*/
 	}
-	::content pre.prettyprint {
+	pre.prettyprint {
 		padding: 2px;
 		border: none !important;
 		margin:0;
@@ -32,19 +32,7 @@ Example:
 		overflow-x: scroll;
 	}
 
-	/*::content .code-block-wrapper {
-		padding: 10px;
-
-		-webkit-box-shadow: inset 3px 3px 10px -3px rgba(186, 167, 130 ,0.8);
-		   -moz-box-shadow: inset 3px 3px 10px -3px rgba(186, 167, 130 ,0.8);
-				box-shadow: inset 3px 3px 10px -3px rgba(186, 167, 130 ,0.8);
-
-		border: 1px solid rgba(219, 206, 180 ,0.8);
-		border-radius: 4px;
-
-	}*/
-
-	::content .code-block-wrapper h2 { /* Free floating for any h2 inside */
+	.code-block-wrapper h2 { /* Free floating for any h2 inside */
 		color: #E3B052;
 	}
 	</style>

@@ -8,14 +8,14 @@
 
 <dom-module id="narrative-text">
     <style>
-        ::content #narritive-text-copy p{
+        :host ::content #narrative-text-copy p{
             font-family: Roboto, sans-serif;
             font-size:20px;
             line-height: 26px;
             font-weight:300;
         };
 
-        ::content #narrative-text-container {
+        :host ::content #narrative-text-container {
         	margin-top:50px;
         	margin-bottom:50px;
         };
@@ -23,7 +23,7 @@
 	<template>
 		<div id="narrative-text-container" class="horizontal layout center-justified">
 			<div class="flex"></div>
-			<paper-material elevation="0" id="narritive-text-copy" class="paper-font-body2 flex-4">
+			<paper-material elevation="0" id="narrative-text-copy" class="paper-font-body2 flex-4">
 				<content></content>
 			</paper-material>
 			<div class="flex"></div>
