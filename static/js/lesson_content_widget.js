@@ -37,23 +37,23 @@ grp.jQuery(document).ready(function() {
         editor.focus();
     })
     $('#btn-lesson-block').click(function() {
-        editor.replaceSelection('<lesson-block>\n</lesson-block>\n');
+        editor.replaceSelection('<lesson-block header="">\n</lesson-block>\n');
         editor.focus();
     })
     $('#btn-step-block').click(function() {
-        editor.replaceSelection('<step-block>\n</step-block>\n');
+        editor.replaceSelection('<step-block header="">\n</step-block>\n');
         editor.focus();
     })
     $('#btn-info-block').click(function() {
-        editor.replaceSelection('<info-block>\n</info-block>\n');
+        editor.replaceSelection('<info-block header="">\n</info-block>\n');
         editor.focus();
     })
     $('#btn-capsule-unit').click(function() {
-        editor.replaceSelection('<capsule-unit>\n</capsule-unit>\n');
+        editor.replaceSelection('<capsule-unit ref="">\n</capsule-unit>\n');
         editor.focus();
     })
     $('#btn-zooming-image').click(function() {
-        editor.replaceSelection('<zooming-image>\n</zooming-image>\n');
+        editor.replaceSelection('<zooming-image ref="">\n</zooming-image>\n');
         editor.focus();
     })
     $('#btn-code-block').click(function() {
