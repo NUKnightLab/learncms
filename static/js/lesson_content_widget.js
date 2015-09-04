@@ -1,3 +1,30 @@
+function launchIntoFullscreen(element) {
+  if(element.requestFullscreen) {
+    element.requestFullscreen();
+  } else if(element.mozRequestFullScreen) {
+    element.mozRequestFullScreen();
+  } else if(element.webkitRequestFullscreen) {
+    element.webkitRequestFullscreen();
+  } else if(element.msRequestFullscreen) {
+    element.msRequestFullscreen();
+  }
+}
+
+function exitFullscreen() {
+  if(document.exitFullscreen) {
+    document.exitFullscreen();
+  } else if(document.mozCancelFullScreen) {
+    document.mozCancelFullScreen();
+  } else if(document.webkitExitFullscreen) {
+    document.webkitExitFullscreen();
+  }
+}
+
+function fullscreenElement() {return document.fullscreenElement || document.mozFullScreenElement || document.webkitFullscreenElement; }
+function fullscreenEnabled() { return document.fullscreenEnabled || document.mozFullScreenEnabled || document.webkitFullscreenEnabled; }
+
+
+
 grp.jQuery(document).ready(function() {
 
     tidy_opts = { // http://tidy.sourceforge.net/docs/quickref.html
@@ -60,9 +87,26 @@ grp.jQuery(document).ready(function() {
         editor.replaceSelection('<code-block>\n</code-block>\n');
         editor.focus();
     });
-    // $('#btn-fullscreen').click(function() {
-    //     editor.setOption('fullScreen',true);
-    // })
+    $('#btn-fullscreen').click(function() {
+      if (editor.getOption('fullScreen')) {
+        exitFullscreen();
+      } else {
+        launchIntoFullscreen(document.getElementById('lesson-content-editor'));
+      }
+    })
+
+    function handleFullScreenChange() {
+      if (fullscreenElement()) {
+        editor.setOption('fullScreen', true);
+      } else {
+        editor.setOption('fullScreen',false);
+      }
+    }
+    document.addEventListener('webkitfullscreenchange', handleFullScreenChange, false);
+    document.addEventListener('mozfullscreenchange', handleFullScreenChange, false);
+    document.addEventListener('fullscreenchange', handleFullScreenChange, false);
+    document.addEventListener('MSFullscreenChange', handleFullScreenChange, false);
+
     $('#btn-format').click(function() {
         var start = editor.getValue();
         var tidied = tidy_html5(start,tidy_opts);

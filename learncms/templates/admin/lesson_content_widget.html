@@ -4,11 +4,10 @@
 <script src='{% static "js/codemirror-compressed.js" %}'></script>
 <script src='{% static "js/tidy.js" %}'></script>
 <script src="https://cdnjs.cloudflare.com/ajax/libs/underscore.js/1.8.3/underscore-min.js" charset="utf-8"></script>
-<div class="lesson-widget lw-column">
-<div class="lesson-widget lw-column">
+<div id="lesson-content-editor" class="lesson-widget lw-column">
     <div class="lw-controls lw-row">
         <input type="button" id="btn-format" value="format" />
-        <!-- <input type="button" id="btn-fullscreen" value="full screen" /> -->
+        <!-- input type="button" id="btn-fullscreen" value="full screen" /-->
         <input type="button" id="btn-narrative-text" value="&lt;narrative-text&gt;" class="code"/>
         <input type="button" id="btn-lesson-block" value="&lt;lesson-block&gt;" class="code"/>
         <input type="button" id="btn-step-block" value="&lt;step-block&gt;" class="code"/>
