@@ -27,6 +27,14 @@ Example:
 
 			border-radius:4px;
 			width:100%;
+
+		}
+
+		#capsule-container:hover {
+			/*background-color:#CCC;*/
+			/*top:-3px;
+			left:-3px;*/
+
 		}
 
 		#capsule-ref {
@@ -199,9 +207,7 @@ Example:
 
 		/* Not sure how to share this, maybe can't because of ::shadow?
 		   Should we do this for all paper-fab elements? (See github #21) */
-		paper-fab::shadow > paper-material {
-		    @apply(--shadow-elevation-8dp);
-		}
+		
 
 	</style>
 	<template>
@@ -256,6 +262,7 @@ Example:
 
 		ready: function() {
 			// DOM OBJECTS
+			this.capsule_container = this.$['capsule-container'];
 			this.capsule_image = this.$['capsule-image'];
 			this.capsule_ref = this.$['capsule-ref'];
 			this.capsule_header = this.$['capsule-header'];
@@ -276,6 +283,14 @@ Example:
 				self._onCapsuleRefClick(e);
 			});
 
+			this.capsule_ref.addEventListener("mouseover", function(e) {
+				self._onCapsuleRefMouseOver(e);
+			});
+
+			this.capsule_ref.addEventListener("mouseout", function(e) {
+				self._onCapsuleRefMouseOut(e);
+			});
+
 			this.capsule_page_block.addEventListener("click", function(e) {
 				self._onCapsuleCloseClick(e);
 			});
@@ -291,6 +306,8 @@ Example:
 			this.capsule_content_container.addEventListener("webkitTransitionEnd",function(e){
 				self._hideContentContainer();
 			},false);
+
+			
 
 		},
 
@@ -308,6 +325,18 @@ Example:
 
 		_onCapsuleRefClick: function(e) {
 			this.windowOn(e);
+		},
+
+		_onCapsuleRefMouseOver: function(e) {
+			this.capsule_container.getAttributeNode("elevation").value = 5;
+			this.capsule_container.style.top = "-3px";
+			this.capsule_container.style.left = "-3px";
+		},
+
+		_onCapsuleRefMouseOut: function(e) {
+			this.capsule_container.getAttributeNode("elevation").value = 1;
+			this.capsule_container.style.top = "0px";
+			this.capsule_container.style.left = "0px";
 		},
 
 		_onCapsuleCloseClick: function(e) {

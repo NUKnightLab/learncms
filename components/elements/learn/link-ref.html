@@ -139,6 +139,7 @@ Polymer({
 	],
 	ready: function() {
 		// DOM OBJECTS
+		this.link_container = this.$['link-container'];
 		this.link_image = this.$['link-image'];
 		this.link_ref = this.$['link-ref'];
 
@@ -152,10 +153,30 @@ Polymer({
 			self._onLinkRefClick(e);
 		});
 
+		this.link_ref.addEventListener("mouseover", function(e) {
+			self._onLinkRefMouseOver(e);
+		});
+
+		this.link_ref.addEventListener("mouseout", function(e) {
+			self._onLinkRefMouseOut(e);
+		});
+
 	},
 
 	_onLinkRefClick: function() {
 		window.open(this.link)
+	},
+
+	_onLinkRefMouseOver: function(e) {
+		this.link_container.getAttributeNode("elevation").value = 5;
+		this.link_container.style.top = "-3px";
+		this.link_container.style.left = "-3px";
+	},
+
+	_onLinkRefMouseOut: function(e) {
+		this.link_container.getAttributeNode("elevation").value = 1;
+		this.link_container.style.top = "0px";
+		this.link_container.style.left = "0px";
 	},
 
 	properties: {

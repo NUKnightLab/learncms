@@ -19,7 +19,7 @@
 			position: relative;
 			top:0;
 			left:0;
-			background-color:#000;
+			
 		};
 		.material-shadow {
 		  transition:box-shadow 0.28s cubic-bezier(0.4, 0, 0.2, 1);
@@ -115,7 +115,7 @@
 	</style>
 	<template>
 
-		<div id="zooming-image">
+		<div id="zooming-image"  >
 			<div id="zoom-image-container">
 
 				<img id='thumbnail' class="material-shadow" elevation="1" src="{{ src }}">
@@ -141,6 +141,7 @@
 		ready: function() {
 
 			// DOM OBJECTS
+			this.container = this.$['zooming-image'];
 			this.fullsize = this.$['fullsize'];
 			this.thumbnail = this.$['thumbnail'];
 			this.zoom_container = this.$['zoom-image-container'];
@@ -173,6 +174,15 @@
 			this.background.addEventListener("webkitTransitionEnd",function(e){
 				self._onBackgroundTransition();
 			},false);
+
+			this.thumbnail.addEventListener("mouseover", function(e) {
+				self._onMouseOver(e);
+			});
+
+			this.thumbnail.addEventListener("mouseout", function(e) {
+				self._onMouseOut(e);
+			});
+
   		},
 
 		/* Using IronA11yKeysBehavior, listen for 'esc' key pressed
@@ -190,6 +200,18 @@
 		_clickListener: function(e) {
 			this.zoomed = !(this.zoomed);
 
+		},
+
+		_onMouseOver: function(e) {
+			this.thumbnail.getAttributeNode("elevation").value = 5;
+			this.thumbnail.style.top = "-3px";
+			this.thumbnail.style.left = "-3px";
+		},
+
+		_onMouseOut: function(e) {
+			this.thumbnail.getAttributeNode("elevation").value = 1;
+			this.thumbnail.style.top = "0px";
+			this.thumbnail.style.left = "0px";
 		},
 
 		/* WHEN TRANSITION ENDS
