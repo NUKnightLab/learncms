@@ -32,8 +32,8 @@ Example:
 
 		#capsule-container:hover {
 			/*background-color:#CCC;*/
-			top:-3px;
-			left:-3px;
+			/*top:-3px;
+			left:-3px;*/
 
 		}
 
@@ -329,10 +329,14 @@ Example:
 
 		_onCapsuleRefMouseOver: function(e) {
 			this.capsule_container.getAttributeNode("elevation").value = 5;
+			this.capsule_container.style.top = "-3px";
+			this.capsule_container.style.left = "-3px";
 		},
 
 		_onCapsuleRefMouseOut: function(e) {
 			this.capsule_container.getAttributeNode("elevation").value = 1;
+			this.capsule_container.style.top = "0px";
+			this.capsule_container.style.left = "0px";
 		},
 
 		_onCapsuleCloseClick: function(e) {
