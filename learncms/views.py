@@ -64,6 +64,14 @@ class LessonDetailView(DetailView):
         elem = fromstring(lesson.content)
         evaluate_content(elem,strip_bad_references=(lesson.status == Lesson.PUBLISHED))
         context['evaluated_content'] = tostring(elem)
+
+
+        context['og_title'] = lesson.title
+        context['og_url'] = "{}{}".format(settings.URL_ROOT, lesson.get_absolute_url())
+        context['og_image'] = "{}{}".format(settings.URL_ROOT, lesson.banner_image.url)
+        context['og_description'] = lesson.reference_blurb
+
+
         return context
 
 def glossary_json(request):

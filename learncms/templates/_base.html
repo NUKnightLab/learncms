@@ -1,8 +1,34 @@
 <!DOCTYPE html>
-<html>
+<html prefix="og: http://ogp.me/ns#">
 <head>
     <title>{% if title %}{{title}} -{% endif %} Learn.KnightLab.com</title>
     <link rel="stylesheet" href="{{ STATIC_URL }}css/app.css" media="screen" title="no title" charset="utf-8">
+    {% block opengraph %}
+    {% comment %}
+    opengraph tags wants:
+      og_title
+      og_url
+      og_image
+      og_description
+      {% endcomment %}
+    <meta property="og:type" content="website" />
+    <meta name="twitter:card" content="summary_large_image">
+    {% if og_title %}
+      <meta property="og:title" content="{{ og_title }}" />
+      <meta name="twitter:title" content="{{ og_title }}">
+    {% endif %}
+    {% if og_url %}<meta property="og:url" content="{{ og_url }}" />{% endif %}
+    {% if og_image %}
+    <meta property="og:image" content="{{ og_image }}" />
+    <!-- twitter:image: at least 280px in width, and at least 150px in height -->
+    <meta name="twitter:image" content="{{ og_image }}">
+    {% endif %}
+    <meta name="twitter:site" content="@KnightLab">
+    {% if og_description %}
+    <meta name="og:description" content="{{ og_description }}">
+    <meta name="twitter:description" content="{{ og_description }}">
+    {% endif  %}
+    {% endblock opengraph %}
 
     {% block extrahead %}{% endblock extrahead %}
 </head>

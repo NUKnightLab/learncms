@@ -21,6 +21,7 @@ from secrets import *
 
 # SECURITY WARNING: don't run with debug turned on in production!
 
+URL_ROOT = 'https://learncms.knightlab.com' # used for OG & twitter cards, etc
 DEBUG = False
 
 ALLOWED_HOSTS = ['learncms.knightlab.com']
@@ -52,7 +53,7 @@ DATABASES = {
 # AWS_SECRET_ACCESS_KEY
 #
 DEFAULT_FILE_STORAGE = 'storages.backends.s3boto.S3BotoStorage'
-from boto.s3.connection import OrdinaryCallingFormat 
+from boto.s3.connection import OrdinaryCallingFormat
 AWS_S3_CALLING_FORMAT = OrdinaryCallingFormat()
 AWS_S3_URL_PROTOCOL = 'https'
 AWS_S3_SECURE_URLS = False

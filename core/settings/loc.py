@@ -20,6 +20,7 @@ from secrets import *
 
 
 # SECURITY WARNING: don't run with debug turned on in production!
+URL_ROOT = 'http://localhost:8000' # used for OG & twitter cards, etc
 
 DEBUG = True
 
