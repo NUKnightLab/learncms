@@ -1,4 +1,12 @@
-<html><head><meta charset="UTF-8"><style>
+<!--
+@license
+Copyright (c) 2015 The Polymer Project Authors. All rights reserved.
+This code may only be used under the BSD style license found at http://polymer.github.io/LICENSE.txt
+The complete set of authors may be found at http://polymer.github.io/AUTHORS.txt
+The complete set of contributors may be found at http://polymer.github.io/CONTRIBUTORS.txt
+Code distributed by Google as part of the polymer project is also
+subject to an additional IP rights grant found at http://polymer.github.io/PATENTS.txt
+--><!-- Iron elements --><html><head><meta charset="UTF-8"><style>
 
   /*******************************
             Flex Layout
@@ -6209,7 +6217,46 @@ detached: function () {
 this._removeChildren();
 }
 });</script>
+<!--
+`iron-meta` is a generic element you can use for sharing information across the DOM tree.
+It uses [monostate pattern](http://c2.com/cgi/wiki?MonostatePattern) such that any
+instance of iron-meta has access to the shared
+information. You can use `iron-meta` to share whatever you want (or create an extension
+[like x-meta] for enhancements).
 
+The `iron-meta` instances containing your actual data can be loaded in an import,
+or constructed in any way you see fit. The only requirement is that you create them
+before you try to access them.
+
+Examples:
+
+If I create an instance like this:
+
+    <iron-meta key="info" keyUrl="foo/bar"></iron-meta>
+
+Note that keyUrl="foo/bar" is the metadata I've defined. I could define more
+attributes or use child nodes to define additional metadata.
+
+Now I can access that element (and it's metadata) from any iron-meta instance
+via the byKey method, e.g.
+
+    meta.byKey('info').getAttribute('keyUrl').
+
+Pure imperative form would be like:
+
+    document.createElement('iron-meta').byKey('info').getAttribute('keyUrl');
+
+Or, in a Polymer element, you can include a meta in your template:
+
+    <iron-meta id="meta"></iron-meta>
+    ...
+    this.$.meta.byKey('info').getAttribute('keyUrl');
+
+@group Iron Elements
+@demo demo/index.html
+@hero hero.svg
+@element iron-meta
+-->
 
 <script>
 
@@ -6811,7 +6858,68 @@ this._removeChildren();
   }
 
 </style>
+<!--
 
+The `iron-icon` element displays an icon. By default an icon renders as a 24px square.
+
+Example using src:
+
+    <iron-icon src="star.png"></iron-icon>
+
+Example setting size to 32px x 32px:
+
+    <iron-icon class="big" src="big_star.png"></iron-icon>
+
+    <style>
+      .big {
+        height: 32px;
+        width: 32px;
+      }
+    </style>
+
+The iron elements include several sets of icons.
+To use the default set of icons, import  `iron-icons.html` and use the `icon` attribute to specify an icon:
+
+    &lt;!-- import default iconset and iron-icon --&gt;
+    <link rel="import" href="/components/iron-icons/iron-icons.html">
+
+    <iron-icon icon="menu"></iron-icon>
+
+To use a different built-in set of icons, import  `iron-icons/<iconset>-icons.html`, and
+specify the icon as `<iconset>:<icon>`. For example:
+
+    &lt;!-- import communication iconset and iron-icon --&gt;
+    <link rel="import" href="/components/iron-icons/communication-icons.html">
+
+    <iron-icon icon="communication:email"></iron-icon>
+
+You can also create custom icon sets of bitmap or SVG icons.
+
+Example of using an icon named `cherry` from a custom iconset with the ID `fruit`:
+
+    <iron-icon icon="fruit:cherry"></iron-icon>
+
+See [iron-iconset](#iron-iconset) and [iron-iconset-svg](#iron-iconset-svg) for more information about
+how to create a custom iconset.
+
+See [iron-icons](http://www.polymer-project.org/components/iron-icons/demo.html) for the default set of icons.
+
+
+### Styling
+
+The following custom properties are available for styling:
+
+Custom property | Description | Default
+----------------|-------------|----------
+`--iron-icon-width` | Width of the icon | `24px`
+`--iron-icon-height` | Height of the icon | `24px`
+
+@group Iron Elements
+@element iron-icon
+@demo demo/index.html
+@hero hero.svg
+@homepage polymer.github.io
+-->
 
 <style is="custom-style">
   :root {
@@ -6998,11 +7106,23 @@ this._removeChildren();
 
   });
 </script>
-
+<!-- Paper elements -->
 <link rel="stylesheet" href="//fonts.googleapis.com/css?family=Roboto:400,300,300italic,400italic,500,500italic,700,700italic">
 <link rel="stylesheet" href="//fonts.googleapis.com/css?family=Inconsolata:400,700">
 
+<!--
+Typographic styles are provided matching the Material Design standard styles:
+http://www.google.com/design/spec/style/typography.html#typography-standard-styles
 
+To make use of them, apply a `paper-font-<style>` class to elements, matching
+the font style you wish it to inherit.
+
+  <header class="paper-font-display2">Hey there!</header>
+
+Note that these are English/Latin centric styles. You may need to further adjust
+line heights and weights for CJK typesetting. See the notes in the Material
+Design typography section.
+-->
 <style>
 
 .paper-font-display4,
@@ -7177,7 +7297,107 @@ styles. All other styles should exist as single lines."
               0 27px 55px 0 rgba(0, 0, 0, 0.3);
 }
 </style>
+<!--
+`paper-header-panel` contains a header section and a content panel section.
 
+__Important:__ The `paper-header-panel` will not display if its parent does not have a height.
+
+Using layout classes, you can make the `paper-header-panel` fill the screen
+
+    <body class="fullbleed layout vertical">
+      <paper-header-panel class="flex">
+        <paper-toolbar>
+          <div>Hello World!</div>
+        </paper-toolbar>
+      </paper-header-panel>
+    </body>
+
+Special support is provided for scrolling modes when one uses a paper-toolbar or equivalent for the
+header section.
+
+Example:
+
+    <paper-header-panel>
+      <paper-toolbar>Header</paper-toolbar>
+      <div>Content goes here...</div>
+    </paper-header-panel>
+
+If you want to use other than `paper-toolbar` for the header, add `paper-header` class to that
+element.
+
+Example:
+
+    <paper-header-panel>
+      <div class="paper-header">Header</div>
+      <div>Content goes here...</div>
+    </paper-header-panel>
+
+To have the content fit to the main area, use the `fit` class.
+
+    <paper-header-panel>
+      <div class="paper-header">standard</div>
+      <div class="fit">content fits 100% below the header</div>
+    </paper-header-panel>
+
+Modes
+
+Controls header and scrolling behavior. Options are `standard`, `seamed`, `waterfall`, `waterfall-tall`, `scroll` and
+`cover`. Default is `standard`.
+
+Mode | Description
+----------------|-------------
+`standard` | The header is a step above the panel. The header will consume the panel at the point of entry, preventing it from passing through to the opposite side.
+`seamed` | The header is presented as seamed with the panel.
+`waterfall` | Similar to standard mode, but header is initially presented as seamed with panel, but then separates to form the step.
+`waterfall-tall` | The header is initially taller (`tall` class is added to the header). As the user scrolls, the header separates (forming an edge) while condensing (`tall` class is removed from the header).
+`scroll` | The header keeps its seam with the panel, and is pushed off screen.
+`cover` | The panel covers the whole `paper-header-panel` including the header. This allows user to style the panel in such a way that the panel is partially covering the header.
+
+Example: 
+
+    <paper-header-panel mode="waterfall">
+      <div class="paper-header">standard</div>
+      <div class="content fit">content fits 100% below the header</div>
+    </paper-header-panel>
+
+
+Styling header panel:
+
+To change the shadow that shows up underneath the header:
+
+    paper-header-panel {
+      --paper-header-panel-shadow: {
+          height: 6px;
+          bottom: -6px;
+          box-shadow: inset 0px 5px 6px -3px rgba(0, 0, 0, 0.4);
+      };
+    }
+
+To change the panel container in different modes:
+
+    paper-slider {
+      --paper-header-panel-standard-container: {
+        border: 1px solid gray;
+      };
+
+      --paper-header-panel-cover-container: {
+        border: 1px solid gray;
+      };
+
+      --paper-header-panel-waterfall-container: {
+        border: 1px solid gray;
+      };
+
+      --paper-header-panel-waterfall-tall-container: {
+        border: 1px solid gray;
+      };
+    }
+
+@group Paper Elements
+@element paper-header-panel
+@demo demo/index.html
+@hero hero.svg
+-->
 
 <style is="custom-style">
 
@@ -7956,7 +8176,61 @@ styles. All other styles should exist as single lines."
   ];
 
 </script>
+<!--
+`paper-ripple` provides a visual effect that other paper elements can
+use to simulate a rippling effect emanating from the point of contact.  The
+effect can be visualized as a concentric circle with motion.
 
+Example:
+
+    <paper-ripple></paper-ripple>
+
+`paper-ripple` listens to "mousedown" and "mouseup" events so it would display ripple
+effect when touches on it.  You can also defeat the default behavior and
+manually route the down and up actions to the ripple element.  Note that it is
+important if you call downAction() you will have to make sure to call
+upAction() so that `paper-ripple` would end the animation loop.
+
+Example:
+
+    <paper-ripple id="ripple" style="pointer-events: none;"></paper-ripple>
+    ...
+    downAction: function(e) {
+      this.$.ripple.downAction({x: e.x, y: e.y});
+    },
+    upAction: function(e) {
+      this.$.ripple.upAction();
+    }
+
+Styling ripple effect:
+
+  Use CSS color property to style the ripple:
+
+    paper-ripple {
+      color: #4285f4;
+    }
+
+  Note that CSS color property is inherited so it is not required to set it on
+  the `paper-ripple` element directly.
+
+By default, the ripple is centered on the point of contact.  Apply the `recenters`
+attribute to have the ripple grow toward the center of its container.
+
+    <paper-ripple recenters></paper-ripple>
+
+You can also  center the ripple inside its container from the start.
+
+    <paper-ripple center></paper-ripple>
+
+Apply `circle` class to make the rippling effect within a circle.
+
+    <paper-ripple class="circle"></paper-ripple>
+
+@group Paper Elements
+@element paper-ripple
+@hero hero.svg
+@demo demo/index.html
+-->
 
 <style is="custom-style">
   :root {
@@ -7964,7 +8238,58 @@ styles. All other styles should exist as single lines."
   }
 </style>
 
+<!--
+Material Design: <a href="http://www.google.com/design/spec/components/buttons.html">Buttons</a>
 
+`paper-icon-button` is a button with an image placed at the center. When the user touches
+the button, a ripple effect emanates from the center of the button.
+
+`paper-icon-button` includes a default icon set.  Use `icon` to specify which icon
+from the icon set to use.
+
+    <paper-icon-button icon="menu"></paper-icon-button>
+
+See [`iron-iconset`](#iron-iconset) for more information about
+how to use a custom icon set.
+
+Example:
+
+    <link href="path/to/iron-icons/iron-icons.html" rel="import">
+
+    <paper-icon-button icon="favorite"></paper-icon-button>
+    <paper-icon-button src="star.png"></paper-icon-button>
+
+###Styling
+
+Style the button with CSS as you would a normal DOM element. If you are using the icons
+provided by `iron-icons`, they will inherit the foreground color of the button.
+
+    /* make a red "favorite" button */
+    <paper-icon-button icon="favorite" style="color: red;"></paper-icon-button>
+
+By default, the ripple is the same color as the foreground at 25% opacity. You may
+customize the color using this selector:
+
+    /* make #my-button use a blue ripple instead of foreground color */
+    #my-button::shadow #ripple {
+      color: blue;
+    }
+
+The opacity of the ripple is not customizable via CSS.
+
+The following custom properties and mixins are available for styling:
+
+Custom property | Description | Default
+----------------|-------------|----------
+`--paper-icon-button-disabled-text` | The color of the disabled button | `--primary-text-color`
+`--paper-icon-button-ink-color` | Selected/focus ripple color | `--default-primary-color`
+`--paper-icon-button` | Mixin for a button | `{}`
+`--paper-icon-button-disabled` | Mixin for a disabled button | `{}`
+
+@group Paper Elements
+@element paper-icon-button
+@demo demo/index.html
+-->
 
 <style is="custom-style">
 
@@ -8336,11 +8661,60 @@ styles. All other styles should exist as single lines."
   }
 
 </style>
+<!--
+
+`paper-material` is a container that renders two shadows on top of each other to
+create the effect of a lifted piece of paper.
+
+Example:
+
+    <paper-material elevation="1">
+      ... content ...
+    </paper-material>
+
+@group Paper Elements
+@class paper-material
+@demo demo/index.html
+-->
+
+<!--
+Material Design: <a href="http://www.google.com/design/spec/components/buttons.html">Button</a>
+
+`paper-fab` is a floating action button. It contains an image placed in the center and
+comes in two sizes: regular size and a smaller size by applying the attribute `mini`. When
+the user touches the button, a ripple effect emanates from the center of the button.
+
+You may import `iron-icons` to use with this element, or provide a URL to a custom icon.
+See `iron-iconset` for more information about how to use a custom icon set.
+
+Example:
+
+    <link href="path/to/iron-icons/iron-icons.html" rel="import">
+
+    <paper-fab icon="add"></paper-fab>
+    <paper-fab mini icon="favorite"></paper-fab>
+    <paper-fab src="star.png"></paper-fab>
 
 
+### Styling
 
+The following custom properties and mixins are available for styling:
 
+Custom property | Description | Default
+----------------|-------------|----------
+`--paper-fab-background` | The background color of the button | `--paper-indigo-500`
+`--paper-fab-disabled-background` | The background color of the button when it's disabled | `--paper-grey-300`
+`--paper-fab-disabled-text` | The text color of the button when it's disabled | `--paper-grey-500`
+`--paper-fab` | Mixin applied to the button | `{}`
+`--paper-fab-mini` | Mixin applied to a mini button | `{}`
+`--paper-fab-disabled` | Mixin applied to a disabled button | `{}`
 
+@group Paper Elements
+@demo demo/index.html
+
+-->
+
+<!-- Add your elements here -->
 <style is="custom-style" type="text/css">
     /* Custom properties that inherit down the document tree may be defined */
     /* https://www.polymer-project.org/1.0/docs/devguide/styling.html */
@@ -8510,7 +8884,7 @@ li.L9 {
 </style>
 <script src="//cdnjs.cloudflare.com/ajax/libs/prettify/r298/prettify.min.js"></script>
 <script src="https://cdn.rawgit.com/google/code-prettify/585e3751e341ebc0ba026caa9d6f676ac7444d86/src/lang-css.js" charset="utf-8"></script>
-
+<!-- Google Material Icons -->
 <link href="https://fonts.googleapis.com/icon?family=Material+Icons" rel="stylesheet">
 </head><body><div hidden="" by-vulcanize=""><dom-module id="iron-icon" assetpath="../bower_components/iron-icon/">
 
@@ -9267,7 +9641,14 @@ li.L9 {
 </script>
 <dom-module id="paper-ripple" assetpath="../bower_components/paper-ripple/">
 
-  
+  <!--
+  Fired when the animation finishes. This is useful if you want to wait until the ripple
+  animation finishes to perform some action.
+
+  @event transitionend
+  @param {Object} detail
+  @param {Object} detail.node The animated node
+  -->
 
   <style>
     :host {
@@ -10286,7 +10667,7 @@ li.L9 {
 				<content></content>
 
 			</div>
-			
+			<!-- Put questions here! -->
 		</content-wrapper>
 	</template>
 </dom-module>
@@ -10401,7 +10782,7 @@ li.L9 {
 			position: relative;
 			top:0;
 			left:0;
-			background-color:#000;
+			
 		};
 		.material-shadow {
 		  transition:box-shadow 0.28s cubic-bezier(0.4, 0, 0.2, 1);
@@ -10523,6 +10904,7 @@ li.L9 {
 		ready: function() {
 
 			// DOM OBJECTS
+			this.container = this.$['zooming-image'];
 			this.fullsize = this.$['fullsize'];
 			this.thumbnail = this.$['thumbnail'];
 			this.zoom_container = this.$['zoom-image-container'];
@@ -10555,6 +10937,15 @@ li.L9 {
 			this.background.addEventListener("webkitTransitionEnd",function(e){
 				self._onBackgroundTransition();
 			},false);
+
+			this.thumbnail.addEventListener("mouseover", function(e) {
+				self._onMouseOver(e);
+			});
+
+			this.thumbnail.addEventListener("mouseout", function(e) {
+				self._onMouseOut(e);
+			});
+
   		},
 
 		/* Using IronA11yKeysBehavior, listen for 'esc' key pressed
@@ -10572,6 +10963,18 @@ li.L9 {
 		_clickListener: function(e) {
 			this.zoomed = !(this.zoomed);
 
+		},
+
+		_onMouseOver: function(e) {
+			this.thumbnail.getAttributeNode("elevation").value = 5;
+			this.thumbnail.style.top = "-3px";
+			this.thumbnail.style.left = "-3px";
+		},
+
+		_onMouseOut: function(e) {
+			this.thumbnail.getAttributeNode("elevation").value = 1;
+			this.thumbnail.style.top = "0px";
+			this.thumbnail.style.left = "0px";
 		},
 
 		/* WHEN TRANSITION ENDS
@@ -10787,7 +11190,7 @@ li.L9 {
     </style>
     <template>
         <div id="navigation">
-            
+            <!-- TK: hamburger menu? -->
             <div id="navigation-container">
 
                 <a id="learn-nav-home-link" href="/">Learn</a>
@@ -10821,6 +11224,14 @@ li.L9 {
 
 			border-radius:4px;
 			width:100%;
+
+		}
+
+		#capsule-container:hover {
+			/*background-color:#CCC;*/
+			/*top:-3px;
+			left:-3px;*/
+
 		}
 
 		#capsule-ref {
@@ -10993,9 +11404,7 @@ li.L9 {
 
 		/* Not sure how to share this, maybe can't because of ::shadow?
 		   Should we do this for all paper-fab elements? (See github #21) */
-		paper-fab::shadow > paper-material {
-		    @apply(--shadow-elevation-8dp);
-		}
+		
 
 	</style>
 	<template>
@@ -11050,6 +11459,7 @@ li.L9 {
 
 		ready: function() {
 			// DOM OBJECTS
+			this.capsule_container = this.$['capsule-container'];
 			this.capsule_image = this.$['capsule-image'];
 			this.capsule_ref = this.$['capsule-ref'];
 			this.capsule_header = this.$['capsule-header'];
@@ -11070,6 +11480,14 @@ li.L9 {
 				self._onCapsuleRefClick(e);
 			});
 
+			this.capsule_ref.addEventListener("mouseover", function(e) {
+				self._onCapsuleRefMouseOver(e);
+			});
+
+			this.capsule_ref.addEventListener("mouseout", function(e) {
+				self._onCapsuleRefMouseOut(e);
+			});
+
 			this.capsule_page_block.addEventListener("click", function(e) {
 				self._onCapsuleCloseClick(e);
 			});
@@ -11085,6 +11503,8 @@ li.L9 {
 			this.capsule_content_container.addEventListener("webkitTransitionEnd",function(e){
 				self._hideContentContainer();
 			},false);
+
+			
 
 		},
 
@@ -11102,6 +11522,18 @@ li.L9 {
 
 		_onCapsuleRefClick: function(e) {
 			this.windowOn(e);
+		},
+
+		_onCapsuleRefMouseOver: function(e) {
+			this.capsule_container.getAttributeNode("elevation").value = 5;
+			this.capsule_container.style.top = "-3px";
+			this.capsule_container.style.left = "-3px";
+		},
+
+		_onCapsuleRefMouseOut: function(e) {
+			this.capsule_container.getAttributeNode("elevation").value = 1;
+			this.capsule_container.style.top = "0px";
+			this.capsule_container.style.left = "0px";
 		},
 
 		_onCapsuleCloseClick: function(e) {
@@ -11664,6 +12096,7 @@ Polymer({
 	],
 	ready: function() {
 		// DOM OBJECTS
+		this.link_container = this.$['link-container'];
 		this.link_image = this.$['link-image'];
 		this.link_ref = this.$['link-ref'];
 
@@ -11677,10 +12110,30 @@ Polymer({
 			self._onLinkRefClick(e);
 		});
 
+		this.link_ref.addEventListener("mouseover", function(e) {
+			self._onLinkRefMouseOver(e);
+		});
+
+		this.link_ref.addEventListener("mouseout", function(e) {
+			self._onLinkRefMouseOut(e);
+		});
+
 	},
 
 	_onLinkRefClick: function() {
 		window.open(this.link)
+	},
+
+	_onLinkRefMouseOver: function(e) {
+		this.link_container.getAttributeNode("elevation").value = 5;
+		this.link_container.style.top = "-3px";
+		this.link_container.style.left = "-3px";
+	},
+
+	_onLinkRefMouseOut: function(e) {
+		this.link_container.getAttributeNode("elevation").value = 1;
+		this.link_container.style.top = "0px";
+		this.link_container.style.left = "0px";
 	},
 
 	properties: {
@@ -11810,7 +12263,6 @@ Polymer({
 				content.innerHTML = pageItem.innerHTML;
 				clone.distributeContent();
 				self.addPage(clone, caller, url);
-				//self.selectPage(self.page_stack.length - 1);
 			})
 		},
 		/**
@@ -11823,9 +12275,10 @@ Polymer({
 		 */
 		addPage: function(pageItem, caller, url) {
 			if (pageItem.tagName == 'PAGE-ITEM') {
-				if (this.page_stack.length > 0) {
+				if (this.page_stack.length == 0) {
+					history.replaceState({ stack_end_index: this.page_stack.length }, pageItem.header, url);
+				} else {
 					history.pushState({ stack_end_index: this.page_stack.length }, pageItem.header, url);
-
 				}
 				this.page_stack.push({el:pageItem, caller:caller});
 				this.appendChild(pageItem);
@@ -11847,14 +12300,13 @@ Polymer({
 		_onPageOut: function(e) {
 			var target = e.detail.index;
 			history.go(target - (this.page_stack.length - 1));
-			// this.selectPage(e.detail.index);
 		},
 		_onPageRemove: function(e) {
 			this.removePage(e.detail.caller);
 		},
 		_onPageReady: function(e) {
 			if (this.page_stack.length == 0) {
-				this.addPage(e.detail.caller, null);
+				this.addPage(e.detail.caller, null, window.location.href);
 			}
 		},
 		removePage: function(el) {
@@ -11864,26 +12316,12 @@ Polymer({
 		selectPage:function(index) {
 			var stack_depth_position = 0,
 				stack_depth = 1,
-				to_remove = [],
-				to_page_out = [];
+				to_page_out = this.page_stack.slice(0,index),
+				to_remove = this.page_stack.splice(index+1);
 
-
-			for (i = 0; i < this.page_stack.length; i++) {
-				if (i !== index) {
-					if (i > index) {
-						console.log("greater than index, will be removed");
-						this.page_stack[i].el.pageOut();
-						to_remove.push(i);
-					} else {
-						to_page_out.push(this.page_stack[i].el);
-					}
-
-				}
-			}
-
-			// Remove any items that were pageOuted
-			for (i = 0; i < to_remove.length; i++) {
-				this.page_stack.pop();
+			to_remove = to_remove.reverse();
+			for (var i = 0; i < to_remove.length; i++) {
+				to_remove[i].el.pageOut();
 			}
 
 
@@ -11891,7 +12329,7 @@ Polymer({
 
 			// PageOuts
 			for (i = 0; i < to_page_out.length; i++) {
-				to_page_out[i].pageOff(stack_depth_position * stack_depth, 10 - stack_depth, i, stack_depth_position);
+				to_page_out[i].el.pageOff(stack_depth_position * stack_depth, 10 - stack_depth, i, stack_depth_position);
 				stack_depth++;
 			}
 
@@ -12508,7 +12946,7 @@ Polymer({
  * to be preferable to load them as a resource.
  */
 <dom-module is="glossary-manager">
-
+<!-- There is no visual presentation for a glossary-manager -->
 </dom-module>
 <script type="text/javascript">
 function fetchGlossary(url, callback) {
