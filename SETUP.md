@@ -90,8 +90,9 @@ END
 
 ```
 
-Create database tables:
+Have Django do its basic setup
 
 ```
+python manage.py collectstatic
 python manage.py migrate
 ```
