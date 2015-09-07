@@ -95,4 +95,13 @@ Have Django do its basic setup
 ```
 python manage.py collectstatic
 python manage.py migrate
+python manage.py createsuperuser
 ```
+
+Now you should be able to run the server:
+
+    python manage.py runserver
+
+Go to `http://localhost:8000` and you should see a message that there are no lessons. Go to
+`http://localhost:8000/admin/` and log in as the user you created with `createsuperuser` and
+you can start adding some!
