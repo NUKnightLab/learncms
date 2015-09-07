@@ -38,9 +38,7 @@ FIXTURE_DIRS = (
     join(PROJECT_ROOT, 'fixtures'),
 )
 
-ADMINS = (
-    ('Knight Lab', 'knightlab@northwestern.edu'),
-)
+ADMINS = ()
 
 MANAGERS = ADMINS
 
