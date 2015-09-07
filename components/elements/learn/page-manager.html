@@ -53,7 +53,6 @@
 				content.innerHTML = pageItem.innerHTML;
 				clone.distributeContent();
 				self.addPage(clone, caller, url);
-				//self.selectPage(self.page_stack.length - 1);
 			})
 		},
 		/**
@@ -66,9 +65,10 @@
 		 */
 		addPage: function(pageItem, caller, url) {
 			if (pageItem.tagName == 'PAGE-ITEM') {
-				if (this.page_stack.length > 0) {
+				if (this.page_stack.length == 0) {
+					history.replaceState({ stack_end_index: this.page_stack.length }, pageItem.header, url);
+				} else {
 					history.pushState({ stack_end_index: this.page_stack.length }, pageItem.header, url);
-
 				}
 				this.page_stack.push({el:pageItem, caller:caller});
 				this.appendChild(pageItem);
@@ -90,14 +90,13 @@
 		_onPageOut: function(e) {
 			var target = e.detail.index;
 			history.go(target - (this.page_stack.length - 1));
-			// this.selectPage(e.detail.index);
 		},
 		_onPageRemove: function(e) {
 			this.removePage(e.detail.caller);
 		},
 		_onPageReady: function(e) {
 			if (this.page_stack.length == 0) {
-				this.addPage(e.detail.caller, null);
+				this.addPage(e.detail.caller, null, window.location.href);
 			}
 		},
 		removePage: function(el) {
@@ -107,26 +106,12 @@
 		selectPage:function(index) {
 			var stack_depth_position = 0,
 				stack_depth = 1,
-				to_remove = [],
-				to_page_out = [];
+				to_page_out = this.page_stack.slice(0,index),
+				to_remove = this.page_stack.splice(index+1);
 
 
-			for (i = 0; i < this.page_stack.length; i++) {
-				if (i !== index) {
-					if (i > index) {
-						console.log("greater than index, will be removed");
-						this.page_stack[i].el.pageOut();
-						to_remove.push(i);
-					} else {
-						to_page_out.push(this.page_stack[i].el);
-					}
-
-				}
-			}
-
-			// Remove any items that were pageOuted
-			for (i = 0; i < to_remove.length; i++) {
-				this.page_stack.pop();
+			for (var i = 0; i < to_remove.length; i++) {
+				to_remove[i].el.pageOut();
 			}
 
 
@@ -134,7 +119,7 @@
 
 			// PageOuts
 			for (i = 0; i < to_page_out.length; i++) {
-				to_page_out[i].pageOff(stack_depth_position * stack_depth, 10 - stack_depth, i, stack_depth_position);
+				to_page_out[i].el.pageOff(stack_depth_position * stack_depth, 10 - stack_depth, i, stack_depth_position);
 				stack_depth++;
 			}
 
