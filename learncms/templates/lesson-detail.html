@@ -1,7 +1,7 @@
 {% extends "_base.html" %}
 {% load staticfiles %}
 {% block content %}
-        <learn-nav logo="{% static 'img/banner-logo-white.png' %}"></learn-nav>
+        <learn-nav home="/" logo="{% static 'img/banner-logo-white.png' %}"></learn-nav>
         <page-manager>
         <page-item header="{{ lesson.title }}">
         <lesson-banner image="{{ lesson.banner_image.url }}" header="{{ lesson.title }}"></lesson-banner>
