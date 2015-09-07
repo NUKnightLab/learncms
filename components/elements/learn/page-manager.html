@@ -109,7 +109,7 @@
 				to_page_out = this.page_stack.slice(0,index),
 				to_remove = this.page_stack.splice(index+1);
 
-
+			to_remove = to_remove.reverse();
 			for (var i = 0; i < to_remove.length; i++) {
 				to_remove[i].el.pageOut();
 			}
