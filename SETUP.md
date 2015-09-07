@@ -1,5 +1,16 @@
 ### Local development setup
 
+Prereqs:
+
+* Python 3.4.x
+* Postgres 9.3.x
+* a virtual environment with the python dependencies installed
+* an initialized database
+
+Once you can check all four of these off, you should be able to run the CMS locally and make and test changes to the code.
+
+If you only want to work on the web components, all you need is something to work as a local web server.
+
 #### Install Python 3.4.4
 
 Download installer from https://www.python.org/downloads/release/python-343/
@@ -24,7 +35,7 @@ http://www.enterprisedb.com/products-services-training/pgdownload
     Default data directory /Library/PostgreSQL/9.3/data
     Default Port = 5432
     Use default locale
-    
+
 Add the PostgreSQL bin directory to your PATH environment variable:
 
 `PATH=$PATH:/Library/PostgreSQL/9.3/bin`
@@ -61,3 +72,26 @@ Verify you can connect to database as learncms user:
 $ psql -U learncms learncms
 ```
 
+#### Setup project
+
+If you just installed Python 3, you may need to upgrade `virtualenvwrapper` (see [SETUP.md](SETUP.md))
+Make virtual environment and install requirements:
+
+```
+$ mkvirtualenv --python=/usr/local/bin/python3 learn-cms
+$ pip install -r requirements.txt
+$ export DJANGO_SETTINGS_MODULE='core.settings.loc'
+$ cat >> ${VIRTUAL_ENV}/bin/postactivate <<END
+
+export DJANGO_SETTINGS_MODULE='core.settings.loc'
+echo "DJANGO_SETTINGS_MODULE set to \$DJANGO_SETTINGS_MODULE"
+
+END
+
+```
+
+Create database tables:
+
+```
+python manage.py migrate
+```
