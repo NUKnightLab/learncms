@@ -1,28 +1,5 @@
 {% extends "_base.html" %}
 {% load staticfiles %}
-{% block extrahead %}
-<script src="{% static 'webcomponentsjs/webcomponents-lite.min.js' %}">
-</script>
-<link rel="import" href="{% static 'webcomponents.html' %}">
-<style is="custom-style" type="text/css">
-
-:root {
-
-}
-
-</style>
-<script type="text/javascript">
-    var rscs = []
-    function initGlossary() {
-
-    }
-    document.addEventListener('readystatechange', function(e) {
-        if (e.target.readyState == 'complete') {
-            initGlossary();
-        }
-    })
-</script>
-{% endblock extrahead %}
 {% block content %}
         <learn-nav logo="{% static 'img/banner-logo-white.png' %}"></learn-nav>
         <page-manager>
@@ -32,5 +9,5 @@
         {{ evaluated_content|safe }}
         </page-item>
         </page-manager>
-<glossary-manager json-url="/glossary.json"></glossary-manager>
+        <glossary-manager json-url="/glossary.json"></glossary-manager>
 {% endblock content %}
