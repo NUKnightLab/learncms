@@ -19,6 +19,6 @@
         <input type="button" id="btn-code-block" value="&lt;code-block&gt;" class="code"/>
     </div>
     <div>
-        <textarea name="{{name}}" id="messageBody" rows="20" cols="100">{{content}}</textarea>
+        <textarea name="{{name}}" id="messageBody" rows="20" cols="100">{{content|default:""}}</textarea>
     </div>
 </div>
