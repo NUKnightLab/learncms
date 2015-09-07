@@ -19,6 +19,7 @@ from django.contrib import admin
 from django.conf import settings
 from django.views.generic.list import ListView
 from django.views.generic import RedirectView
+from django.views.generic.base import TemplateView
 
 from .models import Lesson
 from .views import LessonDetailView, glossary_json, handler404, handler500
@@ -37,6 +38,8 @@ urlpatterns = patterns(
     url(r'^lesson/(?P<slug>[a-z\-]+)/$', LessonDetailView.as_view(), name='lesson-detail'),
     url(r'^glossary.json$', glossary_json, name='glossary-json'),
     url(r'^index.html?$', RedirectView.as_view(url='/'), name='index_html'),
+    url(r'^404(.html|/)?$', TemplateView.as_view(template_name="404.html"), name='show-404'),
+    url(r'^500(.html|/)?$', TemplateView.as_view(template_name="500.html"), name='show-500'),
     url(r'^/?$', ListView.as_view(template_name="index.html",model=Lesson), name='homepage'),
 )
 
