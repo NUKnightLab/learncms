@@ -10,3 +10,40 @@
     font-family: Roboto;
     padding: 3px;
 }
+
+#error {
+  font-family: 'Roboto', 'Helvetica Neue', Helvetica, Arial, sans-serif;
+  width: 100vw;
+  height: 100vh;
+  overflow: hidden;
+}
+
+.error-code {
+  margin-top: 20vh;
+  text-align: center;
+  font-size: 10em;
+  line-height: 1em;
+  margin-bottom: 0;
+}
+
+.error-subhead {
+  text-align: center;
+  font-size: 2em;
+  margin-top: 0;
+}
+
+.error-message {
+  max-width: 550px;
+  text-align: center;
+  display: block;
+  margin: 0 auto;
+  font-weight: 400;
+}
+
+a {
+  color: #80CBC4;
+}
+
+a:hover {
+  text-decoration: underline;
+}

@@ -1,7 +1,11 @@
+{% load staticfiles %}
 <!DOCTYPE html>
 <html prefix="og: http://ogp.me/ns#">
 <head>
     <title>{% if title %}{{title}} -{% endif %} Learn.KnightLab.com</title>
+    <link rel="icon" type="image/png" href="//cdn.knightlab.com/libs/purpleline/latest/img/favicon.ico">
+    <script src="{% static 'webcomponentsjs/webcomponents-lite.min.js' %}"></script>
+    <link rel="import" href="{% static 'webcomponents.html' %}">
     <link rel="stylesheet" href="{{ STATIC_URL }}css/app.css" media="screen" title="no title" charset="utf-8">
     {% block opengraph %}
     {% comment %}
@@ -33,6 +37,7 @@
     {% block extrahead %}{% endblock extrahead %}
 </head>
 <body class="fullbleed">
+{% include "_analytics.html" %}
 {% if user.is_staff %}
 <!-- <div id="staff-toolbar">
     <span id="staff-greeting">welcome, {{ user }} [<a href="{% url 'admin:logout' %}">log out</a>]</span>
@@ -43,6 +48,5 @@
 {% endif %}
 
 {% block content %}{% endblock %}
-{% include "_analytics.html" %}
 </body>
 </html>

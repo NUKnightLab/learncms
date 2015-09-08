@@ -48,7 +48,7 @@ Example:
             <!-- TK: hamburger menu? -->
             <div id="navigation-container">
 
-                <a id="learn-nav-home-link" href="/">Learn</a>
+                <a id="learn-nav-home-link" href="{{ home }}">Learn</a>
                 <a id="kl-link" href="http://knightlab.northwestern.edu"><img src="{{ logo }}"></a>
             </div>
         </div>
@@ -62,6 +62,10 @@ Example:
             logo: {
                 type: String,
                 value: '/images/learn/banner-logo-white.png'
+            },
+            home: {
+              type: String,
+              value: '/'
             }
 
         }

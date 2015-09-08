@@ -18,7 +18,7 @@ class Lesson(models.Model):
         (DRAFT, 'Draft'),
     )
     title = models.CharField(max_length=200)
-    slug = models.SlugField(unique=True, help_text="Don't edit this, let it be automatically assigned. Must be unique.")
+    slug = models.SlugField(unique=True, help_text="Don't edit this, let it be automatically assigned. Must be unique. If you do edit, you need to edit all lesson-ref slugs referring to this.")
     banner_image = FileBrowseField('Banner Image', max_length=200, directory='banners/', blank=True)
     status = models.CharField(choices=LESSON_STATUS_CHOICES, default=DRAFT, max_length=50)
     reference_blurb = models.CharField(max_length=500, blank=True, help_text="The text which appears when a reference to this lesson is included in some other. Don't use markup.")
@@ -59,7 +59,7 @@ class ZoomingImage(models.Model):
 class CapsuleUnit(models.Model):
     title = models.CharField(max_length=200, help_text="")
     slug = models.SlugField(unique=True, help_text="Don't edit this, let it be automatically assigned. Must be unique.")
-    image = models.ImageField(upload_to='capsules')
+    image = FileBrowseField('Image', max_length=200, directory='capsules/', blank=True)
     content = models.TextField(blank=True, help_text="HTML is OK")
     version = IntegerVersionField()
 

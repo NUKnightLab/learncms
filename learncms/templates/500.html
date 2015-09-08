@@ -4,9 +4,13 @@
     body {
         font-family: Roboto
     }
-</style>    
+</style>
 {% endblock %}
 {% block content %}
-<h1>Server Error</h1>
-<p>An unexpected error occurred.</p>
+<div id="error">
+  <h1 class='error-code'>500</h1>
+  <h2 class='error-subhead'>It's not you, it's us.</h2>
+  <h3 class='error-message'>We don't know what exactly went wrong, but we know it's on us.</h3>
+  <h3 class='error-message'>We'll get right on it. In the meantime, you can hit the back button or  <a href="/">get a fresh start.</a></h3>
+</div>
 {% endblock %}
