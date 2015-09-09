@@ -66,3 +66,29 @@ MEDIA_URL = 'https://s3.amazonaws.com/{}/'.format(AWS_STORAGE_BUCKET_NAME)
 # Static files (CSS, JavaScript, Images)
 # deployment to this location is managed by salt
 STATIC_URL = '//{}/learncms/'.format(AWS_STORAGE_BUCKET_NAME)
+
+#django-filebrowser needs its own storage
+from django.core.files.storage import FileSystemStorage
+FILEBROWSER_ROOT=os.path.normpath(os.path.join(PROJECT_ROOT,'../../learn-media'))
+FILEBROWSER_URL="/imagelib/"
+FILEBROWSER_STORAGE = FileSystemStorage(location=FILEBROWSER_ROOT,base_url=FILEBROWSER_URL)
+from filebrowser.sites import site
+site.storage = FILEBROWSER_STORAGE
+# site.directory needs to end with a slash
+site.directory = 'uploads/'
+FILEBROWSER_VERSIONS_BASEDIR = '_versions/' # this doesn't seem to work?
+FILEBROWSER_VERSIONS = { # this doesn't seem to work?
+    'admin_thumbnail': {'verbose_name': 'Admin Thumbnail', 'width': 60, 'height': 60, 'opts': 'crop'},
+    # 'thumbnail': {'verbose_name': 'Thumbnail (1 col)', 'width': 60, 'height': 60, 'opts': 'crop'},
+    # 'small': {'verbose_name': 'Small (2 col)', 'width': 140, 'height': '', 'opts': ''},
+    # 'medium': {'verbose_name': 'Medium (4col )', 'width': 300, 'height': '', 'opts': ''},
+    # 'big': {'verbose_name': 'Big (6 col)', 'width': 460, 'height': '', 'opts': ''},
+    # 'large': {'verbose_name': 'Large (8 col)', 'width': 680, 'height': '', 'opts': ''},
+}
+
+import os
+try:
+    os.makedirs(os.path.join(site.storage.location, site.directory))
+    os.makedirs(os.path.join(site.storage.location, FILEBROWSER_VERSIONS_BASEDIR))
+except Exception:
+    pass
