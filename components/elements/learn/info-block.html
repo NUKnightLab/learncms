@@ -13,7 +13,18 @@ Example:
 -->
 <dom-module id="info-block">
 	<style>
+		@font-face {
+			font-family: "EmojiSymbols";
+			src: url('../../styles/fonts/EmojiSymbols-Regular.woff') format('woff');
+			text-decoration: none;
+			font-style: normal;
+		}
+		.info-emoji {
+			font-family: "EmojiSymbols";
+			line-height: 1;
+			margin-bottom:10px;
 
+		}
 		::content #info-block-wrapper {
 			background-color: #F5F4F4;
 			padding: 20px;
@@ -29,7 +40,7 @@ Example:
 			color: #263238;
 			font-weight:500;
 			font-style:italic;
-			margin-top:0;
+			margin-top:20px;
 			margin-bottom:10px;
 		}
 
@@ -60,10 +71,10 @@ Example:
 			justify-content: center;
 			font-family: Roboto, sans-serif;
 			color: #FAFAFA;
-			font-size: 38px;
+			font-size: 72px;
 
 			border-radius:50%;
-			background-color:#E7E6E6;
+			background-color:#CCC;
 			width: 112px;
 			height: 112px;
 			text-align:center;
@@ -77,10 +88,11 @@ Example:
 	<div id="info-block-wrapper" class="layout horizontal">
 		<div id="info-block-icon" class="flex">
 			<div id="info-block-icon-background">
-				i
+				<span class="info-emoji">{{ emoji }}</span>
 			</div>
 		</div>
 		<div id="info-block-content" class="flex-4">
+			<h2>{{ header }}</h2>
 			<content></content>
 		</div>
 	</div>

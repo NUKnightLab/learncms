@@ -21,6 +21,7 @@ Example:
 
 
 		:host ::content #step-content {
+			font-family: 'Roboto', 'Noto', sans-serif;
 			padding: 20px;
 			width: 70%;
 			/* for large screens */
@@ -29,6 +30,7 @@ Example:
 			/*padding-top: 30px;*/
 			padding-top: 30px;
 			background-color: #FFF;
+			color:#242424;
 		}
 
 		:host ::content #step-content p {
@@ -40,7 +42,12 @@ Example:
 			margin-top:0;
 			margin-bottom: 20px;
 		}
-
+		:host ::content #step-content li {
+			font-family: 'Roboto', 'Noto', sans-serif;
+			font-size: 18px;
+			line-height: 26px;
+			font-weight: normal;
+		}
 		:host ::content h2#step-header {
 			font-family: 'Roboto', 'Noto', sans-serif;
 			color: #338D83;
@@ -59,7 +66,7 @@ Example:
 			margin-bottom:10px;
 		}
 		/* Begin ordered list styling */
-		:host ::content #step-content ol {
+		/*:host ::content #step-content ol {
 			counter-reset: item;
 			padding-left: 0;
 			margin-left: 6em;
@@ -89,7 +96,7 @@ Example:
 			line-height: 5em;
 			margin-bottom: -2.5em;
 			color: #ffffff;
-		}
+		}*/
 		/* End ordered list styling */
 
 		:host ::content #step-content p code {
@@ -110,7 +117,7 @@ Example:
 			font-family: Roboto;
 			font-weight: 500;
 			margin-right: 20px;
-			margin-top: -.9em;
+			margin-top: 0;
 		}
 
 		content-wrapper {
@@ -163,7 +170,7 @@ Example:
 	<template>
 		<content-wrapper>
 			<step-number>{{ stepnum }}</step-number>
-			<div id="step-content" class="material-shadow paper-font-body2" elevation="1">
+			<div id="step-content" class="material-shadow " elevation="1">
 				<h2 id="step-header">{{ header }}</h2>
 				<content></content>
 
