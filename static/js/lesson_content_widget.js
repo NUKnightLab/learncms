@@ -56,6 +56,17 @@ grp.jQuery(document).ready(function() {
 
     window.lessonContentEditor = editor;
     var $ = grp.jQuery;
+
+    $('.CodeMirror').resizable({ // http://stackoverflow.com/a/13979570/102476
+      resize: function() {
+        editor.setSize($(this).width(), $(this).height());
+      }
+    });
+
+    if (localStorage.getItem('lcw-codemirror-font-size')) {
+      $('.CodeMirror').css('font-size', localStorage.getItem('lcw-codemirror-font-size'));
+    }
+
     $('#btn-narrative-text').click(function() {
         var cursor = editor.getCursor();
         var note = '\t<!-- narrative-text can contain any HTML markup. It typically occurs once at the top of a lesson.-->';
@@ -91,26 +102,26 @@ grp.jQuery(document).ready(function() {
         editor.replaceSelection('<glossary-term>' + editor.getSelection() + '</glossary-term>');
         editor.focus();
     });
+    $('#btn-font-larger').click(function() {
+        var size = parseFloat($('.CodeMirror').css('font-size'));
+        var newSize = (size + .5) + "px";
+        localStorage.setItem('lcw-codemirror-font-size', newSize);
+        $('.CodeMirror').css('font-size', newSize);
+    });
+    $('#btn-font-smaller').click(function() {
+      var size = parseFloat($('.CodeMirror').css('font-size'));
+      var newSize = (size - .5) + "px";
+      localStorage.setItem('lcw-codemirror-font-size', newSize);
+      $('.CodeMirror').css('font-size', newSize);
+    });
 
     $('#btn-fullscreen').click(function() {
       if (editor.getOption('fullScreen')) {
         exitFullscreen();
       } else {
-        launchIntoFullscreen(document.getElementById('lesson-content-editor'));
+        editor.setOption('fullScreen', true);
       }
     })
-
-    function handleFullScreenChange() {
-      if (fullscreenElement()) {
-        editor.setOption('fullScreen', true);
-      } else {
-        editor.setOption('fullScreen',false);
-      }
-    }
-    document.addEventListener('webkitfullscreenchange', handleFullScreenChange, false);
-    document.addEventListener('mozfullscreenchange', handleFullScreenChange, false);
-    document.addEventListener('fullscreenchange', handleFullScreenChange, false);
-    document.addEventListener('MSFullscreenChange', handleFullScreenChange, false);
 
     $('#btn-format').click(function() {
         var start = editor.getValue();

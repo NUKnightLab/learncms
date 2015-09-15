@@ -1,6 +1,7 @@
 .CodeMirror {
   width: 760px;
   height: 800px;
+  font-size: 1.2em;
 }
 
 .lw-column {
@@ -25,6 +26,11 @@
 
 .lw-controls input {
     margin: 2px 0 3px 5px;
+}
+
+.lw-controls button {
+    margin: 2px 0 3px 5px;
+    color: #309bbf;
 }
 
 .lw-controls input.code {
