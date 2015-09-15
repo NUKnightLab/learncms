@@ -210,7 +210,7 @@ Example:
 
 		/* Not sure how to share this, maybe can't because of ::shadow?
 		   Should we do this for all paper-fab elements? (See github #21) */
-		
+
 
 	</style>
 	<template>
@@ -283,6 +283,10 @@ Example:
 			this.capsule_image.style.backgroundImage = "url(" + this.image + ")";
 
 			this.capsule_ref.addEventListener("click", function(e) {
+				if (dataLayer) {
+					var target = self.attributes['ref'] || self.header;
+					dataLayer.push({'click-target': target});
+				}
 				self._onCapsuleRefClick(e);
 			});
 
@@ -310,7 +314,7 @@ Example:
 				self._hideContentContainer();
 			},false);
 
-			
+
 
 		},
 
