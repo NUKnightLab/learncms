@@ -16,10 +16,10 @@ Example:
 
 		::content #info-block-wrapper {
 			background-color: #F5F4F4;
-			padding: 0 10px;
+			padding: 20px;
 			margin-top:20px;
 			border-radius:8px;
-			padding-top:30px;
+			/*padding-top:30px;*/
 		};
 
 		::content #info-block-content {
@@ -73,18 +73,18 @@ Example:
 
 	</style>
   <template>
-  <paper-material elevation="0" class="paper-font-body2">
+	
 	<div id="info-block-wrapper" class="layout horizontal">
-	  <div id="info-block-icon" class="flex">
+		<div id="info-block-icon" class="flex">
 			<div id="info-block-icon-background">
 				i
 			</div>
-	  </div>
-	  <div id="info-block-content" class="flex-4">
-		<content></content>
-	  </div>
+		</div>
+		<div id="info-block-content" class="flex-4">
+			<content></content>
+		</div>
 	</div>
-  </paper-material>
+	
   </template>
 </dom-module>
 <script>
