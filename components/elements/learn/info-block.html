@@ -86,11 +86,13 @@ Example:
   <template>
 
 	<div id="info-block-wrapper" class="layout horizontal">
+		<template is="dom-if" if="{{emoji}}">
 		<div id="info-block-icon" class="flex">
 			<div id="info-block-icon-background">
 				<span class="info-emoji">{{ emoji }}</span>
 			</div>
 		</div>
+		</template>
 		<div id="info-block-content" class="flex-4">
 			<h2>{{ header }}</h2>
 			<content></content>
