@@ -283,9 +283,9 @@ Example:
 			this.capsule_image.style.backgroundImage = "url(" + this.image + ")";
 
 			this.capsule_ref.addEventListener("click", function(e) {
-				if (dataLayer) {
+				if (window.dataLayer) {
 					var target = self.attributes['ref'] || self.header;
-					dataLayer.push({'click-target': target});
+					window.dataLayer.push({'click-target': target});
 				}
 				self._onCapsuleRefClick(e);
 			});
