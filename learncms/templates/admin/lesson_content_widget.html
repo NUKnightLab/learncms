@@ -1,4 +1,5 @@
 {% load staticfiles %}
+<link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/font-awesome/4.4.0/css/font-awesome.min.css">
 <link rel="stylesheet" href='{% static "css/codemirror.css" %}'>
 <link rel="stylesheet" href="https://codemirror.net/addon/dialog/dialog.css" media="screen" title="no title" charset="utf-8">
 <script src='{% static "js/codemirror-compressed.js" %}'></script>
@@ -19,6 +20,8 @@
         <input type="button" id="btn-glossary-term" value="&lt;glossary-term&gt;" class="code"/>
     </div>
     <div class="lw-controls lw-column">
+      <button type="button" id="btn-font-larger"><i class="fa fa-font"></i><i class="fa fa-arrow-up"></i></button>
+      <button type="button" id="btn-font-smaller"><i class="fa fa-font"></i><i class="fa fa-arrow-down"></i></button>
       <input type="button" id="btn-format" value="format" />
       <input type="button" id="btn-fullscreen" value="full screen" />
     </div>
