@@ -252,9 +252,14 @@
 		/* HIDE AND SHOW
 		================================================== */
 		_zoomIn: function() {
+
+			var w = window.innerWidth;
+			var h = window.innerHeight;
+
 			this.zoom_container.classList.add('container-zoomed');
 
-			var margin = 20;
+			var margin = 20,
+				margin_top = 68;
 
 			var self = this;
 			this.fullsize.onload = function() {
@@ -266,11 +271,15 @@
 
 			// Calculate Position
 			var position = this.zoom_container.getBoundingClientRect();
+			console.log(this.parentElement)
 
 			this.zoom_container.style.left = -(position.left - margin) + "px";
-			this.zoom_container.style.top = -(position.top - margin) + "px";
+			this.zoom_container.style.top = -(position.top - margin_top) + "px";
 
-			this.zoom_container.style.width = window.innerWidth - (margin*2) + "px";
+			this.zoom_container.style.width = w - (margin*2) + "px";
+
+			console.log(this.zoom_container.offsetHeight)
+			console.log(h)
 
 			//this.background.style.display = "block";
 			this.background.style.opacity = "0.8";
