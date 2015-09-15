@@ -1,4 +1,5 @@
 <!--
+
 `info-block` is a container that shows general lesson information, typically at the beginning or end of a lesson. It is similar to, but distinct from a 'step-block.' It generally can contain any HTML and has no custom properties.
 
 Example:
@@ -12,124 +13,89 @@ Example:
 -->
 <dom-module id="info-block">
 	<style>
-		#info-block-wrapper {
+
+		::content #info-block-wrapper {
 			background-color: #F5F4F4;
 			padding: 0 10px;
-			margin-top: 20px;
-			border-radius: 8px;
-			padding-top: 30px;
-		}
+			margin-top:20px;
+			border-radius:8px;
+			padding-top:30px;
+		};
 
-		#info-block-content {
+		::content #info-block-content {
 			padding: 0 10px;
 		}
-
-		/* Begin ordered list styling */
-		:host ::content ol {
-			counter-reset: item;
-			padding-left: 0;
-			margin-left: 6em;
-		}
-
-		:host ::content ol li {
-			display: block;
-			margin-bottom: 3em;
-		}
-
-		:host ::content ol li p {
-			margin-top: 0em;
-		}
-
-		:host ::content ol li:before {
-			display: inline-block;
-			content: counter(item);
-			counter-increment: item;
-			width: 5em;
-			height: 5em;
-			border-radius: 100%;
-			text-align: center;
-			margin-left: -5em;
-			background-color: #455a64;
-			position: relative;
-			left: -1em;
-			line-height: 5em;
-			margin-bottom: -2.5em;
-			color: #ffffff;
-		}
-		/* End ordered list styling */
-
-		:host h2 {
+		::content #info-block-content h2 {
 			color: #263238;
-			font-weight: 500;
-			font-style: italic;
-			margin-top: 0;
-			margin-bottom: 10px;
-			display: inline;
-			margin-left: 1.5em;
+			font-weight:500;
+			font-style:italic;
+			margin-top:0;
+			margin-bottom:10px;
 		}
 
-		:host ::content p {
-			color: #424242;
-			font-size: 16px;
+		::content #info-block-content p {
+			color: #9B9B9B;
+			font-size:16px;
 			line-height: 22px;
 			font-style: italic;
-			margin-top: .5em;
+			margin-top:0;
+
 		}
 
 		#info-block-icon {
 			display: flex;
-			display: -webkit-flex;
-			display: -ms-flexbox;
 			align-items: center;
-			-webkit-align-items: center;
 			justify-content: center;
-			-webkit-justify-content: center;
-		}
+			/*margin-bottom:50px;*/
 
-		#info-block-icon-background {
+/*			background-image: var(--info-icon-url);
+			background-repeat: no-repeat;
+			background-position: center;*/
+			
+			
+		}
+		::content #info-block-icon-background {
 			display: flex;
-			display: -webkit-flex;
-			display: -ms-flexbox;
 			align-items: center;
-			-webkit-align-items: center;
 			justify-content: center;
-			-webkit-justify-content: center;
 			font-family: Roboto, sans-serif;
 			color: #FAFAFA;
 			font-size: 38px;
-			border-radius: 50%;
-			background-color: #E7E6E6;
+
+			border-radius:50%;
+			background-color:#E7E6E6;
 			width: 112px;
 			height: 112px;
-			text-align: center;
-			color: #FFF;
-		}
+			text-align:center;
+			color:#FFF;
+		};
 
-		.material-icons {
-			position: relative;
-			margin-right: -25px;
-			top: 3px;
-			align-items: center;
-			-webkit-align-items: center;
-		}
+
 	</style>
-	<template>
-		<paper-material elevation="0" class="paper-font-body2">
-			<div id="info-block-wrapper" class="layout horizontal">
-				<div id="info-block-content" class="flex-4">
-					<i class="material-icons">info_outline</i><h2>{{header}}</h2>
-					<content>
-					</content>
-				</div>
+  <template>
+  <paper-material elevation="0" class="paper-font-body2">
+	<div id="info-block-wrapper" class="layout horizontal">
+	  <div id="info-block-icon" class="flex">
+			<div id="info-block-icon-background">
+				i
 			</div>
-		</paper-material>
-	</template>
+	  </div>
+	  <div id="info-block-content" class="flex-4">
+		<content></content>
+	  </div>
+	</div>
+  </paper-material>
+  </template>
 </dom-module>
 <script>
-	Polymer({
-		is: 'info-block',
-		properties: {
-			header: String
-		}
-	});
+  Polymer({
+	is: 'info-block',
+
+	properties: {
+	  image: {
+		type: String,
+		value: "images/learn/info-icon.png"
+	  }
+	}
+  });
 </script>
