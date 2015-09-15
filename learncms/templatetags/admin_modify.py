@@ -1,3 +1,4 @@
+# http://stackoverflow.com/questions/13101281/in-django-admin-how-can-i-hide-save-and-continue-and-save-and-add-another-butto
 # put this in some app such as customize/templatetags/admin_modify.py and place the app
 # before the 'django.contrib.admin' in the INSTALLED_APPS in settings
 

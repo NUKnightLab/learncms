@@ -51,6 +51,7 @@ class LessonAdmin(reversion.VersionAdmin):
         obj.save()
 
     def change_view(self, request, object_id, form_url='', extra_context=None):
+        # http://stackoverflow.com/questions/13101281/in-django-admin-how-can-i-hide-save-and-continue-and-save-and-add-another-butto
         extra_context = extra_context or {}
         extra_context['show_save_and_add_another'] = False
         return super(LessonAdmin, self).change_view(request, object_id,
