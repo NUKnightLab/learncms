@@ -39,12 +39,12 @@
 <body class="fullbleed">
 {% include "_analytics.html" %}
 {% if user.is_staff %}
-<!-- <div id="staff-toolbar">
+<div id="staff-toolbar">
     <span id="staff-greeting">welcome, {{ user }} [<a href="{% url 'admin:logout' %}">log out</a>]</span>
     <a id="staff-admin-link" href="{% url 'admin:index' %}">admin site</a>
     <span id="staff-lesson-status">{% if lesson %}{{lesson.status}}{% endif %}</span></span>
     <span id="staff-edit-lesson">{% if lesson %}<a href="{{lesson.get_admin_url}}" target="_blank">edit this lesson</a>{% endif %}</span></span>
-</div> -->
+</div>
 {% endif %}
 
 {% block content %}{% endblock %}

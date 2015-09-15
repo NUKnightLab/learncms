@@ -10,9 +10,16 @@
 <h1>Learn.Knightlab.com</h1>
 <ul>
 {% for lesson in object_list %}
-<li><a href="{{lesson.get_absolute_url}}">{{ lesson.title }}</a> ({{ lesson.status }})</li>    
+{% if user.is_staff or lesson.status == 'published' %}
+<li><a href="{{lesson.get_absolute_url}}">{{ lesson.title }}</a> ({{ lesson.status }})</li>
+{% endif %}
 {% empty %}
 <li><a href="/admin/">No lessons yet</a></li>
 {% endfor %}
 </ul>
- {% endblock %}
+{% if not user or user.is_staff == False %}
+<p>
+  Hi! We're not quite ready for visitors. If you have an account, log in.
+</p>
+{% endif %}
+{% endblock %}
