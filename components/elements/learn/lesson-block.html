@@ -110,17 +110,11 @@ Example:
 		<content-wrapper>
 			<div id="lesson-block-spacer"></div>
 			<div id="lesson-block-content" class="material-shadow" elevation="1">
-				
+				<template is="dom-if" if="{{header}}"><h2>{{header}}</h2></template>
 				<content></content>
 
 			</div>
 		</content-wrapper>
-
-<!-- 		<paper-material elevation="1" class="lesson-block paper-font-body2">
-			<div class="lesson-block-wrapper">
-				<content></content>
-			</div>
-		</paper-material> -->
 	</template>
 
 </dom-module>
@@ -130,6 +124,7 @@ Example:
 		is: 'lesson-block',
 
 		properties: {
+			header: String
 		}
 	});
 </script>
