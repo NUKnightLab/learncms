@@ -1,3 +1,8 @@
+.CodeMirror {
+  width: 760px;
+  height: 800px;
+}
+
 .lw-column {
     display: -ms-flexbox;
     display: -webkit-flex;
