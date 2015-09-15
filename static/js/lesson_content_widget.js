@@ -87,6 +87,11 @@ grp.jQuery(document).ready(function() {
         editor.replaceSelection('<code-block>\n</code-block>\n');
         editor.focus();
     });
+    $('#btn-glossary-term').click(function() {
+        editor.replaceSelection('<glossary-term>' + editor.getSelection() + '</glossary-term>');
+        editor.focus();
+    });
+
     $('#btn-fullscreen').click(function() {
       if (editor.getOption('fullScreen')) {
         exitFullscreen();
