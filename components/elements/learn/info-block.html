@@ -14,7 +14,7 @@ Example:
 <dom-module id="info-block">
 	<style>
 		@font-face {
-			font-family: "EmojiSymbols";
+			font-family: "EmojiSymbols"; /* http://emojisymbols.com/emojilist.php */
 			src: url('../../styles/fonts/EmojiSymbols-Regular.woff') format('woff');
 			text-decoration: none;
 			font-style: normal;
@@ -62,8 +62,8 @@ Example:
 /*			background-image: var(--info-icon-url);
 			background-repeat: no-repeat;
 			background-position: center;*/
-			
-			
+
+
 		}
 		::content #info-block-icon-background {
 			display: flex;
@@ -84,7 +84,7 @@ Example:
 
 	</style>
   <template>
-	
+
 	<div id="info-block-wrapper" class="layout horizontal">
 		<div id="info-block-icon" class="flex">
 			<div id="info-block-icon-background">
@@ -96,7 +96,7 @@ Example:
 			<content></content>
 		</div>
 	</div>
-	
+
   </template>
 </dom-module>
 <script>
@@ -104,10 +104,10 @@ Example:
 	is: 'info-block',
 
 	properties: {
-	  image: {
-		type: String,
-		value: "images/learn/info-icon.png"
-	  }
-	}
-  });
+	  emoji: {
+			type: String, // ℹ︎ would be nice, but it has a box in this font
+			value: "\u2757" // In JS, use emoji literals, or \u escapes. e.g. "&#x2757;" becomes "\u2752"; in attribute, &entities are OK
+		}
+  }
+});
 </script>
