@@ -10453,13 +10453,11 @@ li.L9 {
 		<content-wrapper>
 			<div id="lesson-block-spacer"></div>
 			<div id="lesson-block-content" class="material-shadow" elevation="1">
-				
+				<template is="dom-if" if="{{header}}"><h2>{{header}}</h2></template>
 				<content></content>
 
 			</div>
 		</content-wrapper>
-
-
 	</template>
 
 </dom-module>
@@ -10469,6 +10467,7 @@ li.L9 {
 		is: 'lesson-block',
 
 		properties: {
+			header: String
 		}
 	});
 </script>
@@ -10824,6 +10823,7 @@ li.L9 {
 			min-width:300px;
 			position:relative;
 			z-index:1;
+			margin-top:48px;
 		};
 
 		#lesson-banner-image {
@@ -10896,62 +10896,68 @@ li.L9 {
 	});
 </script>
 <dom-module id="learn-nav" assetpath="learn/">
-    <style>
+	<style>
 
-        a {
-            color: inherit;
-            text-decoration: inherit;
-        }
+		a {
+			color: inherit;
+			text-decoration: inherit;
+		}
+		:host ::content {
+			/*position: fixed;
+			top:0px;
+			left:0px;*/
+		}
+		#navigation {
+			background-color: #263238;
+			z-index:11;
+			color: var(--learn-primary-color);
+			font-family: var(--learn-primary-font);
+			font-weight: 500;
+			font-style: italic;
+			font-size: 24px;
+			width: 100%;
+			text-align: center;
+			position: relative;
+			position: fixed;
 
-        #navigation {
-            background-color: #263238;
-            z-index:11;
-            color: var(--learn-primary-color);
-            font-family: var(--learn-primary-font);
-            font-weight: 500;
-            font-style: italic;
-            font-size: 24px;
-            width: 100%;
-            text-align: center;
-            position: relative;
-        }
+		}
 
-        #navigation-container {
-            padding: 10px;
-        }
+		#navigation-container {
+			padding: 10px;
+		}
 
-        #kl-link {
-            position: absolute;
-            right: 40px;
-        }
-    </style>
-    <template>
-        <div id="navigation">
-            
-            <div id="navigation-container">
+		#kl-link {
+			position: absolute;
+			right: 40px;
+		}
+	</style>
+	<template>
+		<div id="navigation">
+			
+			<div id="navigation-container">
 
-                <a id="learn-nav-home-link" href="{{ home }}">Learn</a>
-                <a id="kl-link" href="http://knightlab.northwestern.edu"><img src="{{ logo }}"></a>
-            </div>
-        </div>
+				<a id="learn-nav-home-link" href="{{ home }}">Learn</a>
+				<a id="kl-link" href="http://knightlab.northwestern.edu"><img src="{{ logo }}"></a>
+			</div>
+		</div>
 
-    </template>
+	</template>
 </dom-module>
 <script type="text/javascript">
-    Polymer({
-        is: "learn-nav",
-        properties: {
-            logo: {
-                type: String,
-                value: '/images/learn/banner-logo-white.png'
-            },
-            home: {
-              type: String,
-              value: '/'
-            }
+	Polymer({
+		is: "learn-nav",
+		properties: {
+			logo: {
+				type: String,
+				value: '/images/learn/banner-logo-white.png'
+			},
+			home: {
+			  type: String,
+			  value: '/'
+			}
 
-        }
-    })
+		}
+	})
 </script>
 <dom-module id="capsule-unit" assetpath="learn/">
 	<style>
@@ -11221,9 +11227,9 @@ li.L9 {
 			this.capsule_image.style.backgroundImage = "url(" + this.image + ")";
 
 			this.capsule_ref.addEventListener("click", function(e) {
-				if (dataLayer) {
+				if (window.dataLayer) {
 					var target = self.attributes['ref'] || self.header;
-					dataLayer.push({'click-target': target});
+					window.dataLayer.push({'click-target': target});
 				}
 				self._onCapsuleRefClick(e);
 			});
