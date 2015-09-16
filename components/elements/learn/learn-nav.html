@@ -3,71 +3,77 @@
 `learn-nav` is the consistent navigation bar at the top of every page. The element is intended to be empty and no attributes are needed..
 
 TK:
-    * a hamburger menu for the top left.
+	* a hamburger menu for the top left.
 
 Example:
 
-        <learn-nav></learn-nav>
+		<learn-nav></learn-nav>
 
 @group Learn Elements
 @class learn-nav
 -->
 
 <dom-module id="learn-nav">
-    <style>
+	<style>
 
-        a {
-            color: inherit;
-            text-decoration: inherit;
-        }
+		a {
+			color: inherit;
+			text-decoration: inherit;
+		}
+		:host ::content {
+			/*position: fixed;
+			top:0px;
+			left:0px;*/
+		}
+		#navigation {
+			background-color: #263238;
+			z-index:11;
+			color: var(--learn-primary-color);
+			font-family: var(--learn-primary-font);
+			font-weight: 500;
+			font-style: italic;
+			font-size: 24px;
+			width: 100%;
+			text-align: center;
+			position: relative;
+			position: fixed;
 
-        #navigation {
-            background-color: #263238;
-            z-index:11;
-            color: var(--learn-primary-color);
-            font-family: var(--learn-primary-font);
-            font-weight: 500;
-            font-style: italic;
-            font-size: 24px;
-            width: 100%;
-            text-align: center;
-            position: relative;
-        }
+		}
 
-        #navigation-container {
-            padding: 10px;
-        }
+		#navigation-container {
+			padding: 10px;
+		}
 
-        #kl-link {
-            position: absolute;
-            right: 40px;
-        }
-    </style>
-    <template>
-        <div id="navigation">
-            <!-- TK: hamburger menu? -->
-            <div id="navigation-container">
+		#kl-link {
+			position: absolute;
+			right: 40px;
+		}
+	</style>
+	<template>
+		<div id="navigation">
+			<!-- TK: hamburger menu? -->
+			<div id="navigation-container">
 
-                <a id="learn-nav-home-link" href="{{ home }}">Learn</a>
-                <a id="kl-link" href="http://knightlab.northwestern.edu"><img src="{{ logo }}"></a>
-            </div>
-        </div>
+				<a id="learn-nav-home-link" href="{{ home }}">Learn</a>
+				<a id="kl-link" href="http://knightlab.northwestern.edu"><img src="{{ logo }}"></a>
+			</div>
+		</div>
 
-    </template>
+	</template>
 </dom-module>
 <script type="text/javascript">
-    Polymer({
-        is: "learn-nav",
-        properties: {
-            logo: {
-                type: String,
-                value: '/images/learn/banner-logo-white.png'
-            },
-            home: {
-              type: String,
-              value: '/'
-            }
+	Polymer({
+		is: "learn-nav",
+		properties: {
+			logo: {
+				type: String,
+				value: '/images/learn/banner-logo-white.png'
+			},
+			home: {
+			  type: String,
+			  value: '/'
+			}
 
-        }
-    })
+		}
+	})
 </script>
