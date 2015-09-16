@@ -33,7 +33,15 @@
     <meta name="twitter:description" content="{{ og_description }}">
     {% endif  %}
     {% endblock opengraph %}
+    <style media="screen">
+      @font-face {
+        font-family: "EmojiSymbols"; /* http://emojisymbols.com/emojilist.php */
+        src: url('{% static "css/EmojiSymbols-Regular.woff" %}') format('woff');
+        text-decoration: none;
+        font-style: normal;
+      }
 
+    </style>
     {% block extrahead %}{% endblock extrahead %}
 </head>
 <body class="fullbleed">
