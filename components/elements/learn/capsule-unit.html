@@ -100,7 +100,8 @@ Example:
 		#capsule-content {
 			display:none;
 			height:100%;
-			overflow-x:scroll;
+			/*overflow-y:scroll;*/
+			overflow:hidden;
 			padding:40px;
 			
 			-webkit-transition: opacity 500ms ease-in-out;
@@ -173,6 +174,9 @@ Example:
 			z-index:90;
 			top:0;
 			left:0;
+			background-color: rgba(255,255,255,0.5);
+
+			/*background-color:#FFF;*/
 		};
 
 		.material-shadow {
@@ -215,6 +219,8 @@ Example:
 			min-width:200px;
 		}
 
+
+
 		/* Not sure how to share this, maybe can't because of ::shadow?
 		   Should we do this for all paper-fab elements? (See github #21) */
 
@@ -239,8 +245,9 @@ Example:
 					<content></content>
 				</div>
 			</div>
-			<div id="capsule-page-block"></div>
+			
 		</div>
+		<div id="capsule-page-block"></div>
 	</template>
 </dom-module>
 
@@ -309,6 +316,13 @@ Example:
 				self._onCapsuleCloseClick(e);
 			});
 
+			// this.capsule_page_block.addEventListener("mousewheel", function(e) {
+			// 	self._onCapsuleScrollBlock(e);
+			// });
+			this.capsule_content.addEventListener("mousewheel", function(e) {
+				self._onCapsuleScrollBlock(e);
+			});
+
 			this.capsule_close_btn.addEventListener("click", function(e) {
 				self._onCapsuleCloseClick(e);
 			});
@@ -357,6 +371,10 @@ Example:
 			this.windowOff(e);
 		},
 
+		_onCapsuleScrollBlock: function(e) {
+			console.log("scroll");
+			e.preventDefault();
+		},
 
 
 		_clickListener: function(e) {
