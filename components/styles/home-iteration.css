@@ -34,7 +34,7 @@ footer p {
 #about-knightlab address {
 	display:inline-block;
 }
-#about-knightlab a {
+#about-knightlab .copyright a {
 	text-decoration: none;
 	border:0;
 	color:#a8a4a3;
