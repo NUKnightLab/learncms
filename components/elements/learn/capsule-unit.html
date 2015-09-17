@@ -99,8 +99,10 @@ Example:
 
 		#capsule-content {
 			display:none;
-			padding:20px;
-			padding-top:40px;
+			height:100%;
+			overflow-x:scroll;
+			padding:40px;
+			
 			-webkit-transition: opacity 500ms ease-in-out;
 			   -moz-transition: opacity 500ms ease-in-out;
 			     -o-transition: opacity 500ms ease-in-out;
@@ -112,6 +114,10 @@ Example:
 			     -o-transition-timing-function: cubic-bezier(0.770, 0.000, 0.175, 1.000);
 			        transition-timing-function: cubic-bezier(0.770, 0.000, 0.175, 1.000);
 		};
+
+		#capsule-content link-ref {
+			width:33%;
+		}
 
 		#capsule-content p{
 			font-weight:300;
@@ -126,6 +132,7 @@ Example:
  			font-weight:700;
  			padding:0;
  			margin:0;
+ 			margin-bottom:20px;
 		}
 
 		#capsule-content-container {
@@ -376,16 +383,41 @@ Example:
 			}
 
 			var page_item_rect = findPageItemRect(this);
+			var container_top = this.capsule_content_container.getBoundingClientRect();
+
+			var modal_width = 0,
+				modal_height = 0,
+				modal_top = 150,
+				modal_left = 100;
+
+			if (page_item_rect.width > 800) {
+				modal_width = 800;
+				modal_left = (page_item_rect.width - modal_width)/2;
+			} else {
+				modal_width = page_item_rect.width - modal_left;
+			}
+
+			modal_height = page_item_rect.height - modal_top;
+
+			console.log(modal_width);
+			console.log(modal_left);
 
 			this.capsule_content.style.display = "block";
 			this.capsule_content.style.opacity = 1;
 			this.capsule_content_container.style.visibility = "visible";
-			this.capsule_content_container.style.width = page_item_rect.width - 100 + "px";
-			this.capsule_content_container.style.height = page_item_rect.height - 150 + "px";
 
-			var container_top = this.capsule_content_container.getBoundingClientRect();
-			this.capsule_content_container.style.left = (-container_top.left + 50 + page_item_rect.left) + "px";
-			this.capsule_content_container.style.top = -container_top.top + 100 + "px";
+			
+			// SIZE MODAL WINDOW
+			this.capsule_content_container.style.width = modal_width + "px";
+			this.capsule_content_container.style.height = modal_height + "px";
+
+			// POSITION MODAL WINDOW
+			this.capsule_content_container.style.left = (-container_top.left + modal_left + page_item_rect.left) + "px";
+			this.capsule_content_container.style.top = -container_top.top + modal_top/2 + "px";
+
+			this.capsule_content.style.height = modal_height - 60 + "px";
+			
+			// 
 			this.capsule_content_container.style.opacity = "1";
 			this.capsule_content_container.setAttribute("elevation", "5");
 			this.capsule_content_container.style.zIndex = "98";

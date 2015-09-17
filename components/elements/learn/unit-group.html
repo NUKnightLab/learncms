@@ -5,11 +5,41 @@
 <dom-module id="unit-group">
 	<style>
 
+		:host ::content #unit-group {
+			width:100%;
+			margin-top:20px;
 
+			display: -ms-flexbox;
+			display: -webkit-flex;
+			display: flex;
+
+			-ms-flex: 2;
+			-webkit-flex: 2;
+			flex: 2;
+
+			-ms-flex-pack: around;
+			-webkit-justify-content: space-around;
+			justify-content: space-around;
+
+			-ms-flex-pack: center;
+			-webkit-justify-content: center;
+			justify-content: center;
+
+			-ms-flex-align: center;
+			-webkit-align-items: center;
+			align-items: center;
+
+			-ms-flex-direction: row;
+			-webkit-flex-direction: row;
+			flex-direction: row;
+
+			/*flex-wrap: wrap;*/
+
+		}
 
 	</style>
 	<template>
-		<div class="horizontal layout flex center-center around-justified" >
+		<div id="unit-group"  >
 			<content></content>
 		</div>
 
