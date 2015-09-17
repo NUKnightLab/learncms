@@ -30,7 +30,7 @@ Example:
 		-webkit-transition: all 250ms ease-in-out;
 		   -moz-transition: all 250ms ease-in-out;
 		     -o-transition: all 250ms ease-in-out;
-		        transition: all 250ms ease-in-out;
+		        transition: all 250ms ease-in-out; 
 
 /*
 		-webkit-transition-timing-function: cubic-bezier(0.770, 0.000, 0.175, 1.000);
@@ -115,7 +115,7 @@ Example:
 		left: 0;
 	};
 
-	#text-container {
+	:host ::content #text-container {
 		padding: 10px;
 		padding:0px 10px 10px 10px;
 
@@ -130,15 +130,11 @@ Example:
 		margin-right:20px;
 	};
 
-	#text-container p {
-		/*font-size:14px;
+	:host ::content #text-container p {
+		font-size:14px;
 		line-height:22px;
 		font-family: 'Roboto', 'Noto', sans-serif;
-		font-size: 18px;
-		line-height: 26px;
 		font-weight: normal;
-		margin-top: 20px;
-		margin-bottom: 20px;*/
 	}
 
 	.material-shadow {
