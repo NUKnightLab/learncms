@@ -22,7 +22,7 @@ from django.views.generic import RedirectView
 from django.views.generic.base import TemplateView
 
 from .models import Lesson
-from .views import LessonDetailView, glossary_json, handler404, handler500
+from .views import LessonDetailView, HomepageView, glossary_json, handler404, handler500
 
 admin.site.site_header = "Learn.KnightLab.com admin"
 
@@ -40,7 +40,7 @@ urlpatterns = patterns(
     url(r'^index.html?$', RedirectView.as_view(url='/', permanent=True), name='index_html'),
     url(r'^404(.html|/)?$', TemplateView.as_view(template_name="404.html"), name='show-404'),
     url(r'^500(.html|/)?$', TemplateView.as_view(template_name="500.html"), name='show-500'),
-    url(r'^/?$', ListView.as_view(template_name="index.html",model=Lesson), name='homepage'),
+    url(r'^/?$', HomepageView.as_view(), name='homepage'),
 )
 
 # these only work if the URL does not have a protocol (i.e. local)

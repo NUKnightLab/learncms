@@ -4,6 +4,7 @@ from django.shortcuts import render
 from django.http import HttpResponse, HttpResponseRedirect
 import json
 from django.views.generic.detail import DetailView
+from django.views.generic.base import TemplateView
 from django.http import Http404
 
 from lxml.etree import Comment
@@ -71,6 +72,14 @@ class LessonDetailView(DetailView):
         context['og_image'] = "{}{}".format(settings.URL_ROOT, lesson.banner_image.url)
         context['og_description'] = lesson.reference_blurb
 
+
+        return context
+
+class HomepageView(TemplateView):
+    template_name = "homepage.html"
+
+    def get_context_data(self, **kwargs):
+        context = super(HomepageView, self).get_context_data(**kwargs)
 
         return context
 
