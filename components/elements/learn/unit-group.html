@@ -33,7 +33,7 @@
 			-webkit-flex-direction: row;
 			flex-direction: row;
 
-			/*flex-wrap: wrap;*/
+			flex-wrap: wrap;
 
 		}
 
@@ -55,6 +55,33 @@
 				type: String,
 				value: "images/learn/info-icon.png"
 			}
+		},
+
+		ready: function() {
+			// DOM OBJECTS
+			this.unit_group = this.$['unit-group'];
+
+		},
+
+		attached: function() {
+			var self = this;
+			var w = this.unit_group.offsetWidth;
+			var min_size = 250;
+			var margin = 20;
+			var child_width = 0;
+			console.log(w);
+
+			if (w > 0) {
+
+				child_width = w / Math.floor(w / (min_size + margin));
+
+				for (i = 0; i < this.unit_group.children.length; i++) { 
+					this.unit_group.children[i].style.width = child_width - margin + "px";
+				}
+			}
+			
+
 		}
+
 	});
 </script>
