@@ -1,34 +1,34 @@
 body {
-    background-color: #f4f4f4;
-    font-size: 16px;
+	background-color: #f4f4f4;
+	font-size: 16px;
 }
 
 header {
-    width: 100%;
-    margin-top: 0;
-    margin-bottom: 0;
-    padding-top: 5%;
-    padding-bottom: 0;
-    background: #273238;
-    text-align: center;
+	width: 100%;
+	margin-top: 0;
+	margin-bottom: 0;
+	padding-top: 5%;
+	padding-bottom: 0;
+	background: #273238;
+	text-align: center;
 }
 
 section {
-    margin-top: 50px;
-    margin-bottom: 50px;
-    display: block;
+	margin-top: 50px;
+	margin-bottom: 50px;
+	display: block;
 }
 
 footer {}
 
 footer p {
-    font-size: 14px;
+	font-size: 14px;
 }
 
 #about-knightlab {
-    width: 80%;
-    max-width: 1000px;
-    margin: 0 auto;
+	width: 80%;
+	max-width: 1000px;
+	margin: 0 auto;
 }
 
 #about-knightlab address {
@@ -44,73 +44,80 @@ footer p {
 }
 
 #lessons lesson-ref {
-    display: block;
-    max-width: 300px;
+	display: block;
+	max-width: 300px;
 }
 
 #about {
-    display: block;
-    width: 80%;
-    max-width: 800px;
-    margin: 0 auto;
-    margin-bottom: 100px;
+	display: block;
+	width: 80%;
+	max-width: 800px;
+	margin: 0 auto;
+	margin-bottom: 100px;
 }
 
 .description {
-    width: 80%;
-    max-width: 800px;
-    margin: 0 auto;
-    margin-bottom: 40px;
+	width: 80%;
+	max-width: 800px;
+	margin: 0 auto;
+	margin-bottom: 40px;
 }
 
 #lessons {
-    background: #DDD;
-    padding-bottom: 100px;
-    padding-top: 50px;
-    margin-top: 0px;
+	background: #DDD;
+	padding-bottom: 100px;
+	padding-top: 50px;
+	margin-top: 0px;
 }
 
 #students {
-    background: #80cbc4;
-    padding-bottom: 50px;
-    padding-top: 50px;
-    margin-bottom: 0px;
+	background: #80cbc4;
+	padding-bottom: 50px;
+	padding-top: 50px;
+	margin-bottom: 0px;
+}
+
+#forby-students {
+	background: #80cbc4;
+	padding-bottom: 50px;
+	padding-top: 50px;
+	margin-bottom: 0px;
 }
 
 .header-container {
-    width: 100%;
-    height: 20vh;
-    margin-top: 0;
-    margin-bottom: 0;
-    padding-top: 5%;
-    padding-bottom: 0;
-    background: #273238;
+	width: 100%;
+	height: 20vh;
+	margin-top: 0;
+	margin-bottom: 0;
+	padding-top: 5%;
+	padding-bottom: 0;
+	background: #273238;
 }
 
 p {
-    font-family: Roboto, sans-serif;
-    font-size: 20px;
-    line-height: 26px;
-    font-weight: 300;
+	font-family: Roboto, sans-serif;
+	font-size: 20px;
+	line-height: 26px;
+	font-weight: 300;
 }
 
 h1 {
-    font-family: Roboto, sans-serif;
-    color: #80cbc4;
-    font-size: 64px;
-    font-weight: normal;
-    width: 100%;
-    text-align: center;
-    margin: 0;
-    z-index: 2;
+	font-family: Roboto, sans-serif;
+	color: #80cbc4;
+	font-size: 64px;
+	font-weight: normal;
+	width: 100%;
+	text-align: center;
+	margin: 0;
+	z-index: 2;
 }
 
 h2 {
-    font-family: Roboto, sans-serif;
-    font-size: 38px;
-    text-align: center;
-    color: #338D83;
-    font-weight: 400;
+	font-family: Roboto, sans-serif;
+	font-size: 38px;
+	text-align: center;
+	color: #338D83;
+	font-weight: 400;
 }
 
 
@@ -125,55 +132,55 @@ h2 {
 }*/
 
 .intro-graph {
-    display: block;
-    max-width: 600px;
-    margin: 0 auto;
-    text-align: center;
+	display: block;
+	max-width: 600px;
+	margin: 0 auto;
+	text-align: center;
 }
 
 .lesson-container {
-    position: relative;
-    right: 30px;
-    display: block;
-    width: 80%;
-    max-width: 600px;
-    margin: 0 auto;
+	position: relative;
+	right: 30px;
+	display: block;
+	width: 80%;
+	max-width: 600px;
+	margin: 0 auto;
 }
 
 .ghost-button {
-    line-height: 50px;
-    bottom: 50px;
-    display: block;
-    width: 400px;
-    height: 50px;
-    margin: 0 auto;
-    text-align: center;
-    text-transform: uppercase;
-    color: #f2777a;
-    border: solid #f2777a;
-    border-radius: 10px;
+	line-height: 50px;
+	bottom: 50px;
+	display: block;
+	width: 400px;
+	height: 50px;
+	margin: 0 auto;
+	text-align: center;
+	text-transform: uppercase;
+	color: #f2777a;
+	border: solid #f2777a;
+	border-radius: 10px;
 }
 
 .ghost-button:hover {
-    transition: all .5s ease;
-    color: white;
-    background-color: #f2777a;
+	transition: all .5s ease;
+	color: white;
+	background-color: #f2777a;
 }
 
 .ghost-button {
-    margin-top: 50px;
+	margin-top: 50px;
 }
 
 .link-refs-container {
-    display: block;
-    
+	display: block;
+	
    
-    margin: 0 auto;
+	margin: 0 auto;
 }
 
 link-ref {
-    width: 30%;
-    margin-right: 0;
+	width: 30%;
+	margin-right: 0;
 }
 
 
@@ -181,50 +188,50 @@ unit-group lesson-ref {
 	margin-right:50px;
 }
 .link {
-    max-width: 30%;
-    margin-bottom: 40px;
+	max-width: 30%;
+	margin-bottom: 40px;
 }
 
 .students-container {
-    display: flex;
-    display: -webkit-flex;
-    width: 100%;
-    height: 150px;
-    /* background-color: #273238;*/
-    flex-direction: row;
-    -webkit-flex-direction: row;
-    align-content: center;
-    -webkit-align-content: center;
-    align-items: center;
-    -webkit-align-items: center;
-    justify-content: space-around;
-    -webkit-justify-content: space-around;
+	display: flex;
+	display: -webkit-flex;
+	width: 100%;
+	height: 150px;
+	/* background-color: #273238;*/
+	flex-direction: row;
+	-webkit-flex-direction: row;
+	align-content: center;
+	-webkit-align-content: center;
+	align-items: center;
+	-webkit-align-items: center;
+	justify-content: space-around;
+	-webkit-justify-content: space-around;
 }
 
 .students-container img {
-    width: 120px;
-    height: 120px;
-    /*margin-top: 25px;*/
-    border-radius: 100%;
-    background-color: #f2777a;
-    display: block;
-    z-index: 20;
+	width: 120px;
+	height: 120px;
+	/*margin-top: 25px;*/
+	border-radius: 100%;
+	background-color: #f2777a;
+	display: block;
+	z-index: 20;
 }
 
 .student {
-    margin-top: 40px;
-    display: block;
+	margin-top: 40px;
+	display: block;
 }
 
 a.student {
-    color: #333;
+	color: #333;
 }
 
 a.student:hover {
-    color: #338D83;
+	color: #338D83;
 }
 
 #students .ghost-button {
-    color: #338D83;
-    border: solid #338D83;
+	color: #338D83;
+	border: solid #338D83;
 }
