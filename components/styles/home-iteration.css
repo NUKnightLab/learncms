@@ -83,6 +83,15 @@ footer p {
 	padding-top: 50px;
 	margin-bottom: 0px;
 	position:relative;
+	min-height:50vh;
+	display:flex;
+	-ms-flex-pack: center;
+	-webkit-justify-content: center;
+	justify-content: center;
+
+	-ms-flex-align: center;
+	-webkit-align-items: center;
+	align-items: center;
 	
 }
 #forby-students .background-image {
