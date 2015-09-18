@@ -11418,104 +11418,124 @@ li.L9 {
 </script>
 <dom-module id="info-block" assetpath="learn/">
 	<style>
-		@font-face {
-			font-family: "EmojiSymbols"; /* http://emojisymbols.com/emojilist.php */
-			src: url("../styles/fonts/EmojiSymbols-Regular.woff") format('woff');
-			text-decoration: none;
-			font-style: normal;
-		}
-		:host ::content .info-emoji {
-			font-family: "EmojiSymbols";
-			line-height: 1;
-			margin-bottom:10px;
-
-		}
-		:host ::content  #info-block-wrapper {
-			background-color: #F5F4F4;
-			padding: 20px;
-			margin-top:20px;
-			border-radius:8px;
-			/*padding-top:30px;*/
-		};
-
-		:host ::content #info-block-content {
-			padding: 0 10px;
-		}
-		:host ::content  #info-block-content h2 {
-			color: #263238;
-			font-weight:500;
-			font-style:italic;
-			margin-top:20px;
-			margin-bottom:10px;
-		}
-
-		:host ::content  #info-block-content p {
-			color: #9B9B9B;
-			font-size:16px;
-			line-height: 22px;
-			font-style: italic;
-			margin-top:0;
-
-		}
-
-		#info-block-icon {
-			display: flex;
-			align-items: center;
-			justify-content: center;
-			/*margin-bottom:50px;*/
-
-/*			background-image: var(--info-icon-url);
+	@font-face {
+		font-family: "EmojiSymbols";
+		/* http://emojisymbols.com/emojilist.php */
+		src: url("../styles/fonts/EmojiSymbols-Regular.woff") format('woff');
+		text-decoration: none;
+		font-style: normal;
+	}
+	
+	:host::content .info-emoji {
+		font-family: "EmojiSymbols";
+		line-height: 1;
+		margin-bottom: 10px;
+	}
+	
+	:host::content #info-block-wrapper {
+		background-color: #F5F4F4;
+		padding: 20px;
+		margin-top: 20px;
+		border-radius: 8px;
+		/*padding-top:30px;*/
+	}
+	
+	;
+	:host::content #info-block-content {
+		padding: 0 10px;
+	}
+	
+	:host::content #info-block-content h2 {
+		color: #263238;
+		font-weight: 500;
+		font-style: italic;
+		margin-top: 20px;
+		margin-bottom: 10px;
+	}
+	
+	:host::content #info-block-content p {
+		color: #9B9B9B;
+		font-size: 16px;
+		line-height: 22px;
+		font-style: italic;
+		margin-top: 0;
+	}
+	
+	#info-block-icon {
+		display: flex;
+		align-items: center;
+		justify-content: center;
+		/*margin-bottom:50px;*/
+		/*			background-image: var(--info-icon-url);
 			background-repeat: no-repeat;
 			background-position: center;*/
+	}
+	
+	:host::content #info-block-icon-background {
+		display: flex;
+		align-items: center;
+		justify-content: center;
+		font-family: Roboto, sans-serif;
+		color: #FAFAFA;
+		font-size: 72px;
+		border-radius: 50%;
+		background-color: #CCC;
+		width: 112px;
+		height: 112px;
+		text-align: center;
+		color: #FFF;
+	};
 
-
-		}
-		:host ::content  #info-block-icon-background {
-			display: flex;
-			align-items: center;
-			justify-content: center;
-			font-family: Roboto, sans-serif;
-			color: #FAFAFA;
-			font-size: 72px;
-
-			border-radius:50%;
-			background-color:#CCC;
-			width: 112px;
-			height: 112px;
-			text-align:center;
-			color:#FFF;
-		};
-
+	#info-block-wrapper.flip {
+		-ms-flex-direction: row-reverse;
+		-webkit-flex-direction: row-reverse;
+		flex-direction: row-reverse;
+	}
 
 	</style>
-  <template>
-
-	<div id="info-block-wrapper" class="layout horizontal">
-		<template is="dom-if" if="{{emoji}}">
-		<div id="info-block-icon" class="flex">
-			<div id="info-block-icon-background">
-				<span class="info-emoji">{{ emoji }}</span>
+	<template>
+		<div id="info-block-wrapper" class="layout horizontal">
+			<template is="dom-if" if="{{emoji}}">
+				<div id="info-block-icon" class="flex">
+					<div id="info-block-icon-background">
+						<span class="info-emoji">{{ emoji }}</span>
+					</div>
+				</div>
+			</template>
+			<div id="info-block-content" class="flex-4">
+				<h2>{{ header }}</h2>
+				<content></content>
 			</div>
 		</div>
-		</template>
-		<div id="info-block-content" class="flex-4">
-			<h2>{{ header }}</h2>
-			<content></content>
-		</div>
-	</div>
-
-  </template>
+	</template>
 </dom-module>
 <script>
-  Polymer({
+Polymer({
 	is: 'info-block',
 
 	properties: {
-	  emoji: {
+		emoji: {
 			type: String, // ℹ︎ would be nice, but it has a box in this font
 			value: "\u2757" // In JS, use emoji literals, or \u escapes. e.g. "&#x2757;" becomes "\u2752"; in attribute, &entities are OK
+		},
+		flip: {
+			type: Boolean, // ℹ︎ would be nice, but it has a box in this font
+			value: false
 		}
-  }
+	},
+	ready: function() {
+		// DOM OBJECTS
+		this.info_block_wrapper = this.$['info-block-wrapper'];
+
+		
+
+	},
+	attached: function() {
+		if (this.flip) {
+			this.info_block_wrapper.className += " " + "flip";
+		}
+
+	}
 });
 </script>
 <dom-module id="lesson-ref" assetpath="learn/">
