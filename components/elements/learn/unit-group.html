@@ -64,6 +64,11 @@
 		},
 
 		attached: function() {
+			this.updateSize();
+			
+
+		},
+		updateSize: function() {
 			var self = this;
 			var w = this.unit_group.offsetWidth;
 			var min_size = 250;
@@ -79,9 +84,7 @@
 					this.unit_group.children[i].style.width = child_width - margin + "px";
 				}
 			}
-			
-
-		}
+		},
 
 	});
 </script>
