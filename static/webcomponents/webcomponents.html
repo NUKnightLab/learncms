@@ -10912,7 +10912,7 @@ li.L9 {
 			z-index:11;
 			color: var(--learn-primary-color);
 			font-family: var(--learn-primary-font);
-			font-weight: 500;
+			font-weight: 400;
 			font-style: italic;
 			font-size: 24px;
 			width: 100%;
@@ -10925,7 +10925,10 @@ li.L9 {
 		#navigation-container {
 			padding: 10px;
 		}
-
+		#navigation-container img.nav-learn-logo {
+			max-height: 24px;
+			margin-bottom:-3px;
+		}
 		#kl-link {
 			position: absolute;
 			right: 40px;
@@ -10935,7 +10938,7 @@ li.L9 {
 		<div id="navigation">
 			
 			<div id="navigation-container">
-
+				<img class="nav-learn-logo" src="learn/images/learn_logo.png">
 				<a id="learn-nav-home-link" href="{{ home }}">Learn</a>
 				<a id="kl-link" href="http://knightlab.northwestern.edu"><img src="{{ logo }}"></a>
 			</div>
@@ -11421,17 +11424,17 @@ li.L9 {
 	@font-face {
 		font-family: "EmojiSymbols";
 		/* http://emojisymbols.com/emojilist.php */
-		src: url("../styles/fonts/EmojiSymbols-Regular.woff") format('woff');
+		src: url("learn/styles/fonts/EmojiSymbols-Regular.woff") format('woff');
 		text-decoration: none;
 		font-style: normal;
 	}
-	
+
 	:host::content .info-emoji {
 		font-family: "EmojiSymbols";
 		line-height: 1;
 		margin-bottom: 10px;
 	}
-	
+
 	:host::content #info-block-wrapper {
 		background-color: #F5F4F4;
 		padding: 20px;
@@ -11439,12 +11442,12 @@ li.L9 {
 		border-radius: 8px;
 		/*padding-top:30px;*/
 	}
-	
+
 	;
 	:host::content #info-block-content {
 		padding: 0 10px;
 	}
-	
+
 	:host::content #info-block-content h2 {
 		color: #263238;
 		font-weight: 500;
@@ -11452,7 +11455,7 @@ li.L9 {
 		margin-top: 20px;
 		margin-bottom: 10px;
 	}
-	
+
 	:host::content #info-block-content p {
 		color: #9B9B9B;
 		font-size: 16px;
@@ -11460,7 +11463,7 @@ li.L9 {
 		font-style: italic;
 		margin-top: 0;
 	}
-	
+
 	#info-block-icon {
 		display: flex;
 		align-items: center;
@@ -11470,7 +11473,7 @@ li.L9 {
 			background-repeat: no-repeat;
 			background-position: center;*/
 	}
-	
+
 	:host::content #info-block-icon-background {
 		display: flex;
 		align-items: center;
@@ -11527,7 +11530,7 @@ Polymer({
 		// DOM OBJECTS
 		this.info_block_wrapper = this.$['info-block-wrapper'];
 
-		
+
 
 	},
 	attached: function() {

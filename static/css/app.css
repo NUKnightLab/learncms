@@ -49,14 +49,33 @@ a:hover {
 }
 
 /* HOME PAGE STYLES */
-header.homepage {
+header.learn-logo img {
+	max-height:75px;
+	display:inline-block;
+	margin-right:10px;
+	margin-top:-33px;
+}
+header.learn-logo h1 {
+	display:inline-block;
+	width:auto;
+	font-style: italic;
+	color:#273238;
+  font-family: Roboto, sans-serif;
+	font-size: 64px;
+	font-weight: normal;
+	text-align: center;
+	margin: 0;
+	z-index: 2;
+
+}
+header.learn-logo {
 	width: 100%;
 	margin-top: 0;
 	margin-bottom: 0;
-	padding-top: 5%;
-	padding-bottom: 0;
-	background: #273238;
+	padding-top: 100px;
+	background: #80cbc4;
 	text-align: center;
+	padding-bottom:20px;
 }
 
 section.homepage {
@@ -163,17 +182,6 @@ footer.homepage p {
 	font-size: 20px;
 	line-height: 26px;
 	font-weight: 300;
-}
-
-.homepage h1 {
-	font-family: Roboto, sans-serif;
-	color: #80cbc4;
-	font-size: 64px;
-	font-weight: normal;
-	width: 100%;
-	text-align: center;
-	margin: 0;
-	z-index: 2;
 }
 
 .homepage h2 {
