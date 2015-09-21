@@ -12180,7 +12180,8 @@ Polymer({
 		},
 		_onPageOut: function(e) {
 			var target = e.detail.index;
-			history.go(target - (this.page_stack.length - 1));
+			var steps = target - (this.page_stack.length - 1);
+			history.go(steps);
 		},
 		_onPageRemove: function(e) {
 			this.removePage(e.detail.caller);
@@ -12222,6 +12223,7 @@ Polymer({
 
 		ready: function() {
 			var self = this;
+			self.history_length_at_start = history.length;
 			window.onpopstate = function(e) {
 				if (e.state && typeof(e.state.stack_end_index) == "number") {
 					if (e.state.stack_end_index < self.page_stack.length) {
@@ -12475,6 +12477,11 @@ Polymer({
 			this.page_container = this.$['page-container'];
 			this.page_item = this.$['page-item'];
 			this.page_cover = this.$['page-cover'];
+
+			this.page_cover.addEventListener("click",function(e){
+				self._onCoverClick();
+			},false);
+
 			this.default_width = 0;
 
 			var self = this;
@@ -12485,12 +12492,7 @@ Polymer({
 
 		attached: function() {
 			var self = this;
-
 			this.page_item.style.marginLeft = "100%";
-
-			this.page_cover.addEventListener("click",function(e){
-				self._onCoverClick();
-			},false);
 
 			this.fire("page:ready", {caller:self});
 		},

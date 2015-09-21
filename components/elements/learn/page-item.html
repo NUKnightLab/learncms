@@ -227,6 +227,11 @@
 			this.page_container = this.$['page-container'];
 			this.page_item = this.$['page-item'];
 			this.page_cover = this.$['page-cover'];
+
+			this.page_cover.addEventListener("click",function(e){
+				self._onCoverClick();
+			},false);
+
 			this.default_width = 0;
 
 			var self = this;
@@ -237,12 +242,7 @@
 
 		attached: function() {
 			var self = this;
-
 			this.page_item.style.marginLeft = "100%";
-
-			this.page_cover.addEventListener("click",function(e){
-				self._onCoverClick();
-			},false);
 
 			this.fire("page:ready", {caller:self});
 		},

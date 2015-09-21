@@ -89,7 +89,8 @@
 		},
 		_onPageOut: function(e) {
 			var target = e.detail.index;
-			history.go(target - (this.page_stack.length - 1));
+			var steps = target - (this.page_stack.length - 1);
+			history.go(steps);
 		},
 		_onPageRemove: function(e) {
 			this.removePage(e.detail.caller);
@@ -131,6 +132,7 @@
 
 		ready: function() {
 			var self = this;
+			self.history_length_at_start = history.length;
 			window.onpopstate = function(e) {
 				if (e.state && typeof(e.state.stack_end_index) == "number") {
 					if (e.state.stack_end_index < self.page_stack.length) {
