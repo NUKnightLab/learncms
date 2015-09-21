@@ -10189,6 +10189,31 @@ li.L9 {
 			margin-top:30px;
 			margin-bottom:10px;
 		}
+		:host ::content #step-content dl {
+			margin-top:20px;
+			margin-bottom:20px;
+			margin-left:20px;
+		}
+		:host ::content #step-content dt {
+			font-weight:700;
+			font-size: 18px;
+			line-height: 26px;
+		}
+		:host ::content #step-content dd {
+			margin-left:0;
+			font-size: 16px;
+			line-height: 22px;
+			margin-bottom:20px;
+		}
+		:host ::content #step-content dd p {
+			font-size: 16px;
+			line-height: 22px;
+		}
+		:host ::content #step-content li h4 {
+			margin:0;
+			font-weight:700;
+			color:#338D83;
+		}
 		/* Begin ordered list styling */
 		/*:host ::content #step-content ol {
 			counter-reset: item;
@@ -10408,7 +10433,16 @@ li.L9 {
 		:host ::content #lesson-block-spacer {
 			width:150px;
 		}
-
+		:host ::content dt {
+			font-weight:700;
+		}
+		:host ::content dd {
+			margin-left:0;
+			margin-bottom:20px;
+			font-size: 16px;
+			line-height: 22px;
+			margin-bottom:20px;
+		}
 		:host ::content content-wrapper {
 			display: flex;
 			display: -webkit-flex;
@@ -11439,6 +11473,7 @@ li.L9 {
 		background-color: #F5F4F4;
 		padding: 20px;
 		margin-top: 20px;
+		margin-bottom: 20px;
 		border-radius: 8px;
 		/*padding-top:30px;*/
 	}
@@ -11620,6 +11655,38 @@ Polymer({
 		color: #000;
 		z-index:3;
 	}
+	#arrow-icon-front,  #arrow-icon-back {
+		display: inline-block;
+		outline: none;
+		-moz-user-select: none;
+		-ms-user-select: none;
+		-webkit-user-select: none;
+		user-select: none;
+		cursor: pointer;
+		box-sizing: border-box;
+		min-width: 0;
+		width: 56px;
+		height: 56px;
+		border-radius: 50%;
+		padding: 16px;
+		z-index: 0;
+
+		position: absolute;
+		right: -30px;
+		top: 172px; /*56*/
+		background-color: #fff;
+		color: #000;
+		
+	}
+	#arrow-icon-front {
+		z-index:3;
+	}
+	#arrow-icon-back {
+		z-index:1;
+		box-shadow:0 2px 2px 0 rgba(0, 0, 0, 0.14),
+	                  0 1px 5px 0 rgba(0, 0, 0, 0.12),
+	                  0 3px 1px -2px rgba(0, 0, 0, 0.2);
+	}
 	#lesson-ref-image-overlay {
 		background-color:#000;
 		width:100%;
@@ -11646,8 +11713,9 @@ Polymer({
 	};
 
 	:host ::content #text-container {
+		position:relative;
 		padding: 10px;
-		padding:0px 10px 10px 10px;
+		padding:10px 30px 10px 10px;
 
 		font-size:14px;
 		line-height:22px;
@@ -11655,9 +11723,11 @@ Polymer({
 /*		font-size: 18px;
 		line-height: 26px;*/
 		font-weight: normal;
-		margin-top: 10px;
+		margin-top: 0px;
 		margin-bottom: 10px;
-		margin-right:20px;
+		margin-right:0px;
+		background:#FFF;
+		z-index:2;
 	};
 
 	:host ::content #text-container p {
@@ -11703,14 +11773,21 @@ Polymer({
 	</style>
 	<template>
 		<div id="lesson-ref-container" elevation="1" class="material-shadow">
+			<div id="arrow-icon-back">
+				<iron-icon icon="arrow-forward"></iron-icon>
+			</div>
 			<div id="image-container">
 				<div id="lesson-ref-image-overlay"></div>
 				<div id="lesson-ref-image"></div>
 
 				<h2 id="header-el">{{ header }}</h2>
-				<paper-fab icon="arrow-forward"></paper-fab>
+				
 			</div>
-			<paper-fab icon="arrow-forward"></paper-fab>
+			<div id="arrow-icon-front">
+				<iron-icon icon="arrow-forward"></iron-icon>
+			</div>
+			
+			
 			<div id="text-container">
 				<content></content>
 			</div>
@@ -12737,153 +12814,165 @@ Polymer({
 </script>
 <dom-module id="glossary-term" assetpath="learn/">
   <style>
-    #term.usable {
-      /*background-color: var(--learn-secondary-color);*/
-      background-color:#FFDEA1;
-      border-bottom: '1px dotted #999';
-      cursor: pointer;
-    }
+	#term.usable {
+	  /*background-color: var(--learn-secondary-color);*/
+	  background-color:#FFDEA1;
+	  
+	  cursor: pointer;
+	}
 
-    #popup {
-      display: none;
-      background-color: #E3B052;
-      position: absolute;
-      z-index: 999;
-      width: 300px;
-      text-align: left;
-      padding: 1em 1.2em;
-      pointer-events: auto;
-      border-radius: 25px;
-      border: 1px solid black;
+	#popup {
+	  display: none;
+	  background-color: #E3B052;
+	  position: absolute;
+	  z-index: 999;
+	  width: 300px;
+	  text-align: left;
+	  padding: 1em 1.2em;
+	  pointer-events: auto;
+	  border-radius: 25px;
+	  border: 1px solid black;
+	  font-family: 'Roboto', 'Noto', sans-serif;
+	}
 
-    }
+	#popup small {
+		float: right;
+		cursor: pointer;
+	}
+	#popup dt {
+		font-weight: 900;
+		font-style: italic;
+		color: #FFDEA1;
+		font-size: 24px;
+		margin-bottom: 10px;
+	}
+	#popup dd {
+		margin: 0;
+		color: #fff;
+		font-weight: 400;
+		font-size: 18px;
+		line-height: 26px;
+	}
+	#popup p:last-child {
+		margin-bottom: 0;
+	}
+	#popup.glossary-term {
+		background-color: #E3B052;
 
-    #popup small {
-        float: right;
-        cursor: pointer;
-    }
-    #popup dt {
-        font-weight: 900;
-        font-style: italic;
-        color: #FFF7E8;
-        font-size: 1.5em;
-        margin-bottom: .5em;
-    }
-    #popup dd {
-        margin: 0;
-        color: #fff;
-        font-weight: 700;
-    }
-    #popup p:last-child {
-        margin-bottom: 0;
-    }
-
+		padding: 1em 1.2em;
+		pointer-events: auto;
+		border-radius: 10px;
+		border: 0;
+		box-shadow:0 16px 24px 2px rgba(0, 0, 0, 0.14),
+		          0  6px 30px 5px rgba(0, 0, 0, 0.12),
+		          0  8px 10px -5px rgba(0, 0, 0, 0.4);
+	}
   </style>
   <template>
-    <span id="term"><content></content></span>
-    <div id="popup">
-      <small on-click="toggleDefinition" class="close"><i class="fa fa-times-circle"></i> Close</small>
-      <dt>{{lemma}}</dt>
-      <dd>{{definition}}</dd>
-    </div>
+	<span id="term"><content></content></span>
+	<div id="popup">
+	  <small on-click="toggleDefinition" class="close"><i class="fa fa-times-circle"></i> Close</small>
+	  <dt>{{lemma}}</dt>
+	  <dd>{{definition}}</dd>
+	</div>
 
   </template>
 </dom-module>
 <script type="text/javascript">
 var offset = function(o) {
   return {
-      top: o.offsetTop,
-      left: o.offsetLeft,
-      height: o.offsetHeight,
-      width: o.offsetWidth
+	  top: o.offsetTop,
+	  left: o.offsetLeft,
+	  height: o.offsetHeight,
+	  width: o.offsetWidth
   }
 }
 
 Polymer({
   is: 'glossary-term',
   listeners: {
-    click: "toggleDefinition"
+	click: "toggleDefinition"
   },
   keyBindings: {
-    'esc': '_handleEscapeKey'
+	'esc': '_handleEscapeKey'
   },
   behaviors: [ Polymer.IronA11yKeysBehavior ],
   properties: {
-    lemma: {
-      type: String,
-      value: "",
-      reflectToAttribute: true
-    },
-    definition: {
-      type: String,
-      value: "",
-      reflectToAttribute: true,
-      observer: '_definitionStateChange'
-    },
-    usable: {
-      type: Boolean,
-      value: false,
-      observer: '_usableStateChange'
-    },
-    keyEventTarget: { // IronA11yKeysBehavior - listen for esc anywhere on page
-        type: Object,
-        value: function() {
-            return document.body;
-        }
-    }
+	lemma: {
+	  type: String,
+	  value: "",
+	  reflectToAttribute: true
+	},
+	definition: {
+	  type: String,
+	  value: "",
+	  reflectToAttribute: true,
+	  observer: '_definitionStateChange'
+	},
+	usable: {
+	  type: Boolean,
+	  value: false,
+	  observer: '_usableStateChange'
+	},
+	keyEventTarget: { // IronA11yKeysBehavior - listen for esc anywhere on page
+		type: Object,
+		value: function() {
+			return document.body;
+		}
+	}
   },
   ready: function() {
-      this.detachPopup();
-      if (!this.lemma) {
-        this.lemma = this.$.term.textContent.replace(/^\s*|\s*$/g,'');
-      }
-      if (this.lemma && this.definition) {
-        this.usable = true;
-      }
+	  this.detachPopup();
+	  if (!this.lemma) {
+		this.lemma = this.$.term.textContent.replace(/^\s*|\s*$/g,'');
+	  }
+	  if (this.lemma && this.definition) {
+		this.usable = true;
+	  }
   },
   detachPopup: function() {
-      if (!this.popup) {
-          this.popup = this.$.popup;
-          this.removeChild(this.popup);
-          this.popup.style.display = 'block';
-      }
+	  if (!this.popup) {
+		  this.popup = this.$.popup;
+		  this.removeChild(this.popup);
+		  this.popup.style.display = 'block';
+	  }
   },
   _usableStateChange: function() {
-      if (this.usable) {
-        this.$.term.classList.add('usable');
-      } else {
-        this.$.term.classList.remove('usable');
-      }
+	  if (this.usable) {
+		this.$.term.classList.add('usable');
+	  } else {
+		this.$.term.classList.remove('usable');
+	  }
   },
   _definitionStateChange: function(e) {
-      this.usable = (this.lemma && this.definition);
+	  this.usable = (this.lemma && this.definition);
   },
   toggleDefinition: function(e) {
-    if (this.usable) {
-        if (this.popup.parentElement) {
-            this.hideDefinition();
-        } else {
-            this.popup.style.left = offset(this).left + "px";
-            this.popup.style.top = (offset(this).top + 25) + "px";
-            this.parentElement.appendChild(this.popup);
-        }
-        if (e) {
-            e.cancelBubble = true;
-            e.preventDefault();
-        }
-    }
+	if (this.usable) {
+		if (this.popup.parentElement) {
+			this.hideDefinition();
+		} else {
+			this.popup.style.left = offset(this).left + "px";
+			this.popup.style.top = (offset(this).top + 25) + "px";
+			this.parentElement.appendChild(this.popup);
+		}
+		if (e) {
+			e.cancelBubble = true;
+			e.preventDefault();
+		}
+	}
   },
   hideDefinition: function() {
-      if (this.popup.parentElement) {
-          this.popup.parentElement.removeChild(this.popup);
-      }
+	  if (this.popup.parentElement) {
+		  this.popup.parentElement.removeChild(this.popup);
+	  }
   },
   /* Using IronA11yKeysBehavior, listen for 'esc' key pressed
    * anywhere on the page (see keyEventTarget property).
    * escape will hide a zoomed image.
    */
   _handleEscapeKey: function(e) {
-      this.hideDefinition();
+	  this.hideDefinition();
   }
 })
 </script>
