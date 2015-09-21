@@ -91,7 +91,7 @@
   <div class="link-refs-container">
     <unit-group>
       {% for lesson in all_lessons %}
-      <lesson-ref header="{{ lesson.title }}" image="{{ lesson.banner_image }}" url="{{ lesson.get_absolute_url }}">
+      <lesson-ref header="{{ lesson.title }}" image="{{ lesson.banner_image.url }}" url="{{ lesson.get_absolute_url }}">
         <p>
           {{ lesson.reference_blurb }}
         </p>
