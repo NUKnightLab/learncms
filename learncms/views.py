@@ -81,6 +81,10 @@ class HomepageView(TemplateView):
     def get_context_data(self, **kwargs):
         context = super(HomepageView, self).get_context_data(**kwargs)
         context['all_lessons'] = Lesson.objects.all().order_by('title')
+        try:
+            context['featured_lesson'] = Lesson.objects.get(slug='create-basic-website')
+        except:
+            context['featured_lesson'] = context['all_lessons'][0] # local dev may not have that slug. eventually we'll probably make featured status a database property
         return context
 
 def glossary_json(request):

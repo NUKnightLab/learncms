@@ -24,7 +24,7 @@
   </div>
 
   <div class="lesson-container">
-    <lesson-ref header="Project: Build a Basic Website" image="images/learn/source-code.png" url="{% url 'lesson-detail' slug='create-basic-website' %}">
+    <lesson-ref header="Project: {{ featured_lesson.title }}" image="{{ featured_lesson.banner_image.url }}" url="{{ featured_lesson.get_absolute_url }}">
       <p>
         In this series, we'll cover everything you need to know to get a basic site up and running: coming up with a design, writing the HTML and CSS to make it happen, and publishing your project for the world to see.
       </p>
