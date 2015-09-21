@@ -80,7 +80,7 @@ class HomepageView(TemplateView):
 
     def get_context_data(self, **kwargs):
         context = super(HomepageView, self).get_context_data(**kwargs)
-
+        context['all_lessons'] = Lesson.objects.all().order_by('title')
         return context
 
 def glossary_json(request):

@@ -90,35 +90,13 @@
   <h2>Lessons</h2>
   <div class="link-refs-container">
     <unit-group>
-      <lesson-ref header="Basic HTML" image="images/learn/source-code.png" url="lesson.html">
+      {% for lesson in all_lessons %}
+      <lesson-ref header="{{ lesson.title }}" image="{{ lesson.banner_image }}" url="{{ lesson.get_absolute_url }}">
         <p>
-          In this standalone lesson, we'll hit on the rules and regulations for writing solid HTML, as well as the top tags you’re likely to use. Head into this standalone lesson for a better understanding of how to markup your content.
+          {{ lesson.reference_blurb }}
         </p>
       </lesson-ref>
-      <lesson-ref header="Intro to Web Hosting" image="images/learn/source-code.png">
-        <p>If you're ready to put your website on the internet for everyone to see, follow this lesson to learn how to connect the computer you're typing on to a different computer far, far away from you.</p>
-      </lesson-ref>
-      <lesson-ref header="Basic CSS" image="images/learn/source-code.png" url="lesson.html">
-        <p>
-          Wondering why your site’s looking so ugly? HTML just says what’s what and gives the page structure. CSS is where the real fun starts—it will fix things faster than Fix-It Felix.
-        </p>
-      </lesson-ref>
-      <lesson-ref header="Basic HTML" image="images/learn/source-code.png" url="lesson.html">
-        <p>
-          In this standalone lesson, we'll hit on the rules and regulations for writing solid HTML, as well as the top tags you’re likely to use. Head into this standalone lesson for a better understanding of how to markup your content.
-        </p>
-      </lesson-ref>
-      <lesson-ref header="Basic HTML" image="images/learn/source-code.png" url="lesson.html">
-        <p>
-          In this standalone lesson, we'll hit on the rules and regulations for writing solid HTML, as well as the top tags you’re likely to use. Head into this standalone lesson for a better understanding of how to markup your content.
-        </p>
-      </lesson-ref>
-      <lesson-ref header="Basic HTML" image="images/learn/source-code.png" url="lesson.html">
-        <p>
-          In this standalone lesson, we'll hit on the rules and regulations for writing solid HTML, as well as the top tags you’re likely to use. Head into this standalone lesson for a better understanding of how to markup your content.
-        </p>
-      </lesson-ref>
-
+      {% endfor %}
     </unit-group>
   </div>
   <a href="mailto:support@knightlab.zendesk.com?subject=Learn.KnightLab.com%3A%20What%20else%20would%20you%20like%20to%20learn%3F">
