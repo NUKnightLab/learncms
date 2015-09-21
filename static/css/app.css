@@ -47,3 +47,255 @@ a {
 a:hover {
   text-decoration: underline;
 }
+
+/* HOME PAGE STYLES */
+header.homepage {
+	width: 100%;
+	margin-top: 0;
+	margin-bottom: 0;
+	padding-top: 5%;
+	padding-bottom: 0;
+	background: #273238;
+	text-align: center;
+}
+
+section.homepage {
+	margin-top: 50px;
+	margin-bottom: 50px;
+	display: block;
+}
+
+footer.homepage {}
+
+footer.homepage p {
+	font-size: 14px;
+}
+
+#about-knightlab {
+	width: 80%;
+	max-width: 1000px;
+	margin: 0 auto;
+}
+
+#about-knightlab address {
+	display:inline-block;
+}
+#about-knightlab .copyright a {
+	text-decoration: none;
+	border:0;
+	color:#a8a4a3;
+}
+#about-knightlab .copyright, #about-knightlab .address, #about-knightlab .tel {
+	font-size:12px;
+}
+
+#lessons lesson-ref {
+	display: block;
+	max-width: 300px;
+}
+
+#about {
+	display: block;
+	width: 80%;
+	max-width: 800px;
+	margin: 0 auto;
+	margin-bottom: 100px;
+}
+
+.description {
+	width: 80%;
+	max-width: 800px;
+	margin: 0 auto;
+	margin-bottom: 40px;
+}
+
+#lessons {
+	background: #DDD;
+	padding-bottom: 100px;
+	padding-top: 50px;
+	margin-top: 0px;
+}
+
+#students {
+	background: #80cbc4;
+	padding-bottom: 50px;
+	padding-top: 50px;
+	margin-bottom: 0px;
+}
+
+#forby-students {
+	background: #DDD;
+	padding-bottom: 50px;
+	padding-top: 50px;
+	margin-bottom: 0px;
+	position:relative;
+
+}
+#forby-students .background-image {
+	background-size: cover;
+	background-position: center center;
+	width:100%;
+	height:100%;
+	z-index: 0;
+	position: absolute;
+	top: 0;
+	left: 0;
+	opacity:0.25;
+}
+
+#forby-students .student-content-container {
+	z-index:1;
+	position:relative;
+}
+
+.header-container {
+	width: 100%;
+	height: 20vh;
+	margin-top: 0;
+	margin-bottom: 0;
+	padding-top: 5%;
+	padding-bottom: 0;
+	background: #273238;
+}
+
+p {
+	font-family: Roboto, sans-serif;
+	font-size: 20px;
+	line-height: 26px;
+	font-weight: 300;
+}
+
+h1 {
+	font-family: Roboto, sans-serif;
+	color: #80cbc4;
+	font-size: 64px;
+	font-weight: normal;
+	width: 100%;
+	text-align: center;
+	margin: 0;
+	z-index: 2;
+}
+
+h2 {
+	font-family: Roboto, sans-serif;
+	font-size: 38px;
+	text-align: center;
+	color: #338D83;
+	font-weight: 400;
+}
+
+
+/*.subhead {
+  font-size: 2.5em;
+  font-weight: 400;
+  margin-top: 0;
+  margin-top: 20px;
+  margin-bottom: 0;
+  text-align: center;
+  color: #f2777a;
+}*/
+
+.intro-graph {
+	display: block;
+	max-width: 600px;
+	margin: 0 auto;
+	text-align: center;
+}
+
+.lesson-container {
+	position: relative;
+	right: 30px;
+	display: block;
+	width: 80%;
+	max-width: 600px;
+	margin: 0 auto;
+}
+
+.ghost-button {
+	line-height: 50px;
+	bottom: 50px;
+	display: block;
+	width: 400px;
+	height: 50px;
+	margin: 0 auto;
+	text-align: center;
+	text-transform: uppercase;
+	color: #f2777a;
+	border: solid #f2777a;
+	border-radius: 10px;
+}
+
+.ghost-button:hover {
+	transition: all .5s ease;
+	color: white;
+	background-color: #f2777a;
+}
+
+.ghost-button {
+	margin-top: 50px;
+}
+
+.link-refs-container {
+	display: block;
+
+
+	margin: 0 auto;
+}
+
+link-ref {
+	width: 30%;
+	margin-right: 0;
+}
+
+
+unit-group lesson-ref {
+	margin-right:50px;
+}
+.link {
+	max-width: 30%;
+	margin-bottom: 40px;
+}
+
+.students-container {
+	display: flex;
+	display: -webkit-flex;
+	width: 100%;
+	height: 150px;
+	/* background-color: #273238;*/
+	flex-direction: row;
+	-webkit-flex-direction: row;
+	align-content: center;
+	-webkit-align-content: center;
+	align-items: center;
+	-webkit-align-items: center;
+	justify-content: space-around;
+	-webkit-justify-content: space-around;
+}
+
+.students-container img {
+	width: 120px;
+	height: 120px;
+	/*margin-top: 25px;*/
+	border-radius: 100%;
+	background-color: #f2777a;
+	display: block;
+	z-index: 20;
+}
+
+.student {
+	margin-top: 40px;
+	display: block;
+}
+
+a.student {
+	color: #333;
+}
+
+a.student:hover {
+	color: #338D83;
+}
+
+#students .ghost-button {
+	color: #338D83;
+	border: solid #338D83;
+}

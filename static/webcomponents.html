@@ -11043,8 +11043,11 @@ li.L9 {
 
 		#capsule-content {
 			display:none;
-			padding:20px;
-			padding-top:40px;
+			height:100%;
+			/*overflow-y:scroll;*/
+			overflow:hidden;
+			padding:40px;
+
 			-webkit-transition: opacity 500ms ease-in-out;
 			   -moz-transition: opacity 500ms ease-in-out;
 			     -o-transition: opacity 500ms ease-in-out;
@@ -11056,6 +11059,10 @@ li.L9 {
 			     -o-transition-timing-function: cubic-bezier(0.770, 0.000, 0.175, 1.000);
 			        transition-timing-function: cubic-bezier(0.770, 0.000, 0.175, 1.000);
 		};
+
+		#capsule-content link-ref {
+			width:33%;
+		}
 
 		#capsule-content p{
 			font-weight:300;
@@ -11070,6 +11077,7 @@ li.L9 {
  			font-weight:700;
  			padding:0;
  			margin:0;
+ 			margin-bottom:20px;
 		}
 
 		#capsule-content-container {
@@ -11110,6 +11118,9 @@ li.L9 {
 			z-index:90;
 			top:0;
 			left:0;
+			background-color: rgba(255,255,255,0.5);
+
+			/*background-color:#FFF;*/
 		};
 
 		.material-shadow {
@@ -11148,9 +11159,12 @@ li.L9 {
 		:host {
 			width:100%;
 			margin-right:20px;
+			margin-top:20px;
 			max-width:400px;
 			min-width:200px;
 		}
+
+
 
 		/* Not sure how to share this, maybe can't because of ::shadow?
 		   Should we do this for all paper-fab elements? (See github #21) */
@@ -11176,8 +11190,9 @@ li.L9 {
 					<content></content>
 				</div>
 			</div>
-			<div id="capsule-page-block"></div>
+
 		</div>
+		<div id="capsule-page-block"></div>
 	</template>
 </dom-module>
 
@@ -11246,6 +11261,13 @@ li.L9 {
 				self._onCapsuleCloseClick(e);
 			});
 
+			// this.capsule_page_block.addEventListener("mousewheel", function(e) {
+			// 	self._onCapsuleScrollBlock(e);
+			// });
+			this.capsule_content.addEventListener("mousewheel", function(e) {
+				self._onCapsuleScrollBlock(e);
+			});
+
 			this.capsule_close_btn.addEventListener("click", function(e) {
 				self._onCapsuleCloseClick(e);
 			});
@@ -11294,6 +11316,10 @@ li.L9 {
 			this.windowOff(e);
 		},
 
+		_onCapsuleScrollBlock: function(e) {
+			console.log("scroll");
+			e.preventDefault();
+		},
 
 
 		_clickListener: function(e) {
@@ -11309,6 +11335,10 @@ li.L9 {
 				this.window_open = false;
 			}
 
+			var unitGroups = this.querySelectorAll('unit-group');
+			for (var i = 0; i < unitGroups.length; i++) {
+				unitGroups[i].updateSize();
+			}
 
 		},
 
@@ -11320,16 +11350,41 @@ li.L9 {
 			}
 
 			var page_item_rect = findPageItemRect(this);
+			var container_top = this.capsule_content_container.getBoundingClientRect();
+
+			var modal_width = 0,
+				modal_height = 0,
+				modal_top = 150,
+				modal_left = 100;
+
+			if (page_item_rect.width > 800) {
+				modal_width = 800;
+				modal_left = (page_item_rect.width - modal_width)/2;
+			} else {
+				modal_width = page_item_rect.width - modal_left;
+			}
+
+			modal_height = page_item_rect.height - modal_top;
+
+			console.log(modal_width);
+			console.log(modal_left);
 
 			this.capsule_content.style.display = "block";
 			this.capsule_content.style.opacity = 1;
 			this.capsule_content_container.style.visibility = "visible";
-			this.capsule_content_container.style.width = page_item_rect.width - 100 + "px";
-			this.capsule_content_container.style.height = page_item_rect.height - 150 + "px";
 
-			var container_top = this.capsule_content_container.getBoundingClientRect();
-			this.capsule_content_container.style.left = (-container_top.left + 50 + page_item_rect.left) + "px";
-			this.capsule_content_container.style.top = -container_top.top + 100 + "px";
+
+			// SIZE MODAL WINDOW
+			this.capsule_content_container.style.width = modal_width + "px";
+			this.capsule_content_container.style.height = modal_height + "px";
+
+			// POSITION MODAL WINDOW
+			this.capsule_content_container.style.left = (-container_top.left + modal_left + page_item_rect.left) + "px";
+			this.capsule_content_container.style.top = -container_top.top + modal_top/2 + "px";
+
+			this.capsule_content.style.height = modal_height - 60 + "px";
+
+			//
 			this.capsule_content_container.style.opacity = "1";
 			this.capsule_content_container.setAttribute("elevation", "5");
 			this.capsule_content_container.style.zIndex = "98";
@@ -11363,104 +11418,124 @@ li.L9 {
 </script>
 <dom-module id="info-block" assetpath="learn/">
 	<style>
-		@font-face {
-			font-family: "EmojiSymbols"; /* http://emojisymbols.com/emojilist.php */
-			src: url("../styles/fonts/EmojiSymbols-Regular.woff") format('woff');
-			text-decoration: none;
-			font-style: normal;
-		}
-		.info-emoji {
-			font-family: "EmojiSymbols";
-			line-height: 1;
-			margin-bottom:10px;
-
-		}
-		::content #info-block-wrapper {
-			background-color: #F5F4F4;
-			padding: 20px;
-			margin-top:20px;
-			border-radius:8px;
-			/*padding-top:30px;*/
-		};
-
-		::content #info-block-content {
-			padding: 0 10px;
-		}
-		::content #info-block-content h2 {
-			color: #263238;
-			font-weight:500;
-			font-style:italic;
-			margin-top:20px;
-			margin-bottom:10px;
-		}
-
-		::content #info-block-content p {
-			color: #9B9B9B;
-			font-size:16px;
-			line-height: 22px;
-			font-style: italic;
-			margin-top:0;
-
-		}
-
-		#info-block-icon {
-			display: flex;
-			align-items: center;
-			justify-content: center;
-			/*margin-bottom:50px;*/
-
-/*			background-image: var(--info-icon-url);
+	@font-face {
+		font-family: "EmojiSymbols";
+		/* http://emojisymbols.com/emojilist.php */
+		src: url("../styles/fonts/EmojiSymbols-Regular.woff") format('woff');
+		text-decoration: none;
+		font-style: normal;
+	}
+	
+	:host::content .info-emoji {
+		font-family: "EmojiSymbols";
+		line-height: 1;
+		margin-bottom: 10px;
+	}
+	
+	:host::content #info-block-wrapper {
+		background-color: #F5F4F4;
+		padding: 20px;
+		margin-top: 20px;
+		border-radius: 8px;
+		/*padding-top:30px;*/
+	}
+	
+	;
+	:host::content #info-block-content {
+		padding: 0 10px;
+	}
+	
+	:host::content #info-block-content h2 {
+		color: #263238;
+		font-weight: 500;
+		font-style: italic;
+		margin-top: 20px;
+		margin-bottom: 10px;
+	}
+	
+	:host::content #info-block-content p {
+		color: #9B9B9B;
+		font-size: 16px;
+		line-height: 22px;
+		font-style: italic;
+		margin-top: 0;
+	}
+	
+	#info-block-icon {
+		display: flex;
+		align-items: center;
+		justify-content: center;
+		/*margin-bottom:50px;*/
+		/*			background-image: var(--info-icon-url);
 			background-repeat: no-repeat;
 			background-position: center;*/
+	}
+	
+	:host::content #info-block-icon-background {
+		display: flex;
+		align-items: center;
+		justify-content: center;
+		font-family: Roboto, sans-serif;
+		color: #FAFAFA;
+		font-size: 72px;
+		border-radius: 50%;
+		background-color: #CCC;
+		width: 112px;
+		height: 112px;
+		text-align: center;
+		color: #FFF;
+	};
 
-
-		}
-		::content #info-block-icon-background {
-			display: flex;
-			align-items: center;
-			justify-content: center;
-			font-family: Roboto, sans-serif;
-			color: #FAFAFA;
-			font-size: 72px;
-
-			border-radius:50%;
-			background-color:#CCC;
-			width: 112px;
-			height: 112px;
-			text-align:center;
-			color:#FFF;
-		};
-
+	#info-block-wrapper.flip {
+		-ms-flex-direction: row-reverse;
+		-webkit-flex-direction: row-reverse;
+		flex-direction: row-reverse;
+	}
 
 	</style>
-  <template>
-
-	<div id="info-block-wrapper" class="layout horizontal">
-		<template is="dom-if" if="{{emoji}}">
-		<div id="info-block-icon" class="flex">
-			<div id="info-block-icon-background">
-				<span class="info-emoji">{{ emoji }}</span>
+	<template>
+		<div id="info-block-wrapper" class="layout horizontal">
+			<template is="dom-if" if="{{emoji}}">
+				<div id="info-block-icon" class="flex">
+					<div id="info-block-icon-background">
+						<span class="info-emoji">{{ emoji }}</span>
+					</div>
+				</div>
+			</template>
+			<div id="info-block-content" class="flex-4">
+				<h2>{{ header }}</h2>
+				<content></content>
 			</div>
 		</div>
-		</template>
-		<div id="info-block-content" class="flex-4">
-			<h2>{{ header }}</h2>
-			<content></content>
-		</div>
-	</div>
-
-  </template>
+	</template>
 </dom-module>
 <script>
-  Polymer({
+Polymer({
 	is: 'info-block',
 
 	properties: {
-	  emoji: {
+		emoji: {
 			type: String, // ℹ︎ would be nice, but it has a box in this font
 			value: "\u2757" // In JS, use emoji literals, or \u escapes. e.g. "&#x2757;" becomes "\u2752"; in attribute, &entities are OK
+		},
+		flip: {
+			type: Boolean, // ℹ︎ would be nice, but it has a box in this font
+			value: false
 		}
-  }
+	},
+	ready: function() {
+		// DOM OBJECTS
+		this.info_block_wrapper = this.$['info-block-wrapper'];
+
+		
+
+	},
+	attached: function() {
+		if (this.flip) {
+			this.info_block_wrapper.className += " " + "flip";
+		}
+
+	}
 });
 </script>
 <dom-module id="lesson-ref" assetpath="learn/">
@@ -11482,7 +11557,7 @@ li.L9 {
 		-webkit-transition: all 250ms ease-in-out;
 		   -moz-transition: all 250ms ease-in-out;
 		     -o-transition: all 250ms ease-in-out;
-		        transition: all 250ms ease-in-out;
+		        transition: all 250ms ease-in-out; 
 
 /*
 		-webkit-transition-timing-function: cubic-bezier(0.770, 0.000, 0.175, 1.000);
@@ -11567,7 +11642,7 @@ li.L9 {
 		left: 0;
 	};
 
-	#text-container {
+	:host ::content #text-container {
 		padding: 10px;
 		padding:0px 10px 10px 10px;
 
@@ -11582,15 +11657,11 @@ li.L9 {
 		margin-right:20px;
 	};
 
-	#text-container p {
-		/*font-size:14px;
+	:host ::content #text-container p {
+		font-size:14px;
 		line-height:22px;
 		font-family: 'Roboto', 'Noto', sans-serif;
-		font-size: 18px;
-		line-height: 26px;
 		font-weight: normal;
-		margin-top: 20px;
-		margin-bottom: 20px;*/
 	}
 
 	.material-shadow {
@@ -11876,8 +11947,13 @@ li.L9 {
 		:host {
 			width:100%;
 			margin-right:20px;
+			margin-top:20px;
 			max-width:400px;
-			min-width:200px;
+			min-width:250px;
+			-webkit-transition: all 250ms ease-in-out;
+		   -moz-transition: all 250ms ease-in-out;
+		     -o-transition: all 250ms ease-in-out;
+		        transition: all 250ms ease-in-out; 
 		}
 	</style>
 
@@ -12580,11 +12656,44 @@ Polymer({
 <dom-module id="unit-group" assetpath="learn/">
 	<style>
 
+		:host ::content #unit-group {
+			width:100%;
+			margin-top:20px;
 
+			display: -ms-flexbox;
+			display: -webkit-flex;
+			display: flex;
+
+			-ms-flex: 2;
+			-webkit-flex: 2;
+			flex: 2;
+
+			-ms-flex-pack: around;
+			-webkit-justify-content: space-around;
+			justify-content: space-around;
+
+			-ms-flex-pack: center;
+			-webkit-justify-content: center;
+			justify-content: center;
+
+			-ms-flex-align: center;
+			-webkit-align-items: center;
+			align-items: center;
+
+			-ms-flex-direction: row;
+			-webkit-flex-direction: row;
+			flex-direction: row;
+
+			flex-wrap: wrap;
+			-webkit-transition: all 250ms ease-in-out;
+		   -moz-transition: all 250ms ease-in-out;
+		     -o-transition: all 250ms ease-in-out;
+		        transition: all 250ms ease-in-out; 
+		}
 
 	</style>
 	<template>
-		<div class="horizontal layout flex center-center around-justified">
+		<div id="unit-group">
 			<content></content>
 		</div>
 
@@ -12600,13 +12709,44 @@ Polymer({
 				type: String,
 				value: "images/learn/info-icon.png"
 			}
-		}
+		},
+
+		ready: function() {
+			// DOM OBJECTS
+			this.unit_group = this.$['unit-group'];
+
+		},
+
+		attached: function() {
+			this.updateSize();
+			
+
+		},
+		updateSize: function() {
+			var self = this;
+			var w = this.unit_group.offsetWidth;
+			var min_size = 250;
+			var margin = 20;
+			var child_width = 0;
+			console.log(w);
+
+			if (w > 0) {
+
+				child_width = w / Math.floor(w / (min_size + margin));
+
+				for (i = 0; i < this.unit_group.children.length; i++) { 
+					this.unit_group.children[i].style.width = child_width - margin + "px";
+				}
+			}
+		},
+
 	});
 </script>
 <dom-module id="glossary-term" assetpath="learn/">
   <style>
     #term.usable {
-      background-color: var(--learn-secondary-color);
+      /*background-color: var(--learn-secondary-color);*/
+      background-color:#FFDEA1;
       border-bottom: '1px dotted #999';
       cursor: pointer;
     }
