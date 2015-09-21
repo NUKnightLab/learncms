@@ -158,14 +158,14 @@ footer.homepage p {
 	background: #273238;
 }
 
-p {
+.homepage p {
 	font-family: Roboto, sans-serif;
 	font-size: 20px;
 	line-height: 26px;
 	font-weight: 300;
 }
 
-h1 {
+.homepage h1 {
 	font-family: Roboto, sans-serif;
 	color: #80cbc4;
 	font-size: 64px;
@@ -176,7 +176,7 @@ h1 {
 	z-index: 2;
 }
 
-h2 {
+.homepage h2 {
 	font-family: Roboto, sans-serif;
 	font-size: 38px;
 	text-align: center;
@@ -242,13 +242,13 @@ h2 {
 	margin: 0 auto;
 }
 
-link-ref {
+.homepage link-ref {
 	width: 30%;
 	margin-right: 0;
 }
 
 
-unit-group lesson-ref {
+.homepage unit-group lesson-ref {
 	margin-right:50px;
 }
 .link {
