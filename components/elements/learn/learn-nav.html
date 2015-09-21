@@ -30,7 +30,7 @@ Example:
 			z-index:11;
 			color: var(--learn-primary-color);
 			font-family: var(--learn-primary-font);
-			font-weight: 500;
+			font-weight: 400;
 			font-style: italic;
 			font-size: 24px;
 			width: 100%;
@@ -43,7 +43,10 @@ Example:
 		#navigation-container {
 			padding: 10px;
 		}
-
+		#navigation-container img.nav-learn-logo {
+			max-height: 24px;
+			margin-bottom:-3px;
+		}
 		#kl-link {
 			position: absolute;
 			right: 40px;
@@ -53,7 +56,7 @@ Example:
 		<div id="navigation">
 			<!-- TK: hamburger menu? -->
 			<div id="navigation-container">
-
+				<img class="nav-learn-logo" src="../../images/learn_logo.png"/>
 				<a id="learn-nav-home-link" href="{{ home }}">Learn</a>
 				<a id="kl-link" href="http://knightlab.northwestern.edu"><img src="{{ logo }}"></a>
 			</div>
