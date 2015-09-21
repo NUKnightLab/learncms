@@ -11557,7 +11557,7 @@ Polymer({
 		-webkit-transition: all 250ms ease-in-out;
 		   -moz-transition: all 250ms ease-in-out;
 		     -o-transition: all 250ms ease-in-out;
-		        transition: all 250ms ease-in-out; 
+		        transition: all 250ms ease-in-out;
 
 /*
 		-webkit-transition-timing-function: cubic-bezier(0.770, 0.000, 0.175, 1.000);
@@ -11703,7 +11703,7 @@ Polymer({
 			<div id="image-container">
 				<div id="lesson-ref-image-overlay"></div>
 				<div id="lesson-ref-image"></div>
-				
+
 				<h2 id="header-el">{{ header }}</h2>
 				<paper-fab icon="arrow-forward"></paper-fab>
 			</div>
@@ -11766,25 +11766,13 @@ Polymer({
 
 
 		},
-
-		_handleEscapeKey: function(e) {
-			console.log("when available, implement close-capsule here");
-		},
-
-		_handlePaperButtonClick: function(e) {
-
-		},
-
 		_clickListener: function(e) {
 			if (this.url) {
-
-				// var container_top = this.container.getBoundingClientRect().top;
-				// this.container.style.left = "150%";
-				// this.container.style.height = window.innerHeight + "px";
-
-				// this.container.style.top = -container_top + "px";
-				// this.container.setAttribute("elevation", "5");
-				this.fire("page:add", {url:this.url});
+				if (document.querySelector('page-manager')) {
+					this.fire("page:add", {url:this.url});
+				} else {
+					window.location.href = this.url;
+				}
 			}
 		},
 

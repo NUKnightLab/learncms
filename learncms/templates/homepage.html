@@ -1,12 +1,13 @@
 {% extends "_base.html" %}
 {% load staticfiles %}
 {% block extrahead %}
+<link rel="stylesheet" href="{% static 'css/footer.css' %}" media="screen" charset="utf-8">
 <style type="text/css">
     body {
         font-family: Roboto
     }
     #forby-students .background-image {
-    	background-image: url("{% static 'img/forby_students.jpg' %}");
+    	background-image: url("{% static 'img/homepage/forby_students.jpg' %}");
     }
 </style>
 {% endblock %}
@@ -25,13 +26,13 @@
   </div>
 
   <div class="lesson-container">
-    <lesson-ref header="Project: Build a Basic Website" image="images/learn/source-code.png" url="lesson.html">
+    <lesson-ref header="Project: Build a Basic Website" image="images/learn/source-code.png" url="{% url 'lesson-detail' slug='create-basic-website' %}">
       <p>
         In this series, we'll cover everything you need to know to get a basic site up and running: coming up with a design, writing the HTML and CSS to make it happen, and publishing your project for the world to see.
       </p>
     </lesson-ref>
   </div>
-  <a href="#lessons" class='learn'>
+  <a href="mailto:support@knightlab.zendesk.com?subject=Learn.KnightLab.com%3A%20Suggest%20a%20lesson" class='learn'>
     <div class="ghost-button" >
       + Suggest a Lesson
     </div>
@@ -124,7 +125,7 @@
 
     </unit-group>
   </div>
-  <a href="#">
+  <a href="mailto:support@knightlab.zendesk.com?subject=Learn.KnightLab.com%3A%20What%20else%20would%20you%20like%20to%20learn%3F">
     <div class="ghost-button">
       What else would you like to learn?
     </div>
@@ -146,7 +147,7 @@
 <footer class="homepage">
   <div id="about-knightlab">
     <div id="knightlab-logo-column">
-      <a href="./Knight Lab _ Northwestern University_files/Knight Lab _ Northwestern University.html" target="_blank"><img src="images/index/logo_stacked.png" class="img-responsive"></a>
+      <a href="./Knight Lab _ Northwestern University_files/Knight Lab _ Northwestern University.html" target="_blank"><img src="{% static 'img/homepage/logo_stacked.png' %}" class="img-responsive"></a>
 
       <ul class="social list-inline">
         <li><a href="http://www.twitter.com/knightlab" target="_blank" title="Knight Lab on Twitter"><span class="icon-twitter"></span></a></li>
@@ -156,7 +157,7 @@
     </div>
     <div id="knightlab-description">
       <p>The <a title="Northwestern University" href="http://www.northwestern.edu/" target="_blank">Northwestern University</a> Knight Lab is a team of technologists and journalists working at advancing news media innovation through exploration and experimentation.</p>
-      <p>A joint initiative of the <a href="http://www.mccormick.northwestern.edu/" target="_blank">Robert R. McCormick School of Engineering and Applied Science</a> and the<a href="http://www.medill.northwestern.edu/" target="_blank"> Medill School of Journalism, Media, Integrated Marketing Communications</a>.</p><img src="images/index/Logos-Horizontal.png" class="img-responsive logos">
+      <p>A joint initiative of the <a href="http://www.mccormick.northwestern.edu/" target="_blank">Robert R. McCormick School of Engineering and Applied Science</a> and the<a href="http://www.medill.northwestern.edu/" target="_blank"> Medill School of Journalism, Media, Integrated Marketing Communications</a>.</p><img src="{% static 'img/homepage/Logos-Horizontal.png' %}" class="img-responsive logos">
     </div>
     <div class="copyright">
 
@@ -165,11 +166,11 @@
         <span itemprop="tel" class="tel">(847) 467-4971 | </span>
         <span itemprop="address" itemscope="" itemtype="http://data-vocabulary.org/Address" class="address">
           <span itemprop="street-address" class="street-address">
-            <a href="https://maps.google.com/maps?q=1845+Sheridan+Road+Evanston+IL+6020&amp;hl=en&amp;ll=42.050942,-87.673511&amp;spn=0.003059,0.004898&amp;sll=42.050647,-87.674246&amp;sspn=0.012237,0.019591&amp;gl=us&amp;hnear=1845+Sheridan+Rd,+Evanston,+Cook,+Illinois+60201&amp;t=m&amp;z=18&amp;iwloc=A" target="_blank">
+            <a href="https://maps.google.com/maps?q=1845+Sheridan+Road+Evanston+IL+60208&amp;hl=en&amp;ll=42.050942,-87.673511&amp;spn=0.003059,0.004898&amp;sll=42.050647,-87.674246&amp;sspn=0.012237,0.019591&amp;gl=us&amp;hnear=1845+Sheridan+Rd,+Evanston,+Cook,+Illinois+60201&amp;t=m&amp;z=18&amp;iwloc=A" target="_blank">
               1845 Sheridan Road Fisk #109 &amp; #111
             </a>
           </span>
-          <a href="https://maps.google.com/maps?q=1845+Sheridan+Road+Evanston+IL+6020&amp;hl=en&amp;ll=42.050942,-87.673511&amp;spn=0.003059,0.004898&amp;sll=42.050647,-87.674246&amp;sspn=0.012237,0.019591&amp;gl=us&amp;hnear=1845+Sheridan+Rd,+Evanston,+Cook,+Illinois+60201&amp;t=m&amp;z=18&amp;iwloc=A" target="_blank">
+          <a href="https://maps.google.com/maps?q=1845+Sheridan+Road+Evanston+IL+60208&amp;hl=en&amp;ll=42.050942,-87.673511&amp;spn=0.003059,0.004898&amp;sll=42.050647,-87.674246&amp;sspn=0.012237,0.019591&amp;gl=us&amp;hnear=1845+Sheridan+Rd,+Evanston,+Cook,+Illinois+60201&amp;t=m&amp;z=18&amp;iwloc=A" target="_blank">
             ,
             <span itemprop="locality">Evanston,</span>
             <span itemprop="region">IL</span>
@@ -177,7 +178,7 @@
             <span itemprop="country-name" class="address-country">United States</span>
           </a>
         </span>
-        <a href="https://maps.google.com/maps?q=1845+Sheridan+Road+Evanston+IL+6020&amp;hl=en&amp;ll=42.050942,-87.673511&amp;spn=0.003059,0.004898&amp;sll=42.050647,-87.674246&amp;sspn=0.012237,0.019591&amp;gl=us&amp;hnear=1845+Sheridan+Rd,+Evanston,+Cook,+Illinois+60201&amp;t=m&amp;z=18&amp;iwloc=A" target="_blank">
+        <a href="https://maps.google.com/maps?q=1845+Sheridan+Road+Evanston+IL+60208&amp;hl=en&amp;ll=42.050942,-87.673511&amp;spn=0.003059,0.004898&amp;sll=42.050647,-87.674246&amp;sspn=0.012237,0.019591&amp;gl=us&amp;hnear=1845+Sheridan+Rd,+Evanston,+Cook,+Illinois+60201&amp;t=m&amp;z=18&amp;iwloc=A" target="_blank">
           <span style="display:none;" itemprop="geo" itemscope="" itemtype="http://www.data-vocabulary.org/Geo/" class="geo">
             Latitude: <span itemprop="latitude">42.056893</span>
             <br> Longitude: <span itemprop="longitude">-87.676735</span>
