@@ -25,10 +25,18 @@ header.learn-logo h1 {
 	display:inline-block;
 	width:auto;
 	font-style: italic;
-	
+
 	color:#273238;
 	position:relative;
+
+	font-family: Roboto, sans-serif;
+	font-size: 64px;
+	font-weight: normal;
+	text-align: center;
+	margin: 0;
+	z-index: 2;
 }
+
 header.learn-logo h1 span {
 	display:inline-block;
 	font-size: 14px;
@@ -119,7 +127,7 @@ header.learn-logo {
 	-ms-flex-align: center;
 	-webkit-align-items: center;
 	align-items: center;
-	
+
 }
 #forby-students .background-image {
 	background-image: url("../images/forby_students.jpg");
@@ -156,16 +164,6 @@ p {
 	font-weight: 300;
 }
 
-h1 {
-	font-family: Roboto, sans-serif;
-	color: #80cbc4;
-	font-size: 64px;
-	font-weight: normal;
-	width: 100%;
-	text-align: center;
-	margin: 0;
-	z-index: 2;
-}
 
 h2 {
 	font-family: Roboto, sans-serif;
@@ -228,8 +226,8 @@ h2 {
 
 .link-refs-container {
 	display: block;
-	
-   
+
+
 	margin: 0 auto;
 }
 

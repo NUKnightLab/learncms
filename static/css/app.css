@@ -55,18 +55,35 @@ header.learn-logo img {
 	margin-right:10px;
 	margin-top:-33px;
 }
+
 header.learn-logo h1 {
 	display:inline-block;
 	width:auto;
 	font-style: italic;
+
 	color:#273238;
-  font-family: Roboto, sans-serif;
+	position:relative;
+
+	font-family: Roboto, sans-serif;
 	font-size: 64px;
 	font-weight: normal;
 	text-align: center;
 	margin: 0;
 	z-index: 2;
+}
 
+header.learn-logo h1 span {
+	display:inline-block;
+	font-size: 14px;
+	background-color: #9DDCD5;
+	padding:5px;
+	border-radius: 5px;
+	position:absolute;
+	top:26px;
+	margin-left:5px;
+	padding:8px 10px 8px 10px;
+	color:#53A89F;
+	font-weight:400;
 }
 header.learn-logo {
 	width: 100%;
