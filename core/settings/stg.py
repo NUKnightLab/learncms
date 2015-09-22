@@ -24,7 +24,7 @@ from secrets import *
 URL_ROOT = 'https://learncms.knilab.com' # used for OG & twitter cards, etc
 DEBUG = False
 
-ALLOWED_HOSTS = ['learncms.knilab.com']
+ALLOWED_HOSTS = ['learncms.knilab.com', 'learn.knilab.com']
 
 
 # Application definition
