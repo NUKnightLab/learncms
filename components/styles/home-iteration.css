@@ -27,6 +27,20 @@ header.learn-logo h1 {
 	font-style: italic;
 	
 	color:#273238;
+	position:relative;
+}
+header.learn-logo h1 span {
+	display:inline-block;
+	font-size: 14px;
+	background-color: #9DDCD5;
+	padding:5px;
+	border-radius: 5px;
+	position:absolute;
+	top:26px;
+	margin-left:5px;
+	padding:8px 10px 8px 10px;
+	color:#53A89F;
+	font-weight:400;
 }
 header.learn-logo {
 	width: 100%;
