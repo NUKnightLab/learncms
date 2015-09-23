@@ -47,6 +47,7 @@ Example:
 		font-style: italic;
 		margin-top: 20px;
 		margin-bottom: 10px;
+		font-size:26px;
 	}
 
 	:host ::content #info-block-content p {
@@ -56,7 +57,7 @@ Example:
 		font-style: italic;
 		margin-top: 0;
 	}
-	li :host #info-block-content p {
+	:host-context(li) ::content #info-block-content p {
 		color: #000;
 	}
 	#info-block-icon {
