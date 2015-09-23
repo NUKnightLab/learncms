@@ -65,25 +65,10 @@ Example:
 		:host ::content #lesson-block-spacer {
 			width:150px;
 		}
-		:host ::content dt {
+		:host ::content #lesson-block-content dt {
 			font-weight:700;
-		}
-		:host ::content dd {
-			margin-left:0;
-			margin-bottom:20px;
 			font-size: 16px;
 			line-height: 22px;
-			margin-bottom:20px;
-		}
-
-		:host ::content #lesson-block-content .dl-horizontal dd {
-			margin-left: 180px;
-			margin-bottom:10px;
-		}
-		:host ::content #lesson-block-content .dl-horizontal dd p {
-			margin-bottom:10px;
-		}
-		:host ::content #lesson-block-content .dl-horizontal dt {
 			float: left;
 			width: 160px;
 			overflow: hidden;
@@ -91,6 +76,35 @@ Example:
 			text-align: right;
 			text-overflow: ellipsis;
 			white-space: nowrap;
+		}
+		:host ::content #lesson-block-content dd {
+			margin-left:0;
+			margin-bottom:20px;
+			font-size: 16px;
+			line-height: 22px;
+			/*margin-bottom:20px;*/
+			margin-left: 180px;
+			margin-bottom:10px;
+		}
+		:host ::content #lesson-block-content dd p {
+			margin-bottom:10px;
+		}
+
+		:host ::content #lesson-block-content .dl-vertical dd {
+			margin-left: 0px;
+			margin-bottom:20px;
+		}
+		:host ::content #lesson-block-content .dl-vertical dd p {
+			margin-bottom:20px;
+		}
+		:host ::content #lesson-block-content .dl-vertical dt {
+			float: none;
+			width: auto;
+			overflow:visible;
+			clear: noen;
+			text-align: left;
+			text-overflow: ellipsis;
+			white-space: normal;
 		}
 		:host ::content content-wrapper {
 			display: flex;
