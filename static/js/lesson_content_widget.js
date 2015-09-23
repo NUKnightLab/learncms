@@ -83,7 +83,7 @@ grp.jQuery(document).ready(function() {
         editor.focus();
     })
     $('#btn-info-block').click(function() {
-        editor.replaceSelection('<info-block header="">\n</info-block>\n');
+        editor.replaceSelection('<info-block emoji="&#x2757;" header="">\n</info-block>\n');
         editor.focus();
     })
     $('#btn-capsule-unit').click(function() {
