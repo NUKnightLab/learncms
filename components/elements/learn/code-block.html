@@ -17,11 +17,16 @@ Example:
 <dom-module id="code-block">
 
 	<style>
-	.code-block {
+	#code-block {
 		/*background-color: var(--learn-secondary-color);*/
 		/*background-color:#F5F4F4;*/
 		margin-top:30px;
 		margin-bottom:30px;
+		border-radius: 8px;
+		/*box-shadow:  0 2px 2px 0 rgba(0, 0, 0, 0.14),  0 1px 5px 0 rgba(0, 0, 0, 0.12),  0 3px 1px -2px rgba(0, 0, 0, 0.2);*/
+		/*box-shadow:  inset 3px 1px 2px rgba(0, 0, 0, 0.5);*/
+		box-shadow:  inset 0 2px 2px 0 rgba(0, 0, 0, 0.14),  inset 0 1px 5px 0 rgba(0, 0, 0, 0.12),  inset 0 3px 1px -2px rgba(0, 0, 0, 0.2);
+		background-color:#f1efee;
 	}
 	pre.prettyprint {
 		padding: 2px;
@@ -32,6 +37,7 @@ Example:
 		font-size: 16px;
 		border-radius: 8px;
 		overflow-x: scroll;
+		background-color:transparent;
 	}
 
 	.code-block-wrapper h2 { /* Free floating for any h2 inside */
@@ -40,7 +46,7 @@ Example:
 	</style>
 
 	<template>
-		<div class="code-block paper-font-body2">
+		<div id="code-block">
 			<div class="code-block-wrapper"><pre class="prettyprint"><code><content></content></code></pre></div>
 		</div>
 	</template>
