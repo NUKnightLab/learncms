@@ -110,12 +110,9 @@ Polymer({
 	is: 'info-block',
 
 	properties: {
-		emoji: {
-			type: String, // ℹ︎ would be nice, but it has a box in this font
-			value: "\u2757" // In JS, use emoji literals, or \u escapes. e.g. "&#x2757;" becomes "\u2752"; in attribute, &entities are OK
-		},
+		emoji: String,
 		flip: {
-			type: Boolean, // ℹ︎ would be nice, but it has a box in this font
+			type: Boolean,
 			value: false
 		}
 	},
