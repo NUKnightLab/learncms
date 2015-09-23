@@ -27,7 +27,7 @@ Example:
 		margin-bottom: 10px;
 	}
 
-	:host::content #info-block-wrapper {
+	:host ::content #info-block-wrapper {
 		background-color: #F5F4F4;
 		padding: 20px;
 		margin-top: 20px;
@@ -37,11 +37,11 @@ Example:
 	}
 
 	;
-	:host::content #info-block-content {
+	:host ::content #info-block-content {
 		padding: 0 10px;
 	}
 
-	:host::content #info-block-content h2 {
+	:host ::content #info-block-content h2 {
 		color: #263238;
 		font-weight: 500;
 		font-style: italic;
@@ -49,14 +49,16 @@ Example:
 		margin-bottom: 10px;
 	}
 
-	:host::content #info-block-content p {
+	:host ::content #info-block-content p {
 		color: #9B9B9B;
 		font-size: 16px;
 		line-height: 22px;
 		font-style: italic;
 		margin-top: 0;
 	}
-
+	li :host #info-block-content p {
+		color: #000;
+	}
 	#info-block-icon {
 		display: flex;
 		align-items: center;
