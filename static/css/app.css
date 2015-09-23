@@ -9,6 +9,10 @@
     background-color: #FFF7E8;
     font-family: Roboto;
     padding: 3px;
+    /* these would keep the bar fixed at the top, but they also make it disappear on lesson pages.
+    position: fixed;
+    top: 0px;
+    width: 100%;*/
 }
 
 #error {
