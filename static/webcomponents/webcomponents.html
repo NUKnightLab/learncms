@@ -10208,30 +10208,71 @@ li.L9 {
 			margin-top:30px;
 			margin-bottom:10px;
 		}
-		:host ::content #step-content dl {
-			margin-top:20px;
+
+		:host ::content #step-content .dl-vertical dd {
+			margin-left: 0px;
 			margin-bottom:20px;
-			margin-left:20px;
+		}
+		:host ::content #step-content .dl-vertical dd p {
+			margin-bottom:20px;
+		}
+		:host ::content #step-content .dl-vertical dt {
+			float: none;
+			width: auto;
+			overflow:visible;
+			clear: noen;
+			text-align: left;
+			text-overflow: ellipsis;
+			white-space: normal;
 		}
 		:host ::content #step-content dt {
 			font-weight:700;
-			font-size: 18px;
-			line-height: 26px;
-		}
-		:host ::content #step-content dd {
-			margin-left:0;
 			font-size: 16px;
 			line-height: 22px;
+			font-weight:700;
+			float: left;
+			width: 160px;
+			overflow: hidden;
+			clear: left;
+			text-align: right;
+			text-overflow: ellipsis;
+			white-space: nowrap;
+		}
+		:host ::content #step-content dd {
+
+			margin-left:0;
 			margin-bottom:20px;
+			font-size: 16px;
+			line-height: 22px;
+			margin-left: 180px;
+			margin-bottom:10px;
 		}
 		:host ::content #step-content dd p {
 			font-size: 16px;
 			line-height: 22px;
+			margin-bottom:10px;
 		}
+
 		:host ::content #step-content li h4 {
 			margin:0;
 			font-weight:700;
 			color:#338D83;
+		}
+		:host ::content #step-content .dl-horizontal dd {
+			margin-left: 180px;
+			margin-bottom:10px;
+		}
+		:host ::content #step-content .dl-horizontal dd p {
+			margin-bottom:10px;
+		}
+		:host ::content #step-content .dl-horizontal dt {
+			float: left;
+			width: 160px;
+			overflow: hidden;
+			clear: left;
+			text-align: right;
+			text-overflow: ellipsis;
+			white-space: nowrap;
 		}
 		/* Begin ordered list styling */
 		/*:host ::content #step-content ol {
@@ -10452,15 +10493,46 @@ li.L9 {
 		:host ::content #lesson-block-spacer {
 			width:150px;
 		}
-		:host ::content dt {
+		:host ::content #lesson-block-content dt {
 			font-weight:700;
+			font-size: 16px;
+			line-height: 22px;
+			float: left;
+			width: 160px;
+			overflow: hidden;
+			clear: left;
+			text-align: right;
+			text-overflow: ellipsis;
+			white-space: nowrap;
 		}
-		:host ::content dd {
+		:host ::content #lesson-block-content dd {
 			margin-left:0;
 			margin-bottom:20px;
 			font-size: 16px;
 			line-height: 22px;
+			/*margin-bottom:20px;*/
+			margin-left: 180px;
+			margin-bottom:10px;
+		}
+		:host ::content #lesson-block-content dd p {
+			margin-bottom:10px;
+		}
+
+		:host ::content #lesson-block-content .dl-vertical dd {
+			margin-left: 0px;
 			margin-bottom:20px;
+		}
+		:host ::content #lesson-block-content .dl-vertical dd p {
+			margin-bottom:20px;
+		}
+		:host ::content #lesson-block-content .dl-vertical dt {
+			float: none;
+			width: auto;
+			overflow:visible;
+			clear: noen;
+			text-align: left;
+			text-overflow: ellipsis;
+			white-space: normal;
 		}
 		:host ::content content-wrapper {
 			display: flex;
@@ -11499,7 +11571,7 @@ li.L9 {
 		margin-bottom: 10px;
 	}
 
-	:host::content #info-block-wrapper {
+	:host ::content #info-block-wrapper {
 		background-color: #F5F4F4;
 		padding: 20px;
 		margin-top: 20px;
@@ -11509,25 +11581,30 @@ li.L9 {
 	}
 
 	;
-	:host::content #info-block-content {
+	:host ::content #info-block-content {
 		padding: 0 10px;
+		-ms-flex: 4;
+		-webkit-flex: 4;
+		flex: 4;
 	}
-
-	:host::content #info-block-content h2 {
+	
+	:host ::content #info-block-content h2 {
 		color: #263238;
 		font-weight: 500;
 		font-style: italic;
 		margin-top: 20px;
 		margin-bottom: 10px;
+		font-size:26px;
 	}
 
-	:host::content #info-block-content p {
+	:host ::content #info-block-content p {
 		color: #9B9B9B;
 		font-size: 16px;
 		line-height: 22px;
 		font-style: italic;
 		margin-top: 0;
 	}
+
 
 	#info-block-icon {
 		display: flex;
@@ -11553,11 +11630,47 @@ li.L9 {
 		text-align: center;
 		color: #FFF;
 	};
+	
 
 	#info-block-wrapper.flip {
 		-ms-flex-direction: row-reverse;
 		-webkit-flex-direction: row-reverse;
 		flex-direction: row-reverse;
+	}
+
+	/*
+	 	Inside an <li>
+	 */
+	::content li #info-block-wrapper {
+		background-color: #F5F4F4;
+		padding: 10px;
+		margin-top: 20px;
+		margin-bottom: 20px;
+		border-radius: 8px;
+		/*padding-top:30px;*/
+		margin-right:40px;
+	}
+	::content li #info-block-content {
+		-ms-flex: 6;
+		-webkit-flex: 6;
+		flex: 6;
+		
+	}
+	::content li #info-block-icon-background {
+		font-size: 48px;
+		width: 72px;
+		height: 72px;
+	}
+	::content li #info-block-content p {
+		/*color: #000;*/
+		font-size: 14px;
+		line-height: 18px;
+		margin-bottom:10px;
+	}
+	::content li #info-block-content h2 {
+		font-size: 18px;
+		line-height: 22px;
+		margin-top:10px;
 	}
 
 	</style>
@@ -11570,7 +11683,7 @@ li.L9 {
 					</div>
 				</div>
 			</template>
-			<div id="info-block-content" class="flex-4">
+			<div id="info-block-content">
 				<h2>{{ header }}</h2>
 				<content></content>
 			</div>
