@@ -47,6 +47,7 @@
 <body class="fullbleed">
 {% include "_analytics.html" %}
 {% if user.is_staff %}
+<script>document.body.classList.add('toolbar')</script>
 <div id="staff-toolbar">
     <span id="staff-greeting">welcome, {{ user }} [<a href="{% url 'admin:logout' %}">log out</a>]</span>
     <a id="staff-admin-link" href="{% url 'admin:index' %}">admin site</a>
