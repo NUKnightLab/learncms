@@ -10989,7 +10989,7 @@ li.L9 {
 			<div id="navigation-container">
 				<img class="nav-learn-logo" src="learn/images/learn_logo.png">
 				<a id="learn-nav-home-link" href="{{ home }}">Learn</a><span class="logo-beta">beta</span>
-				<a id="kl-link" href="http://knightlab.northwestern.edu"><img src="{{ logo }}"></a>
+				<a id="kl-link" href="http://knightlab.northwestern.edu"><img src="learn/images/banner-logo-white.png"></a>
 			</div>
 		</div>
 
@@ -10999,10 +10999,6 @@ li.L9 {
 	Polymer({
 		is: "learn-nav",
 		properties: {
-			logo: {
-				type: String,
-				value: '/images/learn/banner-logo-white.png'
-			},
 			home: {
 			  type: String,
 			  value: '/'
@@ -13050,5 +13046,101 @@ function fetchGlossary(url, callback) {
             } // should there be a property for the retrieved terms?
         }
     })
+</script>
+<dom-module id="img-li" assetpath="learn/">
+	<style>
+		:host ::content {
+			width:100%;
+		}
+		:host ::content #img-li-container {
+			width:100%;
+			display:flex;
+			margin-bottom:10px;
+		}
+
+		:host ::content #img-li-text-container {
+			margin-left:20px;
+			margin-bottom:10px;
+		}
+
+		:host ::content #img-li-text-container h4 {
+			font-family: 'Roboto', 'Noto', sans-serif;
+			color: #333;
+			font-size: 20px;
+			font-weight: bold;
+			margin: 0;
+			margin-bottom:5px;
+		}
+
+		:host ::content #img-li-image-container {
+			width:150px;
+			min-width:150px;
+		}
+
+	</style>
+
+	<template>
+		<div id="img-li-container">
+			<div id="img-li-image-container">
+				<zooming-image src="{{ src }}" full-src="{{ full-src }}"></zooming-image>
+			</div>
+			<div id="img-li-text-container">
+				<h4>{{ header }}</h4>
+				<content></content>
+			</div>
+		</div>
+	</template>
+
+</dom-module>
+
+<script>
+	Polymer({
+		is: 'img-li',
+
+		properties: {
+			header: String,
+			src: {
+				type: String,
+				value: ""
+			},
+			fullSrc: {
+				type: String,
+				value: ""
+			},
+		}
+	});
+</script>
+<dom-module id="img-ul" assetpath="learn/">
+	<style>
+		:host ::content {
+			width:100%;
+		}
+		:host ::content #img-ul-container {
+			width:100%;
+			margin-top:20px;
+			margin-bottom:20px;
+			padding-left:20px;
+			/*padding-right:20px;*/
+			box-sizing: border-box;
+		}
+
+	</style>
+
+	<template>
+		<div id="img-ul-container">
+			<content></content>
+		</div>
+	</template>
+
+</dom-module>
+
+<script>
+	Polymer({
+		is: 'img-ul',
+
+		properties: {
+			header: String
+		}
+	});
 </script>
 </div></body></html>
