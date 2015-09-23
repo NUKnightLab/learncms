@@ -8365,78 +8365,85 @@ styles. All other styles should exist as single lines."
     }
 
 </script><style>
-/* Tomorrow Night Eighties Theme */
-/* Original theme - https://github.com/chriskempson/tomorrow-theme */
-.prettyprint {
-  background: #2d2d2d;
-  font-family: Menlo, 'Bitstream Vera Sans Mono', 'DejaVu Sans Mono', Monaco, Consolas, monospace;
-  font-size: 12px;
-  line-height: 1.5;
-  border: 1px solid #ccc;
-  padding: 10px;
-}
+/* Atelier Forest Light by Bram de Haan (http://atelierbram.github.io/syntax-highlighting/atelier-schemes/forest) */
 
+/* plain text */
 .pln {
-  color: #cccccc;
+  color: #1b1918;
 }
 
 @media screen {
+  /* string content */
   .str {
-    color: #99cc99;
+    color: #7b9726;
   }
 
+  /* a keyword */
   .kwd {
-    color: #cc99cc;
+    color: #6666ea;
   }
 
+  /* a comment */
   .com {
-    color: #999999;
+    color: #9c9491;
   }
 
+  /* a type name */
   .typ {
-    color: #6699cc;
+    color: #407ee7;
   }
 
+  /* a literal value */
   .lit {
-    color: #f99157;
+    color: #df5320;
   }
 
+  /* punctuation */
   .pun {
-    color: #cccccc;
+    color: #1b1918;
   }
 
+  /* lisp open bracket */
   .opn {
-    color: #cccccc;
+    color: #1b1918;
   }
 
+  /* lisp close bracket */
   .clo {
-    color: #cccccc;
+    color: #1b1918;
   }
 
+  /* a markup tag name */
   .tag {
-    color: #f2777a;
+    color: #f22c40;
   }
 
+  /* a markup attribute name */
   .atn {
-    color: #f99157;
+    color: #df5320;
   }
 
+  /* a markup attribute value */
   .atv {
-    color: #66cccc;
+    color: #3d97b8;
   }
 
+  /* a declaration */
   .dec {
-    color: #f99157;
+    color: #df5320;
   }
 
+  /* a variable name */
   .var {
-    color: #f2777a;
+    color: #f22c40;
   }
 
+  /* a function name */
   .fun {
-    color: #6699cc;
+    color: #407ee7;
   }
 }
+/* Use higher contrast and text-weight for printable form. */
 @media print, projection {
   .str {
     color: #006600;
@@ -8478,6 +8485,18 @@ styles. All other styles should exist as single lines."
     color: #006600;
   }
 }
+/* Style */
+pre.prettyprint {
+  background: #f1efee;
+  color: #a8a19f;
+  font-family: Menlo, Consolas, "Bitstream Vera Sans Mono", "DejaVu Sans Mono", Monaco, monospace;
+  font-size: 12px;
+  line-height: 1.5;
+  border: 1px solid #e6e2e0;
+  padding: 10px;
+  /* border-radius: 3px; */
+}
+
 /* Specify class=linenums on a pre to get line numbering */
 ol.linenums {
   margin-top: 0;
@@ -11563,12 +11582,9 @@ Polymer({
 	is: 'info-block',
 
 	properties: {
-		emoji: {
-			type: String, // ℹ︎ would be nice, but it has a box in this font
-			value: "\u2757" // In JS, use emoji literals, or \u escapes. e.g. "&#x2757;" becomes "\u2752"; in attribute, &entities are OK
-		},
+		emoji: String,
 		flip: {
-			type: Boolean, // ℹ︎ would be nice, but it has a box in this font
+			type: Boolean,
 			value: false
 		}
 	},
@@ -12126,11 +12142,16 @@ Polymer({
 <dom-module id="code-block" assetpath="learn/">
 
 	<style>
-	.code-block {
+	#code-block {
 		/*background-color: var(--learn-secondary-color);*/
 		/*background-color:#F5F4F4;*/
 		margin-top:30px;
 		margin-bottom:30px;
+		border-radius: 8px;
+		/*box-shadow:  0 2px 2px 0 rgba(0, 0, 0, 0.14),  0 1px 5px 0 rgba(0, 0, 0, 0.12),  0 3px 1px -2px rgba(0, 0, 0, 0.2);*/
+		/*box-shadow:  inset 3px 1px 2px rgba(0, 0, 0, 0.5);*/
+		box-shadow:  inset 0 2px 2px 0 rgba(0, 0, 0, 0.14),  inset 0 1px 5px 0 rgba(0, 0, 0, 0.12),  inset 0 3px 1px -2px rgba(0, 0, 0, 0.2);
+		background-color:#f1efee;
 	}
 	pre.prettyprint {
 		padding: 2px;
@@ -12141,6 +12162,7 @@ Polymer({
 		font-size: 16px;
 		border-radius: 8px;
 		overflow-x: scroll;
+		background-color:transparent;
 	}
 
 	.code-block-wrapper h2 { /* Free floating for any h2 inside */
@@ -12149,7 +12171,7 @@ Polymer({
 	</style>
 
 	<template>
-		<div class="code-block paper-font-body2">
+		<div id="code-block">
 			<div class="code-block-wrapper"><pre class="prettyprint"><code><content></content></code></pre></div>
 		</div>
 	</template>
