@@ -39,8 +39,11 @@ Example:
 	;
 	:host ::content #info-block-content {
 		padding: 0 10px;
+		-ms-flex: 4;
+		-webkit-flex: 4;
+		flex: 4;
 	}
-
+	
 	:host ::content #info-block-content h2 {
 		color: #263238;
 		font-weight: 500;
@@ -57,9 +60,8 @@ Example:
 		font-style: italic;
 		margin-top: 0;
 	}
-	:host-context(li) ::content #info-block-content p {
-		color: #000;
-	}
+
+
 	#info-block-icon {
 		display: flex;
 		align-items: center;
@@ -84,11 +86,47 @@ Example:
 		text-align: center;
 		color: #FFF;
 	};
+	
 
 	#info-block-wrapper.flip {
 		-ms-flex-direction: row-reverse;
 		-webkit-flex-direction: row-reverse;
 		flex-direction: row-reverse;
+	}
+
+	/*
+	 	Inside an <li>
+	 */
+	::content li #info-block-wrapper {
+		background-color: #F5F4F4;
+		padding: 10px;
+		margin-top: 20px;
+		margin-bottom: 20px;
+		border-radius: 8px;
+		/*padding-top:30px;*/
+		margin-right:40px;
+	}
+	::content li #info-block-content {
+		-ms-flex: 6;
+		-webkit-flex: 6;
+		flex: 6;
+		
+	}
+	::content li #info-block-icon-background {
+		font-size: 48px;
+		width: 72px;
+		height: 72px;
+	}
+	::content li #info-block-content p {
+		/*color: #000;*/
+		font-size: 14px;
+		line-height: 18px;
+		margin-bottom:10px;
+	}
+	::content li #info-block-content h2 {
+		font-size: 18px;
+		line-height: 22px;
+		margin-top:10px;
 	}
 
 	</style>
@@ -101,7 +139,7 @@ Example:
 					</div>
 				</div>
 			</template>
-			<div id="info-block-content" class="flex-4">
+			<div id="info-block-content">
 				<h2>{{ header }}</h2>
 				<content></content>
 			</div>
