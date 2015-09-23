@@ -1,0 +1,68 @@
+<!--
+
+`img-li` is a container that show a list item with a zooming image thumbnail
+
+-->
+<dom-module id="img-li">
+	<style>
+		:host ::content {
+			width:100%;
+		}
+		:host ::content #img-li-container {
+			width:100%;
+			display:flex;
+			margin-bottom:10px;
+		}
+
+		:host ::content #img-li-text-container {
+			margin-left:20px;
+			margin-bottom:10px;
+		}
+
+		:host ::content #img-li-text-container h4 {
+			font-family: 'Roboto', 'Noto', sans-serif;
+			color: #333;
+			font-size: 20px;
+			font-weight: bold;
+			margin: 0;
+			margin-bottom:5px;
+		}
+
+		:host ::content #img-li-image-container {
+			width:150px;
+			min-width:150px;
+		}
+
+	</style>
+
+	<template>
+		<div id="img-li-container">
+			<div id="img-li-image-container">
+				<zooming-image src="{{ src }}" full-src="{{ full-src }}"></zooming-image>
+			</div>
+			<div id="img-li-text-container">
+				<h4>{{ header }}</h4>
+				<content></content>
+			</div>
+		</div>
+	</template>
+
+</dom-module>
+
+<script>
+	Polymer({
+		is: 'img-li',
+
+		properties: {
+			header: String,
+			src: {
+				type: String,
+				value: ""
+			},
+			fullSrc: {
+				type: String,
+				value: ""
+			},
+		}
+	});
+</script>
