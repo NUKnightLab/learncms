@@ -104,6 +104,11 @@ Now you should be able to run the server:
 
     python manage.py runserver
 
+#### Below is out of date:
+We need to prime the database with new data. Alex is working a bit on dealing with loading a JSON fixture, and [this tarball](https://s3.amazonaws.com/archive.knightlab.com/learn-bootstrap-media.tgz) can be unpacked into this repo directory into `fbimages` (which is git ignored, but
+  is where the locally running app will store uploaded images)
+
+(so the below doesn't work if you have no data loaded, and the front page has changed anyway... so this will get adjusted as we get the data priming fixed)
 Go to `http://localhost:8000` and you should see a message that there are no lessons. Go to
 `http://localhost:8000/admin/` and log in as the user you created with `createsuperuser` and
 you can start adding some!
