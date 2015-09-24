@@ -98,6 +98,8 @@ python manage.py migrate
 python manage.py createsuperuser
 ```
 
+*Note: You may need to pull the latest version of the `secrets` repo before running these commands.*
+
 Now you should be able to run the server:
 
     python manage.py runserver
