@@ -102,6 +102,10 @@ grp.jQuery(document).ready(function() {
         editor.replaceSelection('<glossary-term>' + editor.getSelection() + '</glossary-term>');
         editor.focus();
     });
+    $('#btn-lesson-ref').click(function() {
+        editor.replaceSelection('<lesson-ref ref=""></lesson-ref>');
+        editor.focus();
+    });
     $('#btn-font-larger').click(function() {
         var size = parseFloat($('.CodeMirror').css('font-size'));
         var newSize = (size + .5) + "px";
