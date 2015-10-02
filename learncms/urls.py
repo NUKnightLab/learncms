@@ -22,7 +22,7 @@ from django.views.generic import RedirectView
 from django.views.generic.base import TemplateView
 
 from .models import Lesson
-from .views import LessonDetailView, HomepageView, glossary_json, handler404, handler500
+from .views import LessonDetailView, HomepageView, glossary_json, lesson_json, handler404, handler500
 
 admin.site.site_header = "Learn.KnightLab.com admin"
 
@@ -37,6 +37,7 @@ urlpatterns = patterns(
     url(r'^admin/', include(admin.site.urls)),
     url(r'^lesson/(?P<slug>[a-z\-]+)/$', LessonDetailView.as_view(), name='lesson-detail'),
     url(r'^glossary.json$', glossary_json, name='glossary-json'),
+    url(r'^lesson.json$', lesson_json, name='lesson-json'),
     url(r'^index.html?$', RedirectView.as_view(url='/', permanent=True), name='index_html'),
     url(r'^404(.html|/)?$', TemplateView.as_view(template_name="404.html"), name='show-404'),
     url(r'^500(.html|/)?$', TemplateView.as_view(template_name="500.html"), name='show-500'),
