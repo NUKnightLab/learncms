@@ -4,10 +4,17 @@ with data from the referenced object, so that people don't have to copy.
 
 For each new referenceable model type, add a resolve here and "register" it in REF_RESOLVERS.
 """
+# from django.utils.html import escape
+from django.utils.safestring import mark_safe
+from html import escape, unescape
+from lxml.html.clean import clean_html
+
 from .models import Lesson, ZoomingImage, CapsuleUnit, GlossaryTerm
 from lxml.etree import Comment
 from lxml.html import fromstring, tostring
 from collections import defaultdict
+
+import logging
 
 def evaluate_content(element,strip_bad_references=False):
     """Convert any convenience markup (such as object references) into the ideal markup
@@ -19,6 +26,13 @@ def evaluate_content(element,strip_bad_references=False):
             REF_RESOLVERS[elem.tag].resolve_ref(elem,strip_bad_references)
         except KeyError:
             self.note_error(elem,"Unrecognized ref type", strip_bad_references)
+
+    """Escape Codeblocks"""
+    for elem in element.findall('.//code-block'):
+        inner_html = (elem.text or '') + ''.join([tostring(child).decode('utf-8') for child in elem.iterchildren()])
+        for child in elem.iterchildren():
+            child.drop_tree()
+        elem.text = mark_safe(unescape(inner_html))
 
 
 class ReferenceResolver(object):
