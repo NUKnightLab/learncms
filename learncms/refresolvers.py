@@ -6,15 +6,11 @@ For each new referenceable model type, add a resolve here and "register" it in R
 """
 # from django.utils.html import escape
 from django.utils.safestring import mark_safe
-from html import escape, unescape
-from lxml.html.clean import clean_html
-
+from html import unescape
 from .models import Lesson, ZoomingImage, CapsuleUnit, GlossaryTerm
 from lxml.etree import Comment
 from lxml.html import fromstring, tostring
 from collections import defaultdict
-
-import logging
 
 def evaluate_content(element,strip_bad_references=False):
     """Convert any convenience markup (such as object references) into the ideal markup
