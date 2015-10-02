@@ -70,14 +70,17 @@
 		},
 
 		attached: function() {
+			var self = this;
 			this.updateSize();
-			
+			window.addEventListener("resize", function(e) {
+				self.updateSize();
+			});
 
 		},
 		updateSize: function() {
 			var self = this;
 			var w = this.unit_group.offsetWidth;
-			var min_size = 250;
+			var min_size = 225;
 			var margin = 20;
 			var child_width = 0;
 			console.log(w);
