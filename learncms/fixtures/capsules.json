@@ -1,0 +1,42 @@
+[
+{
+  "fields": {
+    "image": "uploads/capsules/ftp-program.png",
+    "content": "<p>An FTP program transfers computer files from one host to another via the Internet, such as CyberDuck, and FileZilla.</p>\r\n<unit-group>\r\n<link-ref image=\"images/learn/text-editor.png\" header=\"CyberDuck (free)\" link=\"https://cyberduck.io/?l=en\"></link-ref>\r\n<link-ref image=\"images/learn/notepad.gif\" header=\"FileZilla (free)\" link=\"https://filezilla-project.org/\"></link-ref>\r\n<link-ref image=\"images/learn/text-editor.png\" header=\"Transmit (paid)\" link=\"https://panic.com/transmit/\"></link-ref>\r\n<link-ref image=\"images/learn/notepad.gif\" header=\"Forklift (paid)\" link=\"http://www.binarynights.com/forklift/\"></link-ref>\r\n</unit-group>",
+    "slug": "ftp-program",
+    "title": "FTP Program"
+  },
+  "model": "learncms.capsuleunit",
+  "pk": 2
+},
+{
+  "fields": {
+    "image": "uploads/capsules/screen_shot_2015-09-18_at_4.00.01_pm.png",
+    "content": "<p>A text editor is a program that allows users to create and edit plain text files. Plain text files don\u2019t have stylistic formatting; you won\u2019t find code written in Comic Sans or Wingdings, which is one of the ways text editors are different from programs like Microsoft Word. We recommend using <a href=\"http://www.sublimetext.com/\">SublimeText</a>.  It's free. </p>\r\n<unit-group>\r\n<link-ref image=\"images/learn/text-editor.png\" header=\"Sublime Text\" link=\"http://www.sublimetext.com/\"></link-ref>\r\n<link-ref image=\"images/learn/notepad.gif\" header=\"Notepad++\" link=\"https://notepad-plus-plus.org/\"></link-ref>\r\n<link-ref image=\"images/learn/notepad.gif\" header=\"TextWrangler\" link=\"http://www.barebones.com/products/textwrangler/\"></link-ref>\r\n<link-ref image=\"images/learn/notepad.gif\" header=\"Atom\" link=\"https://atom.io/\"></link-ref>\r\n</unit-group>\r\n",
+    "slug": "text-editor",
+    "title": "Text Editor"
+  },
+  "model": "learncms.capsuleunit",
+  "pk": 1
+},
+{
+  "fields": {
+    "image": "uploads/capsules/responsive-07.png",
+    "content": "<p>Using a modern web browser ensures that you can see the website the exact way the people who built it meant for you to see it by complying with standards for displaying web pages. All latest versions of major web browsers (Google Chrome, Safari, Mozilla Firefox, Internet Explorer, Opera) are considered modern.<p>\r\n<unit-group>\r\n<link-ref image=\"images/learn/text-editor.png\" header=\"Google Chrome\" link=\"http://www.google.com/chrome/\"></link-ref>\r\n<link-ref image=\"images/learn/notepad.gif\" header=\"Mozilla Firefox\" link=\"https://www.mozilla.org/en-US/firefox/new/\"></link-ref>\r\n</unit-group>",
+    "slug": "modern-web-browser",
+    "title": "Modern Web Browser"
+  },
+  "model": "learncms.capsuleunit",
+  "pk": 4
+},
+{
+  "fields": {
+    "image": "uploads/capsules/responsive-07.png",
+    "content": "<p><a href=\"https://www.google.com/chrome/browser/desktop/index.html\">Chrome</a> is Google's modern web browser and includes many useful developer tools.</p>\r\n<link-ref image=\"images/learn/text-editor.png\" header=\"Google Chrome\" link=\"http://www.google.com/chrome/\"></link-ref>",
+    "slug": "google-chrome",
+    "title": "Google Chrome"
+  },
+  "model": "learncms.capsuleunit",
+  "pk": 5
+}
+]

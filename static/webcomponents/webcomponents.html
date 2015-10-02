@@ -10503,16 +10503,20 @@ li.L9 {
 			clear: left;
 			text-align: right;
 			text-overflow: ellipsis;
+			margin-bottom:10px;
+
 			white-space: nowrap;
+		}
+		:host ::content #lesson-block-content dt:after {
+			content: " ";
 		}
 		:host ::content #lesson-block-content dd {
 			margin-left:0;
-			margin-bottom:20px;
 			font-size: 16px;
 			line-height: 22px;
-			/*margin-bottom:20px;*/
 			margin-left: 180px;
 			margin-bottom:10px;
+			
 		}
 		:host ::content #lesson-block-content dd p {
 			margin-bottom:10px;
@@ -12901,6 +12905,9 @@ Polymer({
 			flex-direction: row;
 
 			flex-wrap: wrap;
+			-webkit-flex-wrap: wrap;
+			-ms-flex-wrap: row;
+
 			-webkit-transition: all 250ms ease-in-out;
 		   -moz-transition: all 250ms ease-in-out;
 		     -o-transition: all 250ms ease-in-out;
@@ -12991,6 +12998,12 @@ Polymer({
 		color: #FFDEA1;
 		font-size: 24px;
 		margin-bottom: 10px;
+		float: none;
+		width: auto;
+		overflow: auto;
+		clear: none;
+		text-align: left;
+		white-space: normal;
 	}
 	#popup dd {
 		margin: 0;

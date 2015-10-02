@@ -94,8 +94,9 @@ Have Django do its basic setup
 
 ```
 python manage.py collectstatic
-python manage.py migrate
+python manage.py migrate --no-initial-data
 python manage.py createsuperuser
+python manage.py loaddata
 ```
 
 *Note: You may need to pull the latest version of the `secrets` repo before running these commands.*
