@@ -91,11 +91,13 @@
   <div class="link-refs-container">
     <unit-group>
       {% for lesson in all_lessons %}
+      {% if lesson.status == 'published' or user.is_staff %}
       <lesson-ref header="{{ lesson.title }}" image="{{ lesson.banner_image.url }}" url="{{ lesson.get_absolute_url }}">
         <p>
           {{ lesson.reference_blurb }}
         </p>
       </lesson-ref>
+      {% endif %}
       {% endfor %}
     </unit-group>
   </div>
