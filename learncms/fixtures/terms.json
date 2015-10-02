@@ -1,0 +1,18 @@
+[
+{
+  "fields": {
+    "definition": "The internet\u2019s bread and butter. It stands for HyperText Markup Language, and gives sites their structure.",
+    "lemma": "HTML"
+  },
+  "model": "learncms.glossaryterm",
+  "pk": 1
+},
+{
+  "fields": {
+    "definition": "The <a href=\"http://www.w3.org/\">World Wide Web Consortium</a>. This group creates the specifications for HTML and other open-web languages, so that we're all on the same page when we write HTML, and the browsers are all on the same page for how to interpret it. ",
+    "lemma": "W3C"
+  },
+  "model": "learncms.glossaryterm",
+  "pk": 2
+}
+]
