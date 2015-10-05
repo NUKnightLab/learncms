@@ -10274,6 +10274,48 @@ li.L9 {
 			text-overflow: ellipsis;
 			white-space: nowrap;
 		}
+		:host ::content #step-content ol {
+			list-style-type: none;
+			list-style-type: decimal !ie; /*IE 7- hack*/
+			 
+			margin: 0;
+			margin-left: 10px;
+			padding: 0;
+			 
+			counter-reset: li-counter;
+		}
+		:host ::content #step-content ol > li {
+			position: relative;
+			
+
+			margin-bottom: 20px;
+			padding-left: 40px;
+			min-height: 25px;
+			margin-left:20px;
+			
+		}
+		:host ::content #step-content ol > li:before {
+			position: absolute;
+			top: 5px;
+			left: -20px;
+
+
+			color: #338D83;
+			background-color: #D4F0ED;
+			padding: 14px;
+			height: 20px;
+			width: 20px;
+			text-align: center;
+			border-radius: 50%;
+			font-family: Roboto;
+			font-weight: 500;
+			margin-right: 20px;
+			margin-top: 0;
+
+			content: counter(li-counter);
+			counter-increment: li-counter;
+		}
+
 		/* Begin ordered list styling */
 		/*:host ::content #step-content ol {
 			counter-reset: item;
@@ -12941,14 +12983,17 @@ Polymer({
 		},
 
 		attached: function() {
+			var self = this;
 			this.updateSize();
-			
+			window.addEventListener("resize", function(e) {
+				self.updateSize();
+			});
 
 		},
 		updateSize: function() {
 			var self = this;
 			var w = this.unit_group.offsetWidth;
-			var min_size = 250;
+			var min_size = 225;
 			var margin = 20;
 			var child_width = 0;
 			console.log(w);
