@@ -78,7 +78,7 @@ If you just installed Python 3, you may need to upgrade `virtualenvwrapper` (see
 Make virtual environment and install requirements:
 
 ```
-$ mkvirtualenv --python=/usr/local/bin/python3 learn-cms
+$ mkvirtualenv --python=/usr/local/bin/python3 learncms
 $ pip install -r requirements.txt
 $ export DJANGO_SETTINGS_MODULE='core.settings.loc'
 $ cat >> ${VIRTUAL_ENV}/bin/postactivate <<END
@@ -93,10 +93,11 @@ END
 Have Django do its basic setup
 
 ```
-python manage.py collectstatic
 python manage.py migrate --no-initial-data
 python manage.py createsuperuser
 python manage.py loaddata
+python manage.py collectstatic
+./setup_fbimages.sh
 ```
 
 *Note: You may need to pull the latest version of the `secrets` repo before running these commands.*
@@ -105,12 +106,4 @@ Now you should be able to run the server:
 
     python manage.py runserver
 
-----
-Before you can run the server, we probably need to prime the database with new data. Alex is working a bit on dealing with loading a JSON fixture, and [this tarball](https://s3.amazonaws.com/archive.knightlab.com/learn-bootstrap-media.tgz) can be unpacked into this repo directory into `fbimages` (which is git ignored, but
-  is where the locally running app will store uploaded images)
-
-  #### Below is out of date:
-(so the below doesn't work if you have no data loaded, and the front page has changed anyway... so this will get adjusted as we get the data priming fixed)
-Go to `http://localhost:8000` and you should see a message that there are no lessons. Go to
-`http://localhost:8000/admin/` and log in as the user you created with `createsuperuser` and
-you can start adding some!
+Then visit http://localhost:8000/ and you should see a version of the site, roughly as it appeared in September 2015.
