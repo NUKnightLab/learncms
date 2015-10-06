@@ -70,20 +70,26 @@ grp.jQuery(document).ready(function() {
     $(function() {
         $.getJSON('/lesson_json', function(data) {
             $.each(data, function(name, slug) {
-                $('#search-lessons ul').append('<li id="' + slug + '">' + name + '</li>');
+                // $('#search-lessons ul').append('<li id="' + slug + '">' + name + '</li>');
+                $('.chosen-select').append('<option value="' + slug + '">' + name + '</option>');
+            });
+            $('.chosen-select').chosen({
+                max_selected_options: 1,
+                width: '95%'
             });
         });
+
         $('#search-lessons').dialog({
             autoOpen: false
         });
     });
 
-    $(document).on('click', '#search-lessons ul li', function() {
-        var lesson_name = $(event.target).attr('id');
-        $('#search-lessons').dialog('close');
-        editor.replaceSelection('<lesson-ref ref="' + lesson_name + '"></lesson-ref>');
-        editor.focus();
-    });
+    // $(document).on('click', '#search-lessons ul li', function() {
+    //     var lesson_name = $(event.target).attr('id');
+    //     $('#search-lessons').dialog('close');
+    //     editor.replaceSelection('<lesson-ref ref="' + lesson_name + '"></lesson-ref>');
+    //     editor.focus();
+    // });
 
     $('#btn-narrative-text').click(function() {
         var cursor = editor.getCursor();
