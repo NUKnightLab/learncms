@@ -10285,18 +10285,29 @@ li.L9 {
 			counter-reset: li-counter;
 		}
 		:host ::content #step-content ol > li {
+
 			position: relative;
 			
-
-			margin-bottom: 20px;
+			padding-top:12px;
+			margin-bottom: 10px;
 			padding-left: 40px;
-			min-height: 25px;
+			min-height: 45px;
 			margin-left:20px;
 			
 		}
+		:host ::content #step-content li h4 code,  :host ::content #step-content dt code {
+			background-color: transparent;
+			padding:0;
+			border-radius:none;
+			font-size: 100%;
+		}
+		:host ::content #step-content ol > li p {
+			margin:0;
+
+		}
 		:host ::content #step-content ol > li:before {
 			position: absolute;
-			top: 5px;
+			top: 0px;
 			left: -20px;
 
 
@@ -10350,7 +10361,7 @@ li.L9 {
 		}*/
 		/* End ordered list styling */
 
-		:host ::content #step-content p code {
+		:host ::content #step-content code {
 			background-color: #E0E0E0;
 			padding: 4px;
 			border-radius: 3px;
