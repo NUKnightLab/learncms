@@ -49,7 +49,7 @@ grp.jQuery(document).ready(function() {
     }
 
     var editor = CodeMirror.fromTextArea(document.getElementById('messageBody'), {
-      mode: 'xml',
+      mode: 'htmlmixed',
       lineNumbers: true,
       lineWrapping: true
     });
