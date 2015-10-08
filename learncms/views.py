@@ -7,9 +7,6 @@ from django.views.generic.detail import DetailView
 from django.views.generic.base import TemplateView
 from django.http import Http404
 
-from lxml.etree import Comment
-from lxml.html import fromstring, tostring
-
 from .models import Lesson, GlossaryTerm
 from .refresolvers import evaluate_content
 import os.path
@@ -62,9 +59,8 @@ class LessonDetailView(DetailView):
             raise Http404
         context['title'] = lesson.title
         context['lesson'] = lesson
-        elem = fromstring(lesson.content)
-        evaluate_content(elem,strip_bad_references=(lesson.status == Lesson.PUBLISHED))
-        context['evaluated_content'] = tostring(elem)
+        evaluated_content = evaluate_content(lesson.content,strip_bad_references=(lesson.status == Lesson.PUBLISHED))
+        context['evaluated_content'] = evaluated_content
 
 
         context['og_title'] = lesson.title
