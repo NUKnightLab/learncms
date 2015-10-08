@@ -70,7 +70,6 @@ grp.jQuery(document).ready(function() {
     $(function() {
         $.getJSON('/lesson_json', function(data) {
             $.each(data, function(name, slug) {
-                // $('#search-lessons ul').append('<li id="' + slug + '">' + name + '</li>');
                 $('.chosen-select').append('<option value="' + slug + '">' + name + '</option>');
             });
             $('.chosen-select').chosen({
