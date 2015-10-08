@@ -49,7 +49,7 @@ grp.jQuery(document).ready(function() {
     }
 
     var editor = CodeMirror.fromTextArea(document.getElementById('messageBody'), {
-      mode: 'xml',
+      mode: 'htmlmixed',
       lineNumbers: true,
       lineWrapping: true
     });
@@ -66,6 +66,24 @@ grp.jQuery(document).ready(function() {
     if (localStorage.getItem('lcw-codemirror-font-size')) {
       $('.CodeMirror').css('font-size', localStorage.getItem('lcw-codemirror-font-size'));
     }
+
+    $(function() {
+        $.getJSON('/lesson_json', function(data) {
+            $.each(data, function(name, slug) {
+                $('#search-lessons ul').append('<li id="' + slug + '">' + name + '</li>');
+            });
+        });
+        $('#search-lessons').dialog({
+            autoOpen: false
+        });
+    });
+
+    $(document).on('click', '#search-lessons ul li', function() {
+        var lesson_name = $(event.target).attr('id');
+        $('#search-lessons').dialog('close');
+        editor.replaceSelection('<lesson-ref ref="' + lesson_name + '"></lesson-ref>');
+        editor.focus();
+    });
 
     $('#btn-narrative-text').click(function() {
         var cursor = editor.getCursor();
@@ -101,6 +119,9 @@ grp.jQuery(document).ready(function() {
     $('#btn-glossary-term').click(function() {
         editor.replaceSelection('<glossary-term>' + editor.getSelection() + '</glossary-term>');
         editor.focus();
+    });
+    $('#btn-lesson-ref').click(function() {
+        $('#search-lessons').dialog('open');
     });
     $('#btn-font-larger').click(function() {
         var size = parseFloat($('.CodeMirror').css('font-size'));

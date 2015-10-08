@@ -86,3 +86,7 @@ class HomepageView(TemplateView):
 def glossary_json(request):
     terms = dict((gt.lemma, gt.definition) for gt in GlossaryTerm.objects.all())
     return JSONResponse(terms)
+
+def lesson_json(request):
+    lessons = dict((ln.title, ln.slug) for ln in Lesson.objects.all())
+    return JSONResponse(lessons)
