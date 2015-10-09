@@ -3,7 +3,7 @@
 	#term.usable {
 	  /*background-color: var(--learn-secondary-color);*/
 	  background-color:#FFDEA1;
-	  
+
 	  cursor: pointer;
 	}
 
@@ -65,7 +65,7 @@
 	<div id="popup">
 	  <small on-click="toggleDefinition" class="close"><i class="fa fa-times-circle"></i> Close</small>
 	  <dt>{{lemma}}</dt>
-	  <dd>{{definition}}</dd>
+	  <dd id="definition"></dd>
 	</div>
 
   </template>
@@ -106,20 +106,35 @@ Polymer({
 	  value: false,
 	  observer: '_usableStateChange'
 	},
+  htmlDefinition: {
+    type: Object,
+    computed: "parseDefinition(definition)"
+  },
 	keyEventTarget: { // IronA11yKeysBehavior - listen for esc anywhere on page
 		type: Object,
 		value: function() {
 			return document.body;
 		}
-	}
+	 }
+  },
+  parseDefinition: function(element_str) {
+    var dp = new DOMParser();
+    var parsed = dp.parseFromString(element_str,'text/html');
+    return parsed.body;
+  },
+  _applyParsedDefinition: function() { // the value has been set after parseDefinition but now put it in the component
+    // can't use a standard for loop because moving nodes changes the length
+    while (this.htmlDefinition.childNodes.length > 0) {
+      this.$["definition"].appendChild(this.htmlDefinition.childNodes[0]);
+    }
   },
   ready: function() {
 	  this.detachPopup();
 	  if (!this.lemma) {
-		this.lemma = this.$.term.textContent.replace(/^\s*|\s*$/g,'');
+		    this.lemma = this.$.term.textContent.replace(/^\s*|\s*$/g,'');
 	  }
 	  if (this.lemma && this.definition) {
-		this.usable = true;
+		    this.usable = true;
 	  }
   },
   detachPopup: function() {
@@ -131,7 +146,8 @@ Polymer({
   },
   _usableStateChange: function() {
 	  if (this.usable) {
-		this.$.term.classList.add('usable');
+		    this.$.term.classList.add('usable');
+        this._applyParsedDefinition();
 	  } else {
 		this.$.term.classList.remove('usable');
 	  }

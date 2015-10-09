@@ -1,6 +1,8 @@
 {
     "CSS": "Cascading Style Sheets make it look pretty without insanity.",
     "HTML": "The internet\u2019s bread and butter. It stands for HyperText Markup Language, and gives sites their structure.",
-    "slug": "A human-readable but unchanging string used to uniquely identify a resource. Generally restricted to lowercase ASCII letters, numbers, and hyphens.",
-    "lemma": "The canonical form of a term defined in a dictionary. For our purposes, most specifically, a key in the glossary JSON."
+    "slug": "A human-readable but unchanging string used to uniquely identify a resource. Generally restricted to lowercase <a href='http://www.ascii-code.com/'>ASCII</a> letters, numbers, and hyphens.",
+    "lemma": "The canonical form of a term defined in a dictionary. For our purposes, most specifically, a key in the glossary JSON.",
+    "stylesheet": "A collection of CSS rules.",
+    "DOM": "The Document Object Model, a formal definition of how web pages can be analyzed and changed by code."
 }
