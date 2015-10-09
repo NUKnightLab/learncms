@@ -13241,11 +13241,20 @@ function fetchGlossary(url, callback) {
 
     Polymer({
         is: 'glossary-manager',
+        listeners: {
+    			'page:add': 'logIt',
+    			'page:ready': 'logIt',
+    			'page:remove': 'logIt',
+    			'page:out': 'logIt'
+    		},
+        logIt: function() {
+          console.log('glossary-manager',arguments);
+        },
         ready: function(){
             document.addEventListener('readystatechange', function(e){
                 if (e.target.readyState == 'complete') {
                     if (this.jsonUrl) {
-                        fetchGlossary(this.jsonUrl,this.initGlossary);
+                        fetchGlossary(this.jsonUrl,this.initGlossary.bind(this));
                     } else {
                         console.log("Configuration error: no glossary JSON specified");
                     }
@@ -13253,6 +13262,10 @@ function fetchGlossary(url, callback) {
             }.bind(this));
         },
         initGlossary: function(lexicon) {
+          if (lexicon) {
+            this.lexicon = lexicon;
+          }
+          if (this.lexicon) {
             var targets = document.getElementsByTagName('glossary-term');
             for (var i = 0; i < targets.length; i++) {
                 if (lexicon[targets[i].lemma]) {
@@ -13261,11 +13274,16 @@ function fetchGlossary(url, callback) {
                     console.log('No definition specified and none in lexicon for ' + targets[i].lemma);
                 }
             }
+          } else {
+            console.log('no lexicon!')
+          }
+
         },
         properties: {
             jsonUrl: {
                 type: String
-            } // should there be a property for the retrieved terms?
+            },
+            lexicon: Object // should there be a property for the retrieved terms?
         }
     })
 </script>
