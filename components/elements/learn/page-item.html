@@ -366,6 +366,7 @@
 			this.page_cover.style.opacity = "0";
 			this.page_cover.style.height = "0px";
 
+			this.fire('page:entered');
 			var self = this;
 			setTimeout(function(){
 				self.page_container.style.zIndex = 10;

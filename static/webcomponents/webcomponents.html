@@ -12898,6 +12898,7 @@ Polymer({
 			this.page_cover.style.opacity = "0";
 			this.page_cover.style.height = "0px";
 
+			this.fire('page:entered');
 			var self = this;
 			setTimeout(function(){
 				self.page_container.style.zIndex = 10;
@@ -13242,13 +13243,10 @@ function fetchGlossary(url, callback) {
     Polymer({
         is: 'glossary-manager',
         listeners: {
-    			'page:add': 'logIt',
-    			'page:ready': 'logIt',
-    			'page:remove': 'logIt',
-    			'page:out': 'logIt'
+    			'page:entered': 'updateRequested'
     		},
-        logIt: function() {
-          console.log('glossary-manager',arguments);
+        updateRequested: function(evt) {
+          this.applyGlossary(evt.target);
         },
         ready: function(){
             document.addEventListener('readystatechange', function(e){
@@ -13262,20 +13260,22 @@ function fetchGlossary(url, callback) {
             }.bind(this));
         },
         initGlossary: function(lexicon) {
-          if (lexicon) {
-            this.lexicon = lexicon;
-          }
+          this.lexicon = lexicon;
+          this.applyGlossary(this);
+        },
+        applyGlossary: function(elem) {
           if (this.lexicon) {
-            var targets = document.getElementsByTagName('glossary-term');
+            var targets = elem.getElementsByTagName('glossary-term');
             for (var i = 0; i < targets.length; i++) {
-                if (lexicon[targets[i].lemma]) {
-                    targets[i].definition = lexicon[targets[i].lemma];
+                if (this.lexicon[targets[i].lemma]) {
+                    targets[i].definition = this.lexicon[targets[i].lemma];
                 } else if (!targets[i].definition) {
                     console.log('No definition specified and none in lexicon for ' + targets[i].lemma);
                 }
             }
+
           } else {
-            console.log('no lexicon!')
+            console.log("applyGlossary called with no lexicon available.")
           }
 
         },

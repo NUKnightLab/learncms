@@ -94,7 +94,7 @@
                     Component used in support of the stacking effect used when <code>lesson-ref</code>s are followed. Managed by the CMS and the <code>page-manager</code>.
                 </dd>
                 <dt><code>&lt;glossary-manager&gt;</code></dt>
-                <dd>Responsible for retrieving a JSON dictionary of glossary terms and their definitions, and scanning the page to activate valid <code>glossary-term</code>s. Use the <code>json-url</code> attribute to indicate the source of the glossary. In the context of the CMS, glossary terms are managed as separate Django models, and page templates are responsible for making the manager available if the content includes <code>glossary-term</code> elements.</dd>
+                <dd>Responsible for retrieving a JSON dictionary of glossary terms and their definitions, and scanning its contents to activate valid <code>glossary-term</code>s. Use the <code>json-url</code> attribute to indicate the source of the glossary. In the context of the CMS, glossary terms are managed as separate Django models, and page templates are responsible for making the manager available if the content includes <code>glossary-term</code> elements.</dd>
                 <dt><code>styles.html</code></dt>
                 <dd>Mostly experimental. Meant to provide a place to define common styles, and if it makes sense, to establish <a href="https://www.polymer-project.org/1.0/docs/devguide/styling.html#custom-style">CSS</a> variables for common use across components.</dd>
                 <dt><code>behaviors.html</code></dt>
