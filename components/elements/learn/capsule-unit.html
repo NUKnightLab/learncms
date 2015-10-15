@@ -374,6 +374,7 @@ Example:
 
 		_onCapsuleScrollBlock: function(e) {
 			console.log("scroll");
+			this.capsule_content.scrollBy(0,e.deltaY);
 			e.preventDefault();
 		},
 
