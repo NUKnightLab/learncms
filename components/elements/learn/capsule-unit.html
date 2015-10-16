@@ -399,15 +399,28 @@ Example:
 		},
 
 		windowOn:function(e) {
-			function findPageItemRect(e) {
-				if (e.tagName == 'PAGE-ITEM') return e.getContainerRect();
-				if (e.parentElement == null) return e.getBoundingClientRect();
-				return findPageItemRect(e.parentElement);
+			this.capsule_content.style.display = "block";
+			this.capsule_content.style.opacity = 1;
+			this.capsule_content_container.style.visibility = "visible";
+
+			this.resizeModal();
+
+			this.capsule_content_container.style.opacity = "1";
+			this.capsule_content_container.setAttribute("elevation", "5");
+			this.capsule_content_container.style.zIndex = "98";
+
+			this.capsule_page_block.style.visibility = "visible";
+		},
+		resizeModal: function() {
+			function findPageItemRect(elem) {
+				if (elem.tagName == 'PAGE-ITEM') return elem.getContainerRect();
+				if (elem.parentElement == null) return elem.getBoundingClientRect();
+				return findPageItemRect(elem.parentElement);
 			}
 
 			var page_item_rect = findPageItemRect(this);
-			var container_top = this.capsule_content_container.getBoundingClientRect();
 
+			var container_top = this.capsule_content_container.getBoundingClientRect();
 			var modal_width = 0,
 				modal_height = 0,
 				modal_top = 150,
@@ -422,14 +435,6 @@ Example:
 
 			modal_height = page_item_rect.height - modal_top;
 
-			console.log(modal_width);
-			console.log(modal_left);
-
-			this.capsule_content.style.display = "block";
-			this.capsule_content.style.opacity = 1;
-			this.capsule_content_container.style.visibility = "visible";
-
-
 			// SIZE MODAL WINDOW
 			this.capsule_content_container.style.width = modal_width + "px";
 			this.capsule_content_container.style.height = modal_height + "px";
@@ -441,15 +446,8 @@ Example:
 			this.capsule_content.style.height = modal_height - 60 + "px";
 
 			//
-			this.capsule_content_container.style.opacity = "1";
-			this.capsule_content_container.setAttribute("elevation", "5");
-			this.capsule_content_container.style.zIndex = "98";
 
-			this.capsule_page_block.style.visibility = "visible";
-			// this.container.style.top = -container_top + "px";
-			// this.container.setAttribute("elevation", "5");
 		},
-
 		windowOff: function(e) {
 			this.window_open = true;
 			var self = this;
