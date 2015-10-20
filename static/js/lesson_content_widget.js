@@ -83,12 +83,13 @@ grp.jQuery(document).ready(function() {
         });
     });
 
-    // $(document).on('click', '#search-lessons ul li', function() {
-    //     var lesson_name = $(event.target).attr('id');
-    //     $('#search-lessons').dialog('close');
-    //     editor.replaceSelection('<lesson-ref ref="' + lesson_name + '"></lesson-ref>');
-    //     editor.focus();
-    // });
+    $(".chosen-select").change(function(e, params) {
+        var lesson_name = params.selected;
+        console.log(lesson_name);
+        $('#search-lessons').dialog('close');
+        editor.replaceSelection('<lesson-ref ref="' + lesson_name + '"></lesson-ref>');
+        editor.focus();
+    });
 
     $('#btn-narrative-text').click(function() {
         var cursor = editor.getCursor();

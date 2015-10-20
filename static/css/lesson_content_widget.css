@@ -43,3 +43,7 @@
   height: auto;
   z-index: 9;
 }
+
+/*.ui-dialog .ui-dialog-content {
+  overflow: auto;
+}*/
