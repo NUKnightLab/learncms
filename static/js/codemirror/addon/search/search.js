@@ -218,7 +218,8 @@
     });
   }
 
-  CodeMirror.commands.find = function(cm) {clearSearch(cm); doSearch(cm);};
+  // CodeMirror.commands.find = function(cm) {clearSearch(cm); doSearch(cm);};
+  CodeMirror.commands.find = function(cm) { clearSearch(cm); doSearch(cm, false, true);};
   CodeMirror.commands.findPersistent = function(cm) {clearSearch(cm); doSearch(cm, false, true);};
   CodeMirror.commands.findNext = doSearch;
   CodeMirror.commands.findPrev = function(cm) {doSearch(cm, true);};
