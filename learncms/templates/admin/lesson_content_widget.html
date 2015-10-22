@@ -1,8 +1,14 @@
 {% load staticfiles %}
 <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/font-awesome/4.4.0/css/font-awesome.min.css">
 <link rel="stylesheet" href='{% static "css/codemirror.css" %}'>
+<link rel="stylesheet" href='{% static "js/codemirror/addon/dialog/dialog.css" %}'>
+
 <link rel="stylesheet" href="https://codemirror.net/addon/dialog/dialog.css" media="screen" title="no title" charset="utf-8">
-<script src='{% static "js/codemirror-compressed.js" %}'></script>
+<script src='{% static "js/codemirror/codemirror-compressed.js" %}'></script>
+<script src='{% static "js/codemirror/addon/search/search.js" %}'></script>
+<script src='{% static "js/codemirror/addon/search/searchcursor.js" %}'></script>
+<script src='{% static "js/codemirror/addon/dialog/dialog.js" %}'></script>
+
 <script src='{% static "js/tidy.js" %}'></script>
 <script src="https://cdnjs.cloudflare.com/ajax/libs/underscore.js/1.8.3/underscore-min.js" charset="utf-8"></script>
 <div id="lesson-content-editor" class="lesson-widget lw-row">
