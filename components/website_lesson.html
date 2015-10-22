@@ -54,6 +54,9 @@
 					<p>This collection pulls together the info you'll need to get a basic website up and running: getting your machine ready, designing a kickass site, easing into a logical workflow, and all the thrills and spills of learning the best of the basic web--HTML and CSS.</p>
 				</narrative-text>
 				<lesson-block>
+					<p>
+						<glossary-term>slug</glossary-term>
+					</p>
 					<h2>Before we begin, you should download:</h2>
 					<unit-group>
 						<capsule-unit ref="text-editor" image="https://learncms.knightlab.com/imagelib/uploads/capsules/text-editor.png" header="Text Editor">
@@ -109,8 +112,8 @@
 						</img-li>
 					</img-ul>
 					<code-block>
-&lt;head&gt; 
-	&lt;link rel='stylesheet' href='styles.css'&gt; 
+&lt;head&gt;
+	&lt;link rel='stylesheet' href='styles.css'&gt;
 &lt;/head&gt;
 					</code-block>
 					<ul>
@@ -137,30 +140,30 @@
 				<lesson-block header="Break it down: The nitty gritty">
 	 <p>That wasn't you blindly cutting and pasting, was it? Please say no. Let&#39;s go over each
   one:</p>
-   
+
 	<dl>
 	  <dt><code>&lt;!DOCTYPE html&gt;</code></dt>
 	  <dd>
 		<p>Tells the browser that this is an HTML5 document.</p>
 	  </dd>
-	  
+
 	  <dt><code>&lt;html lang="en"&gt; ... &lt;/html&gt;</code></dt>
 	  <dd>
 		<p>Announces to the browser that anything in between
 	  them is HTML, and that the webpage is in English.</p>
 	  </dd>
-	  
+
 	  <dt><code>&lt;head&gt;</code></dt>
 	  <dd>
 		<p>Head elements go in between these tags, including the title
 	  of the webpage and links to stylesheets or scripts.</p>
 	  </dd>
-	  
+
 	  <dt><code>&lt;meta charset=&quot;utf-8&quot;&gt;</code></dt>
 	  <dd>
 		<p>a meta tag contains metadata about the HTML document</p>
 	  </dd>
-	  
+
 	  <dt><code>&lt;body&gt;</code></dt>
 	  <dd>
 		<p>contains the content of the document, including things
@@ -182,201 +185,201 @@
 					<ol>
 						<li>
 							<h4><code>&lt;div&gt;</code></h4>
-							
+
 							<p>used for structure, typically as a generic container for similar elements</p>
 						</li>
 						<li>
 							<h4><code>&lt;a&gt;</code></h4>
-							
+
 							<p>used to add a link</p>
 						</li>
 						<li>
 							<h4><code>&lt;h1&gt;</code></h4> to <h4><code>&lt;h6&gt;</code></h4>
-							
+
 							<p>headers used to denote display type</p>
 						</li>
 						<li>
 							<h4><code>&lt;p&gt;</code></h4>
-							
+
 							<p>used to contain paragraphs of text</p>
 						</li>
 						<li>
 							<h4><code>&lt;img&gt;</code></h4>
-							
+
 							<p>used to contain paragraphs of text</p>
 						</li>
 						<li>
 							<h4><code>&lt;ul&gt;</code></h4> and <h4><code>&lt;li&gt;</code></h4>
-							
+
 							<p>used to create and populate an unordered list, most commonly used for navigation bars</p>
 						</li>
 						<li>
 							<h4><code>&lt;form&gt;</code></h4>
-							
+
 							<p>used to create a submittable form</p>
 						</li>
 						<li>
 							<h4><code>&lt;input&gt;</code></h4>
-							
+
 							<p>used to create an element on the page through which the user can insert input; comes in a variety of types</p>
 						</li>
 						<li>
 							<h4><code>&lt;button&gt;</code></h4>
-							
+
 							<p>used to create a button on the page</p>
 						</li>
 						<li>
 							<h4><code>&lt;span&gt;</code></h4>
-							
+
 							<p>used to create a button on the page</p>
 						</li>
 						<li>
 							<h4><code>&lt;article&gt;</code></h4>
-							
+
 							<p>used to contain an article</p>
 						</li>
 						<li>
 							<h4><code>&lt;figure&gt;</code></h4>
-							
+
 							<p>used to contain an article</p>
 						</li>
 						<li>
 							<h4><code>&lt;blockquote&gt;</code></h4>
-							
+
 							<p>used to contain a quote from a source</p>
 						</li>
 						<li>
 							<h4><code>&lt;cite&gt;</code></h4>
-							
+
 							<p>used to cite a blockquote</p>
 						</li>
 						<li>
 							<h4><code>&lt;code&gt;</code></h4>
-							
+
 							<p>used to denote a code snippet appearing on the screen
 							</p>
 						</li>
 						<li>
 							<h4><code>&lt;section&gt;</code></h4>
-							
+
 							<p>used to denote a section of the page, such as a chapter
 							</p>
 						</li>
 						<li>
 							<h4><code>&lt;title&gt;</code></h4>
-							
+
 							<p>used to give the webpage a title, which typically appears at the top of the tab or window</p>
 						</li>
 						<li>
 							<h4><code>&lt;script&gt;</code></h4>
-							
+
 							<p>used to link client-side scripts to the document</p>
 						</li>
 						<li>
 							<h4><code>&lt;link&gt;</code></h4>
-							
+
 							<p>used mostly to link stylesheets to the document</p>
 						</li>
 						<li>
 							<h4><code>&lt;!--...--&gt;</code></h4>
-							
+
 							<p>used to comment out sections of HTML</p>
 						</li>
 					</ol>
 					<ol>
 						<li>
-							
+
 							<p>used for structure, typically as a generic container for similar elements</p>
 						</li>
 						<li>
-							
+
 							<p>used to add a link</p>
 						</li>
 						<li>
-							
+
 							<p>headers used to denote display type</p>
 						</li>
 						<li>
-							
+
 							<p>used to contain paragraphs of text</p>
 						</li>
 						<li>
-							
+
 							<p>used to contain paragraphs of text</p>
 						</li>
 						<li>
-						
+
 							<p>used to create and populate an unordered list, most commonly used for navigation bars</p>
 						</li>
 						<li>
 
-							
+
 							<p>used to create a submittable form</p>
 						</li>
 						<li>
 
-							
+
 							<p>used to create an element on the page through which the user can insert input; comes in a variety of types</p>
 						</li>
 						<li>
-						
-							
+
+
 							<p>used to create a button on the page</p>
 						</li>
 						<li>
-						
-							
+
+
 							<p>used to create a button on the page</p>
 						</li>
 						<li>
-							
-							
+
+
 							<p>used to contain an article</p>
 						</li>
 						<li>
-						
-							
+
+
 							<p>used to contain an article</p>
 						</li>
 						<li>
-						
-							
+
+
 							<p>used to contain a quote from a source</p>
 						</li>
 						<li>
-							
-							
+
+
 							used to cite a blockquote
 						</li>
 						<li>
-							
-							
+
+
 							used to <code>denote</code> a code snippet appearing on the screen
-							
+
 						</li>
 						<li>
-							
+
 							used to denote a section of the page, such as a chapter
-							
+
 						</li>
 						<li>
-						
-							
+
+
 							used to give the webpage a title, which typically appears at the top of the tab or window
 						</li>
 						<li>
-							
-							
+
+
 							<p>used to link client-side scripts to the document</p>
 						</li>
 						<li>
-							
-							
+
+
 							<p>used mostly to link stylesheets to the document</p>
 						</li>
 						<li>
-							
-							
+
+
 							<p>used to comment out sections of HTML</p>
 						</li>
 					</ol>
@@ -398,66 +401,66 @@
 
 						<dt><code>&lt;img&gt;</code></dt>
 						<dd><p>used to contain paragraphs of text</p></dd>
-					
-					
+
+
 						<dt><code>&lt;ul&gt;</code> and <code>&lt;li&gt;</code></dt>
 						<dd><p>used to create and populate an unordered list, most commonly used for navigation bars</p></dd>
-					
-					
+
+
 						<dt><code>&lt;form&gt;</code></dt>
 						<dd><p>used to create a submittable form</p></dd>
-					
-					
+
+
 						<dt><code>&lt;input&gt;</code></dt>
 						<dd><p>used to create an element on the page through which the user can insert input; comes in a variety of types</p></dd>
-					
-					
+
+
 						<dt><code>&lt;button&gt;</code></dt>
 						<dd><p>used to create a button on the page</p></dd>
-					
-					
+
+
 						<dt><code>&lt;span&gt;</code></dt>
 						<dd><p>used to create a button on the page</p></dd>
-					
-					
+
+
 						<dt><code>&lt;article&gt;</code></dt>
 						<dd><p>used to contain an article</p></dd>
-					
-					
+
+
 						<dt><code>&lt;figure&gt;</code></dt>
 						<dd><p>used to contain an article</p></dd>
-					
-					
+
+
 						<dt><code>&lt;blockquote&gt;</code></dt>
 						<dd><p>used to contain a quote from a source</p></dd>
-					
-					
+
+
 						<dt><code>&lt;cite&gt;</code></dt>
 						<dd><p>used to cite a blockquote</p></dd>
-					
-					
+
+
 						<dt><code>&lt;code&gt;</code></dt>
 						<dd><p>used to denote a code snippet appearing on the screen
 						</p></dd>
-					
-					
+
+
 						<dt><code>&lt;section&gt;</code></dt>
 						<dd><p>used to denote a section of the page, such as a chapter
 						</p></dd>
-					
-					
+
+
 						<dt><code>&lt;title&gt;</code></dt>
 						<dd><p>used to give the webpage a title, which typically appears at the top of the tab or window</p></dd>
-					
-					
+
+
 						<dt><code>&lt;script&gt;</code></dt>
 						<dd><p>used to link client-side scripts to the document</p></dd>
-					
-					
+
+
 						<dt><code>&lt;link&gt;</code></dt>
 						<dd><p>used mostly to link stylesheets to the document</p></dd>
-					
-					
+
+
 						<dt><code>&lt;!--...--&gt;</code></dt>
 						<dd><p>used to comment out sections of HTML</p></dd>
 
@@ -486,73 +489,73 @@
 
 						<dt><code>&lt;img&gt;</code></dt>
 						<dd><p>used to contain paragraphs of text</p></dd>
-					
-					
+
+
 						<dt><code>&lt;ul&gt;</code> and <code>&lt;li&gt;</code></dt>
 						<dd><p>used to create and populate an unordered list, most commonly used for navigation bars</p></dd>
-					
-					
+
+
 						<dt><code>&lt;form&gt;</code></dt>
 						<dd><p>used to create a submittable form</p></dd>
-					
-					
+
+
 						<dt><code>&lt;input&gt;</code></dt>
 						<dd><p>used to create an element on the page through which the user can insert input; comes in a variety of types</p></dd>
-					
-					
+
+
 						<dt><code>&lt;button&gt;</code></dt>
 						<dd><p>used to create a button on the page</p></dd>
-					
-					
+
+
 						<dt><code>&lt;span&gt;</code></dt>
 						<dd><p>used to create a button on the page</p></dd>
-					
-					
+
+
 						<dt><code>&lt;article&gt;</code></dt>
 						<dd><p>used to contain an article</p></dd>
-					
-					
+
+
 						<dt><code>&lt;figure&gt;</code></dt>
 						<dd><p>used to contain an article</p></dd>
-					
-					
+
+
 						<dt><code>&lt;blockquote&gt;</code></dt>
 						<dd><p>used to contain a quote from a source</p></dd>
-					
-					
+
+
 						<dt><code>&lt;cite&gt;</code></dt>
 						<dd><p>used to cite a blockquote</p></dd>
-					
-					
+
+
 						<dt><code>&lt;code&gt;</code></dt>
 						<dd><p>used to denote a code snippet appearing on the screen
 						</p></dd>
-					
-					
+
+
 						<dt><code>&lt;section&gt;</code></dt>
 						<dd><p>used to denote a section of the page, such as a chapter
 						</p></dd>
-					
-					
+
+
 						<dt><code>&lt;title&gt;</code></dt>
 						<dd><p>used to give the webpage a title, which typically appears at the top of the tab or window</p></dd>
-					
-					
+
+
 						<dt><code>&lt;script&gt;</code></dt>
 						<dd><p>used to link client-side scripts to the document</p></dd>
-					
-					
+
+
 						<dt><code>&lt;link&gt;</code></dt>
 						<dd><p>used mostly to link stylesheets to the document</p></dd>
-					
-					
+
+
 						<dt><code>&lt;!--...--&gt;</code></dt>
 						<dd><p>used to comment out sections of HTML</p></dd>
 
 
 					</dl>
 
-					
+
 				</lesson-block>
 
 				<lesson-block>
