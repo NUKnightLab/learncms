@@ -92,5 +92,9 @@ def glossary_json(request):
     return JSONResponse(terms)
 
 def lesson_json(request):
-    lessons = dict((ln.title, ln.slug) for ln in Lesson.objects.all())
+    lessons = {}
+    for ln in Lesson.objects.all():
+        lessons[ln.title] = {}
+        lessons[ln.title]["slug"] = ln.slug
+        lessons[ln.title]["status"] = ln.status
     return JSONResponse(lessons)

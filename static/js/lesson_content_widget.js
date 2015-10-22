@@ -69,8 +69,12 @@ grp.jQuery(document).ready(function() {
 
     $(function() {
         $.getJSON('/lesson_json', function(data) {
-            $.each(data, function(name, slug) {
-                $('.chosen-select').append('<option value="' + slug + '">' + name + '</option>');
+            $.each(data, function(name, info) {
+                if (info.status == "draft") {
+                    $('.chosen-select').append('<option class="draft" value="' + info.slug + '">' + name + '</option>');
+                } else {
+                    $('.chosen-select').append('<option value="' + info.slug + '">' + name + '</option>');
+                } 
             });
             $('.chosen-select').chosen({
                 max_selected_options: 1,
@@ -85,7 +89,6 @@ grp.jQuery(document).ready(function() {
 
     $(".chosen-select").change(function(e, params) {
         var lesson_name = params.selected;
-        console.log(lesson_name);
         $('#search-lessons').dialog('close');
         editor.replaceSelection('<lesson-ref ref="' + lesson_name + '"></lesson-ref>');
         editor.focus();

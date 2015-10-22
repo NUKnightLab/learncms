@@ -44,6 +44,14 @@
   z-index: 9;
 }
 
-/*.ui-dialog .ui-dialog-content {
-  overflow: auto;
-}*/
+.ui-dialog .ui-dialog-content {
+  overflow: visible;
+}
+
+.ui-dialog-content h1 {
+  padding: 5px 0px;
+}
+
+.chosen-results .draft {
+  font-style: italic;
+}
