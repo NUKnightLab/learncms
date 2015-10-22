@@ -4,8 +4,11 @@ with data from the referenced object, so that people don't have to copy.
 
 For each new referenceable model type, add a resolve here and "register" it in REF_RESOLVERS.
 """
+
+import re
+
 from django.utils.safestring import mark_safe
-from html import unescape
+from html import unescape, escape
 from .models import Lesson, ZoomingImage, CapsuleUnit, GlossaryTerm
 
 from bs4 import NavigableString
@@ -13,7 +16,11 @@ from bs4 import BeautifulSoup, Comment
 
 
 def evaluate_content(lesson_content, strip_bad_references=False):
-    soup = BeautifulSoup(lesson_content, 'html.parser')
+
+    pattern = re.compile(r"(?<=\<code-block\>)(.*?)(?=\<\/code-block\>)", re.DOTALL)
+    result = re.sub(pattern, encode_text, lesson_content)
+
+    soup = BeautifulSoup(result, 'html.parser')
 
     """Convert any convenience markup (such as object references) into the ideal markup
        for delivering to the page. Optionally remove from DOM elements which have ref
@@ -24,15 +31,12 @@ def evaluate_content(lesson_content, strip_bad_references=False):
             REF_RESOLVERS[elem.name].resolve_ref(elem, strip_bad_references)
         except KeyError:
             pass
-            # error_resolver = LessonRefResolver()
-            # error_resolver.note_error(elem, "Unrecognized ref type", strip_bad_references)
-
-    """Escape Codeblocks"""
-    for elem in soup.find_all('code-block'):
-        string = elem.decode_contents()
-        elem.string = mark_safe(unescape(string))
 
     return soup.prettify()
+
+
+def encode_text(match):
+    return escape(unescape(match.group(0)))
 
 
 class ReferenceResolver(object):
@@ -53,7 +57,6 @@ class ReferenceResolver(object):
            could be found. Whether or not the object is removed, add an HTML comment
            indicating that the reference could not be resolved.
         """
-        print("SDGSDGSDGSDG")
         try:
             obj = self.get_object(elem)
             self.update_element(elem, obj)
@@ -76,7 +79,7 @@ class LessonRefResolver(ReferenceResolver):
         elem.attrs['image'] = obj.banner_image.url
         elem.attrs['header'] = obj.title
         elem.attrs['url'] = obj.get_absolute_url()
-        elem.insert(1, BeautifulSoup(obj.reference_blurb).html.body.contents[0])
+        elem.insert(1, BeautifulSoup(obj.reference_blurb, "lxml").html.body.contents[0])
 
 
 class ZoomingImageRefResolver(ReferenceResolver):
@@ -94,7 +97,7 @@ class CapsuleRefResolver(ReferenceResolver):
     def update_element(self, elem, obj):
         elem.attrs['image'] = obj.image.url
         elem.attrs['header'] = obj.title
-        elem.insert(1, BeautifulSoup(obj.content).html.body.contents[0])
+        elem.insert(1, BeautifulSoup(obj.content, "lxml").html.body.contents[0])
 
 
 REF_RESOLVERS = {
