@@ -2,6 +2,7 @@
 {% load staticfiles %}
 {% block content %}
         <learn-nav home="/"></learn-nav>
+        <glossary-manager json-url="/glossary.json">
         <page-manager>
         <page-item header="{{ lesson.title }}">
         <lesson-banner image="{{ lesson.banner_image.url }}" header="{{ lesson.title }}"></lesson-banner>
@@ -9,5 +10,5 @@
         {{ evaluated_content|safe }}
         </page-item>
         </page-manager>
-        <glossary-manager json-url="/glossary.json"></glossary-manager>
+        </glossary-manager>
 {% endblock content %}

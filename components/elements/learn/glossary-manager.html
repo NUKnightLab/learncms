@@ -30,11 +30,17 @@ function fetchGlossary(url, callback) {
 
     Polymer({
         is: 'glossary-manager',
+        listeners: {
+    			'page:entered': 'updateRequested'
+    		},
+        updateRequested: function(evt) {
+          this.applyGlossary(evt.target);
+        },
         ready: function(){
             document.addEventListener('readystatechange', function(e){
                 if (e.target.readyState == 'complete') {
                     if (this.jsonUrl) {
-                        fetchGlossary(this.jsonUrl,this.initGlossary);
+                        fetchGlossary(this.jsonUrl,this.initGlossary.bind(this));
                     } else {
                         console.log("Configuration error: no glossary JSON specified");
                     }
@@ -42,19 +48,30 @@ function fetchGlossary(url, callback) {
             }.bind(this));
         },
         initGlossary: function(lexicon) {
-            var targets = document.getElementsByTagName('glossary-term');
+          this.lexicon = lexicon;
+          this.applyGlossary(this);
+        },
+        applyGlossary: function(elem) {
+          if (this.lexicon) {
+            var targets = elem.getElementsByTagName('glossary-term');
             for (var i = 0; i < targets.length; i++) {
-                if (lexicon[targets[i].lemma]) {
-                    targets[i].definition = lexicon[targets[i].lemma];
+                if (this.lexicon[targets[i].lemma]) {
+                    targets[i].definition = this.lexicon[targets[i].lemma];
                 } else if (!targets[i].definition) {
                     console.log('No definition specified and none in lexicon for ' + targets[i].lemma);
                 }
             }
+
+          } else {
+            console.log("applyGlossary called with no lexicon available.")
+          }
+
         },
         properties: {
             jsonUrl: {
                 type: String
-            } // should there be a property for the retrieved terms?
+            },
+            lexicon: Object // should there be a property for the retrieved terms?
         }
     })
 </script>
