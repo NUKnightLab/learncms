@@ -7,7 +7,7 @@ from django.views.generic.detail import DetailView
 from django.views.generic.base import TemplateView
 from django.http import Http404
 
-from .models import Lesson, GlossaryTerm
+from .models import Lesson, GlossaryTerm, CapsuleUnit
 from .refresolvers import evaluate_content
 import os.path
 
@@ -94,3 +94,7 @@ def lesson_json(request):
         lessons[ln.title]["slug"] = ln.slug
         lessons[ln.title]["status"] = ln.status
     return JSONResponse(lessons)
+
+def capsule_json(request):
+    capsules = dict((cp.title, cp.slug) for cp in CapsuleUnit.objects.all())
+    return JSONResponse(capsules)
