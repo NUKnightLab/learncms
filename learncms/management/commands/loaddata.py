@@ -22,19 +22,19 @@ class Command(BaseCommand):
             raise Exception("You must create at least one superuser before running this command")
 
         creator = superusers[0]
-        with open("learncms/fixtures/lessons.json") as o:
+        with open("learncms/data/lessons.json") as o:
                 objects = serializers.deserialize('json', o)
                 for o in objects:
                     o.object.created_by = creator
                     o.object.created_at = timezone.now()
                     o.object.save()
 
-        with open("learncms/fixtures/zimages.json") as o:
+        with open("learncms/data/zimages.json") as o:
             for o in serializers.deserialize('json', o):
                 o.save()
-        with open("learncms/fixtures/capsules.json") as o:
+        with open("learncms/data/capsules.json") as o:
             for o in serializers.deserialize('json', o):
                 o.save()
-        with open("learncms/fixtures/terms.json") as o:
+        with open("learncms/data/terms.json") as o:
             for o in serializers.deserialize('json', o):
                 o.save()

@@ -34,10 +34,6 @@ TEMPLATE_DIRS = (
     join(PROJECT_ROOT, 'templates'),
 )
 
-FIXTURE_DIRS = (
-    join(PROJECT_ROOT, 'fixtures'),
-)
-
 ADMINS = ()
 
 MANAGERS = ADMINS

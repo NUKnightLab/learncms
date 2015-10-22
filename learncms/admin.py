@@ -18,9 +18,9 @@ class S3FileBrowserStorage(S3BotoStorage,S3BotoStorageMixin):
 class LessonContentWidget(widgets.Widget):
     class Media:
         css = {
-            'all': ('css/lesson_content_widget.css',)
+            'all': ('css/lesson_content_widget.css', 'css/chosen.css',)
         }
-        js = ('js/lesson_content_widget.js',)
+        js = ('js/lesson_content_widget.js', 'js/grp.chosen.jquery.js',)
 
     def render(self, name, value, attrs=None):
         template = get_template("admin/lesson_content_widget.html")
