@@ -69,14 +69,14 @@ grp.jQuery(document).ready(function() {
 
     $(function() {
         $.getJSON('/lesson_json', function(data) {
-            $.each(data, function(name, info) {
+            $.each(data, function(lesson, info) {
                 if (info.status == "draft") {
-                    $('.chosen-select').append('<option class="draft" value="' + info.slug + '">' + name + '</option>');
+                    $('.lesson-chosen-select').append('<option class="draft" value="' + info.slug + '">' + lesson + '</option>');
                 } else {
-                    $('.chosen-select').append('<option value="' + info.slug + '">' + name + '</option>');
+                    $('.lesson-chosen-select').append('<option value="' + info.slug + '">' + lesson + '</option>');
                 } 
             });
-            $('.chosen-select').chosen({
+            $('.lesson-chosen-select').chosen({
                 max_selected_options: 1,
                 width: '95%'
             });
@@ -87,10 +87,32 @@ grp.jQuery(document).ready(function() {
         });
     });
 
-    $(".chosen-select").change(function(e, params) {
+    $(function() {
+        $.getJSON('/capsule_json', function(data) {
+            $.each(data, function(capsule, slug) {
+                $('.capsule-chosen-select').append('<option value="' + slug + '">' + capsule + '</option>');
+            });
+            $('.capsule-chosen-select').chosen({
+                max_selected_options: 1,
+                width: '95%'
+            });
+        });
+
+        $('#search-capsules').dialog({
+            autoOpen: false
+        });
+    });
+
+    $(".lesson-chosen-select").change(function(e, params) {
         var lesson_name = params.selected;
         $('#search-lessons').dialog('close');
         editor.replaceSelection('<lesson-ref ref="' + lesson_name + '"></lesson-ref>');
+        editor.focus();
+    });
+    $(".capsule-chosen-select").change(function(e, params) {
+        var capsule_name = params.selected;
+        $('#search-capsules').dialog('close');
+        editor.replaceSelection('<capsule-unit ref="' + capsule_name + '"></capsule-unit>');
         editor.focus();
     });
 
@@ -114,8 +136,7 @@ grp.jQuery(document).ready(function() {
         editor.focus();
     })
     $('#btn-capsule-unit').click(function() {
-        editor.replaceSelection('<capsule-unit ref="">\n</capsule-unit>\n');
-        editor.focus();
+        $('#search-capsules').dialog('open');
     })
     $('#btn-zooming-image').click(function() {
         editor.replaceSelection('<zooming-image ref="">\n</zooming-image>\n');
