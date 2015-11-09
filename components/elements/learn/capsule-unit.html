@@ -27,6 +27,7 @@ Example:
 			color:#242424;
 			border-radius:4px;
 			width:100%;
+
 			-webkit-transition: all 150ms ease-in-out;
 			   -moz-transition: all 150ms ease-in-out;
 			     -o-transition: all 150ms ease-in-out;
@@ -100,8 +101,7 @@ Example:
 		#capsule-content {
 			display:none;
 			height:100%;
-			/*overflow-y:scroll;*/
-			overflow:hidden;
+			overflow-y: scroll;
 			padding:40px;
 
 			-webkit-transition: opacity 500ms ease-in-out;
@@ -147,7 +147,8 @@ Example:
 			width:100%;
 			height:100%;
 			visibility: hidden;
-			overflow:hidden;
+			overflow: hidden;
+
 			-webkit-transition: all 750ms cubic-bezier(0.770, 0.000, 0.175, 1.000);
 			   -moz-transition: all 750ms cubic-bezier(0.770, 0.000, 0.175, 1.000);
 			     -o-transition: all 750ms cubic-bezier(0.770, 0.000, 0.175, 1.000);
@@ -295,6 +296,8 @@ Example:
 
 		attached: function() {
 			var self = this;
+			this.parent_page_item = this._findPageItem(this);
+
 			this.capsule_image.style.backgroundImage = "url(" + this.image + ")";
 
 			this.capsule_ref.addEventListener("click", function(e) {
@@ -398,14 +401,17 @@ Example:
 
 		},
 
-		windowOn:function(e) {
-			function findPageItemRect(e) {
-				if (e.tagName == 'PAGE-ITEM') return e.getContainerRect();
-				if (e.parentElement == null) return e.getBoundingClientRect();
-				return findPageItemRect(e.parentElement);
-			}
+		_findPageItem: function(e) {
+			if (e.tagName == "PAGE-ITEM") return e;
+			if (e.parentElement == null) return e;
+			return this._findPageItem(e.parentElement);
+		},
 
-			var page_item_rect = findPageItemRect(this);
+		windowOn:function(e) {
+
+			var page_item = this.parent_page_item.$['page-item']
+			var page_item_rect = this.parent_page_item.getContainerRect();
+
 			var container_top = this.capsule_content_container.getBoundingClientRect();
 
 			var modal_width = 0,
@@ -448,11 +454,19 @@ Example:
 			this.capsule_page_block.style.visibility = "visible";
 			// this.container.style.top = -container_top + "px";
 			// this.container.setAttribute("elevation", "5");
+
+			// PREVENT SCROLLING OUTSIDE OF MODAL
+			page_item.style.overflow = 'hidden';
+
 		},
 
 		windowOff: function(e) {
 			this.window_open = true;
 			var self = this;
+
+			// REENABLE SCROLLING
+			this.parent_page_item.$['page-item'].style.overflow = 'auto';
+
 
 			this.capsule_page_block.style.visibility = "hidden";
 
