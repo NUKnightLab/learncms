@@ -55,3 +55,7 @@
 .chosen-results .draft {
   font-style: italic;
 }
+
+#search-lessons {
+  display: none;
+}
