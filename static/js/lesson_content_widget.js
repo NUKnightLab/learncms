@@ -24,7 +24,14 @@ function fullscreenElement() {return document.fullscreenElement || document.mozF
 function fullscreenEnabled() { return document.fullscreenEnabled || document.mozFullScreenEnabled || document.webkitFullscreenEnabled; }
 
 function insertImageSelection() {
-    console.log(grp.jQuery('#id_editor_image').val());
+    var image_url = grp.jQuery('#id_editor_image').val();
+    var editor = CodeMirror.fromTextArea(document.getElementById('messageBody'), {
+      mode: 'htmlmixed',
+      lineNumbers: true,
+      lineWrapping: true
+    });
+    editor.replaceSelection('<image src="http://localhost:8000/fbimages/' + image_url + '" />');
+    editor.focus();
 }
 
 grp.jQuery(document).ready(function() {
