@@ -23,7 +23,9 @@ function exitFullscreen() {
 function fullscreenElement() {return document.fullscreenElement || document.mozFullScreenElement || document.webkitFullscreenElement; }
 function fullscreenEnabled() { return document.fullscreenEnabled || document.mozFullScreenEnabled || document.webkitFullscreenEnabled; }
 
-
+function insertImageSelection() {
+    console.log(grp.jQuery('#id_editor_image').val());
+}
 
 grp.jQuery(document).ready(function() {
 

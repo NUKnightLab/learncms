@@ -25,7 +25,15 @@
         <input type="button" id="btn-code-block" value="&lt;code-block&gt;" class="code"/>
         <input type="button" id="btn-glossary-term" value="&lt;glossary-term&gt;" class="code"/>
         <input type="button" id="btn-lesson-ref" value="&lt;lesson-ref&gt;" class="code"/>
-        <a href="javascript:FileBrowser.show('id_banner_image', '/admin/filebrowser/browse/?pop=1');"><input type="button" value="&lt;img&gt;" class="code" /></a>
+        <!-- makes the grappelli image browser work -->
+        <div style="display:none;">
+          <input id="id_editor_image" type="hidden" />
+          <p class="preview" id="preview_id_editor_image">
+            <a href="" target="_blank" id="previewlink_id_editor_image"><img id="previewimage_id_editor_image" src="" class="preview" /></a>
+          </p>
+        </div>
+        <a href="javascript:FileBrowser.show('id_editor_image', '/admin/filebrowser/browse/?pop=1', insertImageSelection);"><input type="button" value="&lt;img&gt;" class="code" /></a>
+        <!-- end grappelli image browser -->
     </div>
     <div id="search-lessons">
       <h1>Select a lesson</h1>
