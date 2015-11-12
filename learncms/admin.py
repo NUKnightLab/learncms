@@ -10,6 +10,7 @@ from filebrowser.storage import S3BotoStorageMixin
 from storages.backends.s3boto import S3BotoStorage
 
 from django.template.loader import get_template
+from django.conf import settings
 
 
 class S3FileBrowserStorage(S3BotoStorage,S3BotoStorageMixin):
@@ -24,7 +25,7 @@ class LessonContentWidget(widgets.Widget):
 
     def render(self, name, value, attrs=None):
         template = get_template("admin/lesson_content_widget.html")
-        context = {"content":value, "name":name}
+        context = {"content":value, "name":name, "image_browser_root":settings.FILEBROWSER_URL}
         if attrs is not None:
             context.update(attrs)
         return template.render(context=context)

@@ -25,13 +25,8 @@ function fullscreenEnabled() { return document.fullscreenEnabled || document.moz
 
 function insertImageSelection() {
     var image_url = grp.jQuery('#id_editor_image').val();
-    var editor = CodeMirror.fromTextArea(document.getElementById('messageBody'), {
-      mode: 'htmlmixed',
-      lineNumbers: true,
-      lineWrapping: true
-    });
-    editor.replaceSelection('<image src="http://localhost:8000/fbimages/' + image_url + '" />');
-    editor.focus();
+    lessonContentEditor.replaceSelection('<img src="' + image_upload_dir + image_url + '" />');
+    lessonContentEditor.focus();
 }
 
 grp.jQuery(document).ready(function() {
