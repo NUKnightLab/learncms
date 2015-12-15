@@ -1,6 +1,6 @@
 from django.contrib import admin
 import reversion
-from learncms.models import Lesson, ZoomingImage, CapsuleUnit, GeneralImage, GlossaryTerm
+from learncms.models import Lesson, ZoomingImage, CapsuleUnit, GeneralImage, GlossaryTerm, Question
 from django.forms import widgets
 from django import forms
 
@@ -80,8 +80,21 @@ class GeneralImageAdmin(admin.ModelAdmin):
     list_display = ('url', 'description')
     search_fields = ['description']
 
+def trunc_question(obj):
+    if obj.question:
+        if len(obj.question) <= 50:
+            return obj.question
+        return obj.question[:50] + "…"
+    return ''
+trunc_question.short_description = 'Question'
+
+class QuestionAdmin(admin.ModelAdmin):
+    list_display = (trunc_question, 'page', 'step', 'email', 'created_at')
+    search_fields = ['question', 'page', 'step', 'email']
+
 admin.site.register(Lesson, LessonAdmin)
 admin.site.register(ZoomingImage, ZoomingImageAdmin)
 admin.site.register(CapsuleUnit, CapsuleUnitAdmin)
 admin.site.register(GeneralImage, GeneralImageAdmin)
 admin.site.register(GlossaryTerm)
+admin.site.register(Question, QuestionAdmin)

@@ -91,3 +91,11 @@ class GlossaryTerm(models.Model):
 
     class Meta:
         ordering = ['lemma']
+
+class Question(models.Model):
+    """A simple model for collecting questions from our audience."""
+    question = models.TextField(help_text="The question submitted.")
+    created_at = models.DateTimeField(auto_now_add=True)
+    email = models.EmailField(blank=True, help_text="Optionally, an email address of the asker.")
+    page = models.CharField(blank=True, max_length=50, help_text="The slug of the lesson page where the question was asked")
+    step = models.CharField(blank=True, max_length=100, help_text="As much as possible about where in the page the asker was when asking.")
