@@ -7,7 +7,7 @@ from django.views.generic.detail import DetailView
 from django.views.generic.base import TemplateView
 from django.http import Http404
 
-from .models import Lesson, GlossaryTerm, CapsuleUnit
+from .models import Lesson, GlossaryTerm, CapsuleUnit, Question
 from .refresolvers import evaluate_content
 import os.path
 
@@ -41,6 +41,23 @@ class JSONResponse(HttpResponse):
         super(JSONResponse,self).__init__(json_str,content_type="application/json")
 
 
+def submit_question(request):
+    # data = json.loads(request.body.decode('utf-8'))
+    data = {
+        "ok": False,
+        "message": "Questions must be submitted as AJAX (and don't forget the CSRF token!)"
+        }
+    if request.method == "POST":
+        try:
+            input = json.loads(request.body.decode('utf-8'))
+            q = Question(**input)
+            q.save()
+            data['ok'] = True
+            data['message'] = "Thanks for asking"
+        except Exception as e:
+            data['ok'] = False
+            data['message'] = str(e)
+    return JSONResponse(data)
 
 
 # Create your views here.
