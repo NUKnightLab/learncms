@@ -22,7 +22,7 @@
 			right:105px;
 			z-index:999;
 			transition: all 0.5s cubic-bezier(0.4, 0, 0.2, 1);
-			
+
 		}
 		:host ::content #help-content {
 			box-shadow: 0 2px 2px 0 rgba(0, 0, 0, 0.14), 0 1px 5px 0 rgba(0, 0, 0, 0.12), 0 3px 1px -2px rgba(0, 0, 0, 0.2);
@@ -49,7 +49,7 @@
 			cursor:pointer;
 			box-shadow: 0 2px 2px 0 rgba(0, 0, 0, 0.14), 0 1px 5px 0 rgba(0, 0, 0, 0.12), 0 3px 1px -2px rgba(0, 0, 0, 0.2);
 			transition: all 0.28s cubic-bezier(0.4, 0, 0.2, 1);
-			
+
 			top:0;
 			left:0;
 			width:90px;
@@ -75,7 +75,7 @@
 			font-size: 20px;
 			font-weight: normal;
 			margin: 0;
-			
+
 		}
 
 		:host ::content .custom-icon {
@@ -97,7 +97,7 @@
 			/*opacity:0.2;*/
 			color:#FFF;
 			stroke:#FFF;
-			
+
 			width: 24px;
 			height: 24px;
 			top:0;
@@ -125,7 +125,7 @@
 			margin-top:10px;
 			margin-bottom:10px;
 		}
-		
+
 		:host ::content #help-content .input-content.paper-input-container label, :host ::content #help-content .input-content.paper-input-container .paper-input-label {
 			/*color: #FFF;*/
 		}
@@ -146,7 +146,7 @@
 				<h4>
 					<span class="custom-icon">
 						<svg viewBox="0 0 24 24" preserveAspectRatio="xMidYMid meet" class="style-scope iron-icon" style="pointer-events: none; display: block; width: 100%; height: 100%;">
-									
+
 							<g>
 								<path class="icon-outer" d="M20,2H4C2.9,2,2,2.9,2,4v18l4-4h14c1.1,0,2-0.9,2-2V4C22,2.9,21.1,2,20,2z"/>
 							</g>
@@ -156,7 +156,7 @@
 								c0.5-0.5,1.2-0.7,2-0.7c0.9,0,1.6,0.2,2.1,0.7c0.5,0.5,0.7,1.2,0.7,2c0,0.7-0.2,1.2-0.5,1.8s-0.8,1-1.4,1.6
 								c-0.3,0.3-0.5,0.5-0.6,0.7c-0.1,0.2-0.1,0.6-0.1,1H11.3z M12.2,15.5h-1v-1.1h1V15.5z"/>
 							</g>
-							
+
 						</svg>
 					</span>
 					Help
@@ -165,18 +165,18 @@
 			<div id="help-content">
 				<h2>Confused?</h2>
 				<div class="help-form">
-					<paper-textarea rows="4" label="Tell us about your troubles."></paper-textarea>
+					<paper-textarea rows="4" label="Tell us about your troubles." value="{{ form_data.question }}"></paper-textarea>
 
-					<paper-input label="Email (Optional)"></paper-input>
+					<paper-input label="Email (Optional)" value="{{ form_data.email }}"></paper-input>
 				</div>
-				<paper-button raised onclick="submitForm()">Send us your question</paper-button>
+				<paper-button raised on-click="submitForm">Send us your question</paper-button>
 
-				
-				
+
+
 				<content></content>
 			</div>
 		</div>
-		
+
 	</template>
 
 </dom-module>
@@ -203,10 +203,24 @@
 			this.help_button = this.$['help-button'];
 			this.help_content = this.$['help-content'];
 		},
-
+		submitForm: function() {
+			console.log('submit clicked');
+			console.log('q: ' + this.form_data.question);
+			console.log('e: ' + this.form_data.email);
+			console.log('p: ' + this.form_data.page);
+			console.log('s: ' + this.form_data.step);
+		},
 		attached: function() {
 			var self = this;
 			var hide_button = false;
+
+			// see http://stackoverflow.com/questions/24982090/polymer-form-using-paper-input-and-core-ajax for more
+			this.form_data = {
+				page: '',
+				step: '',
+				question: '',
+				email: ''
+			}
 
 			this.help_button.addEventListener("click", function(e) {
 
@@ -221,7 +235,7 @@
 				} else {
 					hide_button = true;
 					self.help_content.style.display = "block";
-					
+
 					self.help_content.style.opacity = "1";
 					//self.help_button.style.opacity = "0";
 					//self.help_button.style.display = "none";
@@ -232,7 +246,7 @@
 					self.help_content.style.top = "-300px";
 					self.help_content.style.backgroundColor = "#DDD";
 				}
-				
+
 				//.hide-button
 				console.log("CLICK");
 
@@ -248,7 +262,7 @@
 				if (hide_button) {
 					//self.help_button.style.display = "none";
 				}
-				
+
 			},false);
 
 			// this.capsule_content_container.addEventListener("webkitTransitionEnd",function(e){
