@@ -7,15 +7,41 @@
 	<style>
 		:host ::content {
 			/*width:100px;*/
-			position:fixed;
+			/*position:fixed;
 			bottom:15px;
 			right:15px;
-			z-index:999;
+			z-index:999;*/
 			/*FA597A*/
+
 		}
-		:host ::content #help-button-container {
+		:host ::content #help-container {
 			/*width:100%;*/
 			/*display:flex;*/
+			position:fixed;
+			bottom:65px;
+			right:105px;
+			z-index:999;
+			transition: all 0.5s cubic-bezier(0.4, 0, 0.2, 1);
+			
+		}
+		:host ::content #help-content {
+			box-shadow: 0 2px 2px 0 rgba(0, 0, 0, 0.14), 0 1px 5px 0 rgba(0, 0, 0, 0.12), 0 3px 1px -2px rgba(0, 0, 0, 0.2);
+			box-shadow: 0 16px 24px 2px rgba(0, 0, 0, 0.14), 0 6px 30px 5px rgba(0, 0, 0, 0.12), 0 8px 10px -5px rgba(0, 0, 0, 0.4);
+			transition: all 0.5s cubic-bezier(0.4, 0, 0.2, 1);
+			width:90px;
+			height:50px;
+			background:#338D83;
+			position:absolute;
+			top:0;
+			left:0;
+			opacity:0;
+			padding:10px;
+			box-sizing: border-box;
+			overflow:hidden;
+			/*display:none;*/
+		}
+		:host ::content #help-button {
+			position:absolute;
 			color:#FFF;
 			background:#338D83;
 			padding:10px;
@@ -23,19 +49,27 @@
 			cursor:pointer;
 			box-shadow: 0 2px 2px 0 rgba(0, 0, 0, 0.14), 0 1px 5px 0 rgba(0, 0, 0, 0.12), 0 3px 1px -2px rgba(0, 0, 0, 0.2);
 			transition: all 0.28s cubic-bezier(0.4, 0, 0.2, 1);
-			position:relative;
+			
 			top:0;
 			left:0;
+			width:90px;
+			height:50px;
+			box-sizing: border-box;
+			z-index:5;
 		}
 
-		:host ::content #help-button-container:hover {
+		/*:host ::content #help-button.hide-button,  :host ::content #help-button.hide-button:hover{
+			top:105px;
+		}*/
+
+		:host ::content #help-button:hover {
 			border-radius:0px;
 			box-shadow: 0 16px 24px 2px rgba(0, 0, 0, 0.14), 0 6px 30px 5px rgba(0, 0, 0, 0.12), 0 8px 10px -5px rgba(0, 0, 0, 0.4);
 			top:-3px;
 			left:-3px;
 		}
 
-		:host ::content #help-button-container h4 {
+		:host ::content #help-button h4 {
 			font-family: 'Roboto', 'Noto', sans-serif;
 			color: #FFF;
 			font-size: 20px;
@@ -76,9 +110,29 @@
 		:host ::content .custom-icon .icon-outer{
 			fill:none;
 		}
+		:host ::content .help-form {
+			background-color: #FFF;
+			padding:10px;
+			border-radius:6px;
+			box-shadow: inset 0 2px 2px 0 rgba(0, 0, 0, 0.14), inset 0 1px 5px 0 rgba(0, 0, 0, 0.12), inset 0 3px 1px -2px rgba(0, 0, 0, 0.2);
+		}
+		:host ::content #help-content h2 {
+			font-family: 'Roboto', 'Noto', sans-serif;
+			color: #333;
+			font-size: 24px;
+			font-weight:normal;
+			margin:0;
+			margin-top:10px;
+			margin-bottom:10px;
+		}
+		
+		:host ::content #help-content .input-content.paper-input-container label, :host ::content #help-content .input-content.paper-input-container .paper-input-label {
+			/*color: #FFF;*/
+		}
 
-
-
+		:host ::content #help-content paper-button {
+			margin-top:20px;
+		}
 
 
 
@@ -87,28 +141,42 @@
 	</style>
 
 	<template>
-		<div id="help-button-container">
-			
-			<h4>
-				<span class="custom-icon">
-					<svg viewBox="0 0 24 24" preserveAspectRatio="xMidYMid meet" class="style-scope iron-icon" style="pointer-events: none; display: block; width: 100%; height: 100%;">
-								
-						<g>
-							<path class="icon-outer" d="M20,2H4C2.9,2,2,2.9,2,4v18l4-4h14c1.1,0,2-0.9,2-2V4C22,2.9,21.1,2,20,2z"/>
-						</g>
-						<g>
-							<path class="icon-inner" d="M11.3,12.5c0-0.6,0.1-1.1,0.2-1.3c0.1-0.3,0.4-0.6,0.8-1c0.5-0.5,0.9-1,1.2-1.4c0.2-0.4,0.4-0.8,0.4-1.4
-							c0-0.6-0.2-1.1-0.5-1.4c-0.3-0.3-0.8-0.5-1.4-0.5c-0.6,0-1,0.2-1.4,0.5c-0.4,0.3-0.5,0.8-0.5,1.4H9.1l0,0c0-0.8,0.2-1.4,0.8-1.9
-							c0.5-0.5,1.2-0.7,2-0.7c0.9,0,1.6,0.2,2.1,0.7c0.5,0.5,0.7,1.2,0.7,2c0,0.7-0.2,1.2-0.5,1.8s-0.8,1-1.4,1.6
-							c-0.3,0.3-0.5,0.5-0.6,0.7c-0.1,0.2-0.1,0.6-0.1,1H11.3z M12.2,15.5h-1v-1.1h1V15.5z"/>
-						</g>
-						
-					</svg>
-				</span>
-				Help
-			</h4>
-			<content></content>
+		<div id="help-container">
+			<div id="help-button">
+				<h4>
+					<span class="custom-icon">
+						<svg viewBox="0 0 24 24" preserveAspectRatio="xMidYMid meet" class="style-scope iron-icon" style="pointer-events: none; display: block; width: 100%; height: 100%;">
+									
+							<g>
+								<path class="icon-outer" d="M20,2H4C2.9,2,2,2.9,2,4v18l4-4h14c1.1,0,2-0.9,2-2V4C22,2.9,21.1,2,20,2z"/>
+							</g>
+							<g>
+								<path class="icon-inner" d="M11.3,12.5c0-0.6,0.1-1.1,0.2-1.3c0.1-0.3,0.4-0.6,0.8-1c0.5-0.5,0.9-1,1.2-1.4c0.2-0.4,0.4-0.8,0.4-1.4
+								c0-0.6-0.2-1.1-0.5-1.4c-0.3-0.3-0.8-0.5-1.4-0.5c-0.6,0-1,0.2-1.4,0.5c-0.4,0.3-0.5,0.8-0.5,1.4H9.1l0,0c0-0.8,0.2-1.4,0.8-1.9
+								c0.5-0.5,1.2-0.7,2-0.7c0.9,0,1.6,0.2,2.1,0.7c0.5,0.5,0.7,1.2,0.7,2c0,0.7-0.2,1.2-0.5,1.8s-0.8,1-1.4,1.6
+								c-0.3,0.3-0.5,0.5-0.6,0.7c-0.1,0.2-0.1,0.6-0.1,1H11.3z M12.2,15.5h-1v-1.1h1V15.5z"/>
+							</g>
+							
+						</svg>
+					</span>
+					Help
+				</h4>
+			</div>
+			<div id="help-content">
+				<h2>Confused?</h2>
+				<div class="help-form">
+					<paper-textarea rows="4" label="Tell us about your troubles."></paper-textarea>
+
+					<paper-input label="Email (Optional)"></paper-input>
+				</div>
+				<paper-button raised onclick="submitForm()">Send us your question</paper-button>
+
+				
+				
+				<content></content>
+			</div>
 		</div>
+		
 	</template>
 
 </dom-module>
@@ -127,6 +195,68 @@
 				type: String,
 				value: ""
 			},
+		},
+
+		ready: function() {
+			// DOM OBJECTS
+			this.help_container = this.$['help-container'];
+			this.help_button = this.$['help-button'];
+			this.help_content = this.$['help-content'];
+		},
+
+		attached: function() {
+			var self = this;
+			var hide_button = false;
+
+			this.help_button.addEventListener("click", function(e) {
+
+				if (hide_button) {
+					hide_button = false;
+					self.help_content.style.width = "90px";
+					self.help_content.style.height = "50px";
+					self.help_content.style.left = "0px";
+					self.help_content.style.top = "0px";
+					self.help_content.style.backgroundColor = "#338D83";
+					self.help_content.style.opacity = "0";
+				} else {
+					hide_button = true;
+					self.help_content.style.display = "block";
+					
+					self.help_content.style.opacity = "1";
+					//self.help_button.style.opacity = "0";
+					//self.help_button.style.display = "none";
+
+					self.help_content.style.width = "390px";
+					self.help_content.style.height = "350px";
+					self.help_content.style.left = "-300px";
+					self.help_content.style.top = "-300px";
+					self.help_content.style.backgroundColor = "#DDD";
+				}
+				
+				//.hide-button
+				console.log("CLICK");
+
+			});
+
+
+			// this.capsule_page_block.addEventListener("click", function(e) {
+			// 	self._onCapsuleCloseClick(e);
+			// });
+
+
+			this.help_button.addEventListener("transitionend",function(e){
+				if (hide_button) {
+					//self.help_button.style.display = "none";
+				}
+				
+			},false);
+
+			// this.capsule_content_container.addEventListener("webkitTransitionEnd",function(e){
+			// 	self._hideContentContainer();
+			// },false);
+
+
+
 		}
 	});
 </script>
