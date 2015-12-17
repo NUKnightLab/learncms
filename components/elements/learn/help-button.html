@@ -19,7 +19,7 @@
 			/*display:flex;*/
 			position:fixed;
 			bottom:65px;
-			right:105px;
+			right:125px;
 			z-index:999;
 			transition: all 0.5s cubic-bezier(0.4, 0, 0.2, 1);
 
@@ -28,7 +28,7 @@
 			box-shadow: 0 2px 2px 0 rgba(0, 0, 0, 0.14), 0 1px 5px 0 rgba(0, 0, 0, 0.12), 0 3px 1px -2px rgba(0, 0, 0, 0.2);
 			box-shadow: 0 16px 24px 2px rgba(0, 0, 0, 0.14), 0 6px 30px 5px rgba(0, 0, 0, 0.12), 0 8px 10px -5px rgba(0, 0, 0, 0.4);
 			transition: all 0.5s cubic-bezier(0.4, 0, 0.2, 1);
-			width:90px;
+			width:100px;
 			height:50px;
 			background:#338D83;
 			position:absolute;
@@ -52,7 +52,7 @@
 
 			top:0;
 			left:0;
-			width:90px;
+			width:100px;
 			height:50px;
 			box-sizing: border-box;
 			z-index:5;
@@ -111,10 +111,11 @@
 			fill:none;
 		}
 		:host ::content .help-form {
-			background-color: #FFF;
 			padding:10px;
-			border-radius:6px;
-			box-shadow: inset 0 2px 2px 0 rgba(0, 0, 0, 0.14), inset 0 1px 5px 0 rgba(0, 0, 0, 0.12), inset 0 3px 1px -2px rgba(0, 0, 0, 0.2);
+			/*background-color: #FFF;
+			padding:10px;
+			border-radius:3px;
+			box-shadow: inset 0 2px 2px 0 rgba(0, 0, 0, 0.14), inset 0 1px 5px 0 rgba(0, 0, 0, 0.12), inset 0 3px 1px -2px rgba(0, 0, 0, 0.2);*/
 		}
 		:host ::content #help-content h2 {
 			font-family: 'Roboto', 'Noto', sans-serif;
@@ -133,7 +134,15 @@
 		:host ::content #help-content paper-button {
 			margin-top:20px;
 		}
+		:host ::content #help-close-icon {
+			display:none;
+		}
 
+		:host ::content #help-submit {
+			background-color:#FFF;
+			font-family: 'Roboto', 'Noto', sans-serif;
+			color: #333;
+		}
 
 
 
@@ -144,7 +153,8 @@
 		<div id="help-container">
 			<div id="help-button">
 				<h4>
-					<span class="custom-icon">
+					<iron-icon id="help-close-icon" icon="icons:close"></iron-icon>
+					<span id="help-question-icon" class="custom-icon">
 						<svg viewBox="0 0 24 24" preserveAspectRatio="xMidYMid meet" class="style-scope iron-icon" style="pointer-events: none; display: block; width: 100%; height: 100%;">
 
 							<g>
@@ -159,7 +169,7 @@
 
 						</svg>
 					</span>
-					Help
+					<span id="help-button-text">Help</span>
 				</h4>
 			</div>
 			<div id="help-content">
@@ -169,7 +179,7 @@
 
 					<paper-input label="Email (Optional)" value="{{ form_data.email }}"></paper-input>
 				</div>
-				<paper-button raised on-click="submitForm">Send us your question</paper-button>
+				<paper-button id="help-submit" raised>Send us your question</paper-button>
 
 
 
@@ -202,8 +212,13 @@
 			this.help_container = this.$['help-container'];
 			this.help_button = this.$['help-button'];
 			this.help_content = this.$['help-content'];
+			this.help_button_text = this.$['help-button-text'];
+			this.help_close_icon = this.$['help-close-icon'];
+			this.help_question_icon = this.$['help-question-icon'];
+			this.help_submit = this.$['help-submit'];
+			
 		},
-		submitForm: function() {
+		submitHelp: function() {
 			console.log('submit clicked');
 			console.log('q: ' + this.form_data.question);
 			console.log('e: ' + this.form_data.email);
@@ -221,17 +236,24 @@
 				question: '',
 				email: ''
 			}
+			this.help_submit.addEventListener("click", function(e) {
+				self.submitHelp();
+			});
 
 			this.help_button.addEventListener("click", function(e) {
 
 				if (hide_button) {
 					hide_button = false;
-					self.help_content.style.width = "90px";
+					self.help_content.style.width = "100px";
 					self.help_content.style.height = "50px";
 					self.help_content.style.left = "0px";
 					self.help_content.style.top = "0px";
 					self.help_content.style.backgroundColor = "#338D83";
 					self.help_content.style.opacity = "0";
+					self.help_button_text.innerHTML = "Help";
+					self.help_close_icon.style.display = "none";
+					self.help_question_icon.style.display = "inline-flex";
+					self.help_button.style.backgroundColor = "#338D83";
 				} else {
 					hide_button = true;
 					self.help_content.style.display = "block";
@@ -240,11 +262,15 @@
 					//self.help_button.style.opacity = "0";
 					//self.help_button.style.display = "none";
 
-					self.help_content.style.width = "390px";
+					self.help_content.style.width = "400px";
 					self.help_content.style.height = "350px";
 					self.help_content.style.left = "-300px";
 					self.help_content.style.top = "-300px";
-					self.help_content.style.backgroundColor = "#DDD";
+					self.help_content.style.backgroundColor = "#F5F4F4";
+					self.help_button_text.innerHTML = "Close";
+					self.help_close_icon.style.display = "inline-flex";
+					self.help_question_icon.style.display = "none";
+					self.help_button.style.backgroundColor = "#999";
 				}
 
 				//.hide-button
