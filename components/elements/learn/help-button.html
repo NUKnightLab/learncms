@@ -6,6 +6,7 @@
 <dom-module id="help-button">
 	<style>
 		:host ::content {
+			font-family: 'Roboto', 'Noto', sans-serif;
 			/*width:100px;*/
 			/*position:fixed;
 			bottom:15px;
@@ -25,7 +26,7 @@
 
 		}
 		:host ::content #help-content {
-			box-shadow: 0 2px 2px 0 rgba(0, 0, 0, 0.14), 0 1px 5px 0 rgba(0, 0, 0, 0.12), 0 3px 1px -2px rgba(0, 0, 0, 0.2);
+			
 			box-shadow: 0 16px 24px 2px rgba(0, 0, 0, 0.14), 0 6px 30px 5px rgba(0, 0, 0, 0.12), 0 8px 10px -5px rgba(0, 0, 0, 0.4);
 			transition: all 0.5s cubic-bezier(0.4, 0, 0.2, 1);
 			width:100px;
@@ -38,8 +39,38 @@
 			padding:10px;
 			box-sizing: border-box;
 			overflow:hidden;
+			border-radius:3px;
 			/*display:none;*/
 		}
+
+		:host ::content #help-feedback {
+			/*box-shadow: 0 2px 2px 0 rgba(0, 0, 0, 0.14), 0 1px 5px 0 rgba(0, 0, 0, 0.12), 0 3px 1px -2px rgba(0, 0, 0, 0.2);
+			box-shadow: 0 16px 24px 2px rgba(0, 0, 0, 0.14), 0 6px 30px 5px rgba(0, 0, 0, 0.12), 0 8px 10px -5px rgba(0, 0, 0, 0.4);*/
+			transition: all 0.5s cubic-bezier(0.4, 0, 0.2, 1);
+			width:400px;
+			height:350px;
+			background-color:rgba(255,255,255,0.95);
+			position:absolute;
+			top:-300px;
+			left:-300px;
+			opacity:1;
+			padding:10px;
+			box-sizing: border-box;
+			overflow:hidden;
+			align-items: center;
+  			justify-content: center;
+  			display: flex;
+  			border-radius:3px;
+  			display:none;
+		}
+
+		:host ::content #help-feedback p {
+			color:#666;
+			margin-left:10px;
+		}
+
+
+
 		:host ::content #help-button {
 			position:absolute;
 			color:#FFF;
@@ -117,7 +148,7 @@
 			border-radius:3px;
 			box-shadow: inset 0 2px 2px 0 rgba(0, 0, 0, 0.14), inset 0 1px 5px 0 rgba(0, 0, 0, 0.12), inset 0 3px 1px -2px rgba(0, 0, 0, 0.2);*/
 		}
-		:host ::content #help-content h2 {
+		:host ::content #help-content h2, :host ::content #help-feedback h2{
 			font-family: 'Roboto', 'Noto', sans-serif;
 			color: #333;
 			font-size: 24px;
@@ -125,6 +156,10 @@
 			margin:0;
 			margin-top:10px;
 			margin-bottom:10px;
+		}
+
+		:host ::content #help-feedback h2 {
+			color:#333;
 		}
 
 		:host ::content #help-content .input-content.paper-input-container label, :host ::content #help-content .input-content.paper-input-container .paper-input-label {
@@ -144,7 +179,9 @@
 			color: #333;
 		}
 
-
+		:host ::content .paper-input-container-0 .focused-line.paper-input-container {
+    		background: #338D83;
+		}
 
 
 	</style>
@@ -192,6 +229,10 @@
 									 url="{{ ajaxUrl }}"
 									 ></iron-ajax>
 			</div>
+			<div id="help-feedback">
+				<h2>Thanks!</h2>
+				<p>Your question has been submitted.</p>
+			</div>
 		</div>
 
 	</template>
@@ -227,7 +268,8 @@
 			this.help_close_icon = this.$['help-close-icon'];
 			this.help_question_icon = this.$['help-question-icon'];
 			this.help_submit = this.$['help-submit'];
-
+			this.help_feedback = this.$['help-feedback'];
+			
 		},
 		getCookie: function(name) {
 				var cookieValue = null;
@@ -249,18 +291,42 @@
 			if (!this.form_data.question) {
 				console.log("Blank question, skipping...");
 			}
-	    var csrftoken = this.getCookie('csrftoken');
+		    var csrftoken = this.getCookie('csrftoken');
 
 			if (csrftoken) {
 				this.$.ajax.headers["X-CSRFToken"] = csrftoken;
 			}
 
-			console.log('submit clicked');
-			console.log('q: ' + this.form_data.question);
-			console.log('e: ' + this.form_data.email);
-			console.log('p: ' + this.form_data.page);
-			console.log('s: ' + this.form_data.step);
+			this.form_data.page = document.title;
+			var closest_question = {};
+			var closest_question_number = 0;
+			var page_distance = document.getElementById('page-item').scrollTop;
+
+
+			// Find the closest question on the page for the current scroll position
+			closest_question = this.steps_on_page[0];
+
+
+			for (var i = 0; i < this.steps_on_page.length; i++) {
+				var distance_offset = Math.abs(this.steps_on_page[i].offsetTop - page_distance);
+				if (distance_offset < Math.abs(closest_question.offsetTop - page_distance) ) {
+					closest_question = this.steps_on_page[i];
+					closest_question_number = i;
+				}
+			}
+
+			this.form_data.question = closest_question.header;
+			this.form_data.question_number = closest_question_number + 1;
+
+			console.log(this.form_data);
+
+			// On submitted
+			this.showFeedback();
 		},
+		showFeedback: function(d) {
+			this.help_feedback.style.display = "flex";
+		},
+
 		attached: function() {
 			var self = this;
 			var hide_button = false;
@@ -272,6 +338,10 @@
 				question: '',
 				email: ''
 			}
+
+			this.steps_on_page = document.getElementsByTagName("step-block");
+
+
 			this.help_submit.addEventListener("click", function(e) {
 				self.submitHelp();
 			});
@@ -290,6 +360,7 @@
 					self.help_close_icon.style.display = "none";
 					self.help_question_icon.style.display = "inline-flex";
 					self.help_button.style.backgroundColor = "#338D83";
+					self.help_feedback.style.display = "none";
 				} else {
 					hide_button = true;
 					self.help_content.style.display = "block";
