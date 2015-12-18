@@ -5,11 +5,11 @@
         <glossary-manager json-url="/glossary.json">
         <page-manager>
         <page-item header="{{ lesson.title }}">
-        <help-button></help-button>
         <lesson-banner image="{{ lesson.banner_image.url }}" header="{{ lesson.title }}"></lesson-banner>
 
         {{ evaluated_content|safe }}
         </page-item>
+        <help-button></help-button>
         </page-manager>
         </glossary-manager>
 {% endblock content %}

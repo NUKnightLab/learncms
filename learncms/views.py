@@ -42,7 +42,6 @@ class JSONResponse(HttpResponse):
 
 
 def submit_question(request):
-    # data = json.loads(request.body.decode('utf-8'))
     data = {
         "ok": False,
         "message": "Questions must be submitted as AJAX (and don't forget the CSRF token!)"
