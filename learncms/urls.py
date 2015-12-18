@@ -40,7 +40,7 @@ urlpatterns = patterns(
     url(r'^lesson.json$', lesson_json, name='lesson-json'),
     url(r'^capsule.json$', capsule_json, name='capsule-json'),
     url(r'^index.html?$', RedirectView.as_view(url='/', permanent=True), name='index_html'),
-    url(r'^ask$', TemplateView.as_view(template_name="ask.html"), name='ask'),
+    url(r'^ask/?$', TemplateView.as_view(template_name="ask.html"), name='ask'),
     url(r'^submit-question$', submit_question, name='submit-question'),
     url(r'^404(.html|/)?$', TemplateView.as_view(template_name="404.html"), name='show-404'),
     url(r'^500(.html|/)?$', TemplateView.as_view(template_name="500.html"), name='show-500'),

@@ -1,3 +1,5 @@
+# -*- coding: utf-8 -*-
+
 from django.db import models
 from django.contrib.auth.models import User
 from django.core.urlresolvers import reverse
@@ -99,3 +101,14 @@ class Question(models.Model):
     email = models.EmailField(blank=True, help_text="Optionally, an email address of the asker.")
     page = models.CharField(blank=True, max_length=50, help_text="The slug of the lesson page where the question was asked")
     step = models.CharField(blank=True, max_length=100, help_text="As much as possible about where in the page the asker was when asking.")
+
+    @property
+    def brief_question(self):
+        if self.question:
+            if len(self.question) <= 50:
+                return self.question
+            return self.question[:50] + "…"
+        return '[blank question]'
+
+    def __str__(self):
+        return self.brief_question
