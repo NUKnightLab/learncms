@@ -261,11 +261,28 @@
 			
 		},
 		submitHelp: function() {
-			console.log('submit clicked');
-			console.log('q: ' + this.form_data.question);
-			console.log('e: ' + this.form_data.email);
-			console.log('p: ' + this.form_data.page);
-			console.log('s: ' + this.form_data.step);
+			this.form_data.page = document.title;
+			var closest_question = {};
+			var closest_question_number = 0;
+			var page_distance = document.getElementById('page-item').scrollTop;
+
+
+			// Find the closest question on the page for the current scroll position
+			closest_question = this.steps_on_page[0];
+
+
+			for (var i = 0; i < this.steps_on_page.length; i++) {
+				var distance_offset = Math.abs(this.steps_on_page[i].offsetTop - page_distance);
+				if (distance_offset < Math.abs(closest_question.offsetTop - page_distance) ) {
+					closest_question = this.steps_on_page[i];
+					closest_question_number = i;
+				}
+			}
+
+			this.form_data.question = closest_question.header;
+			this.form_data.question_number = closest_question_number + 1;
+
+			console.log(this.form_data);
 
 			// On submitted
 			this.showFeedback();
@@ -285,6 +302,10 @@
 				question: '',
 				email: ''
 			}
+
+			this.steps_on_page = document.getElementsByTagName("step-block");
+
+
 			this.help_submit.addEventListener("click", function(e) {
 				self.submitHelp();
 			});
