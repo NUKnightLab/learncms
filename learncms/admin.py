@@ -81,11 +81,7 @@ class GeneralImageAdmin(admin.ModelAdmin):
     search_fields = ['description']
 
 def trunc_question(obj):
-    if obj.question:
-        if len(obj.question) <= 50:
-            return obj.question
-        return obj.question[:50] + "…"
-    return ''
+    return obj.brief_question
 trunc_question.short_description = 'Question'
 
 class QuestionAdmin(admin.ModelAdmin):
