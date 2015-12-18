@@ -184,6 +184,13 @@
 
 
 				<content></content>
+				<iron-ajax id="ajax"
+									 handle-as="json"
+									 content-type="application/json"
+									 body="{{ form_data }}"
+									 method="POST"
+									 url="{{ ajaxUrl }}"
+									 ></iron-ajax>
 			</div>
 		</div>
 
@@ -205,6 +212,10 @@
 				type: String,
 				value: ""
 			},
+			ajaxUrl: {
+				type: String,
+				value: "/submit-question"
+			}
 		},
 
 		ready: function() {
@@ -216,9 +227,34 @@
 			this.help_close_icon = this.$['help-close-icon'];
 			this.help_question_icon = this.$['help-question-icon'];
 			this.help_submit = this.$['help-submit'];
-			
+
 		},
+		getCookie: function(name) {
+				var cookieValue = null;
+				if (document.cookie && document.cookie != '') {
+						var cookies = document.cookie.split(';');
+						for (var i = 0; i < cookies.length; i++) {
+								var cookie = jQuery.trim(cookies[i]);
+								// Does this cookie string begin with the name we want?
+								if (cookie.substring(0, name.length + 1) == (name + '=')) {
+										cookieValue = decodeURIComponent(cookie.substring(name.length + 1));
+										break;
+								}
+						}
+				}
+				return cookieValue;
+		},
+
 		submitHelp: function() {
+			if (!this.form_data.question) {
+				console.log("Blank question, skipping...");
+			}
+	    var csrftoken = this.getCookie('csrftoken');
+
+			if (csrftoken) {
+				this.$.ajax.headers["X-CSRFToken"] = csrftoken;
+			}
+
 			console.log('submit clicked');
 			console.log('q: ' + this.form_data.question);
 			console.log('e: ' + this.form_data.email);
