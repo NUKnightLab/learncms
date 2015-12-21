@@ -1,4 +1,4 @@
-from django.core.management.base import BaseCommand, CommandError
+from django.core.management.commands.loaddata import Command as LoadDataCommand
 from django.core import serializers
 from learncms import models
 
@@ -6,16 +6,23 @@ from django.contrib.auth.models import User
 from django.utils import timezone
 
 
-class Command(BaseCommand):
-    help = 'Dumps data from the database without the fiddly bits of versions and concurrency...'
+class Command(LoadDataCommand):
+    help = '''Counterpart to our custom dumpdata... name explicitly chosen to mask the Django `loaddata`
+    command which doesn't play well with the `reversion` plugin'''
 
 
     def add_arguments(self, parser):
-        pass
-        # parser.add_argument('--indent', default=None, dest='indent', type=int,
-        #     help='Specifies the indent level to use when pretty-printing output.')
+        parser.add_argument('args', metavar='fixture', nargs='+',
+            help='Fixture labels are not used with this version of loaddata.')
 
     def handle(self, *fixture_labels, **options):
+
+        if (options.get('app_label') != 'learncms'):
+            return super().handle(*fixture_labels, **options)
+
+        if fixture_labels:
+            print("the custom loaddata command for learncms doesn't use fixtures so assuming this is being called by migrate and doing nothing")
+        return
 
         superusers = User.objects.filter(is_superuser=True)
         if len(superusers) == 0:
