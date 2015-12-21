@@ -6998,6 +6998,789 @@ this._removeChildren();
 
   });
 </script>
+<script>function MakePromise (asap) {
+  function Promise(fn) {
+		if (typeof this !== 'object' || typeof fn !== 'function') throw new TypeError();
+		this._state = null;
+		this._value = null;
+		this._deferreds = []
+
+		doResolve(fn, resolve.bind(this), reject.bind(this));
+	}
+
+	function handle(deferred) {
+		var me = this;
+		if (this._state === null) {
+			this._deferreds.push(deferred);
+			return
+		}
+		asap(function() {
+			var cb = me._state ? deferred.onFulfilled : deferred.onRejected
+			if (typeof cb !== 'function') {
+				(me._state ? deferred.resolve : deferred.reject)(me._value);
+				return;
+			}
+			var ret;
+			try {
+				ret = cb(me._value);
+			}
+			catch (e) {
+				deferred.reject(e);
+				return;
+			}
+			deferred.resolve(ret);
+		})
+	}
+
+	function resolve(newValue) {
+		try { //Promise Resolution Procedure: https://github.com/promises-aplus/promises-spec#the-promise-resolution-procedure
+			if (newValue === this) throw new TypeError();
+			if (newValue && (typeof newValue === 'object' || typeof newValue === 'function')) {
+				var then = newValue.then;
+				if (typeof then === 'function') {
+					doResolve(then.bind(newValue), resolve.bind(this), reject.bind(this));
+					return;
+				}
+			}
+			this._state = true;
+			this._value = newValue;
+			finale.call(this);
+		} catch (e) { reject.call(this, e); }
+	}
+
+	function reject(newValue) {
+		this._state = false;
+		this._value = newValue;
+		finale.call(this);
+	}
+
+	function finale() {
+		for (var i = 0, len = this._deferreds.length; i < len; i++) {
+			handle.call(this, this._deferreds[i]);
+		}
+		this._deferreds = null;
+	}
+
+	/**
+	 * Take a potentially misbehaving resolver function and make sure
+	 * onFulfilled and onRejected are only called once.
+	 *
+	 * Makes no guarantees about asynchrony.
+	 */
+	function doResolve(fn, onFulfilled, onRejected) {
+		var done = false;
+		try {
+			fn(function (value) {
+				if (done) return;
+				done = true;
+				onFulfilled(value);
+			}, function (reason) {
+				if (done) return;
+				done = true;
+				onRejected(reason);
+			})
+		} catch (ex) {
+			if (done) return;
+			done = true;
+			onRejected(ex);
+		}
+	}
+
+	Promise.prototype['catch'] = function (onRejected) {
+		return this.then(null, onRejected);
+	};
+
+	Promise.prototype.then = function(onFulfilled, onRejected) {
+		var me = this;
+		return new Promise(function(resolve, reject) {
+      handle.call(me, {
+        onFulfilled: onFulfilled,
+        onRejected: onRejected,
+        resolve: resolve,
+        reject: reject
+      });
+		})
+	};
+
+	Promise.resolve = function (value) {
+		if (value && typeof value === 'object' && value.constructor === Promise) {
+			return value;
+		}
+
+		return new Promise(function (resolve) {
+			resolve(value);
+		});
+	};
+
+	Promise.reject = function (value) {
+		return new Promise(function (resolve, reject) {
+			reject(value);
+		});
+	};
+
+	
+  return Promise;
+}
+
+if (typeof module !== 'undefined') {
+  module.exports = MakePromise;
+}
+
+</script>
+<script>
+if (!window.Promise) {
+  window.Promise = MakePromise(Polymer.Base.async);
+}
+</script>
+
+<script>
+  Polymer({
+    is: 'iron-request',
+
+    properties: {
+
+      /**
+       * A reference to the XMLHttpRequest instance used to generate the
+       * network request.
+       *
+       * @attribute xhr
+       * @type XMLHttpRequest
+       * @default `new XMLHttpRequest`
+       */
+      xhr: {
+        type: Object,
+        notify: true,
+        readOnly: true,
+        value: function() {
+          return new XMLHttpRequest();
+        }
+      },
+
+      /**
+       * A reference to the parsed response body, if the `xhr` has completely
+       * resolved.
+       *
+       * @attribute response
+       * @type Object
+       * @default null
+       */
+      response: {
+        type: Object,
+        notify: true,
+        readOnly: true,
+        value: function() {
+         return null;
+        }
+      },
+
+      /**
+       * A promise that resolves when the `xhr` response comes back, or rejects
+       * if there is an error before the `xhr` completes.
+       *
+       * @attribute completes
+       * @type Promise
+       * @default `new Promise`
+       */
+      completes: {
+        type: Object,
+        readOnly: true,
+        notify: true,
+        value: function() {
+          return new Promise(function (resolve, reject) {
+            this.resolveCompletes = resolve;
+            this.rejectCompletes = reject;
+          }.bind(this));
+        }
+      },
+
+      /**
+       * An object that contains progress information emitted by the XHR if
+       * available.
+       *
+       * @attribute progress
+       * @type Object
+       * @default {}
+       */
+      progress: {
+        type: Object,
+        notify: true,
+        readOnly: true,
+        value: function() {
+          return {};
+        }
+      },
+
+      /**
+       * Aborted will be true if an abort of the request is attempted.
+       *
+       * @attribute aborted
+       * @type boolean
+       * @default false
+       */
+      aborted: {
+        type: Boolean,
+        notify: true,
+        readOnly: true,
+        value: false,
+      }
+    },
+
+    /**
+     * Succeeded is true if the request succeeded. The request succeeded if the
+     * status code is greater-than-or-equal-to 200, and less-than 300. Also,
+     * the status code 0 is accepted as a success even though the outcome may
+     * be ambiguous.
+     *
+     * @return {boolean}
+     */
+    get succeeded() {
+      var status = this.xhr.status || 0;
+
+      // Note: if we are using the file:// protocol, the status code will be 0
+      // for all outcomes (successful or otherwise).
+      return status === 0 ||
+        (status >= 200 && status < 300);
+    },
+
+    /**
+     * Sends an HTTP request to the server and returns the XHR object.
+     *
+     * @param {{
+     *   url: string,
+     *   method: (string|undefined),
+     *   async: (boolean|undefined),
+     *   body: (ArrayBuffer|ArrayBufferView|Blob|Document|FormData|null|string|undefined),
+     *   headers: (Object|undefined),
+     *   handleAs: (string|undefined),
+     *   withCredentials: (boolean|undefined)}} options -
+     *     url The url to which the request is sent.
+     *     method The HTTP method to use, default is GET.
+     *     async By default, all requests are sent asynchronously. To send synchronous requests,
+     *         set to true.
+     *     body The content for the request body for POST method.
+     *     headers HTTP request headers.
+     *     handleAs The response type. Default is 'text'.
+     *     withCredentials Whether or not to send credentials on the request. Default is false.
+     * @return {Promise}
+     */
+    send: function (options) {
+      var xhr = this.xhr;
+
+      if (xhr.readyState > 0) {
+        return;
+      }
+
+      xhr.addEventListener('readystatechange', function () {
+        if (xhr.readyState === 4 && !this.aborted) {
+
+          if (!this.succeeded) {
+            this.rejectCompletes(new Error('The request failed with status code: ' + this.xhr.status));
+            return;
+          }
+
+          this._setResponse(this.parseResponse());
+          this.resolveCompletes(this);
+        }
+      }.bind(this));
+
+      xhr.addEventListener('progress', function (progress) {
+        this._setProgress({
+          lengthComputable: progress.lengthComputable,
+          loaded: progress.loaded,
+          total: progress.total
+        });
+      }.bind(this))
+
+      xhr.addEventListener('error', function (error) {
+        this.rejectCompletes(error);
+      }.bind(this));
+
+      xhr.addEventListener('abort', function () {
+        this.rejectCompletes(new Error('Request aborted.'));
+      }.bind(this));
+
+      xhr.open(
+        options.method || 'GET',
+        options.url,
+        options.async !== false
+      );
+
+      if (options.headers) {
+        Object.keys(options.headers).forEach(function (requestHeader) {
+          xhr.setRequestHeader(
+            requestHeader,
+            options.headers[requestHeader]
+          );
+        }, this);
+      }
+
+      // In IE, `xhr.responseType` is an empty string when the response
+      // returns. Hence, caching it as `xhr._responseType`.
+      xhr.responseType = xhr._responseType = (options.handleAs || 'text');
+      xhr.withCredentials = !!options.withCredentials;
+
+      xhr.send(options.body);
+
+      return this.completes;
+    },
+
+    /**
+     * Attempts to parse the response body of the XHR. If parsing succeeds,
+     * the value returned will be deserialized based on the `responseType`
+     * set on the XHR.
+     *
+     * @return {Object|Array|Document|string|undefined} The parsed response,
+     * or undefined if there was an empty response or parsing failed.
+     */
+    parseResponse: function () {
+      var xhr = this.xhr;
+      var responseType = this.xhr.responseType ||
+        this.xhr._responseType;
+      // If we don't have a natural `xhr.responseType`, we prefer parsing
+      // `xhr.responseText` over returning `xhr.response`..
+      var preferResponseText = !this.xhr.responseType;
+
+      try {
+        switch (responseType) {
+          case 'json':
+            // If xhr.response is undefined, responseType `json` may
+            // not be supported.
+            if (preferResponseText || xhr.response === undefined) {
+              // If accessing `xhr.responseText` throws, responseType `json`
+              // is supported and the result is rightly `undefined`.
+              try {
+                xhr.responseText;
+              } catch (e) {
+                return xhr.response;
+              }
+
+              // Otherwise, attempt to parse `xhr.responseText` as JSON.
+              if (xhr.responseText) {
+                return JSON.parse(xhr.responseText);
+              }
+            }
+
+            return xhr.response;
+          case 'xml':
+            return xhr.responseXML;
+          case 'blob':
+          case 'document':
+          case 'arraybuffer':
+            return xhr.response;
+          case 'text':
+          default:
+            return xhr.responseText;
+        }
+      } catch (e) {
+        this.rejectCompletes(new Error('Could not parse response. ' + e.message));
+      }
+    },
+
+    /**
+     * Aborts the request.
+     */
+    abort: function () {
+      this._setAborted(true);
+      this.xhr.abort();
+    }
+  });
+</script>
+
+
+
+<script>
+
+  Polymer({
+
+    is: 'iron-ajax',
+
+    /**
+     * Fired when a request is sent.
+     *
+     * @event request
+     */
+
+    /**
+     * Fired when a response is received.
+     *
+     * @event response
+     */
+
+    /**
+     * Fired when an error is received.
+     *
+     * @event error
+     */
+
+    properties: {
+      /**
+       * The URL target of the request.
+       */
+      url: {
+        type: String,
+        value: ''
+      },
+
+      /**
+       * An object that contains query parameters to be appended to the
+       * specified `url` when generating a request. If you wish to set the body
+       * content when making a POST request, you should use the `body` property
+       * instead.
+       */
+      params: {
+        type: Object,
+        value: function() {
+          return {};
+        }
+      },
+
+      /**
+       * The HTTP method to use such as 'GET', 'POST', 'PUT', or 'DELETE'.
+       * Default is 'GET'.
+       */
+      method: {
+        type: String,
+        value: 'GET'
+      },
+
+      /**
+       * HTTP request headers to send.
+       *
+       * Example:
+       *
+       *     <iron-ajax
+       *         auto
+       *         url="http://somesite.com"
+       *         headers='{"X-Requested-With": "XMLHttpRequest"}'
+       *         handle-as="json"
+       *         last-response-changed="{{handleResponse}}"></iron-ajax>
+       *
+       * Note: setting a `Content-Type` header here will override the value
+       * specified by the `contentType` property of this element.
+       */
+      headers: {
+        type: Object,
+        value: function() {
+          return {};
+        }
+      },
+
+      /**
+       * Content type to use when sending data. If the `contentType` property
+       * is set and a `Content-Type` header is specified in the `headers`
+       * property, the `headers` property value will take precedence.
+       */
+      contentType: {
+        type: String,
+        value: 'application/x-www-form-urlencoded'
+      },
+
+      /**
+       * Optional raw body content to send when method === "POST".
+       *
+       * Example:
+       *
+       *     <iron-ajax method="POST" auto url="http://somesite.com"
+       *         body='{"foo":1, "bar":2}'>
+       *     </iron-ajax>
+       */
+      body: {
+        type: String,
+        value: ''
+      },
+
+      /**
+       * Toggle whether XHR is synchronous or asynchronous. Don't change this
+       * to true unless You Know What You Are Doing™.
+       */
+      sync: {
+        type: Boolean,
+        value: false
+      },
+
+      /**
+       * Specifies what data to store in the `response` property, and
+       * to deliver as `event.response` in `response` events.
+       *
+       * One of:
+       *
+       *    `text`: uses `XHR.responseText`.
+       *
+       *    `xml`: uses `XHR.responseXML`.
+       *
+       *    `json`: uses `XHR.responseText` parsed as JSON.
+       *
+       *    `arraybuffer`: uses `XHR.response`.
+       *
+       *    `blob`: uses `XHR.response`.
+       *
+       *    `document`: uses `XHR.response`.
+       */
+      handleAs: {
+        type: String,
+        value: 'json'
+      },
+
+      /**
+       * Set the withCredentials flag on the request.
+       */
+      withCredentials: {
+        type: Boolean,
+        value: false
+      },
+
+      /**
+       * If true, automatically performs an Ajax request when either `url` or
+       * `params` changes.
+       */
+      auto: {
+        type: Boolean,
+        value: false
+      },
+
+      /**
+       * If true, error messages will automatically be logged to the console.
+       */
+      verbose: {
+        type: Boolean,
+        value: false
+      },
+
+      /**
+       * Will be set to true if there is at least one in-flight request
+       * associated with this iron-ajax element.
+       */
+      loading: {
+        type: Boolean,
+        notify: true,
+        readOnly: true
+      },
+
+      /**
+       * Will be set to the most recent request made by this iron-ajax element.
+       */
+      lastRequest: {
+        type: Object,
+        notify: true,
+        readOnly: true
+      },
+
+      /**
+       * Will be set to the most recent response received by a request
+       * that originated from this iron-ajax element. The type of the response
+       * is determined by the value of `handleAs` at the time that the request
+       * was generated.
+       */
+      lastResponse: {
+        type: Object,
+        notify: true,
+        readOnly: true
+      },
+
+      /**
+       * Will be set to the most recent error that resulted from a request
+       * that originated from this iron-ajax element.
+       */
+      lastError: {
+        type: Object,
+        notify: true,
+        readOnly: true
+      },
+
+      /**
+       * An Array of all in-flight requests originating from this iron-ajax
+       * element.
+       */
+      activeRequests: {
+        type: Array,
+        notify: true,
+        readOnly: true,
+        value: function() {
+          this._setActiveRequests([]);
+        }
+      },
+
+      /**
+       * Length of time in milliseconds to debounce multiple requests.
+       */
+      debounceDuration: {
+        type: Number,
+        value: 0,
+        notify: true
+      },
+
+      _boundHandleResponse: {
+        type: Function,
+        value: function() {
+          return this._handleResponse.bind(this);
+        }
+      }
+    },
+
+    observers: [
+      '_requestOptionsChanged(url, method, params, headers,' +
+        'contentType, body, sync, handleAs, withCredentials, auto)'
+    ],
+
+    /**
+     * The query string that should be appended to the `url`, serialized from
+     * the current value of `params`.
+     *
+     * @return {string}
+     */
+    get queryString () {
+      var queryParts = [];
+      var param;
+      var value;
+
+      for (param in this.params) {
+        value = this.params[param];
+        param = window.encodeURIComponent(param);
+
+        if (value !== null) {
+          param += '=' + window.encodeURIComponent(value);
+        }
+
+        queryParts.push(param);
+      }
+
+      return queryParts.join('&');
+    },
+
+    /**
+     * The `url` with query string (if `params` are specified), suitable for
+     * providing to an `iron-request` instance.
+     *
+     * @return {string}
+     */
+    get requestUrl() {
+      var queryString = this.queryString;
+
+      if (queryString) {
+        return this.url + '?' + queryString;
+      }
+
+      return this.url;
+    },
+
+    /**
+     * An object that maps header names to header values, first applying the
+     * the value of `Content-Type` and then overlaying the headers specified
+     * in the `headers` property.
+     *
+     * @return {Object}
+     */
+    get requestHeaders() {
+      var headers = {
+        'Content-Type': this.contentType
+      };
+      var header;
+
+      if (this.headers instanceof Object) {
+        for (header in this.headers) {
+          headers[header] = this.headers[header].toString();
+        }
+      }
+
+      return headers;
+    },
+
+    /**
+     * Request options suitable for generating an `iron-request` instance based
+     * on the current state of the `iron-ajax` instance's properties.
+     *
+     * @return {Object}
+     */
+    toRequestOptions: function() {
+      return {
+        url: this.requestUrl,
+        method: this.method,
+        headers: this.requestHeaders,
+        body: this.body,
+        async: !this.sync,
+        handleAs: this.handleAs,
+        withCredentials: this.withCredentials
+      };
+    },
+
+    /**
+     * Performs an AJAX request to the specified URL.
+     *
+     * @return {iron-request}
+     */
+    generateRequest: function() {
+      var request = document.createElement('iron-request');
+      var requestOptions = this.toRequestOptions();
+
+      this.activeRequests.push(request);
+
+      request.completes.then(
+        this._boundHandleResponse
+      ).catch(
+        this._handleError.bind(this, request)
+      ).then(
+        this._discardRequest.bind(this, request)
+      );
+
+      request.send(requestOptions);
+
+      this._setLastRequest(request);
+      this._setLoading(true);
+
+      this.fire('request', {
+        request: request,
+        options: requestOptions
+      });
+
+      return request;
+    },
+
+    _handleResponse: function(request) {
+      this._setLastResponse(request.response);
+      this.fire('response', request);
+    },
+
+    _handleError: function(request, error) {
+      if (this.verbose) {
+        console.error(error);
+      }
+
+      this._setLastError({
+        request: request,
+        error: error
+      });
+      this.fire('error', {
+        request: request,
+        error: error
+      });
+    },
+
+    _discardRequest: function(request) {
+      var requestIndex = this.activeRequests.indexOf(request);
+
+      if (requestIndex > -1) {
+        this.activeRequests.splice(requestIndex, 1);
+      }
+
+      if (this.activeRequests.length === 0) {
+        this._setLoading(false);
+      }
+    },
+
+    _requestOptionsChanged: function() {
+      this.debounce('generate-request', function() {
+        if (!this.url && this.url !== '') {
+          return;
+        }
+
+        if (this.auto) {
+          this.generateRequest();
+        }
+      }, this.debounceDuration);
+    },
+
+  });
+</script>
 
 <link rel="stylesheet" href="//fonts.googleapis.com/css?family=Roboto:400,300,300italic,400italic,500,500italic,700,700italic">
 <link rel="stylesheet" href="//fonts.googleapis.com/css?family=Inconsolata:400,700">
@@ -8336,6 +9119,932 @@ styles. All other styles should exist as single lines."
   }
 
 </style>
+
+
+
+
+<script>
+
+  /**
+   * Use `Polymer.IronValidatableBehavior` to implement an element that validates user input.
+   *
+   * ### Accessiblity
+   *
+   * Changing the `invalid` property, either manually or by calling `validate()` will update the
+   * `aria-invalid` attribute.
+   *
+   * @demo demo/index.html
+   * @polymerBehavior
+   */
+  Polymer.IronValidatableBehavior = {
+
+    properties: {
+
+      /**
+       * Namespace for this validator.
+       */
+      validatorType: {
+        type: String,
+        value: 'validator'
+      },
+
+      /**
+       * Name of the validator to use.
+       */
+      validator: {
+        type: String
+      },
+
+      /**
+       * True if the last call to `validate` is invalid.
+       */
+      invalid: {
+        notify: true,
+        reflectToAttribute: true,
+        type: Boolean,
+        value: false
+      },
+
+      _validatorMeta: {
+        type: Object
+      }
+
+    },
+
+    observers: [
+      '_invalidChanged(invalid)'
+    ],
+
+    get _validator() {
+      return this._validatorMeta && this._validatorMeta.byKey(this.validator);
+    },
+
+    ready: function() {
+      this._validatorMeta = new Polymer.IronMeta({type: this.validatorType});
+    },
+
+    _invalidChanged: function() {
+      if (this.invalid) {
+        this.setAttribute('aria-invalid', 'true');
+      } else {
+        this.removeAttribute('aria-invalid');
+      }
+    },
+
+    /**
+     * @return {boolean} True if the validator `validator` exists.
+     */
+    hasValidator: function() {
+      return this._validator != null;
+    },
+
+    /**
+     * @param {Object} values Passed to the validator's `validate()` function.
+     * @return {boolean} True if `values` is valid.
+     */
+    validate: function(values) {
+      var valid = this._validator && this._validator.validate(values);
+      this.invalid = !valid;
+      return valid;
+    }
+
+  };
+
+</script>
+<script>
+
+/*
+`<iron-input>` adds two-way binding and custom validators using `Polymer.IronValidatorBehavior`
+to `<input>`.
+
+### Two-way binding
+
+By default you can only get notified of changes to an `input`'s `value` due to user input:
+
+    <input value="{{myValue::input}}">
+
+`iron-input` adds the `bind-value` property that mirrors the `value` property, and can be used
+for two-way data binding. `bind-value` will notify if it is changed either by user input or by script.
+
+    <input is="iron-input" bind-value="{{myValue}}">
+
+### Custom validators
+
+You can use custom validators that implement `Polymer.IronValidatorBehavior` with `<iron-input>`.
+
+    <input is="iron-input" validator="my-custom-validator">
+
+### Stopping invalid input
+
+It may be desirable to only allow users to enter certain characters. You can use the
+`prevent-invalid-input` and `allowed-pattern` attributes together to accomplish this. This feature
+is separate from validation, and `allowed-pattern` does not affect how the input is validated.
+
+    <!-- only allow characters that match [0-9] -->
+    <input is="iron-input" prevent-invaild-input allowed-pattern="[0-9]">
+
+@hero hero.svg
+@demo demo/index.html
+*/
+
+  Polymer({
+
+    is: 'iron-input',
+
+    extends: 'input',
+
+    behaviors: [
+      Polymer.IronValidatableBehavior
+    ],
+
+    properties: {
+
+      /**
+       * Use this property instead of `value` for two-way data binding.
+       */
+      bindValue: {
+        observer: '_bindValueChanged',
+        type: String
+      },
+
+      /**
+       * Set to true to prevent the user from entering invalid input. The new input characters are
+       * matched with `allowedPattern` if it is set, otherwise it will use the `pattern` attribute if
+       * set, or the `type` attribute (only supported for `type=number`).
+       */
+      preventInvalidInput: {
+        type: Boolean
+      },
+
+      /**
+       * Regular expression to match valid input characters.
+       */
+      allowedPattern: {
+        type: String
+      },
+
+      _previousValidInput: {
+        type: String,
+        value: ''
+      },
+
+      _patternAlreadyChecked: {
+        type: Boolean,
+        value: false
+      }
+
+    },
+
+    listeners: {
+      'input': '_onInput',
+      'keypress': '_onKeypress'
+    },
+
+    get _patternRegExp() {
+      var pattern;
+      if (this.allowedPattern) {
+        pattern = new RegExp(this.allowedPattern);
+      } else if (this.pattern) {
+        pattern = new RegExp(this.pattern);
+      } else {
+        switch (this.type) {
+          case 'number':
+            pattern = /[0-9.,e-]/;
+            break;
+        }
+      }
+      return pattern;
+    },
+
+    ready: function() {
+      this.bindValue = this.value;
+    },
+
+    _bindValueChanged: function() {
+      if (this.value !== this.bindValue) {
+        this.value = !this.bindValue ? '' : this.bindValue;
+      }
+      // manually notify because we don't want to notify until after setting value
+      this.fire('bind-value-changed', {value: this.bindValue});
+    },
+
+    _onInput: function() {
+      // Need to validate each of the characters pasted if they haven't
+      // been validated inside `_onKeypress` already.
+      if (this.preventInvalidInput && !this._patternAlreadyChecked) {
+        var valid = this._checkPatternValidity();
+        if (!valid) {
+          this.value = this._previousValidInput;
+        }
+      }
+
+      this.bindValue = this.value;
+      this._previousValidInput = this.value;
+      this._patternAlreadyChecked = false;
+    },
+
+    _isPrintable: function(event) {
+      // What a control/printable character is varies wildly based on the browser.
+      // - most control characters (arrows, backspace) do not send a `keypress` event
+      //   in Chrome, but the *do* on Firefox
+      // - in Firefox, when they do send a `keypress` event, control chars have
+      //   a charCode = 0, keyCode = xx (for ex. 40 for down arrow)
+      // - printable characters always send a keypress event.
+      // - in Firefox, printable chars always have a keyCode = 0. In Chrome, the keyCode
+      //   always matches the charCode.
+      // None of this makes any sense.
+
+      var nonPrintable =
+        (event.keyCode == 8)   ||  // backspace
+        (event.keyCode == 19)  ||  // pause
+        (event.keyCode == 20)  ||  // caps lock
+        (event.keyCode == 27)  ||  // escape
+        (event.keyCode == 45)  ||  // insert
+        (event.keyCode == 46)  ||  // delete
+        (event.keyCode == 144) ||  // num lock
+        (event.keyCode == 145) ||  // scroll lock
+        (event.keyCode > 32 && event.keyCode < 41)   || // page up/down, end, home, arrows
+        (event.keyCode > 111 && event.keyCode < 124); // fn keys
+
+      return !(event.charCode == 0 && nonPrintable);
+    },
+
+    _onKeypress: function(event) {
+      if (!this.preventInvalidInput && this.type !== 'number') {
+        return;
+      }
+      var regexp = this._patternRegExp;
+      if (!regexp) {
+        return;
+      }
+
+      // Handle special keys and backspace
+      if (event.metaKey || event.ctrlKey || event.altKey)
+        return;
+
+      // Check the pattern either here or in `_onInput`, but not in both.
+      this._patternAlreadyChecked = true;
+
+      var thisChar = String.fromCharCode(event.charCode);
+      if (this._isPrintable(event) && !regexp.test(thisChar)) {
+        event.preventDefault();
+      }
+    },
+
+    _checkPatternValidity: function() {
+      var regexp = this._patternRegExp;
+      if (!regexp) {
+        return true;
+      }
+      for (var i = 0; i < this.value.length; i++) {
+        if (!regexp.test(this.value[i])) {
+          return false;
+        }
+      }
+      return true;
+    },
+
+    /**
+     * Returns true if `value` is valid. The validator provided in `validator` will be used first,
+     * then any constraints.
+     * @return {Boolean} True if the value is valid.
+     */
+    validate: function() {
+      // Empty, non-required input is valid.
+      if (!this.required && this.value == '')
+        return true;
+
+      var valid;
+      if (this.hasValidator()) {
+        valid = Polymer.IronValidatableBehavior.validate.call(this, this.value);
+      } else {
+        this.invalid = !this.validity.valid;
+        valid = this.validity.valid;
+      }
+      this.fire('iron-input-validate');
+      return valid;
+    }
+
+  });
+
+  /*
+  The `iron-input-validate` event is fired whenever `validate()` is called.
+  @event iron-input-validate
+  */
+
+</script>
+
+<script>
+
+  /** 
+  
+  @demo demo/index.html
+  @polymerBehavior 
+  
+  */
+  Polymer.IronFormElementBehavior = {
+
+    properties: {
+
+      /**
+       * The name of this element.
+       */
+      name: {
+        type: String
+      },
+
+      /**
+       * The value for this element.
+       */
+      value: {
+        notify: true,
+        type: String
+      },
+    },
+
+    attached: function() {
+      this.fire('iron-form-element-register');
+    }
+
+  };
+
+</script>
+<script>
+
+  /**
+   * Use `Polymer.PaperInputBehavior` to implement inputs with `<paper-input-container>`. This
+   * behavior is implemented by `<paper-input>`. It exposes a number of properties from
+   * `<paper-input-container>` and `<input is="iron-input">` and they should be bound in your
+   * template.
+   *
+   * The input element can be accessed by the `inputElement` property if you need to access
+   * properties or methods that are not exposed.
+   * @polymerBehavior
+   */
+  Polymer.PaperInputBehavior = {
+
+    properties: {
+
+      /**
+       * The label for this input. Bind this to `<paper-input-container>`'s `label` property.
+       */
+      label: {
+        type: String
+      },
+
+      /**
+       * The value for this input. Bind this to the `<input is="iron-input">`'s `bindValue`
+       * property, or the value property of your input that is `notify:true`.
+       */
+      value: {
+        notify: true,
+        type: String
+      },
+
+      /**
+       * Set to true to disable this input. Bind this to both the `<paper-input-container>`'s
+       * and the input's `disabled` property.
+       */
+      disabled: {
+        type: Boolean,
+        value: false
+      },
+
+      /**
+       * Returns true if the value is invalid. Bind this to both the `<paper-input-container>`'s
+       * and the input's `invalid` property.
+       */
+      invalid: {
+        type: Boolean,
+        value: false
+      },
+
+      /**
+       * Set to true to prevent the user from entering invalid input. Bind this to the
+       * `<input is="iron-input">`'s `preventInvalidInput` property.
+       */
+      preventInvalidInput: {
+        type: Boolean
+      },
+
+      /**
+       * Set this to specify the pattern allowed by `preventInvalidInput`. Bind this to the
+       * `<input is="iron-input">`'s `allowedPattern` property.
+       */
+      allowedPattern: {
+        type: String
+      },
+
+      /**
+       * The type of the input. The supported types are `text`, `number` and `password`. Bind this
+       * to the `<input is="iron-input">`'s `type` property.
+       */
+      type: {
+        type: String
+      },
+
+      /**
+       * A pattern to validate the `input` with. Bind this to the `<input is="iron-input">`'s
+       * `pattern` property.
+       */
+      pattern: {
+        type: String
+      },
+
+      /**
+       * Set to true to mark the input as required. Bind this to the `<input is="iron-input">`'s
+       * `required` property.
+       */
+      required: {
+        type: Boolean,
+        value: false
+      },
+
+      /**
+       * The maximum length of the input value. Bind this to the `<input is="iron-input">`'s
+       * `maxlength` property.
+       */
+      maxlength: {
+        type: Number
+      },
+
+      /**
+       * The error message to display when the input is invalid. Bind this to the
+       * `<paper-input-error>`'s content, if using.
+       */
+      errorMessage: {
+        type: String
+      },
+
+      /**
+       * Set to true to show a character counter.
+       */
+      charCounter: {
+        type: Boolean,
+        value: false
+      },
+
+      /**
+       * Set to true to disable the floating label. Bind this to the `<paper-input-container>`'s
+       * `noLabelFloat` property.
+       */
+      noLabelFloat: {
+        type: Boolean,
+        value: false
+      },
+
+      /**
+       * Set to true to always float the label. Bind this to the `<paper-input-container>`'s
+       * `alwaysFloatLabel` property.
+       */
+      alwaysFloatLabel: {
+        type: Boolean,
+        value: false
+      },
+
+      /**
+       * Set to true to auto-validate the input value. Bind this to the `<paper-input-container>`'s
+       * `autoValidate` property.
+       */
+      autoValidate: {
+        type: Boolean,
+        value: false
+      },
+
+      /**
+       * Name of the validator to use. Bind this to the `<input is="iron-input">`'s `validator`
+       * property.
+       */
+      validator: {
+        type: String
+      },
+
+      // HTMLInputElement attributes for binding if needed
+
+      /**
+       * Bind this to the `<input is="iron-input">`'s `autocomplete` property.
+       */
+      autocomplete: {
+        type: String,
+        value: 'off'
+      },
+
+      /**
+       * Bind this to the `<input is="iron-input">`'s `autofocus` property.
+       */
+      autofocus: {
+        type: Boolean
+      },
+
+      /**
+       * Bind this to the `<input is="iron-input">`'s `inputmode` property.
+       */
+      inputmode: {
+        type: String
+      },
+
+      /**
+       * Bind this to the `<input is="iron-input">`'s `minlength` property.
+       */
+      minlength: {
+        type: Number
+      },
+
+      /**
+       * Bind this to the `<input is="iron-input">`'s `name` property.
+       */
+      name: {
+        type: String
+      },
+
+      /**
+       * A placeholder string in addition to the label. If this is set, the label will always float.
+       */
+      placeholder: {
+        type: String,
+        // need to set a default so _computeAlwaysFloatLabel is run
+        value: ''
+      },
+
+      /**
+       * Bind this to the `<input is="iron-input">`'s `readonly` property.
+       */
+      readonly: {
+        type: Boolean,
+        value: false
+      },
+
+      /**
+       * Bind this to the `<input is="iron-input">`'s `size` property.
+       */
+      size: {
+        type: Number
+      },
+
+      _ariaDescribedBy: {
+        type: String,
+        value: ''
+      }
+
+    },
+
+    listeners: {
+      'addon-attached': '_onAddonAttached'
+    },
+
+    /**
+     * Returns a reference to the input element.
+     */
+    get inputElement() {
+      return this.$.input;
+    },
+
+    attached: function() {
+      this._updateAriaLabelledBy();
+    },
+
+    _appendStringWithSpace: function(str, more) {
+      if (str) {
+        str = str + ' ' + more;
+      } else {
+        str = more;
+      }
+      return str;
+    },
+
+    _onAddonAttached: function(event) {
+      var target = event.path ? event.path[0] : event.target;
+      if (target.id) {
+        this._ariaDescribedBy = this._appendStringWithSpace(this._ariaDescribedBy, target.id);
+      } else {
+        var id = 'paper-input-add-on-' + Math.floor((Math.random() * 100000));
+        target.id = id;
+        this._ariaDescribedBy = this._appendStringWithSpace(this._ariaDescribedBy, id);
+      }
+    },
+
+    /**
+     * Validates the input element and sets an error style if needed.
+     */
+     validate: function() {
+       return this.inputElement.validate();
+     },
+
+    /**
+     * Restores the cursor to its original position after updating the value.
+     * @param {String} newValue The value that should be saved.
+     */
+    updateValueAndPreserveCaret: function(newValue) {
+      // Not all elements might have selection, and even if they have the
+      // right properties, accessing them might throw an exception (like for
+      // <input type=number>)
+      try {
+        var start = this.inputElement.selectionStart;
+        this.value = newValue;
+
+        // The cursor automatically jumps to the end after re-setting the value,
+        // so restore it to its original position.
+        this.inputElement.selectionStart = start;
+        this.inputElement.selectionEnd = start;
+      } catch (e) {
+        // Just set the value and give up on the caret.
+        this.value = newValue;
+      }
+    },
+
+    _computeAlwaysFloatLabel: function(alwaysFloatLabel, placeholder) {
+      return placeholder || alwaysFloatLabel;
+    },
+
+    _updateAriaLabelledBy: function() {
+      var label = Polymer.dom(this.root).querySelector('label');
+      if (!label) {
+        this._ariaLabelledBy = '';
+        return;
+      }
+      var labelledBy;
+      if (label.id) {
+        labelledBy = label.id;
+      } else {
+        labelledBy = 'paper-input-label-' + new Date().getUTCMilliseconds();
+        label.id = labelledBy;
+      }
+      this._ariaLabelledBy = labelledBy;
+    }
+
+  };
+
+</script>
+<link rel="stylesheet" href="//fonts.googleapis.com/css?family=Roboto:400,300,300italic,400italic,500,500italic,700,700italic">
+
+<style is="custom-style">
+
+  :root {
+
+    /* Shared Styles */
+
+    /*
+    Unfortunately, we can't make use of these yet - sibling properties aren't
+    evaluated. See https://github.com/Polymer/polymer/issues/1399
+
+    --paper-font-common-base: {
+      font-family: 'Roboto', 'Noto', sans-serif;
+      -webkit-font-smoothing: antialiased;
+    };
+
+    --paper-font-common-code: {
+      font-family: 'Inconsolata', 'Consolas', 'Source Code Pro', 'Monaco', 'Menlo', monospace;
+      -webkit-font-smoothing: antialiased;
+    };
+
+    --paper-font-common-expensive-kerning: {
+      text-rendering: optimizeLegibility;
+    };
+
+    --paper-font-common-nowrap: {
+      white-space: nowrap;
+      overflow: hidden;
+      text-overflow: ellipsis;
+    };
+    */
+
+    /* Material Font Styles */
+
+    --paper-font-display4: {
+      /* @apply(--paper-font-common-base) */
+      font-family: 'Roboto', 'Noto', sans-serif;
+      -webkit-font-smoothing: antialiased;
+      /* @apply(--paper-font-common-expensive-kerning); */
+      text-rendering: optimizeLegibility;
+      /* @apply(--paper-font-common-nowrap); */
+      white-space: nowrap;
+      overflow: hidden;
+      text-overflow: ellipsis;
+
+      font-size: 112px;
+      font-weight: 300;
+      letter-spacing: -.044em;
+      line-height: 120px;
+    };
+
+    --paper-font-display3: {
+      /* @apply(--paper-font-common-base) */
+      font-family: 'Roboto', 'Noto', sans-serif;
+      -webkit-font-smoothing: antialiased;
+      /* @apply(--paper-font-common-expensive-kerning); */
+      text-rendering: optimizeLegibility;
+      /* @apply(--paper-font-common-nowrap); */
+      white-space: nowrap;
+      overflow: hidden;
+      text-overflow: ellipsis;
+
+      font-size: 56px;
+      font-weight: 400;
+      letter-spacing: -.026em;
+      line-height: 60px;
+    };
+
+    --paper-font-display2: {
+      /* @apply(--paper-font-common-base) */
+      font-family: 'Roboto', 'Noto', sans-serif;
+      -webkit-font-smoothing: antialiased;
+      /* @apply(--paper-font-common-expensive-kerning); */
+      text-rendering: optimizeLegibility;
+
+      font-size: 45px;
+      font-weight: 400;
+      letter-spacing: -.018em;
+      line-height: 48px;
+    };
+
+    --paper-font-display1: {
+      /* @apply(--paper-font-common-base) */
+      font-family: 'Roboto', 'Noto', sans-serif;
+      -webkit-font-smoothing: antialiased;
+      /* @apply(--paper-font-common-expensive-kerning); */
+      text-rendering: optimizeLegibility;
+
+      font-size: 34px;
+      font-weight: 400;
+      letter-spacing: -.01em;
+      line-height: 40px;
+    };
+
+    --paper-font-headline: {
+      /* @apply(--paper-font-common-base) */
+      font-family: 'Roboto', 'Noto', sans-serif;
+      -webkit-font-smoothing: antialiased;
+      /* @apply(--paper-font-common-expensive-kerning); */
+      text-rendering: optimizeLegibility;
+
+      font-size: 24px;
+      font-weight: 400;
+      letter-spacing: -.012em;
+      line-height: 32px;
+    };
+
+    --paper-font-title: {
+      /* @apply(--paper-font-common-base) */
+      font-family: 'Roboto', 'Noto', sans-serif;
+      -webkit-font-smoothing: antialiased;
+      /* @apply(--paper-font-common-expensive-kerning); */
+      text-rendering: optimizeLegibility;
+      /* @apply(--paper-font-common-nowrap); */
+      white-space: nowrap;
+      overflow: hidden;
+      text-overflow: ellipsis;
+
+      font-size: 20px;
+      font-weight: 500;
+      line-height: 28px;
+    };
+
+    --paper-font-subhead: {
+      /* @apply(--paper-font-common-base) */
+      font-family: 'Roboto', 'Noto', sans-serif;
+      -webkit-font-smoothing: antialiased;
+      /* @apply(--paper-font-common-expensive-kerning); */
+      text-rendering: optimizeLegibility;
+
+      font-size: 16px;
+      font-weight: 400;
+      line-height: 24px;
+    };
+
+    --paper-font-body2: {
+      /* @apply(--paper-font-common-base) */
+      font-family: 'Roboto', 'Noto', sans-serif;
+      -webkit-font-smoothing: antialiased;
+
+      font-size: 14px;
+      font-weight: 500;
+      line-height: 24px;
+    };
+
+    --paper-font-body1: {
+      /* @apply(--paper-font-common-base) */
+      font-family: 'Roboto', 'Noto', sans-serif;
+      -webkit-font-smoothing: antialiased;
+
+      font-size: 14px;
+      font-weight: 400;
+      line-height: 20px;
+    };
+
+    --paper-font-caption: {
+      /* @apply(--paper-font-common-base) */
+      font-family: 'Roboto', 'Noto', sans-serif;
+      -webkit-font-smoothing: antialiased;
+      /* @apply(--paper-font-common-nowrap); */
+      white-space: nowrap;
+      overflow: hidden;
+      text-overflow: ellipsis;
+
+      font-size: 12px;
+      font-weight: 400;
+      letter-spacing: 0.011em;
+      line-height: 20px;
+    };
+
+    --paper-font-menu: {
+      /* @apply(--paper-font-common-base) */
+      font-family: 'Roboto', 'Noto', sans-serif;
+      -webkit-font-smoothing: antialiased;
+      /* @apply(--paper-font-common-expensive-kerning); */
+      text-rendering: optimizeLegibility;
+      /* @apply(--paper-font-common-nowrap); */
+      white-space: nowrap;
+      overflow: hidden;
+      text-overflow: ellipsis;
+
+      font-size: 13px;
+      font-weight: 500;
+      line-height: 24px;
+    };
+
+    --paper-font-button: {
+      /* @apply(--paper-font-common-base) */
+      font-family: 'Roboto', 'Noto', sans-serif;
+      -webkit-font-smoothing: antialiased;
+      /* @apply(--paper-font-common-expensive-kerning); */
+      text-rendering: optimizeLegibility;
+      /* @apply(--paper-font-common-nowrap); */
+      white-space: nowrap;
+      overflow: hidden;
+      text-overflow: ellipsis;
+
+      font-size: 14px;
+      font-weight: 500;
+      letter-spacing: 0.018em;
+      line-height: 24px;
+      text-transform: uppercase;
+    };
+
+    --paper-font-code2: {
+      /* @apply(--paper-font-common-code); */
+      font-family: 'Inconsolata', 'Consolas', 'Source Code Pro', 'Monaco', 'Menlo', monospace;
+      -webkit-font-smoothing: antialiased;
+
+      font-size: 14px;
+      font-weight: 700;
+      line-height: 20px;
+    };
+
+    --paper-font-code1: {
+      /* @apply(--paper-font-common-code); */
+      font-family: 'Inconsolata', 'Consolas', 'Source Code Pro', 'Monaco', 'Menlo', monospace;
+      -webkit-font-smoothing: antialiased;
+
+      font-size: 14px;
+      font-weight: 500;
+      line-height: 20px;
+    };
+
+  }
+
+</style>
+
+<script>
+
+  /**
+   * Use `Polymer.PaperInputAddonBehavior` to implement an add-on for `<paper-input-container>`. A
+   * add-on appears below the input, and may display information based on the input value and
+   * validity such as a character counter or an error message.
+   * @polymerBehavior
+   */
+  Polymer.PaperInputAddonBehavior = {
+
+    hostAttributes: {
+      'add-on': ''
+    },
+
+    attached: function() {
+      this.fire('addon-attached');
+    },
+
+    /**
+     * The function called by `<paper-input-container>` when the input value or validity changes.
+     * @param {{
+     *   inputElement: (Node|undefined),
+     *   value: (string|undefined),
+     *   invalid: (boolean|undefined)
+     * }} state All properties are optional -
+     *     inputElement: The input element.
+     *     value: The input value.
+     *     invalid: True if the input value is invalid.
+     */
+    update: function(state) {
+    }
+
+  };
+
+</script>
+
+
+
+
+
+
 
 
 
@@ -10159,6 +11868,1019 @@ li.L9 {
 
   });
 </script>
+<dom-module id="paper-input-container" assetpath="../bower_components/paper-input/">
+
+  <style>
+
+    :host {
+      display: block;
+      padding: 8px 0;
+
+      @apply(--paper-input-container);
+    }
+
+    :host[inline] {
+      display: inline-block;
+    }
+
+    :host([disabled]) {
+      pointer-events: none;
+      opacity: 0.33;
+    }
+
+    .floated-label-placeholder {
+      @apply(--paper-font-caption);
+    }
+
+    .underline {
+      position: relative;
+    }
+
+    .focused-line {
+      height: 2px;
+
+      -webkit-transform-origin: center center;
+      transform-origin: center center;
+      -webkit-transform: scale3d(0,1,1);
+      transform: scale3d(0,1,1);
+
+      background: var(--paper-input-container-focus-color, --default-primary-color);
+    }
+
+    .underline.is-highlighted .focused-line {
+      -webkit-transform: none;
+      transform: none;
+      -webkit-transition: -webkit-transform 0.25s;
+      transition: transform 0.25s;
+
+      @apply(--paper-transition-easing);
+    }
+
+    .underline.is-invalid .focused-line {
+      background: var(--paper-input-container-invalid-color, --google-red-500);
+
+      -webkit-transform: none;
+      transform: none;
+      -webkit-transition: -webkit-transform 0.25s;
+      transition: transform 0.25s;
+
+      @apply(--paper-transition-easing);
+    }
+
+    .unfocused-line {
+      height: 1px;
+      background: var(--paper-input-container-color, --secondary-text-color);
+    }
+
+    :host([disabled]) .unfocused-line {
+      border-bottom: 1px dashed;
+      border-color: var(--paper-input-container-color, --secondary-text-color);
+      background: transparent;
+    }
+
+    .input-content {
+      position: relative;
+    }
+
+    .input-content ::content label,
+    .input-content ::content .paper-input-label {
+      position: absolute;
+      top: 0;
+      right: 0;
+      left: 0;
+      font: inherit;
+      color: var(--paper-input-container-color, --secondary-text-color);
+
+      @apply(--paper-font-subhead);
+      @apply(--paper-input-container-label);
+    }
+
+    .input-content.label-is-floating ::content label,
+    .input-content.label-is-floating ::content .paper-input-label {
+      -webkit-transform: translate3d(0, -75%, 0) scale(0.75);
+      transform: translate3d(0, -75%, 0) scale(0.75);
+      -webkit-transform-origin: left top;
+      transform-origin: left top;
+      -webkit-transition: -webkit-transform 0.25s;
+      transition: transform 0.25s;
+
+      @apply(--paper-transition-easing);
+    }
+
+    .input-content.label-is-highlighted ::content label,
+    .input-content.label-is-highlighted ::content .paper-input-label {
+      color: var(--paper-input-container-focus-color, --default-primary-color);
+    }
+
+    .input-content.is-invalid ::content label,
+    .input-content.is-invalid ::content .paper-input-label {
+      color: var(--paper-input-container-invalid-color, --google-red-500);
+    }
+
+    .input-content.label-is-hidden ::content label,
+    .input-content.label-is-hidden ::content .paper-input-label {
+      visibility: hidden;
+    }
+
+    .input-content ::content input,
+    .input-content ::content textarea,
+    .input-content ::content iron-autogrow-textarea,
+    .input-content ::content .paper-input-input {
+      position: relative; /* to make a stacking context */
+      outline: none;
+      box-shadow: none;
+      padding: 0;
+      width: 100%;
+      background: transparent;
+      border: none;
+      color: var(--paper-input-container-input-color, --primary-text-color);
+
+      @apply(--paper-font-subhead);
+      @apply(--paper-input-container-input);
+    }
+
+    /* Firefox sets a min-width on the input, which can cause layout issues */
+    .input-content ::content input {
+      min-width: 0;
+    }
+
+    .input-content ::content textarea {
+      resize: none;
+    }
+
+    .add-on-content.is-invalid ::content * {
+      color: var(--paper-input-container-invalid-color, --google-red-500);
+    }
+
+    .add-on-content.is-highlighted ::content * {
+      color: var(--paper-input-container-focus-color, --default-primary-color);
+    }
+
+  </style>
+
+  <template>
+
+    <template is="dom-if" if="[[!noLabelFloat]]">
+      <div class="floated-label-placeholder">&nbsp;</div>
+    </template>
+
+    <div class$="[[_computeInputContentClass(noLabelFloat,alwaysFloatLabel,focused,invalid,_inputHasContent)]]">
+      <content select=":not([add-on])"></content>
+    </div>
+
+    <div class$="[[_computeUnderlineClass(focused,invalid)]]">
+      <div class="unfocused-line fit"></div>
+      <div class="focused-line fit"></div>
+    </div>
+
+    <div class$="[[_computeAddOnContentClass(focused,invalid)]]">
+      <content id="addOnContent" select="[add-on]"></content>
+    </div>
+
+  </template>
+
+</dom-module>
+
+<script>
+(function() {
+
+  Polymer({
+
+    is: 'paper-input-container',
+
+    properties: {
+
+      /**
+       * Set to true to disable the floating label. The label disappears when the input value is
+       * not null.
+       */
+      noLabelFloat: {
+        type: Boolean,
+        value: false
+      },
+
+      /**
+       * Set to true to always float the floating label.
+       */
+      alwaysFloatLabel: {
+        type: Boolean,
+        value: false
+      },
+
+      /**
+       * The attribute to listen for value changes on.
+       */
+      attrForValue: {
+        type: String,
+        value: 'bind-value'
+      },
+
+      /**
+       * Set to true to auto-validate the input value when it changes.
+       */
+      autoValidate: {
+        type: Boolean,
+        value: false
+      },
+
+      /**
+       * True if the input is invalid. This property is set automatically when the input value
+       * changes if auto-validating, or when the `iron-input-valid` event is heard from a child.
+       */
+      invalid: {
+        observer: '_invalidChanged',
+        type: Boolean,
+        value: false
+      },
+
+      /**
+       * True if the input has focus.
+       */
+      focused: {
+        readOnly: true,
+        type: Boolean,
+        value: false
+      },
+
+      _addons: {
+        type: Array,
+        value: function() {
+          return [];
+        }
+      },
+
+      _inputHasContent: {
+        type: Boolean,
+        value: false
+      },
+
+      _inputSelector: {
+        type: String,
+        value: 'input,textarea,.paper-input-input'
+      },
+
+      _boundOnFocus: {
+        type: Function,
+        value: function() {
+          return this._onFocus.bind(this);
+        }
+      },
+
+      _boundOnBlur: {
+        type: Function,
+        value: function() {
+          return this._onBlur.bind(this);
+        }
+      },
+
+      _boundOnInput: {
+        type: Function,
+        value: function() {
+          this._onInput.bind(this)
+        }
+      },
+
+      _boundValueChanged: {
+        type: Function,
+        value: function() {
+          return this._onValueChanged.bind(this);
+        }
+      }
+
+    },
+
+    listeners: {
+      'addon-attached': '_onAddonAttached',
+      'iron-input-validate': '_onIronInputValidate'
+    },
+
+    get _valueChangedEvent() {
+      return this.attrForValue + '-changed';
+    },
+
+    get _propertyForValue() {
+      return Polymer.CaseMap.dashToCamelCase(this.attrForValue);
+    },
+
+    get _inputElement() {
+      return Polymer.dom(this).querySelector(this._inputSelector);
+    },
+
+    ready: function() {
+      this.addEventListener('focus', this._boundOnFocus, true);
+      this.addEventListener('blur', this._boundOnBlur, true);
+      if (this.attrForValue) {
+        this._inputElement.addEventListener(this._valueChangedEvent, this._boundValueChanged);
+      } else {
+        this.addEventListener('input', this._onInput);
+      }
+    },
+
+    attached: function() {
+      this._handleValue(this._inputElement);
+    },
+
+    _onAddonAttached: function(event) {
+      this._addons.push(event.target);
+      this._handleValue(this._inputElement);
+    },
+
+    _onFocus: function() {
+      this._setFocused(true);
+    },
+
+    _onBlur: function() {
+      this._setFocused(false);
+    },
+
+    _onInput: function(event) {
+      this._handleValue(event.target);
+    },
+
+    _onValueChanged: function(event) {
+      this._handleValue(event.target);
+    },
+
+    _handleValue: function(inputElement) {
+      var value = inputElement[this._propertyForValue] || inputElement.value;
+
+      if (this.autoValidate) {
+        var valid;
+        if (inputElement.validate) {
+          valid = inputElement.validate(value);
+        } else {
+          valid = inputElement.checkValidity();
+        }
+        this.invalid = !valid;
+      }
+
+      // type="number" hack needed because this.value is empty until it's valid
+      if (value || (inputElement.type === 'number' && !inputElement.checkValidity())) {
+        this._inputHasContent = true;
+      } else {
+        this._inputHasContent = false;
+      }
+
+      this.updateAddons({
+        inputElement: inputElement,
+        value: value,
+        invalid: this.invalid
+      });
+    },
+
+    _onIronInputValidate: function(event) {
+      this.invalid = this._inputElement.invalid;
+    },
+
+    _invalidChanged: function() {
+      if (this._addons) {
+        this.updateAddons({invalid: this.invalid});
+      }
+    },
+
+    /**
+     * Call this to update the state of add-ons.
+     * @param {Object} state Add-on state.
+     */
+    updateAddons: function(state) {
+      for (var addon, index = 0; addon = this._addons[index]; index++) {
+        addon.update(state);
+      }
+    },
+
+    _computeInputContentClass: function(noLabelFloat, alwaysFloatLabel, focused, invalid, _inputHasContent) {
+      var cls = 'input-content';
+      if (!noLabelFloat) {
+        if (alwaysFloatLabel || _inputHasContent) {
+          cls += ' label-is-floating';
+          if (invalid) {
+            cls += ' is-invalid';
+          } else if (focused) {
+            cls += " label-is-highlighted";
+          }
+        }
+      } else {
+        if (_inputHasContent) {
+          cls += ' label-is-hidden';
+        }
+      }
+      return cls;
+    },
+
+    _computeUnderlineClass: function(focused, invalid) {
+      var cls = 'underline';
+      if (invalid) {
+        cls += ' is-invalid';
+      } else if (focused) {
+        cls += ' is-highlighted'
+      }
+      return cls;
+    },
+
+    _computeAddOnContentClass: function(focused, invalid) {
+      var cls = 'add-on-content';
+      if (invalid) {
+        cls += ' is-invalid';
+      } else if (focused) {
+        cls += ' is-highlighted'
+      }
+      return cls;
+    }
+
+  });
+
+})();
+</script>
+<dom-module id="paper-input-error" assetpath="../bower_components/paper-input/">
+
+  <style>
+
+    :host {
+      /* need to use display: none for role="alert" */
+      display: none;
+      float: left;
+
+      color: var(--paper-input-container-invalid-color, --google-red-500);
+
+      @apply(--paper-font-caption);
+      @apply(--paper-input-error);
+    }
+
+    :host([invalid]) {
+      display: inline-block;
+    };
+
+  </style>
+
+  <template>
+
+    <content></content>
+
+  </template>
+
+</dom-module>
+
+<script>
+
+(function() {
+
+  Polymer({
+
+    is: 'paper-input-error',
+
+    behaviors: [
+      Polymer.PaperInputAddonBehavior
+    ],
+
+    hostAttributes: {
+      'role': 'alert'
+    },
+
+    properties: {
+
+      /**
+       * True if the error is showing.
+       */
+      invalid: {
+        readOnly: true,
+        reflectToAttribute: true,
+        type: Boolean
+      }
+
+    },
+
+    update: function(state) {
+      this._setInvalid(state.invalid);
+    }
+
+  })
+
+})();
+
+</script>
+<dom-module id="paper-input-char-counter" assetpath="../bower_components/paper-input/">
+
+  <style>
+
+    :host {
+      display: inline-block;
+      float: right;
+
+      @apply(--paper-font-caption);
+      @apply(--paper-input-char-counter);
+    }
+
+  </style>
+
+  <template>
+
+    <span>[[_charCounterStr]]</span>
+
+  </template>
+
+</dom-module>
+
+<script>
+
+(function() {
+
+  Polymer({
+
+    is: 'paper-input-char-counter',
+
+    behaviors: [
+      Polymer.PaperInputAddonBehavior
+    ],
+
+    properties: {
+
+      _charCounterStr: {
+        type: String,
+        value: '0'
+      }
+
+    },
+
+    update: function(state) {
+      if (!state.inputElement) {
+        return;
+      }
+
+      state.value = state.value || '';
+
+      // Account for the textarea's new lines.
+      var str = state.value.replace(/(\r\n|\n|\r)/g, '--').length;
+
+      if (state.inputElement.hasAttribute('maxlength')) {
+        str += '/' + state.inputElement.getAttribute('maxlength');
+      }
+      this._charCounterStr = str;
+    }
+
+  });
+
+})();
+
+</script>
+<dom-module id="paper-input" assetpath="../bower_components/paper-input/">
+
+  <style>
+
+    :host {
+      display: block;
+    }
+
+    input::-webkit-input-placeholder {
+      color: var(--paper-input-container-color, --secondary-text-color);
+    }
+
+    input:-moz-placeholder {
+      color: var(--paper-input-container-color, --secondary-text-color);
+    }
+
+    input::-moz-placeholder {
+      color: var(--paper-input-container-color, --secondary-text-color);
+    }
+
+    input:-ms-input-placeholder {
+      color: var(--paper-input-container-color, --secondary-text-color);
+    }
+
+  </style>
+
+  <template>
+
+    <paper-input-container no-label-float="[[noLabelFloat]]" always-float-label="[[_computeAlwaysFloatLabel(alwaysFloatLabel,placeholder)]]" auto-validate$="[[autoValidate]]" disabled$="[[disabled]]" invalid="[[invalid]]">
+
+      <label hidden$="[[!label]]">[[label]]</label>
+
+      <input is="iron-input" id="input" aria-labelledby$="[[_ariaLabelledBy]]" aria-describedby$="[[_ariaDescribedBy]]" disabled$="[[disabled]]" bind-value="{{value}}" invalid="{{invalid}}" prevent-invalid-input="[[preventInvalidInput]]" allowed-pattern="[[allowedPattern]]" validator="[[validator]]" type$="[[type]]" pattern$="[[pattern]]" maxlength$="[[maxlength]]" required$="[[required]]" autocomplete$="[[autocomplete]]" autofocus$="[[autofocus]]" inputmode$="[[inputmode]]" minlength$="[[minlength]]" name$="[[name]]" placeholder$="[[placeholder]]" readonly$="[[readonly]]" size$="[[size]]">
+
+      <template is="dom-if" if="[[errorMessage]]">
+        <paper-input-error>[[errorMessage]]</paper-input-error>
+      </template>
+
+      <template is="dom-if" if="[[charCounter]]">
+        <paper-input-char-counter></paper-input-char-counter>
+      </template>
+
+    </paper-input-container>
+
+  </template>
+
+</dom-module>
+
+<script>
+
+(function() {
+
+  Polymer({
+
+    is: 'paper-input',
+
+    behaviors: [
+      Polymer.PaperInputBehavior,
+      Polymer.IronFormElementBehavior
+    ]
+
+  })
+
+})();
+
+</script>
+<dom-module id="iron-autogrow-textarea" assetpath="../bower_components/iron-autogrow-textarea/">
+
+  <style>
+    :host {
+      display: inline-block;
+      position: relative;
+      width: 400px;
+      border: 1px solid;
+      padding: 2px;
+      -moz-appearance: textarea;
+      -webkit-appearance: textarea;
+    }
+
+    .mirror-text {
+      visibility: hidden;
+      word-wrap: break-word;
+    }
+
+    textarea {
+      position: relative;
+      outline: none;
+      border: none;
+      resize: none;
+      background: inherit;
+      /* see comments in template */
+      width: 100%;
+      height: 100%;
+      font-size: inherit;
+      font-family: inherit;
+    }
+
+    ::content textarea:invalid {
+      box-shadow: none;
+    }
+
+  </style>
+  <template>
+    
+    <div id="mirror" class="mirror-text" aria-hidden="true">&nbsp;</div>
+
+    
+    <div class="textarea-container fit">
+      <textarea id="textarea" autocomplete$="[[autocomplete]]" autofocus$="[[autofocus]]" inputmode$="[[inputmode]]" name$="[[name]]" placeholder$="[[placeholder]]" readonly$="[[readonly]]" required$="[[required]]" rows$="[[rows]]" maxlength$="[[maxlength]]"></textarea>
+    </div>
+  </template>
+
+<script>
+
+  Polymer({
+
+    is: 'iron-autogrow-textarea',
+
+    behaviors: [
+      Polymer.IronValidatableBehavior
+    ],
+
+    properties: {
+
+      /**
+       * Use this property instead of `value` for two-way data binding.
+       */
+      bindValue: {
+        observer: '_bindValueChanged',
+        type: String
+      },
+
+      /**
+       * The initial number of rows.
+       *
+       * @attribute rows
+       * @type number
+       * @default 1
+       */
+      rows: {
+        type: Number,
+        value: 1,
+        observer: '_updateCached'
+      },
+
+      /**
+       * The maximum number of rows this element can grow to until it
+       * scrolls. 0 means no maximum.
+       *
+       * @attribute maxRows
+       * @type number
+       * @default 0
+       */
+      maxRows: {
+       type: Number,
+       value: 0,
+       observer: '_updateCached'
+      },
+
+      /**
+       * Bound to the textarea's `autocomplete` attribute.
+       */
+      autocomplete: {
+        type: String,
+        value: 'off'
+      },
+
+      /**
+       * Bound to the textarea's `autofocus` attribute.
+       */
+      autofocus: {
+        type: String,
+        value: 'off'
+      },
+
+      /**
+       * Bound to the textarea's `inputmode` attribute.
+       */
+      inputmode: {
+        type: String
+      },
+
+      /**
+       * Bound to the textarea's `name` attribute.
+       */
+      name: {
+        type: String
+      },
+
+      /**
+       * Bound to the textarea's `placeholder` attribute.
+       */
+      placeholder: {
+        type: String
+      },
+
+      /**
+       * Bound to the textarea's `readonly` attribute.
+       */
+      readonly: {
+        type: String
+      },
+
+      /**
+       * Set to true to mark the textarea as required.
+       */
+      required: {
+        type: Boolean
+      },
+
+      /**
+       * The maximum length of the input value.
+       */
+      maxlength: {
+        type: Number
+      }
+
+    },
+
+    listeners: {
+      'input': '_onInput'
+    },
+
+    /**
+     * Returns the underlying textarea.
+     */
+    get textarea() {
+      return this.$.textarea;
+    },
+
+    _update: function() {
+      this.$.mirror.innerHTML = this._valueForMirror();
+
+      var textarea = this.textarea;
+      // If the value of the textarea was updated imperatively, then we
+      // need to manually update bindValue as well.
+      if (textarea && this.bindValue != textarea.value) {
+        this.bindValue = textarea.value;
+      }
+    },
+
+    _bindValueChanged: function() {
+      var textarea = this.textarea;
+      if (!textarea) {
+        return;
+      }
+
+      textarea.value = this.bindValue;
+      this._update();
+      // manually notify because we don't want to notify until after setting value
+      this.fire('bind-value-changed', {value: this.bindValue});
+    },
+
+    _onInput: function(event) {
+      this.bindValue = event.path ? event.path[0].value : event.target.value;
+      this._update();
+    },
+
+    _constrain: function(tokens) {
+      var _tokens;
+      tokens = tokens || [''];
+      // Enforce the min and max heights for a multiline input to avoid measurement
+      if (this.maxRows > 0 && tokens.length > this.maxRows) {
+        _tokens = tokens.slice(0, this.maxRows);
+      } else {
+        _tokens = tokens.slice(0);
+      }
+      while (this.rows > 0 && _tokens.length < this.rows) {
+        _tokens.push('');
+      }
+      return _tokens.join('<br>') + '&nbsp;';
+    },
+
+    _valueForMirror: function() {
+      var input = this.textarea;
+      if (!input) {
+        return;
+      }
+      this.tokens = (input && input.value) ? input.value.replace(/&/gm, '&amp;').replace(/"/gm, '&quot;').replace(/'/gm, '&#39;').replace(/</gm, '&lt;').replace(/>/gm, '&gt;').split('\n') : [''];
+      return this._constrain(this.tokens);
+    },
+
+    _updateCached: function() {
+      this.$.mirror.innerHTML = this._constrain(this.tokens);
+    }
+  })
+</script>
+</dom-module><dom-module id="paper-textarea" assetpath="../bower_components/paper-input/">
+  <template>
+
+    <paper-input-container no-label-float$="[[noLabelFloat]]" always-float-label="[[_computeAlwaysFloatLabel(alwaysFloatLabel,placeholder)]]" auto-validate$="[[autoValidate]]" disabled$="[[disabled]]" invalid="[[invalid]]">
+
+      <label hidden$="[[!label]]">[[label]]</label>
+
+      <iron-autogrow-textarea id="input" class="paper-input-input" bind-value="{{value}}" autocomplete$="[[autocomplete]]" autofocus$="[[autofocus]]" inputmode$="[[inputmode]]" name$="[[name]]" placeholder$="[[placeholder]]" readonly$="[[readonly]]" required$="[[required]]" maxlength$="[[maxlength]]"></iron-autogrow-textarea>
+
+      <template is="dom-if" if="[[errorMessage]]">
+        <paper-input-error>[[errorMessage]]</paper-input-error>
+      </template>
+
+      <template is="dom-if" if="[[charCounter]]">
+        <paper-input-char-counter></paper-input-char-counter>
+      </template>
+
+    </paper-input-container>
+
+  </template>
+
+</dom-module>
+
+<script>
+
+(function() {
+
+  Polymer({
+
+    is: 'paper-textarea',
+
+    behaviors: [
+      Polymer.PaperInputBehavior,
+      Polymer.IronFormElementBehavior
+    ],
+
+    properties: {
+
+      _ariaLabelledBy: {
+        observer: '_ariaLabelledByChanged',
+        type: String
+      },
+
+      _ariaDescribedBy: {
+        observer: '_ariaDescribedByChanged',
+        type: String
+      }
+
+    },
+
+    _ariaLabelledByChanged: function(ariaLabelledBy) {
+      this.$.input.textarea.setAttribute('aria-labelledby', ariaLabelledBy);
+    },
+
+    _ariaDescribedByChanged: function(ariaDescribedBy) {
+      this.$.input.textarea.setAttribute('aria-describedby', ariaDescribedBy);
+    }
+
+  });
+
+})();
+
+</script>
+<dom-module id="paper-button" assetpath="../bower_components/paper-button/">
+
+  <style>
+
+    :host {
+      display: inline-block;
+      position: relative;
+      box-sizing: border-box;
+      min-width: 5.14em;
+      margin: 0 0.29em;
+      background: transparent;
+      text-align: center;
+      font: inherit;
+      text-transform: uppercase;
+      outline: none;
+      border-radius: 3px;
+      -moz-user-select: none;
+      -ms-user-select: none;
+      -webkit-user-select: none;
+      user-select: none;
+      cursor: pointer;
+      z-index: 0;
+
+      @apply(--paper-button);
+    }
+
+    .keyboard-focus {
+      font-weight: bold;
+    }
+
+    :host([disabled]) {
+      background: #eaeaea;
+      color: #a8a8a8;
+      cursor: auto;
+      pointer-events: none;
+
+      @apply(--paper-button-disabled);
+    }
+
+    :host([noink]) paper-ripple {
+      display: none;
+    }
+
+    paper-material {
+      border-radius: inherit;
+    }
+
+    .content > ::content * {
+      text-transform: inherit;
+    }
+
+    .content {
+      padding: 0.7em 0.57em
+    }
+  </style>
+
+  <template>
+
+    <paper-ripple></paper-ripple>
+
+    <paper-material class$="[[_computeContentClass(receivedFocusFromKeyboard)]]" elevation="[[_elevation]]" animated="">
+      <content></content>
+    </paper-material>
+
+  </template>
+
+</dom-module>
+
+<script>
+
+  Polymer({
+
+    is: 'paper-button',
+
+    behaviors: [
+      Polymer.PaperButtonBehavior
+    ],
+
+    properties: {
+
+      /**
+       * If true, the button should be styled with a shadow.
+       */
+      raised: {
+        type: Boolean,
+        reflectToAttribute: true,
+        value: false,
+        observer: '_calculateElevation'
+      }
+    },
+
+    _calculateElevation: function() {
+      if (!this.raised) {
+        this._elevation = 0;
+      } else {
+        Polymer.PaperButtonBehaviorImpl._calculateElevation.apply(this);
+      }
+    },
+
+    _computeContentClass: function(receivedFocusFromKeyboard) {
+      var className = 'content ';
+      if (receivedFocusFromKeyboard) {
+        className += ' keyboard-focus';
+      }
+      return className;
+    }
+  });
+
+</script>
 <dom-module id="step-block" assetpath="learn/">
 	<style>
 
@@ -10404,6 +13126,11 @@ li.L9 {
 			margin-right: -20px;
 		}
 
+
+
+
+		
+
 		.material-shadow {
 			transition: box-shadow 0.28s cubic-bezier(0.4, 0, 0.2, 1);
 		}
@@ -10433,7 +13160,10 @@ li.L9 {
 		<content-wrapper>
 			<step-number>{{ stepnum }}</step-number>
 			<div id="step-content" class="material-shadow " elevation="1">
-				<h2 id="step-header">{{ header }}</h2>
+				<h2 id="step-header">
+					<span>{{ header }}</span>
+					
+				</h2> 
 				<content></content>
 
 			</div>
@@ -11539,15 +14269,28 @@ li.L9 {
 		},
 
 		windowOn:function(e) {
-			function findPageItemRect(e) {
-				if (e.tagName == 'PAGE-ITEM') return e.getContainerRect();
-				if (e.parentElement == null) return e.getBoundingClientRect();
-				return findPageItemRect(e.parentElement);
+			this.capsule_content.style.display = "block";
+			this.capsule_content.style.opacity = 1;
+			this.capsule_content_container.style.visibility = "visible";
+
+			this.resizeModal();
+
+			this.capsule_content_container.style.opacity = "1";
+			this.capsule_content_container.setAttribute("elevation", "5");
+			this.capsule_content_container.style.zIndex = "98";
+
+			this.capsule_page_block.style.visibility = "visible";
+		},
+		resizeModal: function() {
+			function findPageItemRect(elem) {
+				if (elem.tagName == 'PAGE-ITEM') return elem.getContainerRect();
+				if (elem.parentElement == null) return elem.getBoundingClientRect();
+				return findPageItemRect(elem.parentElement);
 			}
 
 			var page_item_rect = findPageItemRect(this);
-			var container_top = this.capsule_content_container.getBoundingClientRect();
 
+			var container_top = this.capsule_content_container.getBoundingClientRect();
 			var modal_width = 0,
 				modal_height = 0,
 				modal_top = 150,
@@ -11562,14 +14305,6 @@ li.L9 {
 
 			modal_height = page_item_rect.height - modal_top;
 
-			console.log(modal_width);
-			console.log(modal_left);
-
-			this.capsule_content.style.display = "block";
-			this.capsule_content.style.opacity = 1;
-			this.capsule_content_container.style.visibility = "visible";
-
-
 			// SIZE MODAL WINDOW
 			this.capsule_content_container.style.width = modal_width + "px";
 			this.capsule_content_container.style.height = modal_height + "px";
@@ -11581,15 +14316,8 @@ li.L9 {
 			this.capsule_content.style.height = modal_height - 60 + "px";
 
 			//
-			this.capsule_content_container.style.opacity = "1";
-			this.capsule_content_container.setAttribute("elevation", "5");
-			this.capsule_content_container.style.zIndex = "98";
 
-			this.capsule_page_block.style.visibility = "visible";
-			// this.container.style.top = -container_top + "px";
-			// this.container.setAttribute("elevation", "5");
 		},
-
 		windowOff: function(e) {
 			this.window_open = true;
 			var self = this;
@@ -13380,6 +16108,403 @@ function fetchGlossary(url, callback) {
 
 		properties: {
 			header: String
+		}
+	});
+</script>
+<dom-module id="help-button" assetpath="learn/">
+	<style>
+		:host ::content {
+			font-family: 'Roboto', 'Noto', sans-serif;
+			/*width:100px;*/
+			/*position:fixed;
+			bottom:15px;
+			right:15px;
+			z-index:999;*/
+			/*FA597A*/
+
+		}
+		:host ::content #help-container {
+			/*width:100%;*/
+			/*display:flex;*/
+			position:fixed;
+			bottom:65px;
+			right:125px;
+			z-index:999;
+			transition: all 0.5s cubic-bezier(0.4, 0, 0.2, 1);
+
+		}
+		:host ::content #help-content {
+
+			box-shadow: 0 16px 24px 2px rgba(0, 0, 0, 0.14), 0 6px 30px 5px rgba(0, 0, 0, 0.12), 0 8px 10px -5px rgba(0, 0, 0, 0.4);
+			transition: all 0.5s cubic-bezier(0.4, 0, 0.2, 1);
+			width:100px;
+			height:50px;
+			background:#338D83;
+			position:absolute;
+			top:0;
+			left:0;
+			opacity:0;
+			padding:10px;
+			box-sizing: border-box;
+			overflow:hidden;
+			border-radius:3px;
+			/*display:none;*/
+		}
+
+		:host ::content #help-feedback {
+			/*box-shadow: 0 2px 2px 0 rgba(0, 0, 0, 0.14), 0 1px 5px 0 rgba(0, 0, 0, 0.12), 0 3px 1px -2px rgba(0, 0, 0, 0.2);
+			box-shadow: 0 16px 24px 2px rgba(0, 0, 0, 0.14), 0 6px 30px 5px rgba(0, 0, 0, 0.12), 0 8px 10px -5px rgba(0, 0, 0, 0.4);*/
+			transition: all 0.5s cubic-bezier(0.4, 0, 0.2, 1);
+			width:400px;
+			height:350px;
+			background-color:rgba(255,255,255,0.95);
+			position:absolute;
+			top:-300px;
+			left:-300px;
+			opacity:1;
+			padding:10px;
+			box-sizing: border-box;
+			overflow:hidden;
+			align-items: center;
+  			justify-content: center;
+  			display: flex;
+  			border-radius:3px;
+  			display:none;
+		}
+
+		:host ::content #help-feedback p {
+			color:#666;
+			margin-left:10px;
+		}
+
+
+
+		:host ::content #help-button {
+			position:absolute;
+			color:#FFF;
+			background:#338D83;
+			padding:10px;
+			border-radius:4px;
+			cursor:pointer;
+			box-shadow: 0 2px 2px 0 rgba(0, 0, 0, 0.14), 0 1px 5px 0 rgba(0, 0, 0, 0.12), 0 3px 1px -2px rgba(0, 0, 0, 0.2);
+			transition: all 0.28s cubic-bezier(0.4, 0, 0.2, 1);
+
+			top:0;
+			left:0;
+			width:100px;
+			height:50px;
+			box-sizing: border-box;
+			z-index:5;
+		}
+
+		/*:host ::content #help-button.hide-button,  :host ::content #help-button.hide-button:hover{
+			top:105px;
+		}*/
+
+		:host ::content #help-button:hover {
+			border-radius:0px;
+			box-shadow: 0 16px 24px 2px rgba(0, 0, 0, 0.14), 0 6px 30px 5px rgba(0, 0, 0, 0.12), 0 8px 10px -5px rgba(0, 0, 0, 0.4);
+			top:-3px;
+			left:-3px;
+		}
+
+		:host ::content #help-button h4 {
+			font-family: 'Roboto', 'Noto', sans-serif;
+			color: #FFF;
+			font-size: 20px;
+			font-weight: normal;
+			margin: 0;
+
+		}
+
+		:host ::content .custom-icon {
+			display: -ms-inline-flexbox;
+			display: -webkit-inline-flex;
+			display: inline-flex;
+			-ms-flex-align: center;
+			-webkit-align-items: center;
+			align-items: center;
+			-ms-flex-pack: center;
+			-webkit-justify-content: center;
+			justify-content: center;
+			width: 28px;
+			height: 28px;
+			position: relative;
+			vertical-align: middle;
+			fill: currentcolor;
+			transition: all 0.28s cubic-bezier(0.4, 0, 0.2, 1);
+			/*opacity:0.2;*/
+			color:#FFF;
+			stroke:#FFF;
+
+			width: 24px;
+			height: 24px;
+			top:0;
+		}
+		:host ::content .custom-icon svg{
+			width: 24px;
+			height: 24px;
+		}
+
+		:host ::content .custom-icon .icon-outer{
+			fill:none;
+		}
+		:host ::content .help-form {
+			padding:10px;
+			/*background-color: #FFF;
+			padding:10px;
+			border-radius:3px;
+			box-shadow: inset 0 2px 2px 0 rgba(0, 0, 0, 0.14), inset 0 1px 5px 0 rgba(0, 0, 0, 0.12), inset 0 3px 1px -2px rgba(0, 0, 0, 0.2);*/
+		}
+		:host ::content #help-content h2, :host ::content #help-feedback h2{
+			font-family: 'Roboto', 'Noto', sans-serif;
+			color: #333;
+			font-size: 24px;
+			font-weight:normal;
+			margin:0;
+			margin-top:10px;
+			margin-bottom:10px;
+		}
+
+		:host ::content #help-feedback h2 {
+			color:#333;
+		}
+
+		:host ::content #help-content .input-content.paper-input-container label, :host ::content #help-content .input-content.paper-input-container .paper-input-label {
+			/*color: #FFF;*/
+		}
+
+		:host ::content #help-content paper-button {
+			margin-top:20px;
+		}
+		:host ::content #help-close-icon {
+			display:none;
+		}
+
+		:host ::content #help-submit {
+			background-color:#FFF;
+			font-family: 'Roboto', 'Noto', sans-serif;
+			color: #333;
+		}
+
+		:host ::content .paper-input-container-0 .focused-line.paper-input-container {
+    		background: #338D83;
+		}
+
+
+	</style>
+
+	<template>
+		<div id="help-container">
+			<div id="help-button">
+				<h4>
+					<iron-icon id="help-close-icon" icon="icons:close"></iron-icon>
+					<span id="help-question-icon" class="custom-icon">
+						<svg viewBox="0 0 24 24" preserveAspectRatio="xMidYMid meet" class="style-scope iron-icon" style="pointer-events: none; display: block; width: 100%; height: 100%;">
+
+							<g>
+								<path class="icon-outer" d="M20,2H4C2.9,2,2,2.9,2,4v18l4-4h14c1.1,0,2-0.9,2-2V4C22,2.9,21.1,2,20,2z"></path>
+							</g>
+							<g>
+								<path class="icon-inner" d="M11.3,12.5c0-0.6,0.1-1.1,0.2-1.3c0.1-0.3,0.4-0.6,0.8-1c0.5-0.5,0.9-1,1.2-1.4c0.2-0.4,0.4-0.8,0.4-1.4
+								c0-0.6-0.2-1.1-0.5-1.4c-0.3-0.3-0.8-0.5-1.4-0.5c-0.6,0-1,0.2-1.4,0.5c-0.4,0.3-0.5,0.8-0.5,1.4H9.1l0,0c0-0.8,0.2-1.4,0.8-1.9
+								c0.5-0.5,1.2-0.7,2-0.7c0.9,0,1.6,0.2,2.1,0.7c0.5,0.5,0.7,1.2,0.7,2c0,0.7-0.2,1.2-0.5,1.8s-0.8,1-1.4,1.6
+								c-0.3,0.3-0.5,0.5-0.6,0.7c-0.1,0.2-0.1,0.6-0.1,1H11.3z M12.2,15.5h-1v-1.1h1V15.5z"></path>
+							</g>
+
+						</svg>
+					</span>
+					<span id="help-button-text">Help</span>
+				</h4>
+			</div>
+			<div id="help-content">
+				<h2>Confused?</h2>
+				<div class="help-form">
+					<paper-textarea rows="4" label="Tell us about your troubles." value="{{ form_data.question }}"></paper-textarea>
+
+					<paper-input label="Email (Optional)" value="{{ form_data.email }}"></paper-input>
+				</div>
+				<paper-button id="help-submit" raised="">Send us your question</paper-button>
+
+
+
+				<content></content>
+				<iron-ajax id="ajax" handle-as="json" content-type="application/json" body="{{ form_data }}" method="POST" url="{{ ajaxUrl }}" on-response="showFeedback"></iron-ajax>
+			</div>
+			<div id="help-feedback">
+				<h2>Thanks!</h2>
+				<p>Your question has been submitted.</p>
+			</div>
+		</div>
+
+	</template>
+
+</dom-module>
+
+<script>
+	Polymer({
+		is: 'help-button',
+
+		properties: {
+			header: String,
+			src: {
+				type: String,
+				value: ""
+			},
+			fullSrc: {
+				type: String,
+				value: ""
+			},
+			ajaxUrl: {
+				type: String,
+				value: "/submit-question"
+			}
+		},
+
+		ready: function() {
+			// DOM OBJECTS
+			this.help_container = this.$['help-container'];
+			this.help_button = this.$['help-button'];
+			this.help_content = this.$['help-content'];
+			this.help_button_text = this.$['help-button-text'];
+			this.help_close_icon = this.$['help-close-icon'];
+			this.help_question_icon = this.$['help-question-icon'];
+			this.help_submit = this.$['help-submit'];
+			this.help_feedback = this.$['help-feedback'];
+
+		},
+		getCookie: function(name) {
+				var cookieValue = null;
+				if (document.cookie && document.cookie != '') {
+						var cookies = document.cookie.split(';');
+						for (var i = 0; i < cookies.length; i++) {
+								var cookie = cookies[i].trim(); // trim is ECMAScript 5 so good for modern browsers
+								// Does this cookie string begin with the name we want?
+								if (cookie.substring(0, name.length + 1) == (name + '=')) {
+										cookieValue = decodeURIComponent(cookie.substring(name.length + 1));
+										break;
+								}
+						}
+				}
+				return cookieValue;
+		},
+
+		submitHelp: function() {
+			if (!this.form_data.question) {
+				console.log("Blank question, skipping...");
+				return;
+			}
+			this.form_data.page = document.location.pathname;
+			var closest_step = {};
+			var closest_step_number = 0;
+			var page_distance = document.getElementById('page-item').scrollTop;
+
+
+			// Find the closest question on the page for the current scroll position
+			closest_step = this.steps_on_page[0];
+
+
+			for (var i = 0; i < this.steps_on_page.length; i++) {
+				var distance_offset = Math.abs(this.steps_on_page[i].offsetTop - page_distance);
+				if (distance_offset < Math.abs(closest_step.offsetTop - page_distance) ) {
+					closest_step = this.steps_on_page[i];
+					closest_step_number = i;
+				}
+			}
+
+			this.form_data.step = closest_step.header;
+			this.form_data.step_number = closest_step_number + 1;
+
+			var csrftoken = this.getCookie('csrftoken');
+
+			if (csrftoken) {
+				this.$.ajax.headers["X-CSRFToken"] = csrftoken;
+			}
+			this.$.ajax.body = JSON.stringify(this.form_data); // this is supposed to be automatic but in a newer version of polymer
+			var generated = this.$.ajax.generateRequest();
+		},
+		showFeedback: function(d) {
+			this.help_feedback.style.display = "flex";
+		},
+
+		attached: function() {
+			var self = this;
+			var hide_button = false;
+
+			// see http://stackoverflow.com/questions/24982090/polymer-form-using-paper-input-and-core-ajax for more
+			this.form_data = {
+				page: '',
+				step: '',
+				step_number: null,
+				question: '',
+				email: ''
+			}
+
+			this.steps_on_page = document.getElementsByTagName("step-block");
+
+
+			this.help_submit.addEventListener("click", function(e) {
+				self.submitHelp();
+			});
+
+			this.help_button.addEventListener("click", function(e) {
+
+				if (hide_button) {
+					hide_button = false;
+					self.help_content.style.width = "100px";
+					self.help_content.style.height = "50px";
+					self.help_content.style.left = "0px";
+					self.help_content.style.top = "0px";
+					self.help_content.style.backgroundColor = "#338D83";
+					self.help_content.style.opacity = "0";
+					self.help_button_text.innerHTML = "Help";
+					self.help_close_icon.style.display = "none";
+					self.help_question_icon.style.display = "inline-flex";
+					self.help_button.style.backgroundColor = "#338D83";
+					self.help_feedback.style.display = "none";
+				} else {
+					hide_button = true;
+					self.help_content.style.display = "block";
+
+					self.help_content.style.opacity = "1";
+					//self.help_button.style.opacity = "0";
+					//self.help_button.style.display = "none";
+
+					self.help_content.style.width = "400px";
+					self.help_content.style.height = "350px";
+					self.help_content.style.left = "-300px";
+					self.help_content.style.top = "-300px";
+					self.help_content.style.backgroundColor = "#F5F4F4";
+					self.help_button_text.innerHTML = "Close";
+					self.help_close_icon.style.display = "inline-flex";
+					self.help_question_icon.style.display = "none";
+					self.help_button.style.backgroundColor = "#999";
+				}
+
+				//.hide-button
+				console.log("CLICK");
+
+			});
+
+
+			// this.capsule_page_block.addEventListener("click", function(e) {
+			// 	self._onCapsuleCloseClick(e);
+			// });
+
+
+			this.help_button.addEventListener("transitionend",function(e){
+				if (hide_button) {
+					//self.help_button.style.display = "none";
+				}
+
+			},false);
+
+			// this.capsule_content_container.addEventListener("webkitTransitionEnd",function(e){
+			// 	self._hideContentContainer();
+			// },false);
+
+
+
 		}
 	});
 </script>

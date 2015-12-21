@@ -6,11 +6,12 @@ import json
 from django.views.generic.detail import DetailView
 from django.views.generic.base import TemplateView
 from django.http import Http404
+from django.utils.decorators import method_decorator
+from django.views.decorators.csrf import ensure_csrf_cookie
 
 from .models import Lesson, GlossaryTerm, CapsuleUnit, Question
 from .refresolvers import evaluate_content
 import os.path
-
 # from django.forms import TextInput, Textarea
 # from django.db import models
 
@@ -33,6 +34,11 @@ def handler500(request):
     return response
 
 class JSONResponse(HttpResponse):
+
+    @method_decorator(ensure_csrf_cookie)
+    def dispatch(self, *args, **kwargs):
+        return super().dispatch(*args,**kwargs)
+
     def __init__(self,payload):
         if isinstance(payload,str):
             json_str = payload
@@ -42,7 +48,6 @@ class JSONResponse(HttpResponse):
 
 
 def submit_question(request):
-    # data = json.loads(request.body.decode('utf-8'))
     data = {
         "ok": False,
         "message": "Questions must be submitted as AJAX (and don't forget the CSRF token!)"
@@ -65,6 +70,10 @@ class LessonDetailView(DetailView):
 
     model = Lesson
     template_name = "lesson-detail.html"
+
+    @method_decorator(ensure_csrf_cookie)
+    def dispatch(self, *args, **kwargs):
+        return super().dispatch(*args,**kwargs)
 
     def is_editor(self):
         return self.request.user.is_authenticated()
@@ -90,6 +99,10 @@ class LessonDetailView(DetailView):
 
 class HomepageView(TemplateView):
     template_name = "homepage.html"
+
+    @method_decorator(ensure_csrf_cookie)
+    def dispatch(self, *args, **kwargs):
+        return super().dispatch(*args,**kwargs)
 
     def get_context_data(self, **kwargs):
         context = super(HomepageView, self).get_context_data(**kwargs)

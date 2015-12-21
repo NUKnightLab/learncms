@@ -101,6 +101,7 @@ class Question(models.Model):
     email = models.EmailField(blank=True, help_text="Optionally, an email address of the asker.")
     page = models.CharField(blank=True, max_length=50, help_text="The slug of the lesson page where the question was asked")
     step = models.CharField(blank=True, max_length=100, help_text="As much as possible about where in the page the asker was when asking.")
+    step_number = models.IntegerField(null=True)
 
     @property
     def brief_question(self):

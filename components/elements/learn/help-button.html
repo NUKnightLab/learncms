@@ -1,0 +1,409 @@
+<!--
+
+'help-button' is a help button :)
+
+-->
+<dom-module id="help-button">
+	<style>
+		:host ::content {
+			font-family: 'Roboto', 'Noto', sans-serif;
+			/*width:100px;*/
+			/*position:fixed;
+			bottom:15px;
+			right:15px;
+			z-index:999;*/
+			/*FA597A*/
+
+		}
+		:host ::content #help-container {
+			/*width:100%;*/
+			/*display:flex;*/
+			position:fixed;
+			bottom:65px;
+			right:125px;
+			z-index:999;
+			transition: all 0.5s cubic-bezier(0.4, 0, 0.2, 1);
+
+		}
+		:host ::content #help-content {
+
+			box-shadow: 0 16px 24px 2px rgba(0, 0, 0, 0.14), 0 6px 30px 5px rgba(0, 0, 0, 0.12), 0 8px 10px -5px rgba(0, 0, 0, 0.4);
+			transition: all 0.5s cubic-bezier(0.4, 0, 0.2, 1);
+			width:100px;
+			height:50px;
+			background:#338D83;
+			position:absolute;
+			top:0;
+			left:0;
+			opacity:0;
+			padding:10px;
+			box-sizing: border-box;
+			overflow:hidden;
+			border-radius:3px;
+			/*display:none;*/
+		}
+
+		:host ::content #help-feedback {
+			/*box-shadow: 0 2px 2px 0 rgba(0, 0, 0, 0.14), 0 1px 5px 0 rgba(0, 0, 0, 0.12), 0 3px 1px -2px rgba(0, 0, 0, 0.2);
+			box-shadow: 0 16px 24px 2px rgba(0, 0, 0, 0.14), 0 6px 30px 5px rgba(0, 0, 0, 0.12), 0 8px 10px -5px rgba(0, 0, 0, 0.4);*/
+			transition: all 0.5s cubic-bezier(0.4, 0, 0.2, 1);
+			width:400px;
+			height:350px;
+			background-color:rgba(255,255,255,0.95);
+			position:absolute;
+			top:-300px;
+			left:-300px;
+			opacity:1;
+			padding:10px;
+			box-sizing: border-box;
+			overflow:hidden;
+			align-items: center;
+  			justify-content: center;
+  			display: flex;
+  			border-radius:3px;
+  			display:none;
+		}
+
+		:host ::content #help-feedback p {
+			color:#666;
+			margin-left:10px;
+		}
+
+
+
+		:host ::content #help-button {
+			position:absolute;
+			color:#FFF;
+			background:#338D83;
+			padding:10px;
+			border-radius:4px;
+			cursor:pointer;
+			box-shadow: 0 2px 2px 0 rgba(0, 0, 0, 0.14), 0 1px 5px 0 rgba(0, 0, 0, 0.12), 0 3px 1px -2px rgba(0, 0, 0, 0.2);
+			transition: all 0.28s cubic-bezier(0.4, 0, 0.2, 1);
+
+			top:0;
+			left:0;
+			width:100px;
+			height:50px;
+			box-sizing: border-box;
+			z-index:5;
+		}
+
+		/*:host ::content #help-button.hide-button,  :host ::content #help-button.hide-button:hover{
+			top:105px;
+		}*/
+
+		:host ::content #help-button:hover {
+			border-radius:0px;
+			box-shadow: 0 16px 24px 2px rgba(0, 0, 0, 0.14), 0 6px 30px 5px rgba(0, 0, 0, 0.12), 0 8px 10px -5px rgba(0, 0, 0, 0.4);
+			top:-3px;
+			left:-3px;
+		}
+
+		:host ::content #help-button h4 {
+			font-family: 'Roboto', 'Noto', sans-serif;
+			color: #FFF;
+			font-size: 20px;
+			font-weight: normal;
+			margin: 0;
+
+		}
+
+		:host ::content .custom-icon {
+			display: -ms-inline-flexbox;
+			display: -webkit-inline-flex;
+			display: inline-flex;
+			-ms-flex-align: center;
+			-webkit-align-items: center;
+			align-items: center;
+			-ms-flex-pack: center;
+			-webkit-justify-content: center;
+			justify-content: center;
+			width: 28px;
+			height: 28px;
+			position: relative;
+			vertical-align: middle;
+			fill: currentcolor;
+			transition: all 0.28s cubic-bezier(0.4, 0, 0.2, 1);
+			/*opacity:0.2;*/
+			color:#FFF;
+			stroke:#FFF;
+
+			width: 24px;
+			height: 24px;
+			top:0;
+		}
+		:host ::content .custom-icon svg{
+			width: 24px;
+			height: 24px;
+		}
+
+		:host ::content .custom-icon .icon-outer{
+			fill:none;
+		}
+		:host ::content .help-form {
+			padding:10px;
+			/*background-color: #FFF;
+			padding:10px;
+			border-radius:3px;
+			box-shadow: inset 0 2px 2px 0 rgba(0, 0, 0, 0.14), inset 0 1px 5px 0 rgba(0, 0, 0, 0.12), inset 0 3px 1px -2px rgba(0, 0, 0, 0.2);*/
+		}
+		:host ::content #help-content h2, :host ::content #help-feedback h2{
+			font-family: 'Roboto', 'Noto', sans-serif;
+			color: #333;
+			font-size: 24px;
+			font-weight:normal;
+			margin:0;
+			margin-top:10px;
+			margin-bottom:10px;
+		}
+
+		:host ::content #help-feedback h2 {
+			color:#333;
+		}
+
+		:host ::content #help-content .input-content.paper-input-container label, :host ::content #help-content .input-content.paper-input-container .paper-input-label {
+			/*color: #FFF;*/
+		}
+
+		:host ::content #help-content paper-button {
+			margin-top:20px;
+		}
+		:host ::content #help-close-icon {
+			display:none;
+		}
+
+		:host ::content #help-submit {
+			background-color:#FFF;
+			font-family: 'Roboto', 'Noto', sans-serif;
+			color: #333;
+		}
+
+		:host ::content .paper-input-container-0 .focused-line.paper-input-container {
+    		background: #338D83;
+		}
+
+
+	</style>
+
+	<template>
+		<div id="help-container">
+			<div id="help-button">
+				<h4>
+					<iron-icon id="help-close-icon" icon="icons:close"></iron-icon>
+					<span id="help-question-icon" class="custom-icon">
+						<svg viewBox="0 0 24 24" preserveAspectRatio="xMidYMid meet" class="style-scope iron-icon" style="pointer-events: none; display: block; width: 100%; height: 100%;">
+
+							<g>
+								<path class="icon-outer" d="M20,2H4C2.9,2,2,2.9,2,4v18l4-4h14c1.1,0,2-0.9,2-2V4C22,2.9,21.1,2,20,2z"/>
+							</g>
+							<g>
+								<path class="icon-inner" d="M11.3,12.5c0-0.6,0.1-1.1,0.2-1.3c0.1-0.3,0.4-0.6,0.8-1c0.5-0.5,0.9-1,1.2-1.4c0.2-0.4,0.4-0.8,0.4-1.4
+								c0-0.6-0.2-1.1-0.5-1.4c-0.3-0.3-0.8-0.5-1.4-0.5c-0.6,0-1,0.2-1.4,0.5c-0.4,0.3-0.5,0.8-0.5,1.4H9.1l0,0c0-0.8,0.2-1.4,0.8-1.9
+								c0.5-0.5,1.2-0.7,2-0.7c0.9,0,1.6,0.2,2.1,0.7c0.5,0.5,0.7,1.2,0.7,2c0,0.7-0.2,1.2-0.5,1.8s-0.8,1-1.4,1.6
+								c-0.3,0.3-0.5,0.5-0.6,0.7c-0.1,0.2-0.1,0.6-0.1,1H11.3z M12.2,15.5h-1v-1.1h1V15.5z"/>
+							</g>
+
+						</svg>
+					</span>
+					<span id="help-button-text">Help</span>
+				</h4>
+			</div>
+			<div id="help-content">
+				<h2>Confused?</h2>
+				<div class="help-form">
+					<paper-textarea rows="4" label="Tell us about your troubles." value="{{ form_data.question }}"></paper-textarea>
+
+					<paper-input label="Email (Optional)" value="{{ form_data.email }}"></paper-input>
+				</div>
+				<paper-button id="help-submit" raised>Send us your question</paper-button>
+
+
+
+				<content></content>
+				<iron-ajax id="ajax"
+									 handle-as="json"
+									 content-type="application/json"
+									 body="{{ form_data }}"
+									 method="POST"
+									 url="{{ ajaxUrl }}"
+									 on-response="showFeedback"
+									 ></iron-ajax>
+			</div>
+			<div id="help-feedback">
+				<h2>Thanks!</h2>
+				<p>Your question has been submitted.</p>
+			</div>
+		</div>
+
+	</template>
+
+</dom-module>
+
+<script>
+	Polymer({
+		is: 'help-button',
+
+		properties: {
+			header: String,
+			src: {
+				type: String,
+				value: ""
+			},
+			fullSrc: {
+				type: String,
+				value: ""
+			},
+			ajaxUrl: {
+				type: String,
+				value: "/submit-question"
+			}
+		},
+
+		ready: function() {
+			// DOM OBJECTS
+			this.help_container = this.$['help-container'];
+			this.help_button = this.$['help-button'];
+			this.help_content = this.$['help-content'];
+			this.help_button_text = this.$['help-button-text'];
+			this.help_close_icon = this.$['help-close-icon'];
+			this.help_question_icon = this.$['help-question-icon'];
+			this.help_submit = this.$['help-submit'];
+			this.help_feedback = this.$['help-feedback'];
+
+		},
+		getCookie: function(name) {
+				var cookieValue = null;
+				if (document.cookie && document.cookie != '') {
+						var cookies = document.cookie.split(';');
+						for (var i = 0; i < cookies.length; i++) {
+								var cookie = cookies[i].trim(); // trim is ECMAScript 5 so good for modern browsers
+								// Does this cookie string begin with the name we want?
+								if (cookie.substring(0, name.length + 1) == (name + '=')) {
+										cookieValue = decodeURIComponent(cookie.substring(name.length + 1));
+										break;
+								}
+						}
+				}
+				return cookieValue;
+		},
+
+		submitHelp: function() {
+			if (!this.form_data.question) {
+				console.log("Blank question, skipping...");
+				return;
+			}
+			this.form_data.page = document.location.pathname;
+			var closest_step = {};
+			var closest_step_number = 0;
+			var page_distance = document.getElementById('page-item').scrollTop;
+
+
+			// Find the closest question on the page for the current scroll position
+			closest_step = this.steps_on_page[0];
+
+
+			for (var i = 0; i < this.steps_on_page.length; i++) {
+				var distance_offset = Math.abs(this.steps_on_page[i].offsetTop - page_distance);
+				if (distance_offset < Math.abs(closest_step.offsetTop - page_distance) ) {
+					closest_step = this.steps_on_page[i];
+					closest_step_number = i;
+				}
+			}
+
+			this.form_data.step = closest_step.header;
+			this.form_data.step_number = closest_step_number + 1;
+
+			var csrftoken = this.getCookie('csrftoken');
+
+			if (csrftoken) {
+				this.$.ajax.headers["X-CSRFToken"] = csrftoken;
+			}
+			this.$.ajax.body = JSON.stringify(this.form_data); // this is supposed to be automatic but in a newer version of polymer
+			var generated = this.$.ajax.generateRequest();
+		},
+		showFeedback: function(d) {
+			this.help_feedback.style.display = "flex";
+		},
+
+		attached: function() {
+			var self = this;
+			var hide_button = false;
+
+			// see http://stackoverflow.com/questions/24982090/polymer-form-using-paper-input-and-core-ajax for more
+			this.form_data = {
+				page: '',
+				step: '',
+				step_number: null,
+				question: '',
+				email: ''
+			}
+
+			this.steps_on_page = document.getElementsByTagName("step-block");
+
+
+			this.help_submit.addEventListener("click", function(e) {
+				self.submitHelp();
+			});
+
+			this.help_button.addEventListener("click", function(e) {
+
+				if (hide_button) {
+					hide_button = false;
+					self.help_content.style.width = "100px";
+					self.help_content.style.height = "50px";
+					self.help_content.style.left = "0px";
+					self.help_content.style.top = "0px";
+					self.help_content.style.backgroundColor = "#338D83";
+					self.help_content.style.opacity = "0";
+					self.help_button_text.innerHTML = "Help";
+					self.help_close_icon.style.display = "none";
+					self.help_question_icon.style.display = "inline-flex";
+					self.help_button.style.backgroundColor = "#338D83";
+					self.help_feedback.style.display = "none";
+				} else {
+					hide_button = true;
+					self.help_content.style.display = "block";
+
+					self.help_content.style.opacity = "1";
+					//self.help_button.style.opacity = "0";
+					//self.help_button.style.display = "none";
+
+					self.help_content.style.width = "400px";
+					self.help_content.style.height = "350px";
+					self.help_content.style.left = "-300px";
+					self.help_content.style.top = "-300px";
+					self.help_content.style.backgroundColor = "#F5F4F4";
+					self.help_button_text.innerHTML = "Close";
+					self.help_close_icon.style.display = "inline-flex";
+					self.help_question_icon.style.display = "none";
+					self.help_button.style.backgroundColor = "#999";
+				}
+
+				//.hide-button
+				console.log("CLICK");
+
+			});
+
+
+			// this.capsule_page_block.addEventListener("click", function(e) {
+			// 	self._onCapsuleCloseClick(e);
+			// });
+
+
+			this.help_button.addEventListener("transitionend",function(e){
+				if (hide_button) {
+					//self.help_button.style.display = "none";
+				}
+
+			},false);
+
+			// this.capsule_content_container.addEventListener("webkitTransitionEnd",function(e){
+			// 	self._hideContentContainer();
+			// },false);
+
+
+
+		}
+	});
+</script>

@@ -85,7 +85,7 @@ def trunc_question(obj):
 trunc_question.short_description = 'Question'
 
 class QuestionAdmin(admin.ModelAdmin):
-    list_display = (trunc_question, 'page', 'step', 'email', 'created_at')
+    list_display = (trunc_question, 'page', 'step', 'step_number', 'email', 'created_at')
     search_fields = ['question', 'page', 'step', 'email']
 
 admin.site.register(Lesson, LessonAdmin)
