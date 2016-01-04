@@ -13,7 +13,7 @@ from .models import Lesson, ZoomingImage, CapsuleUnit, GlossaryTerm
 
 from bs4 import NavigableString
 from bs4 import BeautifulSoup, Comment
-
+import traceback
 
 def evaluate_content(lesson_content, strip_bad_references=False):
 
@@ -62,6 +62,7 @@ class ReferenceResolver(object):
             self.update_element(elem, obj)
         except Exception as e:
             self.note_error(elem, "Reference could not be resolved", strip_bad_references)
+            self.note_error(elem, traceback.format_exc(), strip_bad_references)
 
     def note_error(self, elem, message, strip):
         elem.append(Comment(message))
