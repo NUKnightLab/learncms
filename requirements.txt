@@ -9,3 +9,4 @@ django-storages-redux==1.2.3
 -e git+https://github.com/sehmaschine/django-filebrowser@febfad950774755ab215c48babc7822eb451ebee#egg=django_filebrowser-master
 django-concurrency==0.9
 beautifulsoup4==4.4.1
+lxml==3.4.4
