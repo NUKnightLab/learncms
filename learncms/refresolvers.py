@@ -80,7 +80,9 @@ class LessonRefResolver(ReferenceResolver):
         elem.attrs['image'] = obj.banner_image.url
         elem.attrs['header'] = obj.title
         elem.attrs['url'] = obj.get_absolute_url()
-        elem.insert(1, BeautifulSoup(obj.reference_blurb, "lxml").html.body.contents[0])
+        for i,item in enumerate(BeautifulSoup(obj.reference_blurb, "lxml").html.body.contents):
+            elem.insert(i+1, item)
+
 
 
 class ZoomingImageRefResolver(ReferenceResolver):
@@ -98,7 +100,8 @@ class CapsuleRefResolver(ReferenceResolver):
     def update_element(self, elem, obj):
         elem.attrs['image'] = obj.image.url
         elem.attrs['header'] = obj.title
-        elem.insert(1, BeautifulSoup(obj.content, "lxml").html.body.contents[0])
+        for i,item in enumerate(BeautifulSoup(obj.content, "lxml").html.body.contents):
+            elem.insert(i+1, item)
 
 
 REF_RESOLVERS = {
