@@ -95,7 +95,7 @@ Have Django do its basic setup
 ```
 python manage.py migrate --no-initial-data
 python manage.py createsuperuser
-python manage.py loaddata
+python manage.py loadlearndata
 python manage.py collectstatic
 ./setup_fbimages.sh
 ```

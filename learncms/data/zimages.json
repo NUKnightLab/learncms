@@ -1,130 +1,130 @@
 [
 {
+  "pk": 1,
+  "model": "learncms.zoomingimage",
   "fields": {
     "image": "zimages/mac-screenshot-big.png",
     "slug": "mac-file-system"
-  },
-  "model": "learncms.zoomingimage",
-  "pk": 1
+  }
 },
 {
+  "pk": 2,
+  "model": "learncms.zoomingimage",
   "fields": {
     "image": "zimages/pc-screenshot-big.png",
     "slug": "pc-file-system"
-  },
-  "model": "learncms.zoomingimage",
-  "pk": 2
+  }
 },
 {
+  "pk": 3,
+  "model": "learncms.zoomingimage",
   "fields": {
     "image": "zimages/responsive-01.png",
     "slug": "responsive-01"
-  },
-  "model": "learncms.zoomingimage",
-  "pk": 3
+  }
 },
 {
+  "pk": 4,
+  "model": "learncms.zoomingimage",
   "fields": {
     "image": "zimages/responsive-02.png",
     "slug": "responsive-02"
-  },
-  "model": "learncms.zoomingimage",
-  "pk": 4
+  }
 },
 {
+  "pk": 5,
+  "model": "learncms.zoomingimage",
   "fields": {
     "image": "zimages/responsive-03.png",
     "slug": "responsive-03"
-  },
-  "model": "learncms.zoomingimage",
-  "pk": 5
+  }
 },
 {
+  "pk": 6,
+  "model": "learncms.zoomingimage",
   "fields": {
     "image": "zimages/responsive-04.png",
     "slug": "responsive-04"
-  },
-  "model": "learncms.zoomingimage",
-  "pk": 6
+  }
 },
 {
+  "pk": 7,
+  "model": "learncms.zoomingimage",
   "fields": {
     "image": "zimages/responsive-05.png",
     "slug": "responsive-05"
-  },
-  "model": "learncms.zoomingimage",
-  "pk": 7
+  }
 },
 {
+  "pk": 8,
+  "model": "learncms.zoomingimage",
   "fields": {
     "image": "zimages/responsive-06.png",
     "slug": "responsive-06"
-  },
-  "model": "learncms.zoomingimage",
-  "pk": 8
+  }
 },
 {
+  "pk": 9,
+  "model": "learncms.zoomingimage",
   "fields": {
     "image": "zimages/responsive-07.png",
     "slug": "responsive-07"
-  },
-  "model": "learncms.zoomingimage",
-  "pk": 9
+  }
 },
 {
+  "pk": 10,
+  "model": "learncms.zoomingimage",
   "fields": {
     "image": "zimages/responsive-08.png",
     "slug": "responsive-08"
-  },
-  "model": "learncms.zoomingimage",
-  "pk": 10
+  }
 },
 {
+  "pk": 11,
+  "model": "learncms.zoomingimage",
   "fields": {
     "image": "zimages/responsive-09.png",
     "slug": "responsive-09"
-  },
-  "model": "learncms.zoomingimage",
-  "pk": 11
+  }
 },
 {
+  "pk": 12,
+  "model": "learncms.zoomingimage",
   "fields": {
     "image": "zimages/responsive-10.png",
     "slug": "responsive-10"
-  },
-  "model": "learncms.zoomingimage",
-  "pk": 12
+  }
 },
 {
+  "pk": 13,
+  "model": "learncms.zoomingimage",
   "fields": {
     "image": "zimages/Screen_Shot_2015-08-24_at_1.34.21_PM.png",
     "slug": "filezilla-login"
-  },
-  "model": "learncms.zoomingimage",
-  "pk": 13
+  }
 },
 {
+  "pk": 14,
+  "model": "learncms.zoomingimage",
   "fields": {
     "image": "zimages/Screen_Shot_2015-08-24_at_1.39.42_PM.png",
     "slug": "cyberduck-login"
-  },
-  "model": "learncms.zoomingimage",
-  "pk": 14
+  }
 },
 {
+  "pk": 15,
+  "model": "learncms.zoomingimage",
   "fields": {
     "image": "zimages/Screen_Shot_2015-08-24_at_1.19.47_PM.png",
     "slug": "filezilla-windows"
-  },
-  "model": "learncms.zoomingimage",
-  "pk": 15
+  }
 },
 {
+  "pk": 16,
+  "model": "learncms.zoomingimage",
   "fields": {
     "image": "zimages/Screen_Shot_2015-08-24_at_1.45.53_PM.png",
     "slug": "cyberduck-windows"
-  },
-  "model": "learncms.zoomingimage",
-  "pk": 16
+  }
 }
 ]

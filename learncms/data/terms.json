@@ -1,18 +1,178 @@
 [
 {
-  "fields": {
-    "definition": "The internet\u2019s bread and butter. It stands for HyperText Markup Language, and gives sites their structure.",
-    "lemma": "HTML"
-  },
+  "pk": 11,
   "model": "learncms.glossaryterm",
-  "pk": 1
+  "fields": {
+    "lemma": "attribute",
+    "definition": "An attribute is written within the angle brackets of an HTML tag, and provide additional information about that tag. They come in name-value pairs e.g. src is a value for the image tag, written as so: <img src=\"photo.jpeg\">"
+  }
 },
 {
-  "fields": {
-    "definition": "The <a href=\"http://www.w3.org/\">World Wide Web Consortium</a>. This group creates the specifications for HTML and other open-web languages, so that we're all on the same page when we write HTML, and the browsers are all on the same page for how to interpret it. ",
-    "lemma": "W3C"
-  },
+  "pk": 17,
   "model": "learncms.glossaryterm",
-  "pk": 2
+  "fields": {
+    "lemma": "class",
+    "definition": "A class is a CSS selector that lets you target multiple elements. It is specified using a period before the class name e.g. .greenEggs"
+  }
+},
+{
+  "pk": 21,
+  "model": "learncms.glossaryterm",
+  "fields": {
+    "lemma": "comment",
+    "definition": "A comment is an annotation in a program's code that makes the code easier to understand."
+  }
+},
+{
+  "pk": 22,
+  "model": "learncms.glossaryterm",
+  "fields": {
+    "lemma": "control flow",
+    "definition": "Control flow is the order in which statements, instructions, or functions of a program are executed or evaluated."
+  }
+},
+{
+  "pk": 3,
+  "model": "learncms.glossaryterm",
+  "fields": {
+    "lemma": "CSS",
+    "definition": "CSS, or Cascading Style Sheets, makes the Internet look pretty. It also adds basic functionality, like buttons."
+  }
+},
+{
+  "pk": 20,
+  "model": "learncms.glossaryterm",
+  "fields": {
+    "lemma": "debugging",
+    "definition": "Debugging is the process of identifying and fixing errors in your code so that it behaves the way you intended."
+  }
+},
+{
+  "pk": 4,
+  "model": "learncms.glossaryterm",
+  "fields": {
+    "lemma": "declaration",
+    "definition": "A CSS declaration consists of a property, such as background-color, and a value, such as beige."
+  }
+},
+{
+  "pk": 19,
+  "model": "learncms.glossaryterm",
+  "fields": {
+    "lemma": "developer tool",
+    "definition": "Developer tools are built-in tools in web browsers like Chrome and Firefox. They allow access to the goings-on in the browser itself, as well as the inner workings of your own web app."
+  }
+},
+{
+  "pk": 12,
+  "model": "learncms.glossaryterm",
+  "fields": {
+    "lemma": "GIF",
+    "definition": "GIF stands for Graphics Interchange Format, a file format used to save images with up to 256 colors as well as moving images. Because of their limited color palette, they're not the best format for hi-res photos, but they're great for saving simple logos, charts and dancing babies."
+  }
+},
+{
+  "pk": 7,
+  "model": "learncms.glossaryterm",
+  "fields": {
+    "lemma": "hex values",
+    "definition": "Hex values are 6-digit number used to denote color on webpages. They're sometimes abbreviated to 3 digits e.g. #000000 can become #000, but only under certain circumstances."
+  }
+},
+{
+  "pk": 6,
+  "model": "learncms.glossaryterm",
+  "fields": {
+    "lemma": "HSB",
+    "definition": "HSB is a color convention that stands for hue, saturation and brightness. Hue is the actual color itself, saturation is how pure the color is and brightness is how white or black it is."
+  }
+},
+{
+  "pk": 1,
+  "model": "learncms.glossaryterm",
+  "fields": {
+    "lemma": "HTML",
+    "definition": "The internet\u2019s bread and butter. It stands for HyperText Markup Language, and gives sites their structure."
+  }
+},
+{
+  "pk": 10,
+  "model": "learncms.glossaryterm",
+  "fields": {
+    "lemma": "HTML5",
+    "definition": "HTML5 is the fifth version of HTML released by the W3C in 2014. It contains semantic tags, such as <code>&lt;footer&gt;</code> and <code>&lt;header&gt;</code> for structuring webpages, and tags like <code>&lt;audio&gt;</code> and <code>&lt;video&gt;</code> that support multimedia elements."
+  }
+},
+{
+  "pk": 16,
+  "model": "learncms.glossaryterm",
+  "fields": {
+    "lemma": "ID",
+    "definition": "An ID is a CSS selector that lets you target one unique element. It is denoted using an octothorpe # (\u201chashtag\u201d for all you millennials) before the ID name e.g. #greenEggs"
+  }
+},
+{
+  "pk": 14,
+  "model": "learncms.glossaryterm",
+  "fields": {
+    "lemma": "JPG",
+    "definition": "JPG, or JPEG, is one of the most widely used image formats, created in the early 1990's by the Joint Photographic Experts Group (see where the acronym comes from?)."
+  }
+},
+{
+  "pk": 13,
+  "model": "learncms.glossaryterm",
+  "fields": {
+    "lemma": "PNG",
+    "definition": "PNGs are Portable Network Graphics commonly used on the web to ensure images scale up and down without pixellation. They're often used for images with transparent backgrounds."
+  }
+},
+{
+  "pk": 18,
+  "model": "learncms.glossaryterm",
+  "fields": {
+    "lemma": "programming language",
+    "definition": "A programming language communicates instructions to a computer. HTML is not considered a programming language but a markup language because it only defines structured data. Programming languages typically include additional features related to how data is stored, structured, and manipulated, and how programs are executed."
+  }
+},
+{
+  "pk": 5,
+  "model": "learncms.glossaryterm",
+  "fields": {
+    "lemma": "RGB",
+    "definition": "RGB stands for red, green and blue (not to be confused with Supreme Court Justice Ruth Bader Ginsburg). Different levels of red green and blue create various colors."
+  }
+},
+{
+  "pk": 15,
+  "model": "learncms.glossaryterm",
+  "fields": {
+    "lemma": "selectors",
+    "definition": "A CSS selector, like class or ID, lets you select HTML elements to manipulate them in some way."
+  }
+},
+{
+  "pk": 8,
+  "model": "learncms.glossaryterm",
+  "fields": {
+    "lemma": "SFTP",
+    "definition": "The Domain Name System (DNS) is a naming system for any Internet-connected device. It also functions as Internet's primary directory service."
+  }
+},
+{
+  "pk": 9,
+  "model": "learncms.glossaryterm",
+  "fields": {
+    "lemma": "shareware",
+    "definition": "Shareware is software that you can download for free, and that usually has some extra features you can buy. Think of it as an unlimited free trial."
+  }
+},
+{
+  "pk": 2,
+  "model": "learncms.glossaryterm",
+  "fields": {
+    "lemma": "W3C",
+    "definition": "The <a href=\"http://www.w3.org/\">World Wide Web Consortium</a>. This group creates the specifications for HTML and other open-web languages, so that we're all on the same page when we write HTML, and the browsers are all on the same page for how to interpret it. "
+  }
 }
 ]
