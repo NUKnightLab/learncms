@@ -1,0 +1,69 @@
+<!--
+
+`video-embed` is a container that facilitates embedding a video from a service such as Vimeo.
+
+Example:
+
+	<video-embed>
+	  ... content ...
+	</video-embed>
+
+@group Learn Elements
+@class lesson-block
+-->
+<dom-module id="video-embed">
+	<style>
+
+	</style>
+	<template>
+  <iframe src="{{src}}" width="{{width}}" height="{{height}}" frameborder="0"></iframe>
+	</template>
+</dom-module>
+
+<script>
+	Polymer({
+		is: 'video-embed',
+    ready: function() {
+      console.log("hi ready " + this.vimeoId);
+      if (this.vimeoId) {
+        this.src = "https://player.vimeo.com/video/" + this.vimeoId;
+      }
+    },
+		properties: {
+			/**
+			 * The primary label for this step.
+			 *
+			 * @attribute src
+			 * @type String
+			 * @default ""
+			 */
+			src: {
+				type: String,
+				value: ""
+			},
+
+			/**
+			 * The position of this step among all steps. Not meant to be set by users,
+			 * at the moment it gets set at page load time by analyzing all other steps
+			 * with the same parent.
+			 *
+			 * @attribute vimeoId
+			 * @type String
+			 * @default ""
+			 */
+			vimeoId: {
+				type: String,
+				value: "",
+			},
+      width: {
+        type: Number,
+        value: 640
+      },
+      height: {
+        type: Number,
+        value: 360
+      }
+
+		}
+	});
+</script>
