@@ -77,29 +77,34 @@
                 <p>
                     This section documents the other pieces which are loaded in our web component initialization. Generally, you won't do a lot with these.
                 </p>
-                <dt><code>&lt;learn-nav&gt;</code></dt>
-                <dd>
-                    The nav bar for every page on the site. Typically managed by the CMS.
-                </dd>
-                <dt><code>&lt;lesson-banner&gt;</code></dt>
-                <dd>
-                    An illustration at the top of the page. Typically managed by the CMS.
-                </dd>
-                <dt><code>&lt;page-manager&gt;</code></dt>
-                <dd>
-                    Component used to manage stacking lessons called in via the <code>lesson-ref</code> tag. Managed by the CMS.
-                </dd>
-                <dt><code>&lt;page-item&gt;</code></dt>
-                <dd>
-                    Component used in support of the stacking effect used when <code>lesson-ref</code>s are followed. Managed by the CMS and the <code>page-manager</code>.
-                </dd>
-                <dt><code>&lt;glossary-manager&gt;</code></dt>
-                <dd>Responsible for retrieving a JSON dictionary of glossary terms and their definitions, and scanning its contents to activate valid <code>glossary-term</code>s. Use the <code>json-url</code> attribute to indicate the source of the glossary. In the context of the CMS, glossary terms are managed as separate Django models, and page templates are responsible for making the manager available if the content includes <code>glossary-term</code> elements.</dd>
-                <dt><code>styles.html</code></dt>
-                <dd>Mostly experimental. Meant to provide a place to define common styles, and if it makes sense, to establish <a href="https://www.polymer-project.org/1.0/docs/devguide/styling.html#custom-style">CSS</a> variables for common use across components.</dd>
-                <dt><code>behaviors.html</code></dt>
-                <dd>Mostly experimental. Used to test understanding of Polymer's behavior mechanism for sharing <a href="https://www.polymer-project.org/1.0/docs/devguide/behaviors.html">behavior</a> among components.</dd>
-
+						<dl>
+							<dt><code>&lt;learn-nav&gt;</code></dt>
+							<dd>
+							    The nav bar for every page on the site. Typically managed by the CMS.
+							</dd>
+							<dt><code>&lt;lesson-banner&gt;</code></dt>
+							<dd>
+							    An illustration at the top of the page. Typically managed by the CMS.
+							</dd>
+							<dt><code>&lt;page-manager&gt;</code></dt>
+							<dd>
+							    Component used to manage stacking lessons called in via the <code>lesson-ref</code> tag. Managed by the CMS.
+							</dd>
+							<dt><code>&lt;page-item&gt;</code></dt>
+							<dd>
+							    Component used in support of the stacking effect used when <code>lesson-ref</code>s are followed. Managed by the CMS and the <code>page-manager</code>.
+							</dd>
+							<dt><code>&lt;video-embed&gt;</code></dt>
+							<dd>
+							    Embed a video in a lesson. For now, only works with Vimeo. Use the <code>vimeo-id</code> to specify the ID of the video to embed.
+							</dd>
+							<dt><code>&lt;glossary-manager&gt;</code></dt>
+							<dd>Responsible for retrieving a JSON dictionary of glossary terms and their definitions, and scanning its contents to activate valid <code>glossary-term</code>s. Use the <code>json-url</code> attribute to indicate the source of the glossary. In the context of the CMS, glossary terms are managed as separate Django models, and page templates are responsible for making the manager available if the content includes <code>glossary-term</code> elements.</dd>
+							<dt><code>styles.html</code></dt>
+							<dd>Mostly experimental. Meant to provide a place to define common styles, and if it makes sense, to establish <a href="https://www.polymer-project.org/1.0/docs/devguide/styling.html#custom-style">CSS</a> variables for common use across components.</dd>
+							<dt><code>behaviors.html</code></dt>
+							<dd>Mostly experimental. Used to test understanding of Polymer's behavior mechanism for sharing <a href="https://www.polymer-project.org/1.0/docs/devguide/behaviors.html">behavior</a> among components.</dd>
+						</dl>
             </step-block>
             <glossary-manager json-url="/glossary.json"></glossary-manager>
 	</body>
