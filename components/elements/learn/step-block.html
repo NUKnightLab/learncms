@@ -65,6 +65,15 @@ Example:
 			margin-top:30px;
 			margin-bottom:10px;
 		}
+		:host ::content h4 {
+			font-family: 'Roboto', 'Noto', sans-serif;
+			
+			font-size: 22px;
+			font-weight: normal;
+			margin: 0;
+			margin-top:30px;
+			margin-bottom:10px;
+		}
 
 		:host ::content #step-content .dl-vertical dd {
 			margin-left: 0px;
@@ -159,7 +168,7 @@ Example:
 			font-size: 100%;
 		}
 		:host ::content #step-content ol > li p {
-			margin:0;
+			/*margin:0;*/
 
 		}
 		:host ::content #step-content ol > li:before {
@@ -182,6 +191,16 @@ Example:
 
 			content: counter(li-counter);
 			counter-increment: li-counter;
+		}
+
+		:host ::content img {
+			width:100%;
+			box-shadow: 0 6px 10px 0 rgba(0, 0, 0, 0.14), 0 1px 18px 0 rgba(0, 0, 0, 0.12), 0 3px 5px -1px rgba(0, 0, 0, 0.4);
+			border:1px solid #CCC;
+			padding:5px;
+			box-sizing: border-box;
+			margin-top:20px;
+			margin-bottom:20px;
 		}
 
 		/* Begin ordered list styling */

@@ -1,0 +1,636 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+	<meta charset="UTF-8">
+	<title>Write Some HTML -- Learn.knightlab.com</title>
+
+	<script src="bower_components/webcomponentsjs/webcomponents-lite.min.js">
+	</script>
+	<link rel="stylesheet" href="styles/main.css">
+	<link rel="import" href="elements/elements.html">
+	<style type="text/css">
+		/* Eventually this will migrate to an external CSS file */
+
+		narrative-text {
+			/* Does narrative-text need to be a polymer/web component?
+				Or if it is just a matter of CSS, can we get away with a custom element name
+				and corresponding CSS selectors?
+				**/
+			font-family: "Roboto Light", sans-serif;
+		}
+	</style>
+</head>
+
+<body class="fullbleed">
+	<!-- Don't really know the details of these Material/Polymer classes -->
+
+
+<page-manager>
+	<page-item>
+		<lesson-banner image="https://learn.knightlab.com/images/learn/basic-website-banner.png" header="Write Some HTML"></lesson-banner>
+		<narrative-text>
+  <p>Every page on the Internet starts as a humble HTML file. HTML
+  (HyperText Markup Language) is the backbone of the web, and the
+  beginning of any website. In this standalone lesson, you&#39;ll
+  learn the basics of HTML and be on your way in creating your very
+  own website.</p>
+</narrative-text>
+
+
+  <narrative-text>
+  <p>If HTML defines the content and structure of webpages, and CSS specifies the visual layout, <em>JavaScript</em> adds behavior and interactions. It’s the <glossary-term>programming language</glossary-term> of the web.</p>
+
+  <p>Without JS, the only interactions with our webpage would be to
+  click on hyperlinks or hover over things. How boring would that
+  be? Just a few things you can do with JavaScript: change HTML and
+  CSS on the fly, add animations, and validate form
+  submissions.</p>
+</narrative-text>
+
+<step-block header="Getting Set Up">
+  <h3>What we do</h3>
+
+  <p>We’re going to create a blank JavaScript file and add a link
+  to an HTML document that points to our JavaScript file.</p>
+
+  <h3>Why we do</h3>
+
+  <p>This is part of the basic set-up of your files. We’re telling
+  the browser there’s JavaScript at play here, kind of like you
+  might have done for CSS. Once you include the link, your
+  JavaScript will affect your webpage. Without it, the browser
+  would never know the file’s there.</p>
+
+  <h3>How we do</h3>
+
+  <ol>
+    <li>Create a blank file called index.html in your project
+    directory. Check out the <a href=
+    "https://learn.knightlab.com/lesson/write-some-html/" target=
+    "_blank">HTML lesson</a> if you need a refresher on project
+    directories or the structure of a basic HTML file.
+    </li>
+
+    <li>Create a blank file called script.js in your project
+    directory.</li>
+
+    <li>Open the index.html file in your text editor, add your basic HTML structure, and then paste the following line right before the closing &lt;/body&gt; tag.</li>
+  </ol>
+  
+  <code-block>
+    &lt;body&gt;
+      ...
+      &lt;script src="script.js"&gt;&lt;/script&gt;
+   &lt;/body&gt;
+  </code-block>
+  
+  <info-block emoji="&#x270B;" header="What's a program?">
+    <p>A program is a list of instructions that you (the programmer) can write to tell a computer what to do to accomplish a specific task. This means you can tell the computer to do your bidding—divide the check at dinner, send random GIFs to friends, or set a calendar countdown for the new Star Wars movie!</p>
+  </info-block>
+  
+  <h4>Test your connection</h4>
+  <p>Before we continue, let’s make sure that we’ve done our set-up properly. In your script.js file, add the following:</p>
+  <code-block>
+    alert(“it lives!”);
+  </code-block>
+  <p>Save the file and open index.html in a browser. If the script file is linked to index.html, you’ll see a pop-up or alert box with the message “it lives!”—that’s what the alert function does! If you’re not seeing it, just double check your file structure and make sure you don’t have any typos.</p>
+
+  <info-block emoji="&#x270B;" header="What's a function?">
+    <p>Where a program is a list of instructions to a computer, a function is the named section of a program responsible for a certain task. You can think of functions as the bullet points making up the list of instructions of a program. Functions can be built-in (like the alert function in JavaScript), meaning that they’re prewritten and part of the programming language you’re writing in, or they can be custom, meaning you can write and name your own functions from scratch so that they do whatever you want.</p>
+  </info-block>
+
+</step-block>
+<step-block header="Understanding the Building Blocks of Programming Part 1: data types, writing your first script, and interacting with the browser">
+  <h3>What we do</h3>
+  <p>Before we can do anything too fancy, we need to spend some time with the fundamentals. This means data types. We’ll dive into different data types, walk through writing your first JavaScript file, and give you some tips for working in the browser.</p>
+  
+  <h3>Why we do</h3>
+  <p>Data types are the building blocks of programming, and they’re everywhere! Let’s take the <a href="http://www.amazon.com/" target="_blank">Amazon homepage</a> as an example. Some of these elements are the same for everyone—the menus, the items for sale. But some are specific to <em>you</em>—your name, the number of items in your cart, etc. These are variables: little pieces of data stored away, and easily changed based on the user and her behavior.</p>
+  
+  <h3>How we do</h3>
+  <p>The three basic data types are:</p>
+  <ol>
+    <li><p>Strings (i.e. “Hello, Nicole”) - a string is anything you put in between quotations “” and are typically used to represent text</p>
+     
+      <img src="https://learn.knightlab.com/imagelib/uploads/datatypes2.jpg"  />
+      <p>If you’re logged into your Amazon account, in the top right corner you’ll see that your name is displayed as a <em>string.</em></p>
+    </li>
+    <li><p>Numbers (i.e. 6) - a number can be negative or positive</p>
+     
+      <img src="https://learn.knightlab.com/imagelib/uploads/datatypes1.jpg" />
+      <p>The shopping cart icon shows the <em>number</em> of items you currently have selected to purchase.</p>
+    </li>
+    <li><p>Booleans (i.e. true) - a boolean value represents logic and can only take one of two values: true or false</p>
+      
+      <img src="https://learn.knightlab.com/imagelib/uploads/datatypes3.jpg" />
+      <p>If you’re a Prime user, the page shows a checklist of the Prime benefits. Each of these checked items represent a <em>boolean</em>. You’ve either used the Prime benefits (Free Two-Day Shipping, Prime Video, Prime Music, Prime Photos, Kindle Owners’ Lending Library) or not.</p>
+    </li>
+  </ol>
+  
+  <h4>Let's see them in action!</h4>
+  <ol>
+    <li>Open up your script.js file and replace the alert with the following, then save:
+    <code-block>
+  console.log("hello world");
+  console.log(123);
+  console.log(true);
+  </code-block>
+  </li>
+    <li>Open your index.html file in a web browser.</li>
+    <li>You won’t see anything on the page because you haven’t added anything to the HTML document, but if you right click anywhere on the page and click “Inspect,” a window pane will appear in your browser.</li>
+    <li>Click the “console” tab in that window and you’ll see the following output:
+    <code-block>
+  "hello world"
+  123
+  true
+  </code-block>
+    <p>If you get an error like “Uncaught SyntaxError: missing ) after argument list”, retype the quotes around “hello world”. Sometimes copying and pasting between different text editors messes up special characters like quotes.</p>
+  </li>
+  </ol>
+
+</step-block>
+
+<step-block header="What's the console, and why am I logging?">
+  <h3>What we do</h3>
+  
+  <p>The console is a powerful <glossary-term>developer tool</glossary-term> that helps debug websites and allows you to interact with the page directly in real time. This means you can check for mistakes and make sure everything is functioning the way you intended. The console usually comes up as a pane in your browser (you can also pop it out as a separate window) and is a place where you can enter JavaScript and have it interact with elements on your page, and within the context of all the HTML, CSS, and JavaScript that has already been loaded.</p>
+  <img src="https://learn.knightlab.com/imagelib/uploads/inspector.png" style="width:100%;" />
+  
+  <h3>Why we do</h3>
+  
+  <p>Console.log comes in handy for <glossary-term>debugging</glossary-term>. Writing code that works on the first try is rare, so it's good to know how to debug and trouble-shoot your code. Your future self will thank you for learning to debug properly because it’ll limit the amount of headbanging against your computer when things don’t work as expected.</p>
+  
+  <h3>How we do</h3>
+  
+  <p>Console.log is a built-in JavaScript function that “prints” to the console anything you put in its parentheses—it “logs” things to the “console” (we said the thing!). The console is like the scribble test of a pen just to make sure that things are (1) working and (2) working in the intended way. In addition to using console.log() in your script files, you can also type directly into the console. You can think of the console like scratch paper. You use it to test out code before you commit it to your files, or to see what variables have what values.</p>
+  <p>To make sure that what we output to the console are indeed the right data types, we will use the “typeof” function. This will output the data type of whatever we pass to it.</p>
+  <p>You can <glossary-term>comment</glossary-term> out the code you have so far in one of two ways—this means that the browser will ignore those lines and will not execute that code:</p>
+  
+  <ol>
+    <li>Single-line comments i.e. // this is a comment</li>
+    <li>Multi-line comments i.e. /* multi-line comment */</li>
+  </ol>
+  
+  <p>Add the following code below the code you just commented out:</p>
+  <code-block>
+  console.log(typeof "hello world");
+  console.log(typeof 123);
+  console.log(typeof true);
+  </code-block>
+  
+  <p>When you open up the browser, you’ll see the data types output in the console:</p>
+  <code-block>
+  "string"
+  "number"
+  "boolean"
+  </code-block>
+  
+  <p>You want to make sure that you’re using the right data types so that you can take advantage of built-in JavaScript functions specific to those data types. For example, it’s much easier to increase the number of items from 5 to 6 in your Amazon shopping cart rather than converting and overwriting a string representing the same information. (The character representing the number is not the same as the number. There’s your deep thought for the day.)</p>
+</step-block>
+<step-block header="Understanding the Building Blocks of Programming Part 2: built-in JavaScript functions and comparing data">
+  <h3>What we do</h3>
+  <p>Now that we know what data types we have to work with, we’ll introduce handy built-in functions, as well as some basic logic in JavaScript.</p>
+  
+  <h3>Why we do</h3>
+  <p>Besides data types, the other major component of programs is control flow, which determines the program’s order of execution and what to do with those data types. This is important because programs do not always execute in a linear way. Take websites like Pinterest or Quora that only show limited posts to non-logged in users—<glossary-term>control flow</glossary-term> decides what to show to logged in or non-logged in users. It jumps to and executes different parts of the program based on certain conditions or data values.</p>
+  
+  <h3>How we do</h3>
+  <p>There are additional built-in functions you can do to manipulate these data types. You can do math with numbers (which is also programming!). Just like in regular math, everything is evaluated in the order of operations. Add the following to your script file:</p>
+  
+  <code-block>
+  // addition
+  console.log(2+2);
+  // subtraction
+  console.log(2-5);
+  // division
+  console.log(8/2);
+  // multiplication
+  console.log(2*4);
+  // a new operator called “modulo” which returns the remainder after the division of one number by another number - this is usually used to see if a number is divisible by another
+  console.log(9%2);
+  </code-block>
+  
+  <p>With strings, which are just sequences of characters wrapped in “”, you can use the following to return the length of the string (the number of characters):</p>
+  <code-block>
+    console.log("hello world".length):
+  </code-block>
+  
+  <p>With booleans, you can use comparison operators to evaluate expressions to true or false (all booleans will eventually evaluate to either true or false):</p>
+  <ul>
+    <li>&gt; greater than</li>
+    <li>&lt; less than</li>
+    <li>== equal to (compares the values, but not the object types)</li>
+    <li>=== equal to (compares the values AND object types)</li>
+    <li>!== not equal to</li>
+    <li>&gt;= greater than or equal to</li>
+    <li>&lt;= less than or equal to</li>
+  </ul>
+  
+  <code-block>
+  console.log(100 &lt;= 5);
+  console.log(100 / 5 > 20 / 4);
+  console.log(-1 &lt; -5);
+  console.log(“hello world”.length > 11);
+  console.log(2 * 2 !== 5);
+  console.log (5 % 3 === 1);
+  </code-block>
+</step-block>
+<step-block header="Understanding the Building Blocks of Programming Part 3: variables and scope">
+  <h3>What we do</h3>
+  <p>We’ll talk about different types of variables, how to use them, and some of the common errors you might run into when dealing with them.</p>
+  
+  <h3>Why we do</h3>
+  <p>Variables work the same way as you probably learned in algebra (many, many years ago). They’re ways of abstracting and storing data. Let’s take the below example that calculates the remaining seats in an auditorium:</p>
+  <code-block>
+  var audience = 1000;
+  var seats = 2500;
+  var empty_seats = seats - audience;
+</code-block>
+  <p>Because you can assign and reassign values, variables are useful because they can basically be used for storing arbitrary information that can be reused or accessed throughout the program. The empty_seats variable will represent the right result even if we enter new values for the variables “audience” and “seats.”</p>
+  <p>Variables are usually given descriptive names in programs in order to clearly define their purpose. For example, in our above calculation, a variable <em>empty_seats</em> explains the value it stores better than a generically-named variable <em>x</em>.</p>
+  
+  <h3>How we do</h3>
+  <p>To help us keep track of things, variables are declared and can store data with the preceding word <em>var</em>. Unlike Michael Scott in The Office <a href="https://www.youtube.com/watch?v=HuGIgf-ICHM" target="_blank">declaring bankruptcy</a> (“You can’t just say the word bankruptcy and expect anything to happen”), declaring variables actually <em>does</em> make a difference.</p>
+  
+  <code-block>
+  console.log(bankruptcy);
+  // outputs: “Uncaught ReferenceError: bankruptcy is not defined” meaning the variable has not been declared or defined
+  </code-block>
+  <p>This is the browser’s way of saying “I have no idea what ‘bankruptcy’ is” because we never told the browser that it even existed, let alone what it means.</p>
+  
+  <code-block>
+  var bankruptcy;
+  console.log(bankruptcy);
+  // outputs: “undefined” meaning the variable has been declared but it has no value
+  </code-block>
+  <p>This is the browser's way of saying “You told me that bankruptcy is a thing but I don’t know what it means.” We can arbitrarily declare variables like this, but we did not assign it a value, which is why it outputs “undefined.”</p>
+  
+  <code-block>
+  var bankruptcy = "I didn't say it. I declared it.";
+  console.log(bankruptcy);
+  // outputs: “I didn’t say it. I declared it.”
+  </code-block>
+  <p>Now that we’ve told the browser that the variable “bankruptcy” exists and has a value, the browser returns what we expect: the string, “I didn’t say it. I declared it.”</p>
+  
+  <p>We can also use, update, and change the variables just as we would the normal data type. If you’re updating the variable, make sure that you’re also saving it back to the same variable!</p>
+  <p>Let’s increment the number of times Michael Scott has seen the movie The Devil Wears Prada (hint: it’s a lot).</p>
+  
+  <code-block>
+  var movie_watches = 3;
+  console.log(movie_watches + 1);
+  // 4
+  console.log(movie_watches);
+  // 3 (we never updated the movie_watches variable by saving it back to the variable, so it stays 3)
+  movie_watches = movie_watches + 1;
+  console.log(movie_watches);
+  // 4 (now movie_watches has been updated to be 4 because we have saved it back to the variable)
+  movie_watches++;
+  // the ++ is shorthand for “increment this value by 1 and save the new value back to the same variable”
+  console.log(movie_watches);
+  // 5
+  </code-block>
+  <info-block emoji="&#x270B;" header="Why are there so many semicolons?">
+    <p>Semicolons in JavaScript are kind of like the periods at the end of sentences. They separate and terminate each instruction. Check out <a href="https://www.codecademy.com/blog/78" target="_blank">Codecademy’s blog</a> if you want to read more about the ins and outs of JavaScript semicolons, but a safe bet is to add a semicolon to the end of each line of JavaScript.</p>
+  </info-block>
+</step-block>
+
+<lesson-block>
+  <h2>Types of Variables: Local vs. Global</h2>
+  <p>In JavaScript, variables can be local or global depending where they are declared. Local variables are declared inside functions (which we will talk about in a second), so they can only be accessed within that specific function. Global variables are declared outside of any function, which means they can be accessed (and updated) by any other functions.</p>
+  <p>To see this in action, copy and paste the follow in your JavaScript file and then open your console in Chrome.</p>
+  <code-block>
+  var localVarFunc = function() {
+    var local_var = "hello from the other side";
+    console.log(local_var);
+  };
+
+  var global_var = "hello world";
+  </code-block>
+  <p>If you try to type “global_var” in your console, you will see “hello world” returned. If you do the same with “local_var” in your console, you will see that it is not defined because it is inside a function. But if you call the function by typing “localVarFunc()” in the console, you’ll see “hello from the other side.” This next section on functions will help solidify the difference between local and global scope.</p>
+</lesson-block>
+
+<step-block header="How will we function?">
+  <h3>What we do</h3>
+  <p>We’ll break down the parts of a JavaScript function, demonstrate its usefulness by writing a few of our own, and provide a few tips and tricks for writing good, clean code.</p>
+  
+  <h3>Why we do</h3>
+  <p>JavaScript functions are self-contained chunks of programs that perform a specific function (haha get it?). They’re blocks of code you can set aside until you need them—some future, imagined functionality. Functions make programs more manageable and readable, and can be used again and again to accomplish the same task in many different situations.</p>
+  
+  <h3>How we do</h3>
+  <p>Functions, like variables, must be declared before they can be used, or <em>called</em>. Functions can take in values, known as <em>parameters</em>, and can return values. </p>
+  <p>A function has to be declared with a descriptive name, and all the code of the function goes inside the curly braces:</p>
+  <code-block>
+  function someFunction(param) {
+    // function code
+    // function code
+    // function code
+  };
+  </code-block>
+  
+  <p>Below is an example of a function that determines if a number is divisible by 2:</p>
+  <code-block>
+  function divisibleByTwo(num) {
+    var result;
+      if (num % 2 === 0) {
+        result = "yes";
+      } else {
+        result = "no";
+      }
+    return result;
+  };
+  </code-block>
+  
+  <p>This function determines if a number is divisible by the number 2 (we will dive more into if/else statements in the next part of this lesson). First, we declare the function by using the word “function” and giving it a name “divisibleByTwo.” Function names should be descriptive about what they do. The function takes a parameter (num), meaning it expects some kind of input when it is called. This input num is then used inside the function to determine the result to be returned. If the number is divisible by 2 (if the remainder of the division of the number by 2 is 0, then it is divisible by 2), then the result is “yes”. Otherwise the result is “no.” We update the result variable accordingly, and finally return that result at the end of the function. Notice that we don’t have any console.logs in this function. Let’s see what that means.</p>
+  <p>To call (or use) a function, type the following the console:</p>
+  <code-block>
+    divisiblebyTwo(4);
+  </code-block>
+  <p>Alternatively you can add the following to your script.js:</p>
+  <code-block>
+  var result = divisibleByTwo(4);
+  console.log(result);
+  </code-block>
+  <p>This means you can either call functions on the fly once the page has loaded or call the function in the script file and store/output the result. If you simply had this line in your script file:</p>
+  <code-block>
+    divisiblebyTwo(4);
+  </code-block>
+  <p>you won’t see anything in the console because in the original function, we don’t use any console.logs. We only “return” a result. That result exists, but it won’t be visible to us until we console.log it as a variable or its equivalent console.log(divisibleByTwo(4)); As seen in the above example, we stored it in the variable “result” and then logged it to the console.</p>
+  <info-block emoji="&#x270B;" header="When should I write a function?">
+    <p>A good principle in programming is DRY: Don’t Repeat Yourself. If you find yourself copying and pasting code or repeating lines of code, you might want to break out that chunk into its own function. By abstracting and generalizing your code into various functions, they can be reused throughout your code because each component accomplishes a specific task. This will help you manage your code as your application get more and more complex.</p>
+  </info-block>
+</step-block>
+
+<step-block header="For the Love of Arrays">
+  <h3>What we do</h3>
+  <p>We’ll cover another important JavaScript data type: <em>arrays</em>. We’ll also introduce <em>for loops</em> as a way of running the same portions of code multiple times.</p>
+  
+  <h3>Why we do</h3>
+  <p>Arrays are useful ways of storing a bunch of related items together in a single variable. Think of them as a kind of list. This simplifies code—one variable for a whole grocery list, instead of 20 variables for every kind of frozen pizza imaginable. Then you’re able to execute the same block of code (like a function called “buyAllOfTheThings”) for each unique value stored in the array.</p>
+  
+  <h3>How we do</h3>
+  <p>An array is a JavaScript object that stores several values separated by commas, all inside square brackets. Arrays can contain a mix of data types and objects—numbers, strings, other objects, etc. We can declare arrays by directly assigning values to it. In this example, the variable netflix_shows is our to-watch list of Netflix original series.</p>
+  
+  <code-block>
+    var netflix_shows = [“house of cards”, “jessica jones”, “orange is the new black”, “unbreakable kimmy schmidt”, “bojack horseman”];
+  </code-block>
+  
+  <p>Or we can initialize an empty array and add items to it later. To add values to the end of an array, you can use the “push” function. Let’s add the latest seasons of Love and Daredevil:
+</p>
+  <code-block>
+  netflix_shows.push("love");
+  netflix_shows.push("daredevil");
+  </code-block>
+  
+  <p>You can also add values to certain slots by referencing the <em>index number</em>, or their spot on the list:</p>
+  <code-block>
+  var netflix_shows = [];
+  netflix_shows[0] = "house of cards";
+  netflix_shows[1] = "jessica jones";
+  netflix_shows[2] = "orange is the new black";
+  </code-block>
+  
+  <p>Yes, we start counting at 0. This is because arrays are <em>zero-indexed</em>. Use square brackets for the index you want to access in the array. When working with arrays, feel free to throw in a console.log(netflix_shows) to periodically to check if things are as expected, or check up on a specific index like so:</p>
+  <code-block>
+  console.log(netflix_shows[2]);
+  // prints “orange is the new black”
+  </code-block>
+  
+  <p>You can also update values in an array by writing over an existing index:</p>
+  <code-block>
+  netflix_shows[3] = "arrested development";
+  netflix_shows[4] = "sense8";
+  </code-block>
+  
+  <p>Be careful not to write to indexes that are outside of the array’s range, otherwise the array will just fill everything in between with “undefined”. For example, if we were to write the value “bloodline” to index 6:</p>
+  <code-block>
+  netflix_shows[6] = "bloodline";
+  console.log(netflix_shows[5]);
+  // prints “undefined” because we haven’t written anything in that place in the array
+  console.log(netflix_shows[6]);
+  // prints “bloodline” as expected
+  </code-block>
+  
+  <p>Let’s write another show to netflix_shows[5] so our watch-list only contains actual television  shows:</p>
+  <code-block>netflix_shows[5] = "master of none";</code-block>
+  
+  <p>There are also a few handy built-in ways of getting useful information about arrays. The <em>length</em> property will return the length (number of items) of an array. Let’s see how many Netflix shows we currently have in our to-watch list:</p>
+  <code-block>console.log(netflix_shows.length);</code-block>
+  
+  <p>Seven shows is a lot of TV to binge on! Pro tip: start with Master Of None.</p>
+  <p>Remember, because arrays are zero-indexed, the length of the array will always be 1 greater than the last index. So if an array has 7 items, the last index will be 6.</p>
+  <p>The sort method will sort strings into alphabetical order and numbers into ascending order. The A.V. Club has a ranking of the best episodes of Master Of None stored in the variable episode_ranking. Since we’re just watching the series in order, let’s rearrange the first half of the season in ascending order.</p>
+  <code-block>
+  var episode_ranking = [2, 4, 1, 5, 3];
+  console.log(episode_ranking.sort());
+  // prints [1, 2, 3, 4, 5];
+  </code-block>
+  
+  <p>We can also do the same with the episode names so that they’re in alphabetical order, because why not?</p>
+  <code-block>
+  var episode_names = ["Plan B", "Parents", "Hot Ticket", "Indians On TV", "The Other Man", "Nashville", "Ladies and Gentlemen", "Old People", "Mornings", "Finale"];
+  console.log(episode_names.sort());
+  // prints ["Finale", "Hot Ticket", "Indians On TV", "Ladies and Gentlemen", "Mornings", "Nashville", "Old People", "Parents", "Plan B", "The Other Man"];
+  </code-block>
+  <p>This time, the array is sorted in proper alphabetical order!</p>
+  <p>This would be the worst way to watch TV, but let’s mix up episode numbers and names in the same array:</p>
+  <code-block>
+  var episodes = ["Parents", 3, "Mornings", 8];
+  console.log(episodes.sort());
+  // prints [3, 8, “Mornings”, “Parents”];
+  </code-block>
+  
+  <info-block emoji="&#x270B;" header="Why does the syntax differ between the length and sort methods?">
+    <p>The length function is a property, so that means we just access that information about that object without trying to change the object itself. The sort method is a function that that is changing something about the object we apply it to, which is why we have the parentheses after arr.sort().</p>
+  </info-block>
+  
+  <h3>For Loops</h3>
+  <p>Now that we know how to create, access, and update arrays, let’s look at how loops can make our lives a whole lot simpler. Loops are part of <em>control flow</em>, which are types of logical statements that control the flow of execution of a program (we’ll dive more into this in the next section).</p>
+  <p>There are many types of loops, but for now we’ll talk about the most useful one: the for loop.</p>
+  <p>The for loop is used to iterate over many different values and execute code for those values. In other words, it loops through the array, applying the function to every item inside, one by one—much like you might do a batch operation to resize every photo in a certain folder.</p>
+  <p>The structure of a for loop is the following:</p>
+  <code-block>
+  for (initialize looping variable; looping condition; counting variable) {
+    // code block involving variable
+  }
+  </code-block>
+  
+  <ol>
+    <li>Initialize the looping variable by setting the starting value. This is executed at the very beginning of the for loop only once. It most commonly starts at 0, which is the first item in the array.</li>
+    <li>The looping condition is a logic statement that defines the condition under which the for loop should continue running; it will run as long as this returns true. This runs before each iteration of the for loop to determine whether or not to continue with the code block inside the { } or whether to continue the program’s normal flow of execution.</li>
+    <li>The incrementing variable defines the way to increment the looping variable and is executed each time after the code block runs. Without this, we would be thrown into an infinite loop!</li>
+  </ol>
+  
+  <p>Let’s see this in action with our previous netflix_shows example:</p>
+  <code-block>
+  var netflix_shows =  [“house of cards”, “jessica jones”, “orange is the new black”, “unbreakable kimmy schmidt”, “master of none”];
+  for (var i=0; i &lt; netflix_shows.length; i++) {
+    console.log(netflix_shows[i]);
+  }
+  </code-block>
+  <h4>This is the most common way to iterate through an array.</h4>
+  <ol>
+  <li>
+    <p><em>Initialize the looping variable by setting the starting value. This is executed at the very beginning of the for loop only once.</em></p>
+  <p>We set the initial variable to be 0, since arrays are zero-indexed.</p>
+  </li>
+  <li>
+    <p><em>The looping condition is a logic statement that defines the condition under which the for loop should continue running. This runs before each iteration of the for loop to determine whether or not to continue with the code block inside the { } or whether to continue the program’s normal flow of execution.</em></p>
+  <p>The next part says the loop will run through the entire array, and no further. The logic statement i &lt; netflix_shows.length ensures that even if we add or subtract from our array, we’ll run this code block until we reach the end. Every time this condition holds true, the code inside the for statement is executed: console.log(netflix_shows[i]). Since i changes every time the loop runs, we’ll get a different show every time.</p>
+  </li>
+  <li>
+     <p><em>The counting variable defines the way to increment the looping variable and is executed each time after the code block runs. Without this, we would be thrown into an infinite loop!</em></p>
+  <p>After each iteration, we increment the counter variable, i. We increase it by 1 (the ++ is a shorthand for i += 1 or i = i + 1) each time the for loop runs. Initially, it is 0, and then 1, 2, ... and is incremented until we reach 5, which is the length of our list. At this point, the looping condition from (2) is not met (5 is not less than 5), so we exit the for loop. This means that we go through all Netflix shows in our netflix_shows array until we reach the end.</p>
+  </li>
+  </ol>
+
+
+ 
+  <p>We can also start from the end of the array and decrement one by one:</p>
+  <code-block>
+  for (var i=netflix_shows.length; i >= 0; i--) {
+    console.log(netflix_shows[i]);
+  }
+  </code-block>
+  <p>Or skip every other element:</p>
+  <code-block>
+  for (var i=0; i &lt; netflix_shows.length; i+=2) {
+    console.log(netflix_shows[i]);
+  }
+  </code-block>
+  <p>We can also use the netflix_shows array values in more creative ways. How would you write a for loop that appends the string “I’m currently hooked on” before every Netflix show?</p>
+  <code-block>
+  // hide the solution behind a dropdown or something
+  for (var i=0; i &lt; netflix_shows.length; i++) {
+    console.log(“i’m currently hooked on “ + netflix_shows[i]);
+  }
+  </code-block>
+</step-block>
+
+<step-block header="Control Flow">
+  <h3>What we do</h3>
+  <p>We’ll talk about control flow, which determines the order in which program statements and functions are executed. We’ll also work on ways of controlling the flow of execution in our program through specific kinds of conditional statements.</p>
+  
+  <h3>Why we do</h3>
+  <p>Sometimes you want to write a single function that can handle a variety of cases or situations. Take traffic, for example. You might want to write a rule for the stoplight that tells cars what to do based on the color of the light. These rules (green means go, red means stop) are essentially real-life forms of control flow. The light controls the flow of traffic, just like we’ll control the flow of our code.</p>
+  <p>In other words, control flow allows us to write more complex functions. Rather than being required to write statements that have to be done in a certain order, we can instead write control flow statements that pass variables around and run certain code blocks only under certain conditions.</p>
+  
+  <h3>How we do</h3>
+  <p>We’ll cover three ways to control this traffic, or control flow statements: if/else, switch, and while statements.</p>
+  <ol>
+  
+  <li>
+  <h4>If/Else</h4>
+  <video-embed vimeo-id="166064850"></video-embed>
+
+  <p>An if/else statement will execute one section of code if a condition is true, and another section of code if the condition is false.</p>
+  <code-block>
+  if (some condition) {
+    // code to be executed if condition is true
+  } else {
+    // code to be executed if condition is false
+  }
+  </code-block>
+  <p>We can use an if/else statement to illustrate the basic rules of the road:</p>
+  <code-block>
+  var stopLight = “red”;
+  if (stopLight === “red”) {
+    console.log(“Stop”);
+  else {
+    console.log(“Go”);
+  }
+  </code-block>
+  <p>You can add additional “else if” statements if there are different types of conditions to be met. Since our first if/else statement only specifies stopping on red, we can be more specific about by checking for the other colors of stoplights:</p>
+  <code-block>
+  if (stopLight === “red”) {
+    console.log(“Stop”);
+  } else if (stopLight === “green”) {
+    console.log(“Go”);
+  } else {
+    console.log(“Clear the intersection”);
+  }
+  </code-block>
+  <p>Notice that since we specified the cases for a red or green stoplight, we don’t need to explicitly  check for the yellow stoplight and instead just use an all-encompassing “else” statement. These are mutually exclusive; if red or green is triggered, yellow won’t be. So we can assume it’s all that’s left.
+</p>
+  </li>
+  <li>
+  <h4>Switch</h4>
+  <video-embed vimeo-id="166066216"></video-embed>
+
+  <p>A switch statement is like a more complicated if/else statement. The switch statement executes a specific “case” (block of code) depending on the expression. There is always a default case, and every other case has to end with the line “break” in order to break out of that case.</p>
+  <code-block>
+  switch (expression) {
+    case x:
+        code to be executed
+        break;
+    case y:
+        code to be executed
+        break;
+   ....
+    default:
+        default code to be executed
+  }
+  </code-block>
+  <p>Let’s see this in action with our driving example:</p>
+  <code-block>
+  switch (stopLight) {
+    case “red”:
+        console.log(“Stop”);
+        break;
+    case “green”:
+        console.log(“Go”);
+        break;
+    case “yellow”:
+        console.log(“Slow down or speed up depending on your current speed”);
+        break;
+    default:
+        console.log(“Yikes! Someone needs to fix the stop light. Proceed with caution.”);
+  }
+  </code-block>
+  <p>In this case, we specified the three stop light colors of red, green, and yellow, and what to do in response to each of them. The default case shows an error because if the stopLight is any other color besides red, green, or yellow, something must be wrong. But not all switch statements will use the default case as an error case. Sometimes it might just be used to deal with a generic case that hasn’t been specified.</p>
+  
+  <info-block emoji="&#x270B;" header="Why would you use a switch statement over an if/else statement?">
+    <p>Switch statements can essentially be rewritten as if/else statements and vice versa. If this is the case, in what cases would you use one over the other? Switch statements handle a larger number of cases than a bunch of “else if” statements. They also generally have a better performance (run faster) than if/else statements.</p>
+  </info-block>
+  </li>
+  <li>
+  <h4>While</h4>
+  <video-embed vimeo-id="166066870"></video-embed>
+
+  <p>A while statement executes a certain block of code while a condition holds true. Similar to for loops, be careful that you don’t accidentally get stuck in an infinite loop.</p>
+  <code-block>
+  while (condition) {
+    code to be executed
+  }
+  </code-block>
+  <p>This while statement basically says that while the stop light is green and there is no stop sign, you can continue driving.</p>
+  <p>Can you spot what’s wrong with this example?</p>
+  <code-block>
+  while (stopLight === “green” && stopSign === false) {
+    console.log(“Go”);
+  }
+  </code-block>
+  <p>The car will never stop! The while statement will go into the dreaded infinite loop. All we need to do to fix this is add in some statement that will cause the loop to exit. Because an and statement requires <em>both</em> conditions to be true, we only need to change the condition of the stopLight or the stopSign. We’ll introduce a stop sign into the way of our car to get it to stop.</p>
+  <code-block>
+  while (stopLight === “green” && stopSign === false) {
+    console.log(“Go”);
+    stopSign = true;
+  }
+  </code-block>
+  </li>
+  </ol>
+</step-block>
+
+<lesson-block header="That's all (for now!)">
+  <p>Play around with more JavaScript functions, variables, and control flow by building something fun - all of the following can be built with HTML, CSS, and JavaScript!</p>
+  <ul>
+    <li><a href="http://www.soundboardt.com/" target="_blank">Soundboardt</a> - click on different images to play Beyonc&eacute; music samples</li>
+    <li><a href="http://drakeweather.com/" target="_blank">Drake Weather</a> - swap out Drake’s <em>Nothing Was the Same</em> album cover based on the weather forecast in your area</li>
+  </ul>
+</lesson-block>
+
+</page-item>
+</page-manager>
+</body>
+
+</html>
