@@ -19,7 +19,7 @@ PROJECT_ROOT = dirname(CORE_ROOT)
 # STATIC_URL
 # STATICFILES_STORAGE
 # Don't change this, it is connected to our salt deployment system
-STATIC_ROOT = os.path.join(os.environ.get('TMPDIR', '/tmp'), 'cityhallmonitor_static')
+STATIC_ROOT = os.path.join(os.environ.get('TMPDIR', '/tmp'), 'learncms_static')
 
 STATICFILES_DIRS = (
     join(PROJECT_ROOT, 'static'),
