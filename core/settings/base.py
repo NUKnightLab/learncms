@@ -7,6 +7,7 @@ https://docs.djangoproject.com/en/1.8/topics/settings/
 For the full list of settings and their values, see
 https://docs.djangoproject.com/en/1.8/ref/settings/
 """
+import os
 from os.path import abspath, dirname, join, normpath
 
 
@@ -19,7 +20,7 @@ PROJECT_ROOT = dirname(CORE_ROOT)
 # STATIC_URL
 # STATICFILES_STORAGE
 # Don't change this, it is connected to our salt deployment system
-STATIC_ROOT = os.path.join(os.environ.get('TMPDIR', '/tmp'), 'learncms_static')
+STATIC_ROOT = join(os.environ.get('TMPDIR', '/tmp'), 'learncms_static')
 
 STATICFILES_DIRS = (
     join(PROJECT_ROOT, 'static'),
