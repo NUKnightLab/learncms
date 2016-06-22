@@ -3,7 +3,7 @@ port: 9018
 python: python3
 type: django # (django|flask|other|repository)
 
-nginx_template: {{ config_dir }}/nginx.j2
+nginx_template: "{{ config_dir }}/nginx.j2"
 
 # these will be merged with deployment-specific env into init_env
 init_env_common:
