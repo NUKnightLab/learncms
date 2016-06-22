@@ -1,3 +1,7 @@
+# development or deployment specific environment variable exports
+/env.sh
+/env_run.sh
+
 # Project specific
 uploads
 

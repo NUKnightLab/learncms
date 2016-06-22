@@ -65,7 +65,6 @@ MANAGERS = ADMINS
 # set the environment variable DJANGO_DEBUG=True
 DEBUG = True if env.get('DJANGO_DEBUG', '').lower() == 'true' else False
 
-SECRET_KEY = env['DJANGO_SECRET_KEY']
 ALLOWED_HOSTS = env['APPLICATION_DOMAINS'].split()
 WSGI_APPLICATION = 'core.wsgi.application'
 LANGUAGE_CODE = 'en-us'
