@@ -1,17 +1,48 @@
 project_name: learncms
-
-gunicorn_env:
-  - DJANGO_SETTINGS_MODULE=core.settings.{{ env }}
 port: 9018
 python: python3
-type: django
-django_settings_module: core.settings.{{ env }}
+type: django # (django|flask|other|repository)
+
+# these will be merged with deployment-specific env into init_env
+init_env_common:
+  PROJECT_NAME: "{{ project_name }}"
+  APPLICATION_DOMAINS: "{{ domains }}" # space-delimited
+  DJANGO_SETTINGS_MODULE: "{{ django_settings_module }}"
+  STATIC_TMPDIR: "{{ static_tmpdir }}"
+  DJANGO_SECRET_KEY: "{{ vault_django_secret_key }}"
+  DB_ENGINE__DEFAULT: "django.db.backends.postgresql_psycopg2"
+  DB_NAME__DEFAULT: "{{ project_name }}_{{ env }}"
+  DB_USER__DEFAULT: "{{ vault_db_user__default }}"
+  DB_PASSWORD__DEFAULT: "{{ vault_db_password__default }}"
+  DB_HOST__DEFAULT: "{{ vault_db_host__default }}"
+  DB_PORT__DEFAULT: "{{ vault_db_port__default }}"
+
+
+# Django specific configs
+django_settings_module: "core.settings.ec2"
+static_tmpdir: "/tmp/{{ project_name }}_static"
+
 
 # Configs below will not usually change
-project_repo: "git@github.com:NUKnightLab/{{ project_name }}.git"
 deploy_dir: "{{ install_root }}/{{ project_name }}"
-django_root: ""
+env_setup_script: "{{ deploy_dir }}/env.sh"
+env_run_script: "{{ deploy_dir }}/env_run.sh"
+project_repo: "git@github.com:NUKnightLab/{{ project_name }}.git"
+application_dir: "{{ deploy_dir }}" # application dir could be a subdirectory
 requirements_file: "{{ deploy_dir }}/requirements.txt"
-service_name: "apps/{{ project_name }}"
 virtualenv: "{{ virtualenv_root }}/{{ project_name }}"
-wsgi_application: "{{ deploy_config_dir }}.wsgi:application"
+wsgi_application: "core.wsgi:application"
+service_name: "apps/{{ project_name }}" # application services are now kept
+                                        # in /etc/init/apps
+
+
+# Configs common to all projects
+application_user: apps
+install_root: /home/{{ application_user }}/sites
+virtualenv_root: /home/{{ application_user }}/env
+
+# environment keys must match deployment branch names. Value is the name
+# of the branch to be merged into this environment during deployment.
+supported_envs:
+  stg: master
+  prd: stg
