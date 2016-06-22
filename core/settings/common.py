@@ -124,7 +124,7 @@ from boto.s3.connection import OrdinaryCallingFormat
 AWS_S3_CALLING_FORMAT = OrdinaryCallingFormat()
 AWS_S3_URL_PROTOCOL = 'https'
 AWS_S3_SECURE_URLS = False
-AWS_STORAGE_BUCKET_NAME = 'media.knightlab.com'
+AWS_STORAGE_BUCKET_NAME = env['AWS_STORAGE_BUCKET_NAME']
 
 # not sure this is needed with the new TEMPLATES structure
 #TEMPLATE_DIRS = (
