@@ -1,4 +1,4 @@
-domains: "{{ project_name }}.knightlab.com"
+domains: "learn.knightlab.com learncms.knightlab.com"
 staticbucket: "media.knightlab.com/{{ project_name }}"
 gunicorn_reload: False
 
