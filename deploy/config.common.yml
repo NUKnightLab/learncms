@@ -1,5 +1,5 @@
-# git-deploy 1.0.1
 project_name: learncms
+gitdeploy_version: "1.0.1"
 port: 9018
 python: python3
 type: django # (django|flask|other|repository)
