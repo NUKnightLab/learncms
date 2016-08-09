@@ -1,5 +1,5 @@
 project_name: learncms
-gitdeploy_version: "1.0.1"
+gitdeploy_version: "1.0.3"
 port: 9018
 python: python3
 type: django # (django|flask|other|repository)
@@ -35,9 +35,9 @@ application_dir: "{{ deploy_dir }}" # application dir could be a subdirectory
 requirements_file: "{{ deploy_dir }}/requirements.txt"
 virtualenv: "{{ virtualenv_root }}/{{ project_name }}"
 wsgi_application: "core.wsgi:application"
-service_name: "apps/{{ project_name }}" # application services are now kept
-                                        # in /etc/init/apps
-
+service_name: "apps/{{ project_name }}"
+static_service: "s3"
+static_dest: "s3://{{ static_bucket }}/{{ project_name }}"
 
 # Configs common to all projects
 application_user: apps
