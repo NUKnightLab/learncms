@@ -1,5 +1,5 @@
 project_name: learncms
-gitdeploy_version: "1.0.3"
+gitdeploy_version: "1.0.4"
 port: 9018
 python: python3
 type: django # (django|flask|other|repository)
@@ -11,7 +11,7 @@ init_env_common:
   PROJECT_NAME: "{{ project_name }}"
   APPLICATION_DOMAINS: "{{ domains }}" # space-delimited
   DJANGO_SETTINGS_MODULE: "{{ django_settings_module }}"
-  STATIC_TMPDIR: "{{ static_tmpdir }}"
+  STATIC_TMPDIR: "{{ static_dir }}"
   DJANGO_SECRET_KEY: "{{ vault_django_secret_key }}"
   DB_ENGINE__DEFAULT: "django.db.backends.postgresql_psycopg2"
   DB_NAME__DEFAULT: "{{ project_name }}_{{ env }}"
@@ -23,7 +23,8 @@ init_env_common:
 
 # Django specific configs
 django_settings_module: "core.settings.ec2"
-static_tmpdir: "/tmp/{{ project_name }}_static"
+static_dir: "/tmp/{{ project_name }}_static"
+static_prep: "{{ env_run_script }} manage.py collectstatic --noinput"
 
 
 # Configs below will not usually change
