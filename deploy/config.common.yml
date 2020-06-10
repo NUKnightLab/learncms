@@ -1,10 +1,10 @@
 project_name: learncms
-gitdeploy_version: "1.0.4"
+gitdeploy_version: "1.0.5"
 port: 9018
 python: python3
 type: django # (django|flask|other|repository)
 
-nginx_template: "{{ config_dir }}/nginx.j2"
+nginx_conf: "{{ deploy_dir }}/nginx/conf.d/{{ project_name }}.conf"
 
 # these will be merged with deployment-specific env into init_env
 init_env_common:
