@@ -24,7 +24,8 @@ init_env_common:
 # Django specific configs
 django_settings_module: "core.settings.ec2"
 static_dir: "/tmp/{{ project_name }}_static"
-env_run_script: ". {{ virtualenv }}/bin/activate; /home/apps/.local/bin/runenv .env"
+#env_run_script: ". {{ virtualenv }}/bin/activate; /home/apps/.local/bin/runenv .env"
+env_run_script: "direnv exec {{ deploy_dir }}"
 static_prep: "{{ env_run_script }} ./manage.py collectstatic --noinput"
 #static_prep: "{{ env_run_script }} manage.py collectstatic --noinput"
 #env_run_script: "{{ deploy_dir }}/env_run.sh"
