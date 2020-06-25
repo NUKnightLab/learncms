@@ -1,7 +1,7 @@
 project_name: learncms
 gitdeploy_version: "1.0.5"
 port: 9018
-python: python3
+python: python3.7
 type: django # (django|flask|other|repository)
 
 nginx_conf: "{{ deploy_dir }}/nginx/conf.d/{{ project_name }}.conf"
@@ -38,7 +38,7 @@ envrc_file: "{{ deploy_dir }}/.envrc"
 project_repo: "git@github.com:NUKnightLab/{{ project_name }}.git"
 application_dir: "{{ deploy_dir }}" # application dir could be a subdirectory
 requirements_file: "{{ deploy_dir }}/requirements.txt"
-virtualenv: "{{ virtualenv_root }}/{{ project_name }}"
+virtualenv: "{{ virtualenv_root }}/venv"
 wsgi_application: "core.wsgi:application"
 service_name: "{{ project_name }}"
 static_service: "s3"
@@ -47,7 +47,7 @@ static_dest: "s3://{{ static_bucket }}/{{ project_name }}"
 # Configs common to all projects
 application_user: apps
 install_root: /home/{{ application_user }}/sites
-virtualenv_root: /home/{{ application_user }}/env
+virtualenv_root: "{{ deploy_dir }}"
 
 # environment keys must match deployment branch names. Value is the name
 # of the branch to be merged into this environment during deployment.
