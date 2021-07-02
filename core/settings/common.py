@@ -75,8 +75,7 @@ USE_TZ = True
 
 # static
 
-# Static hosted in S3, thus STATIC_ROOT only used for collectstatic
-STATIC_ROOT = env['STATIC_TMPDIR']
+STATIC_ROOT = env.get('STATIC_ROOT', 'static')
 STATICFILES_DIRS = (
     join(PROJECT_ROOT, 'static'),
 )
