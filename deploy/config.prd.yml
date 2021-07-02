@@ -1,8 +1,8 @@
-domains: "learn.knightlab.com,learncms.knightlab.com"
+domains: "learn.knightlab.com"
 service_exec: "{{ virtualenv}}/bin/gunicorn -b :{{ service_port }} --workers 3 {{ wsgi_application }}"
 
 init_env_prd:
-  URL_ROOT: "https://learncms.knightlab.com"
+  URL_ROOT: "https://learn.knightlab.com"
   AWS_STORAGE_BUCKET_NAME: "media.knightlab.com"
 
 # Note that env vars set in the upstart config will also be set when using the
