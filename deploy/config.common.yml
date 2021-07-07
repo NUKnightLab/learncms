@@ -4,6 +4,7 @@ gitdeploy_version: "1.0.6"
 python_version: "3.7.7"
 python: /home/apps/sites/twxplorer/.venv/bin/python
 service_port: "{{ learncms_port }}"
+nginx_template: learncms.conf
 
 playbooks:
   - playbook.deploy-repo.yml
@@ -23,7 +24,6 @@ init_env_common:
   DB_PASSWORD__DEFAULT: "{{ vault_db_password__default }}"
   DB_HOST__DEFAULT: "{{ vault_db_host__default }}"
   DB_PORT__DEFAULT: "{{ vault_db_port__default }}"
-  STATIC_URL: "/"
 
 
 # Django specific configs
