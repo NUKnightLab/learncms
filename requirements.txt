@@ -11,4 +11,4 @@ django-storages-redux==1.2.3
 django-filebrowser==3.6.4
 django-concurrency==0.9
 beautifulsoup4==4.4.1
-lxml==4.5.1
+lxml==4.6.5
