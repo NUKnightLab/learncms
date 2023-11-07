@@ -1,5 +1,5 @@
 domains: "learn.knightlab.com"
-service_exec: "{{ virtualenv}}/bin/gunicorn -b :{{ service_port }} --workers 3 {{ wsgi_application }}"
+service_exec: "{{ virtualenv}}/bin/gunicorn -b :{{ service_port }} --workers 1 {{ wsgi_application }}"
 
 init_env_prd:
   URL_ROOT: "https://learn.knightlab.com"
