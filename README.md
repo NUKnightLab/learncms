@@ -31,3 +31,52 @@ Work on the webcomponents is as simple as running a local webserver in the `comp
 
 Otherwise, the components are meant to be self-documenting. The `index.html` file should be kept up to date if new components are added
 or if guidelines need to be set.
+
+
+# Dependency issues
+
+There is some trickiness sorting out pg and pillow for older Python which we need until
+the project is updated to use newer Django.
+
+Mac
+
+```bash
+xcode-select --install                           # if not already
+brew install libpq
+brew install jpeg libtiff little-cms2 openjpeg webp freetype
+
+export PATH="/opt/homebrew/opt/libpq/bin:$PATH"
+export LDFLAGS="-L/opt/homebrew/opt/libpq/lib \
+-L/opt/homebrew/opt/jpeg/lib \
+-L/opt/homebrew/opt/libtiff/lib \
+-L/opt/homebrew/opt/little-cms2/lib \
+-L/opt/homebrew/opt/openjpeg/lib \
+-L/opt/homebrew/opt/webp/lib \
+-L/opt/homebrew/opt/freetype/lib"
+export CPPFLAGS="-I/opt/homebrew/opt/libpq/include \
+-I/opt/homebrew/opt/jpeg/include \
+-I/opt/homebrew/opt/libtiff/include \
+-I/opt/homebrew/opt/little-cms2/include \
+-I/opt/homebrew/opt/openjpeg/include \
+-I/opt/homebrew/opt/webp/include \
+-I/opt/homebrew/opt/freetype/include"
+export PKG_CONFIG_PATH="/opt/homebrew/opt/libpq/lib/pkgconfig"
+
+pip install --upgrade pip setuptools wheel
+pip install -r requirements.txt
+```
+
+
+Ubuntu
+
+```bash
+sudo apt-get update
+sudo apt-get install -y libpq-dev gcc python3-dev
+sudo apt-get install -y build-essential \
+  libjpeg-dev zlib1g-dev libtiff5-dev libfreetype6-dev \
+  libwebp-dev liblcms2-dev libopenjp2-7-dev
+
+pip install --upgrade pip setuptools wheel
+pip install -r requirements.txt
+```
+
