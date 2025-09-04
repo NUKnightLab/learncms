@@ -1,7 +1,9 @@
 Django==1.8.3
 gunicorn==19.3.0
-psycopg2==2.9.9
-#Pillow==2.9.0
+
+# Must be < 2.9 for Django 1.8 timezone compatibility
+psycopg2==2.8.6
+
 Pillow==9.2.0
 boto==2.38.0
 django-imagekit==3.2.6

@@ -33,7 +33,7 @@ Otherwise, the components are meant to be self-documenting. The `index.html` fil
 or if guidelines need to be set.
 
 
-# Dependency issues
+## Dependency issues
 
 There is some trickiness sorting out pg and pillow for older Python which we need until
 the project is updated to use newer Django.
@@ -80,3 +80,8 @@ pip install --upgrade pip setuptools wheel
 pip install -r requirements.txt
 ```
 
+## Ansible compatibility
+
+Ansible (and thus git-deploy) will likely have issues with the older Python. The simplest fix for
+deployment is to install git-deploy in a newer (e.g. 3.12) external virtualenv and source that
+environment when running deployment.

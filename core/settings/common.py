@@ -48,7 +48,10 @@ DATABASES = {
         'USER': env['DB_USER__DEFAULT'],
         'PASSWORD': env['DB_PASSWORD__DEFAULT'],
         'HOST': env['DB_HOST__DEFAULT'],
-        'PORT': env['DB_PORT__DEFAULT']
+        'PORT': env['DB_PORT__DEFAULT'],
+        'OPTIONS': {
+            'options': '-c timezone=UTC',
+        },
     }
 }
 
@@ -68,7 +71,8 @@ DEBUG = True if env.get('DJANGO_DEBUG', '').lower() == 'true' else False
 ALLOWED_HOSTS = env['APPLICATION_DOMAINS'].split(',')
 WSGI_APPLICATION = 'core.wsgi.application'
 LANGUAGE_CODE = 'en-us'
-TIME_ZONE = 'America/Chicago'
+#TIME_ZONE = 'America/Chicago'
+TIME_ZONE = 'UTC'
 USE_I18N = True
 USE_L10N = True
 USE_TZ = True
