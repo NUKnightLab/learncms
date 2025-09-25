@@ -164,6 +164,52 @@ static_site/
 2. **404 errors**: Check that lessons have `status='published'`
 3. **Missing static files**: Run `collectstatic` and copy files to output directory
 4. **Timeout errors**: Increase timeout with `--timeout` option
+5. **Magnifying glass overlays not working**: Web components need proper setup (see below)
+
+### Fixing Web Component Issues (Magnifying Glass Overlays)
+
+The magnifying glass zoom functionality uses Polymer web components. If the overlays show only a sliver or don't work at all, follow these steps:
+
+#### Step 1: Use the Debug Tool
+```bash
+# Check if required files exist
+python debug_static_site.py check --static-dir ./static
+
+# Fix HTML template tags that break web components
+python debug_static_site.py fix --site-dir ./static_site
+
+# Diagnose a specific page
+python debug_static_site.py diagnose --file ./static_site/lesson/some-lesson/index.html
+```
+
+#### Step 2: Manual Fixes
+If the debug tool doesn't fix everything, check these manually:
+
+1. **Ensure web components are loaded in HTML head**:
+   ```html
+   <script src="/static/webcomponentsjs/webcomponents-lite.min.js"></script>
+   <link rel="import" href="/static/webcomponents/webcomponents.html">
+   ```
+
+2. **Check that static files exist**:
+   - `/static/webcomponentsjs/webcomponents-lite.min.js`
+   - `/static/webcomponents/webcomponents.html`
+   - All Polymer component files
+
+3. **Remove Django template tags from static HTML**:
+   - Replace `{% static 'file.js' %}` with `/static/file.js`
+   - Remove `{% load staticfiles %}` from HTML files
+
+#### Step 3: Verify Component Loading
+Open browser developer tools and check:
+- No 404 errors for `/static/webcomponents*` files
+- No JavaScript errors related to Polymer
+- `<zooming-image>` elements are properly defined
+
+#### Common Error Messages
+- "webcomponents-lite.min.js:1 Failed to load": Static files not copied correctly
+- "Uncaught TypeError: Cannot read property": Django template tags not fixed
+- Overlay shows only a sliver: CSS z-index conflicts or missing component definitions
 
 ### Checking Generated Content
 

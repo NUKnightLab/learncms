@@ -48,27 +48,6 @@ class StaticSiteGenerator:
             self.failed_urls.append((url, f"Error: {e}"))
             return None
 
-    def save_content(self, relative_path, content, content_type='text/html'):
-        """Save content to the output directory"""
-        if isinstance(content, bytes):
-            content = content.decode('utf-8', errors='replace')
-
-        # Create the full path
-        if relative_path == '' or relative_path == '/':
-            file_path = self.output_dir / 'index.html'
-        elif relative_path.endswith('/'):
-            # Directory-style URLs get an index.html
-            dir_path = self.output_dir / relative_path.strip('/')
-            dir_path.mkdir(parents=True, exist_ok=True)
-            file_path = dir_path / 'index.html'
-        else:
-            # File-style URLs
-            file_path = self.output_dir / relative_path.lstrip('/')
-            file_path.parent.mkdir(parents=True, exist_ok=True)
-
-        print(f"Saving: {file_path}")
-        with open(file_path, 'w', encoding='utf-8') as f:
-            f.write(content)
 
     def get_lessons_from_api(self):
         """Get all lesson slugs from the JSON API"""
@@ -131,11 +110,63 @@ class StaticSiteGenerator:
                     self.save_content(endpoint, content, 'application/json')
                     self.crawled_urls.add(endpoint)
 
+    def fix_web_component_paths(self, content):
+        """Fix relative paths in HTML content for static site"""
+        if isinstance(content, bytes):
+            content = content.decode('utf-8', errors='replace')
+
+        # Fix common static file references to use absolute paths
+        # This ensures web components and other assets load correctly
+        replacements = [
+            # Fix script src paths
+            ('src="/static/', 'src="/static/'),
+            ('href="/static/', 'href="/static/'),
+            # Ensure webcomponents load correctly
+            ('src="{% static \'webcomponentsjs/webcomponents-lite.min.js\' %}"', 'src="/static/webcomponentsjs/webcomponents-lite.min.js"'),
+            ('href="{% static \'webcomponents/webcomponents.html\' %}"', 'href="/static/webcomponents/webcomponents.html"'),
+        ]
+
+        for old, new in replacements:
+            content = content.replace(old, new)
+
+        return content
+
+    def save_content(self, relative_path, content, content_type='text/html'):
+        """Save content to the output directory"""
+        if isinstance(content, bytes):
+            content = content.decode('utf-8', errors='replace')
+
+        # Fix web component paths for static site
+        if content_type == 'text/html':
+            content = self.fix_web_component_paths(content)
+
+        # Create the full path
+        if relative_path == '' or relative_path == '/':
+            file_path = self.output_dir / 'index.html'
+        elif relative_path.endswith('/'):
+            # Directory-style URLs get an index.html
+            dir_path = self.output_dir / relative_path.strip('/')
+            dir_path.mkdir(parents=True, exist_ok=True)
+            file_path = dir_path / 'index.html'
+        else:
+            # File-style URLs
+            file_path = self.output_dir / relative_path.lstrip('/')
+            file_path.parent.mkdir(parents=True, exist_ok=True)
+
+        print(f"Saving: {file_path}")
+        with open(file_path, 'w', encoding='utf-8') as f:
+            f.write(content)
+
     def download_static_files(self):
         """Download static files (CSS, JS, images)"""
         print("Note: Static files (CSS, JS, images) should be collected using Django's collectstatic command")
         print("Run: python manage.py collectstatic --noinput")
         print("Then copy the collected static files to your nginx static directory")
+        print("")
+        print("IMPORTANT: For web components to work properly, ensure the following files are accessible:")
+        print("- /static/webcomponentsjs/webcomponents-lite.min.js")
+        print("- /static/webcomponents/webcomponents.html")
+        print("- All Polymer components and dependencies")
 
     def generate_nginx_config(self):
         """Generate a basic nginx configuration"""
