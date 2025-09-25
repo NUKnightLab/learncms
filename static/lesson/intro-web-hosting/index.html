@@ -332,54 +332,7 @@ j=d.createElement(s),dl=l!='dataLayer'?'&l='+l:'';j.async=true;j.src=
   log in.
  </p>
  <media-group class="layout horizontal around-justified">
-  <zooming-image ref="filezilla-login">
-   <!--Reference could not be resolved-->
-   <!--Traceback (most recent call last):
-  File "/home/apps/sites/learncms/learncms/refresolvers.py", line 62, in resolve_ref
-    self.update_element(elem, obj)
-  File "/home/apps/sites/learncms/learncms/refresolvers.py", line 92, in update_element
-    elem.attrs['src'] = obj.thumbnail.url
-  File "/home/apps/sites/learncms/.venv/lib/python3.7/site-packages/imagekit/cachefiles/__init__.py", line 84, in url
-    return self._storage_attr('url')
-  File "/home/apps/sites/learncms/.venv/lib/python3.7/site-packages/imagekit/cachefiles/__init__.py", line 74, in _storage_attr
-    existence_required.send(sender=self, file=self)
-  File "/home/apps/sites/learncms/.venv/lib/python3.7/site-packages/django/dispatch/dispatcher.py", line 201, in send
-    response = receiver(signal=self, sender=sender, **named)
-  File "/home/apps/sites/learncms/.venv/lib/python3.7/site-packages/imagekit/registry.py", line 53, in existence_required_receiver
-    self._receive(file, 'on_existence_required')
-  File "/home/apps/sites/learncms/.venv/lib/python3.7/site-packages/imagekit/registry.py", line 61, in _receive
-    call_strategy_method(file, callback)
-  File "/home/apps/sites/learncms/.venv/lib/python3.7/site-packages/imagekit/utils.py", line 151, in call_strategy_method
-    fn(file)
-  File "/home/apps/sites/learncms/.venv/lib/python3.7/site-packages/imagekit/cachefiles/strategies.py", line 15, in on_existence_required
-    file.generate()
-  File "/home/apps/sites/learncms/.venv/lib/python3.7/site-packages/imagekit/cachefiles/__init__.py", line 93, in generate
-    self.cachefile_backend.generate(self, force)
-  File "/home/apps/sites/learncms/.venv/lib/python3.7/site-packages/imagekit/cachefiles/backends.py", line 109, in generate
-    self.generate_now(file, force=force)
-  File "/home/apps/sites/learncms/.venv/lib/python3.7/site-packages/imagekit/cachefiles/backends.py", line 95, in generate_now
-    if force or self.get_state(file) not in (CacheFileState.GENERATING, CacheFileState.EXISTS):
-  File "/home/apps/sites/learncms/.venv/lib/python3.7/site-packages/imagekit/cachefiles/backends.py", line 69, in get_state
-    exists = self._exists(file)
-  File "/home/apps/sites/learncms/.venv/lib/python3.7/site-packages/imagekit/cachefiles/backends.py", line 113, in _exists
-    or file.storage.exists(file.name))
-  File "/home/apps/sites/learncms/.venv/lib/python3.7/site-packages/storages/backends/s3boto.py", line 438, in exists
-    k = self.bucket.new_key(self._encode_name(name))
-  File "/home/apps/sites/learncms/.venv/lib/python3.7/site-packages/storages/backends/s3boto.py", line 295, in bucket
-    self._bucket = self._get_or_create_bucket(self.bucket_name)
-  File "/home/apps/sites/learncms/.venv/lib/python3.7/site-packages/storages/backends/s3boto.py", line 328, in _get_or_create_bucket
-    return self.connection.get_bucket(name,
-  File "/home/apps/sites/learncms/.venv/lib/python3.7/site-packages/storages/backends/s3boto.py", line 284, in connection
-    port=self.port,
-  File "/home/apps/sites/learncms/.venv/lib/python3.7/site-packages/boto/s3/connection.py", line 190, in __init__
-    validate_certs=validate_certs, profile_name=profile_name)
-  File "/home/apps/sites/learncms/.venv/lib/python3.7/site-packages/boto/connection.py", line 569, in __init__
-    host, config, self.provider, self._required_auth_capability())
-  File "/home/apps/sites/learncms/.venv/lib/python3.7/site-packages/boto/auth.py", line 987, in get_auth_handler
-    'Check your credentials' % (len(names), str(names)))
-boto.exception.NoAuthHandlerFound: No handler was ready to authenticate. 1 handlers were checked. ['HmacAuthV1Handler'] Check your credentials
--->
-  </zooming-image>
+  <zooming-image src="/static/img/filezilla-login.png" full-src="/static/img/filezilla-login.png"></zooming-image>
  </media-group>
  <p>
   In Cyberduck, when you launch the application for the first
@@ -396,54 +349,7 @@ boto.exception.NoAuthHandlerFound: No handler was ready to authenticate. 1 handl
   password to connect to your server, and you should be in!
  </p>
  <media-group class="layout horizontal around-justified">
-  <zooming-image ref="cyberduck-login">
-   <!--Reference could not be resolved-->
-   <!--Traceback (most recent call last):
-  File "/home/apps/sites/learncms/learncms/refresolvers.py", line 62, in resolve_ref
-    self.update_element(elem, obj)
-  File "/home/apps/sites/learncms/learncms/refresolvers.py", line 92, in update_element
-    elem.attrs['src'] = obj.thumbnail.url
-  File "/home/apps/sites/learncms/.venv/lib/python3.7/site-packages/imagekit/cachefiles/__init__.py", line 84, in url
-    return self._storage_attr('url')
-  File "/home/apps/sites/learncms/.venv/lib/python3.7/site-packages/imagekit/cachefiles/__init__.py", line 74, in _storage_attr
-    existence_required.send(sender=self, file=self)
-  File "/home/apps/sites/learncms/.venv/lib/python3.7/site-packages/django/dispatch/dispatcher.py", line 201, in send
-    response = receiver(signal=self, sender=sender, **named)
-  File "/home/apps/sites/learncms/.venv/lib/python3.7/site-packages/imagekit/registry.py", line 53, in existence_required_receiver
-    self._receive(file, 'on_existence_required')
-  File "/home/apps/sites/learncms/.venv/lib/python3.7/site-packages/imagekit/registry.py", line 61, in _receive
-    call_strategy_method(file, callback)
-  File "/home/apps/sites/learncms/.venv/lib/python3.7/site-packages/imagekit/utils.py", line 151, in call_strategy_method
-    fn(file)
-  File "/home/apps/sites/learncms/.venv/lib/python3.7/site-packages/imagekit/cachefiles/strategies.py", line 15, in on_existence_required
-    file.generate()
-  File "/home/apps/sites/learncms/.venv/lib/python3.7/site-packages/imagekit/cachefiles/__init__.py", line 93, in generate
-    self.cachefile_backend.generate(self, force)
-  File "/home/apps/sites/learncms/.venv/lib/python3.7/site-packages/imagekit/cachefiles/backends.py", line 109, in generate
-    self.generate_now(file, force=force)
-  File "/home/apps/sites/learncms/.venv/lib/python3.7/site-packages/imagekit/cachefiles/backends.py", line 95, in generate_now
-    if force or self.get_state(file) not in (CacheFileState.GENERATING, CacheFileState.EXISTS):
-  File "/home/apps/sites/learncms/.venv/lib/python3.7/site-packages/imagekit/cachefiles/backends.py", line 69, in get_state
-    exists = self._exists(file)
-  File "/home/apps/sites/learncms/.venv/lib/python3.7/site-packages/imagekit/cachefiles/backends.py", line 113, in _exists
-    or file.storage.exists(file.name))
-  File "/home/apps/sites/learncms/.venv/lib/python3.7/site-packages/storages/backends/s3boto.py", line 438, in exists
-    k = self.bucket.new_key(self._encode_name(name))
-  File "/home/apps/sites/learncms/.venv/lib/python3.7/site-packages/storages/backends/s3boto.py", line 295, in bucket
-    self._bucket = self._get_or_create_bucket(self.bucket_name)
-  File "/home/apps/sites/learncms/.venv/lib/python3.7/site-packages/storages/backends/s3boto.py", line 328, in _get_or_create_bucket
-    return self.connection.get_bucket(name,
-  File "/home/apps/sites/learncms/.venv/lib/python3.7/site-packages/storages/backends/s3boto.py", line 284, in connection
-    port=self.port,
-  File "/home/apps/sites/learncms/.venv/lib/python3.7/site-packages/boto/s3/connection.py", line 190, in __init__
-    validate_certs=validate_certs, profile_name=profile_name)
-  File "/home/apps/sites/learncms/.venv/lib/python3.7/site-packages/boto/connection.py", line 569, in __init__
-    host, config, self.provider, self._required_auth_capability())
-  File "/home/apps/sites/learncms/.venv/lib/python3.7/site-packages/boto/auth.py", line 987, in get_auth_handler
-    'Check your credentials' % (len(names), str(names)))
-boto.exception.NoAuthHandlerFound: No handler was ready to authenticate. 1 handlers were checked. ['HmacAuthV1Handler'] Check your credentials
--->
-  </zooming-image>
+  <zooming-image src="/static/img/cyberduck-login.png" full-src="/static/img/cyberduck-login.png"></zooming-image>
  </media-group>
 </step-block>
 <step-block header="Transfer files to your host server">
@@ -464,54 +370,7 @@ boto.exception.NoAuthHandlerFound: No handler was ready to authenticate. 1 handl
   computer.
  </p>
  <media-group class="layout horizontal around-justified">
-  <zooming-image ref="filezilla-windows">
-   <!--Reference could not be resolved-->
-   <!--Traceback (most recent call last):
-  File "/home/apps/sites/learncms/learncms/refresolvers.py", line 62, in resolve_ref
-    self.update_element(elem, obj)
-  File "/home/apps/sites/learncms/learncms/refresolvers.py", line 92, in update_element
-    elem.attrs['src'] = obj.thumbnail.url
-  File "/home/apps/sites/learncms/.venv/lib/python3.7/site-packages/imagekit/cachefiles/__init__.py", line 84, in url
-    return self._storage_attr('url')
-  File "/home/apps/sites/learncms/.venv/lib/python3.7/site-packages/imagekit/cachefiles/__init__.py", line 74, in _storage_attr
-    existence_required.send(sender=self, file=self)
-  File "/home/apps/sites/learncms/.venv/lib/python3.7/site-packages/django/dispatch/dispatcher.py", line 201, in send
-    response = receiver(signal=self, sender=sender, **named)
-  File "/home/apps/sites/learncms/.venv/lib/python3.7/site-packages/imagekit/registry.py", line 53, in existence_required_receiver
-    self._receive(file, 'on_existence_required')
-  File "/home/apps/sites/learncms/.venv/lib/python3.7/site-packages/imagekit/registry.py", line 61, in _receive
-    call_strategy_method(file, callback)
-  File "/home/apps/sites/learncms/.venv/lib/python3.7/site-packages/imagekit/utils.py", line 151, in call_strategy_method
-    fn(file)
-  File "/home/apps/sites/learncms/.venv/lib/python3.7/site-packages/imagekit/cachefiles/strategies.py", line 15, in on_existence_required
-    file.generate()
-  File "/home/apps/sites/learncms/.venv/lib/python3.7/site-packages/imagekit/cachefiles/__init__.py", line 93, in generate
-    self.cachefile_backend.generate(self, force)
-  File "/home/apps/sites/learncms/.venv/lib/python3.7/site-packages/imagekit/cachefiles/backends.py", line 109, in generate
-    self.generate_now(file, force=force)
-  File "/home/apps/sites/learncms/.venv/lib/python3.7/site-packages/imagekit/cachefiles/backends.py", line 95, in generate_now
-    if force or self.get_state(file) not in (CacheFileState.GENERATING, CacheFileState.EXISTS):
-  File "/home/apps/sites/learncms/.venv/lib/python3.7/site-packages/imagekit/cachefiles/backends.py", line 69, in get_state
-    exists = self._exists(file)
-  File "/home/apps/sites/learncms/.venv/lib/python3.7/site-packages/imagekit/cachefiles/backends.py", line 113, in _exists
-    or file.storage.exists(file.name))
-  File "/home/apps/sites/learncms/.venv/lib/python3.7/site-packages/storages/backends/s3boto.py", line 438, in exists
-    k = self.bucket.new_key(self._encode_name(name))
-  File "/home/apps/sites/learncms/.venv/lib/python3.7/site-packages/storages/backends/s3boto.py", line 295, in bucket
-    self._bucket = self._get_or_create_bucket(self.bucket_name)
-  File "/home/apps/sites/learncms/.venv/lib/python3.7/site-packages/storages/backends/s3boto.py", line 328, in _get_or_create_bucket
-    return self.connection.get_bucket(name,
-  File "/home/apps/sites/learncms/.venv/lib/python3.7/site-packages/storages/backends/s3boto.py", line 284, in connection
-    port=self.port,
-  File "/home/apps/sites/learncms/.venv/lib/python3.7/site-packages/boto/s3/connection.py", line 190, in __init__
-    validate_certs=validate_certs, profile_name=profile_name)
-  File "/home/apps/sites/learncms/.venv/lib/python3.7/site-packages/boto/connection.py", line 569, in __init__
-    host, config, self.provider, self._required_auth_capability())
-  File "/home/apps/sites/learncms/.venv/lib/python3.7/site-packages/boto/auth.py", line 987, in get_auth_handler
-    'Check your credentials' % (len(names), str(names)))
-boto.exception.NoAuthHandlerFound: No handler was ready to authenticate. 1 handlers were checked. ['HmacAuthV1Handler'] Check your credentials
--->
-  </zooming-image>
+  <zooming-image src="/static/img/filezilla-windows.png" full-src="/static/img/filezilla-windows.png"></zooming-image>
  </media-group>
  <p>
   In Cyberduck, once you’ve connected to your host server it
@@ -521,54 +380,7 @@ boto.exception.NoAuthHandlerFound: No handler was ready to authenticate. 1 handl
   it!
  </p>
  <media-group class="layout horizontal around-justified">
-  <zooming-image ref="cyberduck-windows">
-   <!--Reference could not be resolved-->
-   <!--Traceback (most recent call last):
-  File "/home/apps/sites/learncms/learncms/refresolvers.py", line 62, in resolve_ref
-    self.update_element(elem, obj)
-  File "/home/apps/sites/learncms/learncms/refresolvers.py", line 92, in update_element
-    elem.attrs['src'] = obj.thumbnail.url
-  File "/home/apps/sites/learncms/.venv/lib/python3.7/site-packages/imagekit/cachefiles/__init__.py", line 84, in url
-    return self._storage_attr('url')
-  File "/home/apps/sites/learncms/.venv/lib/python3.7/site-packages/imagekit/cachefiles/__init__.py", line 74, in _storage_attr
-    existence_required.send(sender=self, file=self)
-  File "/home/apps/sites/learncms/.venv/lib/python3.7/site-packages/django/dispatch/dispatcher.py", line 201, in send
-    response = receiver(signal=self, sender=sender, **named)
-  File "/home/apps/sites/learncms/.venv/lib/python3.7/site-packages/imagekit/registry.py", line 53, in existence_required_receiver
-    self._receive(file, 'on_existence_required')
-  File "/home/apps/sites/learncms/.venv/lib/python3.7/site-packages/imagekit/registry.py", line 61, in _receive
-    call_strategy_method(file, callback)
-  File "/home/apps/sites/learncms/.venv/lib/python3.7/site-packages/imagekit/utils.py", line 151, in call_strategy_method
-    fn(file)
-  File "/home/apps/sites/learncms/.venv/lib/python3.7/site-packages/imagekit/cachefiles/strategies.py", line 15, in on_existence_required
-    file.generate()
-  File "/home/apps/sites/learncms/.venv/lib/python3.7/site-packages/imagekit/cachefiles/__init__.py", line 93, in generate
-    self.cachefile_backend.generate(self, force)
-  File "/home/apps/sites/learncms/.venv/lib/python3.7/site-packages/imagekit/cachefiles/backends.py", line 109, in generate
-    self.generate_now(file, force=force)
-  File "/home/apps/sites/learncms/.venv/lib/python3.7/site-packages/imagekit/cachefiles/backends.py", line 95, in generate_now
-    if force or self.get_state(file) not in (CacheFileState.GENERATING, CacheFileState.EXISTS):
-  File "/home/apps/sites/learncms/.venv/lib/python3.7/site-packages/imagekit/cachefiles/backends.py", line 69, in get_state
-    exists = self._exists(file)
-  File "/home/apps/sites/learncms/.venv/lib/python3.7/site-packages/imagekit/cachefiles/backends.py", line 113, in _exists
-    or file.storage.exists(file.name))
-  File "/home/apps/sites/learncms/.venv/lib/python3.7/site-packages/storages/backends/s3boto.py", line 438, in exists
-    k = self.bucket.new_key(self._encode_name(name))
-  File "/home/apps/sites/learncms/.venv/lib/python3.7/site-packages/storages/backends/s3boto.py", line 295, in bucket
-    self._bucket = self._get_or_create_bucket(self.bucket_name)
-  File "/home/apps/sites/learncms/.venv/lib/python3.7/site-packages/storages/backends/s3boto.py", line 328, in _get_or_create_bucket
-    return self.connection.get_bucket(name,
-  File "/home/apps/sites/learncms/.venv/lib/python3.7/site-packages/storages/backends/s3boto.py", line 284, in connection
-    port=self.port,
-  File "/home/apps/sites/learncms/.venv/lib/python3.7/site-packages/boto/s3/connection.py", line 190, in __init__
-    validate_certs=validate_certs, profile_name=profile_name)
-  File "/home/apps/sites/learncms/.venv/lib/python3.7/site-packages/boto/connection.py", line 569, in __init__
-    host, config, self.provider, self._required_auth_capability())
-  File "/home/apps/sites/learncms/.venv/lib/python3.7/site-packages/boto/auth.py", line 987, in get_auth_handler
-    'Check your credentials' % (len(names), str(names)))
-boto.exception.NoAuthHandlerFound: No handler was ready to authenticate. 1 handlers were checked. ['HmacAuthV1Handler'] Check your credentials
--->
-  </zooming-image>
+  <zooming-image src="/static/img/cyberduck-windows.png" full-src="/static/img/cyberduck-windows.png"></zooming-image>
  </media-group>
 </step-block>
 <step-block header="Check out your site">

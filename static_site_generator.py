@@ -137,6 +137,27 @@ class StaticSiteGenerator:
         for old, new in replacements:
             content = content.replace(old, new)
 
+        # Fix broken zooming-image references
+        content = self.fix_broken_image_references(content)
+
+        return content
+
+    def fix_broken_image_references(self, content):
+        """Fix broken zooming-image ref attributes"""
+        import re
+
+        # Pattern to match broken zooming-image elements with unresolved references
+        pattern = r'<zooming-image ref="([^"]+)"[^>]*>.*?<!--Reference could not be resolved-->.*?</zooming-image>'
+
+        def replace_broken_ref(match):
+            ref_name = match.group(1)
+            # Use placeholder image path for now - users can replace with actual images
+            placeholder_path = f"/static/img/{ref_name}.png"
+            return f'<zooming-image src="{placeholder_path}" full-src="{placeholder_path}"></zooming-image>'
+
+        # Apply the replacement
+        content = re.sub(pattern, replace_broken_ref, content, flags=re.DOTALL)
+
         return content
 
     def save_content(self, relative_path, content, content_type='text/html'):
