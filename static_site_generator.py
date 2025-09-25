@@ -132,7 +132,7 @@ class StaticSiteGenerator:
         return content
 
     def fix_broken_image_references(self, content):
-        """Fix broken zooming-image ref attributes"""
+        """Fix broken zooming-image ref attributes to point to local zimages"""
         import re
 
         # Pattern to match broken zooming-image elements with unresolved references
@@ -140,9 +140,9 @@ class StaticSiteGenerator:
 
         def replace_broken_ref(match):
             ref_name = match.group(1)
-            # Use CDN placeholder or actual image paths - keep protocol-relative
-            placeholder_path = f"//media.knightlab.com/learncms/img/{ref_name}.png"
-            return f'<zooming-image src="{placeholder_path}" full-src="{placeholder_path}"></zooming-image>'
+            # Convert to local static zimages path
+            image_path = f"/static/zimages/{ref_name}.png"
+            return f'<zooming-image src="{image_path}" full-src="{image_path}"></zooming-image>'
 
         # Apply the replacement
         content = re.sub(pattern, replace_broken_ref, content, flags=re.DOTALL)
