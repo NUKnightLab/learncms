@@ -165,6 +165,7 @@ static_site/
 3. **Missing static files**: Run `collectstatic` and copy files to output directory
 4. **Timeout errors**: Increase timeout with `--timeout` option
 5. **Magnifying glass overlays not working**: Web components need proper setup (see below)
+6. **Callout blocks show placeholder icons**: Emoji font not loading correctly (see below)
 
 ### Fixing Web Component Issues (Magnifying Glass Overlays)
 
@@ -210,6 +211,40 @@ Open browser developer tools and check:
 - "webcomponents-lite.min.js:1 Failed to load": Static files not copied correctly
 - "Uncaught TypeError: Cannot read property": Django template tags not fixed
 - Overlay shows only a sliver: CSS z-index conflicts or missing component definitions
+
+### Fixing Callout Block Emoji Issues
+
+If callout blocks (like "Danger, danger!" messages) show placeholder circle icons instead of proper emojis:
+
+#### The Problem
+Info blocks use a custom emoji font (`EmojiSymbols-Regular.woff`) that may not be loading correctly in the static site.
+
+#### The Solution
+```bash
+# 1. Check if emoji font exists
+python debug_static_site.py check --static-dir ./static
+
+# 2. Fix font paths in static files
+python debug_static_site.py fix --site-dir ./static_site
+
+# 3. Verify the emoji font is in the right place
+ls ./static/css/EmojiSymbols-Regular.woff
+```
+
+#### Manual Fix
+If the font file is missing:
+1. **Copy the emoji font** from your Django static files to `/static/css/EmojiSymbols-Regular.woff`
+2. **Update web component CSS** to use the correct path:
+   ```css
+   @font-face {
+     font-family: "EmojiSymbols";
+     src: url('/static/css/EmojiSymbols-Regular.woff') format('woff');
+   }
+   ```
+3. **Check browser console** for any remaining font loading errors
+
+#### Alternative Solution
+If the emoji font continues to cause issues, you can modify the info-block component to use system emojis instead by removing the custom font family.
 
 ### Checking Generated Content
 

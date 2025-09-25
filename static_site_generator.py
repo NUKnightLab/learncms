@@ -115,15 +115,23 @@ class StaticSiteGenerator:
         if isinstance(content, bytes):
             content = content.decode('utf-8', errors='replace')
 
-        # Fix common static file references to use absolute paths
-        # This ensures web components and other assets load correctly
+        # Fix common static file references to use local static files instead of CDN
+        # This ensures web components and other assets load correctly in static site
         replacements = [
-            # Fix script src paths
+            # Fix CDN references to local static files
+            ('src="//media.knightlab.com/learncms/', 'src="/static/'),
+            ('href="//media.knightlab.com/learncms/', 'href="/static/'),
+            ("url('//media.knightlab.com/learncms/", "url('/static/"),
             ('src="/static/', 'src="/static/'),
             ('href="/static/', 'href="/static/'),
             # Ensure webcomponents load correctly
-            ('src="{% static \'webcomponentsjs/webcomponents-lite.min.js\' %}"', 'src="/static/webcomponentsjs/webcomponents-lite.min.js"'),
+            ('src="{% static \'webcomponentsjs/webcomponents-lite.min.js\' %}"', 'src="/static/webcomponents/webcomponents-lite.min.js"'),
             ('href="{% static \'webcomponents/webcomponents.html\' %}"', 'href="/static/webcomponents/webcomponents.html"'),
+            # Fix emoji font paths in web components
+            ('url(\'styles/fonts/EmojiSymbols-Regular.woff\')', 'url(\'/static/css/EmojiSymbols-Regular.woff\')'),
+            ('src: url(\'styles/fonts/EmojiSymbols-Regular.woff\')', 'src: url(\'/static/css/EmojiSymbols-Regular.woff\')'),
+            # Fix Django template tag leftovers
+            ('{% static \'css/EmojiSymbols-Regular.woff\' %}', '/static/css/EmojiSymbols-Regular.woff'),
         ]
 
         for old, new in replacements:
@@ -163,10 +171,17 @@ class StaticSiteGenerator:
         print("Run: python manage.py collectstatic --noinput")
         print("Then copy the collected static files to your nginx static directory")
         print("")
-        print("IMPORTANT: For web components to work properly, ensure the following files are accessible:")
-        print("- /static/webcomponentsjs/webcomponents-lite.min.js")
-        print("- /static/webcomponents/webcomponents.html")
-        print("- All Polymer components and dependencies")
+        print("IMPORTANT: For web components to work properly, you need to download static files:")
+        print("")
+        print("Required files from https://media.knightlab.com/learncms/:")
+        print("- webcomponentsjs/webcomponents-lite.min.js")
+        print("- webcomponents/webcomponents.html")
+        print("- css/EmojiSymbols-Regular.woff (for emoji callout blocks)")
+        print("- css/app.css (main stylesheet)")
+        print("- All other static assets")
+        print("")
+        print("Download these to your static directory or run 'python manage.py collectstatic'")
+        print("The generated HTML now points to /static/ instead of the CDN")
 
     def generate_nginx_config(self):
         """Generate a basic nginx configuration"""
