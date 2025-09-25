@@ -115,23 +115,12 @@ class StaticSiteGenerator:
         if isinstance(content, bytes):
             content = content.decode('utf-8', errors='replace')
 
-        # Fix common static file references to use local static files instead of CDN
-        # This ensures web components and other assets load correctly in static site
+        # Only fix Django template tags and broken references, keep working CDN URLs
         replacements = [
-            # Fix CDN references to local static files
-            ('src="//media.knightlab.com/learncms/', 'src="/static/'),
-            ('href="//media.knightlab.com/learncms/', 'href="/static/'),
-            ("url('//media.knightlab.com/learncms/", "url('/static/"),
-            ('src="/static/', 'src="/static/'),
-            ('href="/static/', 'href="/static/'),
-            # Ensure webcomponents load correctly
-            ('src="{% static \'webcomponentsjs/webcomponents-lite.min.js\' %}"', 'src="/static/webcomponents/webcomponents-lite.min.js"'),
-            ('href="{% static \'webcomponents/webcomponents.html\' %}"', 'href="/static/webcomponents/webcomponents.html"'),
-            # Fix emoji font paths in web components
-            ('url(\'styles/fonts/EmojiSymbols-Regular.woff\')', 'url(\'/static/css/EmojiSymbols-Regular.woff\')'),
-            ('src: url(\'styles/fonts/EmojiSymbols-Regular.woff\')', 'src: url(\'/static/css/EmojiSymbols-Regular.woff\')'),
-            # Fix Django template tag leftovers
-            ('{% static \'css/EmojiSymbols-Regular.woff\' %}', '/static/css/EmojiSymbols-Regular.woff'),
+            # Fix Django template tag leftovers (if any)
+            ('src="{% static \'webcomponentsjs/webcomponents-lite.min.js\' %}"', 'src="//media.knightlab.com/learncms/webcomponentsjs/webcomponents-lite.min.js"'),
+            ('href="{% static \'webcomponents/webcomponents.html\' %}"', 'href="//media.knightlab.com/learncms/webcomponents/webcomponents.html"'),
+            ('{% static \'css/EmojiSymbols-Regular.woff\' %}', '//media.knightlab.com/learncms/css/EmojiSymbols-Regular.woff'),
         ]
 
         for old, new in replacements:
@@ -151,8 +140,8 @@ class StaticSiteGenerator:
 
         def replace_broken_ref(match):
             ref_name = match.group(1)
-            # Use placeholder image path for now - users can replace with actual images
-            placeholder_path = f"/static/img/{ref_name}.png"
+            # Use CDN placeholder or actual image paths - keep protocol-relative
+            placeholder_path = f"//media.knightlab.com/learncms/img/{ref_name}.png"
             return f'<zooming-image src="{placeholder_path}" full-src="{placeholder_path}"></zooming-image>'
 
         # Apply the replacement
