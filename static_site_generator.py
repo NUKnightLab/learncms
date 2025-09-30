@@ -11,6 +11,7 @@ import sys
 import json
 import time
 import re
+import shutil
 from pathlib import Path
 import argparse
 from urllib.parse import urljoin, urlparse, urlunparse
@@ -45,7 +46,17 @@ class StaticSiteGenerator:
             with urlopen(request, timeout=timeout) as response:
                 if response.status == 200:
                     content_type = response.headers.get('content-type', '').lower()
-                    return response.read(), content_type
+                    content = response.read()
+
+                    # If it's HTML, decode properly based on response encoding
+                    if 'html' in content_type:
+                        encoding = 'utf-8'  # Default to UTF-8
+                        if 'charset=' in content_type:
+                            encoding = content_type.split('charset=')[1].split(';')[0].strip()
+                        content = content.decode(encoding, errors='replace')
+                        return content.encode('utf-8'), content_type
+
+                    return content, content_type
                 else:
                     print(f"Warning: {url} returned status {response.status}")
                     return None, None
@@ -166,10 +177,20 @@ class StaticSiteGenerator:
     def process_html_content(self, content, page_url):
         """Process HTML content and validate dependencies"""
         if isinstance(content, bytes):
-            content = content.decode('utf-8', errors='replace')
+            # Try to detect and properly decode the content
+            try:
+                content = content.decode('utf-8')
+            except UnicodeDecodeError:
+                # Fall back to latin-1 then encode to utf-8
+                content = content.decode('latin-1').encode('utf-8').decode('utf-8')
 
         # Rewrite media.knightlab.com URLs to local paths
         content = self._rewrite_knightlab_urls(content, page_url)
+
+        # Add charset meta tag if missing
+        if '<meta charset=' not in content and '<meta http-equiv="Content-Type"' not in content:
+            # Insert charset meta tag after <head>
+            content = content.replace('<head>', '<head>\n    <meta charset="utf-8">')
 
         # Validate media dependencies after rewriting
         self.validate_media_dependencies(content, page_url)
@@ -177,27 +198,38 @@ class StaticSiteGenerator:
         return content
 
     def _rewrite_knightlab_urls(self, content, page_url):
-        """Rewrite media.knightlab.com URLs to local static paths"""
+        """Rewrite media.knightlab.com URLs and fix broken relative paths"""
         import re
 
         # Pattern to match media.knightlab.com URLs
         pattern = r'https?://media\.knightlab\.com/learncms/([^"\'\s>]+)'
 
-        def replace_url(match):
+        def replace_knightlab_url(match):
             path = match.group(1)
-            local_file = self.static_dir / path
+            # Check if file exists in our output directory
+            local_file = self.output_dir / path
             if local_file.exists():
                 return f"/{path}"
             else:
                 # Keep original URL if file doesn't exist locally (will be caught by validation)
                 return match.group(0)
 
-        return re.sub(pattern, replace_url, content)
+        content = re.sub(pattern, replace_knightlab_url, content)
+
+        # Fix broken relative image paths like "images/learn/text-editor.png"
+        content = re.sub(r'images/learn/([^"\'\s>]+)', r'/images/learn/\1', content)
+
+        return content
 
     def save_content(self, relative_path, content, content_type='text/html'):
         """Save content to the output directory"""
         if isinstance(content, bytes):
-            content = content.decode('utf-8', errors='replace')
+            # Try to detect and properly decode the content
+            try:
+                content = content.decode('utf-8')
+            except UnicodeDecodeError:
+                # Fall back to latin-1 then encode to utf-8
+                content = content.decode('latin-1').encode('utf-8').decode('utf-8')
 
         # Create the full path
         if relative_path == '' or relative_path == '/':
@@ -269,6 +301,42 @@ class StaticSiteGenerator:
                     self.save_content(endpoint, content, content_type)
                     self.crawled_urls.add(endpoint)
 
+    def copy_all_static_assets(self):
+        """Copy all static assets to the output directory"""
+        print("Copying static assets...")
+
+        # Copy everything from static/ directory
+        if self.static_dir.exists():
+            for item in self.static_dir.rglob('*'):
+                if item.is_file():
+                    relative_path = item.relative_to(self.static_dir)
+                    dest_path = self.output_dir / relative_path
+                    dest_path.parent.mkdir(parents=True, exist_ok=True)
+                    shutil.copy2(item, dest_path)
+                    print(f"Copied: {relative_path}")
+
+        # Copy images from components/images to images/ in output
+        components_images = Path('components/images')
+        if components_images.exists():
+            for item in components_images.rglob('*'):
+                if item.is_file():
+                    relative_path = item.relative_to(components_images)
+                    dest_path = self.output_dir / 'images' / relative_path
+                    dest_path.parent.mkdir(parents=True, exist_ok=True)
+                    shutil.copy2(item, dest_path)
+                    print(f"Copied component image: {relative_path} -> images/{relative_path}")
+
+        # Copy from learn-media directory to imagelib in output
+        learn_media_path = Path('learn-media')
+        if learn_media_path.exists():
+            for item in learn_media_path.rglob('*'):
+                if item.is_file():
+                    relative_path = item.relative_to(learn_media_path)
+                    dest_path = self.output_dir / 'imagelib' / relative_path
+                    dest_path.parent.mkdir(parents=True, exist_ok=True)
+                    shutil.copy2(item, dest_path)
+                    print(f"Copied learn-media: {relative_path} -> imagelib/{relative_path}")
+
     def generate_site(self):
         """Generate the complete static site"""
         print(f"Generating static site from {self.base_url}")
@@ -276,6 +344,9 @@ class StaticSiteGenerator:
         print(f"Target domain: {self.domain}")
 
         start_time = time.time()
+
+        # Copy all static assets first
+        self.copy_all_static_assets()
 
         # Crawl different types of content
         self.crawl_static_pages()
