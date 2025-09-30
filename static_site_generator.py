@@ -132,20 +132,24 @@ class StaticSiteGenerator:
         return content
 
     def fix_broken_image_references(self, content):
-        """Fix broken zooming-image ref attributes to point to local zimages"""
+        """Fix broken zooming-image ref attributes and imagelib uploads to point to local zimages"""
         import re
 
-        # Pattern to match broken zooming-image elements with unresolved references
-        pattern = r'<zooming-image ref="([^"]+)"[^>]*>.*?<!--Reference could not be resolved-->.*?</zooming-image>'
+        # Pattern 1: match broken zooming-image elements with unresolved references
+        pattern1 = r'<zooming-image ref="([^"]+)"[^>]*>.*?<!--Reference could not be resolved-->.*?</zooming-image>'
 
         def replace_broken_ref(match):
             ref_name = match.group(1)
-            # Convert to local static zimages path
-            image_path = f"/static/zimages/{ref_name}.png"
+            # Convert to local zimages path (no /static/ prefix to match other static assets)
+            image_path = f"/zimages/{ref_name}.png"
             return f'<zooming-image src="{image_path}" full-src="{image_path}"></zooming-image>'
 
-        # Apply the replacement
-        content = re.sub(pattern, replace_broken_ref, content, flags=re.DOTALL)
+        # Apply the first replacement
+        content = re.sub(pattern1, replace_broken_ref, content, flags=re.DOTALL)
+
+        # Pattern 2: fix /imagelib/uploads/ paths to /zimages/
+        content = re.sub(r'src="/imagelib/uploads/([^"]+)"', r'src="/zimages/\1"', content)
+        content = re.sub(r'full-src="/imagelib/uploads/([^"]+)"', r'full-src="/zimages/\1"', content)
 
         return content
 
