@@ -96,7 +96,7 @@ class ZoomingImageRefResolver(ReferenceResolver):
         image_filename = os.path.basename(obj.image.name)
 
         # Construct local static URLs directly (bypass CDN STATIC_URL)
-        local_url = f"/static/zimages/{image_filename}"
+        local_url = f"/zimages/{image_filename}"
         elem.attrs['src'] = local_url
         elem.attrs['full-src'] = local_url
 
