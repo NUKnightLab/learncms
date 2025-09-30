@@ -8,7 +8,7 @@
   roles:
     - role: knightlab
     - role: repo
-    - role: dotenv
-    - role: virtualenv
-    - role: service
+    #- role: dotenv
+    #- role: virtualenv
+    #- role: service
     - role: nginx
