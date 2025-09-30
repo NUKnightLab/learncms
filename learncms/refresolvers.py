@@ -90,15 +90,16 @@ class ZoomingImageRefResolver(ReferenceResolver):
 
     def update_element(self, elem, obj):
         # Use local static files instead of S3
-        from django.conf import settings
+        from django.templatetags.static import static
         import os
 
         # Extract filename from the image field
         image_filename = os.path.basename(obj.image.name)
 
-        # Construct local static URLs
-        elem.attrs['src'] = f"{settings.STATIC_URL}zimages/{image_filename}"
-        elem.attrs['full-src'] = f"{settings.STATIC_URL}zimages/{image_filename}"
+        # Construct local static URLs using Django's static() function
+        static_path = f"zimages/{image_filename}"
+        elem.attrs['src'] = static(static_path)
+        elem.attrs['full-src'] = static(static_path)
 
 
 class CapsuleRefResolver(ReferenceResolver):
