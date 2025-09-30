@@ -9,7 +9,7 @@ nginx_template: learncms.conf
 playbooks:
   - playbook.deploy-repo.yml
   - playbook.deploy-web.yml
-  - playbook.restart.yml
+  # - playbook.restart.yml
 
 # these will be merged with deployment-specific env into init_env
 init_env_common:

@@ -2,6 +2,12 @@
 
 Learn.knightlab.com is a website created by students, for students, to help develop web making skills.
 
+## learn is now a static site
+
+As of Sept. 2025, learn.knightlab.com has been converted to a static site contained in
+the `static_site` directory. All Django functionality in this repo is now obsolete.
+
+
 # Developing the CMS
 
 ## Prereqs
