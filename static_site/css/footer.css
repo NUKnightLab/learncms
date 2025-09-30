@@ -1,0 +1,392 @@
+
+#footer {
+	font-size: 11px;
+	line-height: 1.5em;
+}
+
+#footer a {
+	color: #333;
+	font-weight: 400;
+}
+
+#footer a:hover {
+    color: #444;
+}
+
+#footer-wrapper .grid.col-940 {
+	margin: 0;
+}
+
+.scroll-top {
+	text-align: center;
+}
+
+.copyright {
+	text-align: center;
+}
+
+.powered {
+	text-align: right;
+}
+
+/* =Social Icons
+-------------------------------------------------------------- */
+#footer .social-icons {
+	list-style: none;
+	line-height: normal;
+	margin: 0;
+	text-align: right;
+}
+
+
+#footer .yelp-icon,
+#footer .vimeo-icon,
+#footer .youtube-icon,
+#footer .twitter-icon,
+#footer .facebook-icon,
+#footer .linkedin-icon,
+#footer .rss-feed-icon,
+#footer .instagram-icon,
+#footer .pinterest-icon,
+#footer .foursquare-icon,
+#footer .google-plus-icon,
+#footer .stumble-upon-icon {
+	display: inline;
+	margin: 1px;
+	padding-left: 3px;
+}
+
+/* =Alignments Extras
+-------------------------------------------------------------- */
+.left {
+	float: left;
+}
+
+.right {
+	float: right;
+}
+
+.center {
+	text-align: center;
+}
+
+/* =Clearfix
+-------------------------------------------------------------- */
+.clearfix:after,
+#container:after,
+.widget-wrapper:after {
+	clear: both;
+	content: '\0020';
+	display: block;
+	height: 0;
+	max-height: 0;
+	overflow: hidden;
+	visibility: hidden;
+}
+
+.clearfix,
+#container,
+.widget-wrapper {
+	display: inline-block;
+}
+
+*html .clearfix,
+*html #container,
+*html .widget-wrapper {
+	height: 1%;
+}
+
+.clearfix,
+#container,
+.widget-wrapper {
+	display: block;
+}
+
+.clear {
+	clear: both;
+}
+
+footer,
+#footer{
+  padding: 10px 80px 0;
+  font-size: 14px;
+  background-color: #F3F3F3;
+  font-family: "Apres RE", "Helvetica Neue", Helvetica, Arial, sans-serif;
+}
+footer .room-num::before { content: ", "; }
+#knightlab-logo-column {
+  width: 25%;
+  float: left;
+  margin-right: 30px;
+  text-align: center;
+}
+#knightlab-description {
+  width: 65%;
+  float: left;
+  border-left: solid 1px #d0d0d0;
+  padding-left: 20px;
+}
+
+
+#footer-outer {
+  border-top: 4px solid #474748;
+  background-image: linear-gradient(top, rgb(50,33,63) 14%, rgb(83,0,99) 66%, rgb(83,0,99) 44%);
+  background-image: -o-linear-gradient(top, rgb(50,33,63) 14%, rgb(83,0,99) 66%, rgb(83,0,99) 44%);
+  background-image: -moz-linear-gradient(top, rgb(50,33,63) 14%, rgb(83,0,99) 66%, rgb(83,0,99) 44%);
+  background-image: -webkit-linear-gradient(top, rgb(50,33,63) 14%, rgb(83,0,99) 66%, rgb(83,0,99) 44%);
+  background-image: -ms-linear-gradient(top, rgb(50,33,63) 14%, rgb(83,0,99) 66%, rgb(83,0,99) 44%);
+
+  background-image: -webkit-gradient(
+    linear,
+    left top,
+    left bottom,
+    color-stop(0.14, rgb(50,33,63)),
+    color-stop(0.66, rgb(83,0,99)),
+    color-stop(0.44, rgb(83,0,99))
+    );
+  height: 14px;
+}
+.ie9 #footer-outer {
+  background-image: none;
+  background-color: #530063;
+}
+
+.about-knightlab {
+  max-width: 840px;
+  margin: auto;
+  padding-top: 60px;
+}
+
+footer .col-940 {
+  display: none;
+}
+
+footer ul {
+  list-style: none outside none;
+  margin: 0
+}
+footer ul.social {
+  text-align: center;
+  padding: 10px 0;
+  /* override blueline styles */
+  /*margin: 5px 5px 5px  25px;*/
+  width: 100%;
+  float: none;
+}
+
+footer ul.social a {
+  border: none;
+  text-decoration: none;
+}
+
+footer ul.social li{
+  display: inline;
+  font-size: 24px;
+  line-height: 1.4em;
+  padding-bottom: 3px;
+}
+
+footer ul.social li a:hover{
+  text-decoration: none;
+  opacity: .9;
+}
+footer ul.logos {
+  margin-top: 25px;
+  border-left: 1px solid #CCCCCC;
+}
+footer ul.logos li{
+  display: block;
+  float: right;
+}
+footer ul.logos li:nth-child(1n+4) {
+  float: none;
+  clear: left;
+}
+
+footer ul.logos li:nth-child(1),
+footer ul.logos li:nth-child(3) {
+  border-left: 1px solid #CCCCCC;
+}
+
+footer ul.logos li:nth-child(n+5) {
+  float: left;
+  clear: none;
+}
+
+footer ul.logos li:nth-child(1n+6) {
+  clear: none;
+  float: left;
+}
+
+footer ul.logos li:nth-child(10n+2) {
+  clear: right;
+}
+
+footer ul.logos li:hover{
+  opacity: .85;
+}
+footer ul.logos li a{
+  background: url("images/footer-logosheet.png") no-repeat scroll center top transparent;
+  display: block;
+  text-indent: -9999px;
+}
+footer ul.logos li a.northwestern{
+  background-position: -42px -106px;
+  height: 174px;
+  margin-bottom: 17px;
+  margin-left: 30px;
+  width: 290px;
+}
+
+footer ul.logos li a.knightfoundation{
+  background-position: 22px -283px;
+  height: 83px;
+  margin-bottom: 23px;
+  margin-top: 14px;
+  width: 383px;
+}
+footer ul.logos li a.medill{
+  background-position: -221px -385px;
+  height: 52px;
+  margin-bottom: 20px;
+  margin-left: 11px;
+  width: 111px;
+}
+footer ul.logos li a.mccormick{
+  background-position: -19px -385px;
+  float: right;
+  height: 52px;
+  margin-bottom: 20px;
+  width: 185px;
+}
+footer ul.logos li a.mccormickfound{
+  background-position: -6px -462px;
+  height: 68px;
+  margin-bottom: 51px;
+  margin-right: 34px;
+  margin-top: 23px;
+  width: 218px;
+}
+footer ul.logos li a.nsf{
+  background-position: right -448px;
+  float: right;
+  height: 84px;
+  margin: 0;
+  width: 131px;
+}
+
+.post-data, .post-meta, .read-more, address, .copyright {
+  font-size: 16px;
+  font-family: "Apres RE", "Helvetica Neue", Helvetica, Arial, sans-serif;
+  color: #8f8f8f;
+  font-weight: normal;
+  text-transform: uppercase;
+  margin-bottom: 0px;
+}
+.address {
+    background-color: transparent;
+    border: none;
+}
+
+.meta-below {
+  margin-bottom: 60px;
+  margin-top: -65px;
+}
+.address,
+.tel,
+.copyright {
+  font-size: 14px;
+  clear: both;
+  color: #a8a4a3;
+  padding-bottom: 20px;
+  padding-top: 20px;
+}
+
+.read-more {
+  clear: none;
+  display: inline;
+  padding-left: 2px;
+}
+.read-more a {
+    color: #1DACD6;
+  border: none;
+}
+
+.post-entry>p:not(.post-meta)>a,
+.post-entry>p:not(.post-meta)>a:link,
+.post-entry>p:not(.post-meta)>a:visited,
+.post-entry #teaser p a,
+.post-entry #teaser p a:link,
+.post-entry #teaser p a:visited,
+footer a,
+footer a:link,
+footer a:visited{
+  color: #686868;
+  border-bottom: solid 1px #1DACD6;
+}
+.post-entry>p:not(.post-meta)>a:hover,
+.post-entry>p:not(.post-meta)>a:active,
+.post-entry #teaser p a:hover,
+.post-entry #teaser p a:active,
+footer a:hover,
+footer a:active {
+  text-decoration: none;
+  color: #1DACD6;
+}
+footer #knightlab-logo-column a { border-bottom: none; }
+
+p {
+  margin: 5px 0px 1.6em 0;
+}
+a {
+	color: #06c;
+	font-weight: 400;
+	text-decoration: none;
+}
+
+a:hover {
+	color: #444;
+	text-decoration: none;
+}
+
+::selection {
+	background: #e8fbff;
+	text-shadow: none;
+}
+
+
+a {
+    webkit-transition: all 0.3s ease-in-out;
+    -moz-transition: all 0.3s ease-in-out;
+    transition: all 0.3s ease-in-out;
+}
+a,
+a:link,
+a:visited {
+    color: #1DACD6;
+}
+
+a:hover,
+a:active,
+ul.storytelling-tools li li:last-child a:active,
+ul.storytelling-tools li li:last-child a:hover {
+    color: #056B89;
+}
+
+img {
+    -ms-interpolation-mode: bicubic;
+    border: 0;
+	height: auto;
+	max-width: 100%;
+    vertical-align: middle;
+}
+
+.ie8 img {
+    height: auto;
+    width: auto\9;
+}
+
+.ie8 img.size-large {
+	max-width: 60%;
+	width: auto;
+}

@@ -1,0 +1,370 @@
+
+<!DOCTYPE html>
+<html prefix="og: http://ogp.me/ns#">
+<head>
+    <meta charset="utf-8">
+    <title>Create a Basic Website - Learn.KnightLab.com</title>
+    <link rel="icon" type="image/png" href="//cdn.knightlab.com/libs/purpleline/latest/img/favicon.ico">
+    <script src="//media.knightlab.com/learncms/webcomponentsjs/webcomponents-lite.min.js"></script>
+    <link rel="import" href="//media.knightlab.com/learncms/webcomponents/webcomponents.html">
+    <link rel="stylesheet" href="//media.knightlab.com/learncms/css/app.css" media="screen" title="no title" charset="utf-8">
+    
+    
+    <meta property="og:type" content="website" />
+    <meta name="twitter:card" content="summary_large_image">
+    
+      <meta property="og:title" content="Create a Basic Website" />
+      <meta name="twitter:title" content="Create a Basic Website">
+    
+    <meta property="og:url" content="https://learn.knightlab.com/lesson/create-basic-website/" />
+    
+    <meta property="og:image" content="https://learn.knightlab.com/imagelib/uploads/banners/learn-illustration-01.png" />
+    <!-- twitter:image: at least 280px in width, and at least 150px in height -->
+    <meta name="twitter:image" content="https://learn.knightlab.com/imagelib/uploads/banners/learn-illustration-01.png">
+    
+    <meta name="twitter:site" content="@KnightLab">
+    
+    <meta name="og:description" content="Learn the basics of web development, from idea to polished product: how to wrap your content in HTML, to style it with CSS, and publish it online.">
+    <meta name="twitter:description" content="Learn the basics of web development, from idea to polished product: how to wrap your content in HTML, to style it with CSS, and publish it online.">
+    
+    
+    <style media="screen">
+      @font-face {
+        font-family: "EmojiSymbols"; /* http://emojisymbols.com/emojilist.php */
+        src: url('//media.knightlab.com/learncms/css/EmojiSymbols-Regular.woff') format('woff');
+        text-decoration: none;
+        font-style: normal;
+      }
+
+    </style>
+    
+</head>
+<body class="fullbleed">
+<!-- Google Tag Manager -->
+<!-- Copy the code below and paste it onto every page of your website.
+     Place it immediately after the opening <body> tag.     -->
+<noscript><iframe src="//www.googletagmanager.com/ns.html?id=GTM-MF8NL6"
+height="0" width="0" style="display:none;visibility:hidden"></iframe></noscript>
+<script>(function(w,d,s,l,i){w[l]=w[l]||[];w[l].push({'gtm.start':
+new Date().getTime(),event:'gtm.js'});var f=d.getElementsByTagName(s)[0],
+j=d.createElement(s),dl=l!='dataLayer'?'&l='+l:'';j.async=true;j.src=
+'//www.googletagmanager.com/gtm.js?id='+i+dl;f.parentNode.insertBefore(j,f);
+})(window,document,'script','dataLayer','GTM-MF8NL6');</script>
+<!-- End Google Tag Manager -->
+
+
+
+
+        <learn-nav home="/"></learn-nav>
+        <glossary-manager json-url="/glossary.json">
+        <page-manager>
+        <page-item header="Create a Basic Website">
+        <lesson-banner image="/imagelib/uploads/banners/learn-illustration-01.png" header="Create a Basic Website"></lesson-banner>
+
+        <narrative-text>
+ <p>
+  This collection pulls together the info you'll need to get a basic website up and running: getting your machine ready, designing an amazing site, easing into a logical workflow, and of course, all the thrills and spills of learning the best of the basic web—HTML and CSS.
+ </p>
+</narrative-text>
+<lesson-block>
+ <h2>
+  Before we begin, you should download:
+ </h2>
+ <unit-group>
+  <capsule-unit header="Text Editor" image="/imagelib/uploads/capsules/screen_shot_2015-09-18_at_4.00.01_pm.png" ref="text-editor">
+   <p>
+    A text editor is a program that allows users to create and edit plain text files. Plain text files don’t have stylistic formatting; you won’t find code written in Comic Sans or Wingdings, which is one of the ways text editors are different from programs like Microsoft Word. We recommend using
+    <a href="http://www.sublimetext.com/">
+     SublimeText
+    </a>
+    . It's
+    <glossary-term>
+     shareware
+    </glossary-term>
+    .
+   </p>
+   <unit-group>
+    <link-ref header="Sublime Text" image="/imagelib/uploads/sublime.png" link="http://www.sublimetext.com/">
+    </link-ref>
+    <link-ref header="Notepad++" image="/images/learn/notepad.gif" link="https://notepad-plus-plus.org/">
+    </link-ref>
+    <link-ref header="TextWrangler" image="/imagelib/uploads/textwrangler.png" link="http://www.barebones.com/products/textwrangler/">
+    </link-ref>
+    <link-ref header="Atom" image="/imagelib/uploads/atom.png" link="https://atom.io/">
+    </link-ref>
+   </unit-group>
+  </capsule-unit>
+  <capsule-unit header="FTP Program" image="/imagelib/uploads/capsules/ftp-program.png" ref="ftp-program">
+   <p>
+    An FTP program transfers computer files from one host to another via the Internet, such as CyberDuck, and FileZilla.
+   </p>
+   <unit-group>
+    <link-ref header="CyberDuck (free)" image="/images/learn/text-editor.png" link="https://cyberduck.io/?l=en">
+    </link-ref>
+    <link-ref header="FileZilla (free)" image="/images/learn/notepad.gif" link="https://filezilla-project.org/">
+    </link-ref>
+    <link-ref header="Transmit (paid)" image="/images/learn/text-editor.png" link="https://panic.com/transmit/">
+    </link-ref>
+    <link-ref header="Forklift (paid)" image="/images/learn/notepad.gif" link="http://www.binarynights.com/forklift/">
+    </link-ref>
+   </unit-group>
+  </capsule-unit>
+ </unit-group>
+</lesson-block>
+<step-block header="Getting organized: Boring but essential logistics">
+ <p>
+  Setting up a work environment might seem like a hassle, but trust us—it will save you headaches down the road. Websites are essentially just a collection of files, so being organized will help prevent errors later on.
+ </p>
+ <h3>
+  What we do
+ </h3>
+ <p>
+  We're setting up a dedicated spot on your machine for all the files you'll create: your technical docs, as well as images, videos, or other assets you're going to display.
+ </p>
+ <h3>
+  Why we do
+ </h3>
+ <p>
+  Putting those files in organized folders
+    enables us to give the browser exact directions to the
+    locations of those files. So, no search or spotlight
+    allowed—know where your files are so you can send the browser
+    down the right path. Broken paths, missing files, or imprecise
+    directions are common reasons things break. Ever seen a 404
+    message? That’s why!
+ </p>
+ <h3>
+  How we do
+ </h3>
+ <ol>
+  <li>
+   Create a new folder somewhere easy, like your desktop.
+  </li>
+  <li>
+   Give it a name with no spaces or caps.
+  </li>
+  <li>
+   Open up your text editor (probably Sublime if you're following along) and go to file &gt; new.
+  </li>
+  <li>
+   Then save it in your new folder as
+   <code>
+    index.html
+   </code>
+   . You
+   <em>
+    must
+   </em>
+   include the file extension! This is our first signal to the browser about what we'll be doing in here.
+  </li>
+  <li>
+   Head into your browser of choice (Chrome, cough cough), go to file &gt; open, and select the file we just made.
+  </li>
+  <li>
+   Take a look at your beautiful website? ... Jk there's nothing there. That's good. Proceed!
+  </li>
+ </ol>
+ <!--<media-group class="layout horizontal around-justified">
+				<zooming-image src="/imagelib/uploads/1.gif" full-src="/imagelib/uploads/1.gif"></zooming-image>
+			</media-group> -->
+ <info-block emoji="👿" header="Danger, danger! When moving files ...">
+  <p>
+   If you're ever going to move your files around, make sure to close out of your text editor while you do. Poor Sublime will keep editing the old doc, and will keep saving it in the old place. Once again: close Sublime, move files, reopen to edit in Sublime.
+  </p>
+ </info-block>
+</step-block>
+<step-block header="Write some HTML">
+ <p>
+  Ah, HTML. You've heard so much, and yet, know so little. Let us help.
+  <glossary-term>
+   HTML
+  </glossary-term>
+  is the backbone of the
+    web, and the beginning of any website. It's our way of telling the browser what's what—this is a paragraph, this is a list, this is an image of Steve Buscemi. Dive into this standalone lesson on HTML to see how it works and to put together your first page.
+ </p>
+ <lesson-ref header="Write Some HTML" image="/imagelib/uploads/banners/learn-illustration-01.png" ref="write-some-html" url="/lesson/write-some-html/">
+  <p>
+   HTML is the most widely used coding language on the Internet, so you'll need a strong grasp on it before you go any further.
+  </p>
+ </lesson-ref>
+ <info-block emoji="🐙" header="Did you know ...">
+  <p>
+   Beginners often think they're stumbling with CSS and JavaScript, but the culprit is actually HTML. Make sure you spend some time really understanding the
+   <glossary-term>
+    DOM
+   </glossary-term>
+   and bulletproofing your HTML before diving too deep elsewhere. (Or at least return to it when you hit problems.)
+  </p>
+ </info-block>
+</step-block>
+<lesson-block>
+ <h2>
+  Workflow: We learned it the hard way
+ </h2>
+ <h3>
+  Here’s the sad truth: When things go south, it’s always your
+  fault.
+ </h3>
+ <p>
+  At least when it comes to building websites. We can’t
+  vouch for that thing with your ex. More than likely, the page is not
+  <em>
+   just acting crazy
+  </em>
+  . It’s acting crazy because you
+  <em>
+   told
+  </em>
+  it to act
+  crazy. So here’s a strategy to help you cut down on the amount of
+  time you spend troubleshooting.
+ </p>
+ <p>
+  <strong>
+   Change, save, refresh, check.
+  </strong>
+ </p>
+ <p>
+  If you make a lot of changes and then notice things are
+    broken, it’s tough to tell what exactly broke, and when. So
+  <strong>
+   work in very small bursts
+  </strong>
+  . Check the results frequently. Then,
+    when something breaks, you know where things went wrong—it’s what you just did.
+ </p>
+ <ul>
+  <li>
+   <strong>
+    Change
+   </strong>
+   something in your HTML and/or CSS
+      documents.
+  </li>
+  <li>
+   <strong>
+    Save
+   </strong>
+   every file you touched.
+  </li>
+  <li>
+   <strong>
+    Refresh
+   </strong>
+   in your browser.
+  </li>
+  <li>
+   <strong>
+    Check
+   </strong>
+   to make sure you’re seeing what
+      you want to.
+  </li>
+ </ul>
+</lesson-block>
+<step-block header="Prepare for CSS" id="prepareCSS">
+ <p>
+  Just like we did with HTML, we've got to get our files hooked up and running before we can start to style our pages in earnest. That's right—we're about to finally take the semantically beautiful but ultimately ugly HTML we've written and apply some style to it. First, though, the prep:
+ </p>
+ <h3>
+  What we do
+ </h3>
+ <p>
+  We're creating a
+  <glossary-term>
+   stylesheet
+  </glossary-term>
+  for our website and linking it to our HTML file.
+ </p>
+ <h3>
+  Why we do
+ </h3>
+ <p>
+  CSS is a critical piece of any site—it's the beautiful part. Without this link, our browser would never know that these styles are associated with this site (aka this HTML file). Once we're done, when the browser reads our HTML file, it will see this link, fetch our styles, and apply them to the site. Good browser. Here's a treat.
+ </p>
+ <h3>
+  How we do
+ </h3>
+ <ol>
+  <li>
+   Create a new file in your text editor by going to file &gt; new.
+  </li>
+  <li>
+   Save it in your site folder as
+   <code>
+    style.css
+   </code>
+   . Don't forget the extension!
+  </li>
+  <li>
+   To tell your site where it can find your stylesheet, link to
+      it in the
+   <code>
+    &lt;head&gt;
+   </code>
+   of your HTML document.
+  </li>
+ </ol>
+ <code-block>
+  &lt;head&gt;
+    &lt;link rel='stylesheet' href='style.css'&gt;
+&lt;/head&gt;
+ </code-block>
+</step-block>
+<step-block header="Write some CSS">
+ <p>
+  It's the moment we've all been waiting for. Time to dress up your HTML and make something people actually want to look at. The enabler here is
+  <glossary-term>
+   CSS
+  </glossary-term>
+  , aka Cascading Style Sheets, the governing documents for the look and feel of your site. It's a good bit bigger and more complicated than HTML, and with great power comes great responsibility, young Peter. Design wisely.
+ </p>
+ <lesson-ref header="Write Some CSS" image="/imagelib/uploads/banners/learn-illustration-01.png" ref="write-some-css" url="/lesson/write-some-css/">
+  <p>
+   Wondering why your site’s looking so ugly? HTML just says what’s what and gives the page structure. CSS is where the real fun starts–it will fix things faster than Fix-it Felix.
+  </p>
+ </lesson-ref>
+</step-block>
+<!--
+<lesson-block header="Good web design practices">
+  <h3>Because there&#39;s a big difference between writing up some code and actually
+  designing a website.</h3>
+  <p>CSS is just the language that we use to implement style. If you're left wondering how to <em>choose</em> those styles and make something that looks a little more recent than the web circa 1998, check out our series on Good Web Design Practices. It'll walk you through the basics of design.</p>
+
+  <lesson-ref ref="good-web-design-practices"></lesson-ref>
+</lesson-block>-->
+<step-block header="Publishing your site for all to see">
+ <p>
+  Thus far, we've just been building the site on your machine—which nobody can access, with good reason. (Hello, embarrasing search history from that time you got obsessed with you know what.) So to get your site out to the rest of the world, you've got to get a copy of your files onto a server that others can access. This means securing a
+  domain name (your URL) and hosting your files somewhere.
+ </p>
+ <lesson-ref header="Intro to Web Hosting" image="/imagelib/uploads/banners/learn-illustration-01.png" ref="intro-web-hosting" url="/lesson/intro-web-hosting/">
+  <p>
+   When your site is ready, you’ll upload your files to your hosting server using a File Transfer Protocol (FTP) client. (We like Cyberduck and FileZilla.) Make sure that your files appear on your server the same way that they do in the site folder on your computer, or else your site may not work properly.
+  </p>
+ </lesson-ref>
+ <info-block emoji="👊" header="Did you know ... you got served?">
+  <p>
+   A server is a special computer dedicated to holding and serving up web
+    files. Every time you type a URL into your browser, it makes a request—several, actually—for your website's files. The server then sends them along and your browser (aka the client) assembles everything into the visual experience you know the web to be.
+  </p>
+ </info-block>
+</step-block>
+<lesson-block header="That's a wrap">
+ <p>
+  Now that your website is live, check it out! Click on all of
+  the links to make sure they’re directing to the right places and
+  that all the images are showing. If you have to fix something,
+  change it on your computer, save, then re-upload the edited file
+  onto your hosting server. Did we say good job yet? No? Good
+  job!
+ </p>
+</lesson-block>
+
+        </page-item>
+        <help-button></help-button>
+        </page-manager>
+        </glossary-manager>
+
+</body>
+</html>

@@ -1,0 +1,1025 @@
+
+<!DOCTYPE html>
+<html prefix="og: http://ogp.me/ns#">
+<head>
+    <meta charset="utf-8">
+    <title>Write Some CSS - Learn.KnightLab.com</title>
+    <link rel="icon" type="image/png" href="//cdn.knightlab.com/libs/purpleline/latest/img/favicon.ico">
+    <script src="//media.knightlab.com/learncms/webcomponentsjs/webcomponents-lite.min.js"></script>
+    <link rel="import" href="//media.knightlab.com/learncms/webcomponents/webcomponents.html">
+    <link rel="stylesheet" href="//media.knightlab.com/learncms/css/app.css" media="screen" title="no title" charset="utf-8">
+    
+    
+    <meta property="og:type" content="website" />
+    <meta name="twitter:card" content="summary_large_image">
+    
+      <meta property="og:title" content="Write Some CSS" />
+      <meta name="twitter:title" content="Write Some CSS">
+    
+    <meta property="og:url" content="https://learn.knightlab.com/lesson/write-some-css/" />
+    
+    <meta property="og:image" content="https://learn.knightlab.com/imagelib/uploads/banners/learn-illustration-01.png" />
+    <!-- twitter:image: at least 280px in width, and at least 150px in height -->
+    <meta name="twitter:image" content="https://learn.knightlab.com/imagelib/uploads/banners/learn-illustration-01.png">
+    
+    <meta name="twitter:site" content="@KnightLab">
+    
+    <meta name="og:description" content="Wondering why your site’s looking so ugly? HTML just says what’s what and gives the page structure. CSS is where the real fun starts–it will fix things faster than Fix-it Felix.">
+    <meta name="twitter:description" content="Wondering why your site’s looking so ugly? HTML just says what’s what and gives the page structure. CSS is where the real fun starts–it will fix things faster than Fix-it Felix.">
+    
+    
+    <style media="screen">
+      @font-face {
+        font-family: "EmojiSymbols"; /* http://emojisymbols.com/emojilist.php */
+        src: url('//media.knightlab.com/learncms/css/EmojiSymbols-Regular.woff') format('woff');
+        text-decoration: none;
+        font-style: normal;
+      }
+
+    </style>
+    
+</head>
+<body class="fullbleed">
+<!-- Google Tag Manager -->
+<!-- Copy the code below and paste it onto every page of your website.
+     Place it immediately after the opening <body> tag.     -->
+<noscript><iframe src="//www.googletagmanager.com/ns.html?id=GTM-MF8NL6"
+height="0" width="0" style="display:none;visibility:hidden"></iframe></noscript>
+<script>(function(w,d,s,l,i){w[l]=w[l]||[];w[l].push({'gtm.start':
+new Date().getTime(),event:'gtm.js'});var f=d.getElementsByTagName(s)[0],
+j=d.createElement(s),dl=l!='dataLayer'?'&l='+l:'';j.async=true;j.src=
+'//www.googletagmanager.com/gtm.js?id='+i+dl;f.parentNode.insertBefore(j,f);
+})(window,document,'script','dataLayer','GTM-MF8NL6');</script>
+<!-- End Google Tag Manager -->
+
+
+
+
+        <learn-nav home="/"></learn-nav>
+        <glossary-manager json-url="/glossary.json">
+        <page-manager>
+        <page-item header="Write Some CSS">
+        <lesson-banner image="/imagelib/uploads/banners/learn-illustration-01.png" header="Write Some CSS"></lesson-banner>
+
+        <narrative-text>
+ <p>
+  So you’ve built a webpage. Or at least, you
+  <em>
+   think
+  </em>
+  it’s a
+  webpage. It looks very different from what you’re used to seeing. There are no fun, bright colors, no sleek
+  interfaces, no gifs of adorable mammals. Let's fix that.
+  <glossary-term>
+   CSS
+  </glossary-term>
+  , or Cascading Style Sheets, is ready to help. And so are we.
+ </p>
+</narrative-text>
+<lesson-block>
+ <h2>
+  Before we begin, you'll need to download:
+ </h2>
+ <unit-group>
+  <capsule-unit header="Text Editor" image="/imagelib/uploads/capsules/screen_shot_2015-09-18_at_4.00.01_pm.png" ref="text-editor">
+   <p>
+    A text editor is a program that allows users to create and edit plain text files. Plain text files don’t have stylistic formatting; you won’t find code written in Comic Sans or Wingdings, which is one of the ways text editors are different from programs like Microsoft Word. We recommend using
+    <a href="http://www.sublimetext.com/">
+     SublimeText
+    </a>
+    . It's
+    <glossary-term>
+     shareware
+    </glossary-term>
+    .
+   </p>
+   <unit-group>
+    <link-ref header="Sublime Text" image="/imagelib/uploads/sublime.png" link="http://www.sublimetext.com/">
+    </link-ref>
+    <link-ref header="Notepad++" image="/images/learn/notepad.gif" link="https://notepad-plus-plus.org/">
+    </link-ref>
+    <link-ref header="TextWrangler" image="/imagelib/uploads/textwrangler.png" link="http://www.barebones.com/products/textwrangler/">
+    </link-ref>
+    <link-ref header="Atom" image="/imagelib/uploads/atom.png" link="https://atom.io/">
+    </link-ref>
+   </unit-group>
+  </capsule-unit>
+  <capsule-unit header="Modern Web Browser" image="/imagelib/uploads/capsules/responsive-07.png" ref="modern-web-browser">
+   <p>
+    Using a modern web browser ensures that you can see the website the exact way the people who built it meant for you to see it by complying with standards for displaying web pages. All latest versions of major web browsers (Google Chrome, Safari, Mozilla Firefox, Internet Explorer, Opera) are considered modern.
+   </p>
+  </capsule-unit>
+ </unit-group>
+</lesson-block>
+<step-block header="What it looks like">
+ <h3>
+  What we do
+ </h3>
+ <p>
+  Before we dive into all the cool stuff, we need to look at how to construct a proper CSS
+  <glossary-term>
+   declaration
+  </glossary-term>
+  . Once you've got that down, then you can create your own recipes to get things looking like you want them.
+ </p>
+ <h3>
+  Why we do
+ </h3>
+ <p>
+  If your biggest enemy in HTML was forgetting to close a tag, its CSS counterpart is forgetting that semi-colon at the end of a declaration. This lets the browser know you're done with that particular instruction, so it can move along to the next one. If the semi-colon
+  <em>
+   isn't
+  </em>
+  there, the browser thinks you're still working on the same property, and things go beserk.
+ </p>
+ <h3>
+  How we do
+ </h3>
+ <p>
+  The syntax for CSS is a lot simpler than the syntax for HTML.
+  Are you ready for it? Here it is:
+ </p>
+ <code-block lang="css">
+  element {
+  property: value;
+  property: value;
+}
+ </code-block>
+ <p>
+  The
+  <strong>
+   element
+  </strong>
+  is the HTML element you want to style, like an
+  <code>
+   h1
+  </code>
+  . But since we're referencing it in CSS, you don't need the angle brackets.
+ </p>
+ <p>
+  So to target
+  <code>
+   h1
+  </code>
+  , we'd go in and change the element like this:
+ </p>
+ <code-block lang="css">
+  h1 {
+  property: value;
+}
+ </code-block>
+ <p>
+  Think of
+  <strong>
+   properties
+  </strong>
+  as the basic vocabulary set of CSS. It defines what you want to change, then the
+  <code>
+   value
+  </code>
+  specifies exactly how. Common properties
+  include
+  <code>
+   background-color
+  </code>
+  ,
+  <code>
+   height
+  </code>
+  ,
+  <code>
+   width
+  </code>
+  , and others.
+ </p>
+ <p>
+  So let's say we wanted to change the backround color of that tag. We'd use the
+  <code>
+   background-color
+  </code>
+  property here:
+ </p>
+ <code-block lang="css">
+  h1 {
+  backround-color: value;
+}
+ </code-block>
+ <p>
+  Each property has a set of acceptable values that can go along with it. So you can set
+  <code>
+   background-color
+  </code>
+  to
+  <code>
+   blue
+  </code>
+  , for example, but you can't set it to "pig". So it becomes this:
+ </p>
+ <code-block lang="css">
+  h1 {
+  background-color: blue;
+}
+ </code-block>
+ <p>
+  The key to CSS is digging around for the right property-value one-two punches that will make your page look amazing. Like HTML, you've got to spend some time trying out the vocab to see what makes the most sense.
+ </p>
+</step-block>
+<step-block header="Making our first changes: Do something ugly!">
+ <h3>
+  What we do
+ </h3>
+ <p>
+  We're going to change the background color of our page to beige.
+ </p>
+ <h3>
+  Why we do
+ </h3>
+ <p>
+  When you first set things up, it's good to do something obvious and ugly so that you know your setup is working.
+  <a href="https://learn.knightlab.com/lesson/create-basic-website/#prepareCSS">
+   (If it's not, head back here to double check.)
+  </a>
+  .
+ </p>
+ <h3>
+  How we do
+ </h3>
+ <ol>
+  <li>
+   First up: Deciding what to target. Since we want to change the background color of the whole page, we have to grab a top-level tag. For us, that's
+   <code>
+    &lt;body&gt;
+   </code>
+   .
+  </li>
+  <li>
+   From there, we've got to select a property and value that will achieve the style we're after.
+   <a href="http://www.w3schools.com/cssref/">
+    Here's a list
+   </a>
+   of all the property options, but a quick Google search is just as good. We're after
+   <code>
+    background-color
+   </code>
+   and
+   <code>
+    beige
+   </code>
+   .
+  </li>
+  <li>
+   Type the following into your CSS file:
+   <code-block lang="css">
+    body {
+  background-color: beige;
+}
+   </code-block>
+  </li>
+ </ol>
+ <!--<media-group class="layout horizontal around-justified">
+				<zooming-image src="/imagelib/uploads/2-beige.png" full-src="/imagelib/uploads/2-beige.png"></zooming-image>
+			</media-group>-->
+ <info-block emoji="✋" header="Do browsers recognize the color 'Tango Red?'">
+  <p>
+   Nope. (Though we like it too.) Browsers know the basics, like red, blue, and green (
+   <a href="http://www.crockford.com/wrrrld/color.html">
+    and 144 others
+   </a>
+   ), but if you want more options, you've got to go another route. For a more precise method of identifying color, you'll need to know a little more about how color itself works. Look into
+   <glossary-term>
+    RGB
+   </glossary-term>
+   ,
+   <glossary-term>
+    HSB
+   </glossary-term>
+   , and
+   <glossary-term>
+    hex values
+   </glossary-term>
+   . Consider making your own palette or browsing others' at sites like
+   <a href="https://color.adobe.com/">
+    Adobe Color
+   </a>
+   .
+  </p>
+ </info-block>
+</step-block>
+<step-block header="Selecting the right content">
+ <p>
+  Our website’s looking better already. By playing with
+  elements’ property and value pairs, we can modify just about
+  anything, from size to color to position.
+ </p>
+ <p>
+  But there’s still a problem. As of right now, we don’t have
+    any way of grouping certain elements together in our HTML.
+ </p>
+ <p>
+  Let’s say we wanted to have all of our introductory information
+    have the same
+  <code>
+   background-color
+  </code>
+  . We could try
+    styling each piece at once, like this:
+ </p>
+ <code-block lang="css">
+  h1 {
+  background-color: firebrick;
+}
+
+img {
+  background-color: firebrick;
+}
+
+p {
+  background-color: firebrick;
+}
+ </code-block>
+ <p>
+  This is pretty laborious, and it doesn’t really give us what we want. Instead of putting everything in one red box, we have
+    three separately colored blocks. If only there was some way to
+    go in our HTML and put the elements into one larger,
+    over-arching element. Oh, wait there is.
+ </p>
+ <h3>
+  What we do
+ </h3>
+ <p>
+  We're going to group things together in our HTML document, and style three things at once.
+ </p>
+ <h3>
+  Why we do
+ </h3>
+ <p>
+  It would be a painstaking process to style every single thing individually. Grouping them together allows us to be more efficient--which is great for page-loading time.
+ </p>
+ <h3>
+  How we do
+ </h3>
+ <p>
+  <a href="https://learn.knightlab.com/lesson/write-some-html/#divExplainer">
+   Remember how
+  </a>
+  in the HTML lesson we had you wrap all your
+  introductory information in a
+  <code>
+   &lt;div&gt;
+  </code>
+  ? Yeah,
+  those were good times. And now we get to actually put that
+  <code>
+   &lt;div&gt;
+  </code>
+  to use.
+ </p>
+ <p>
+  That
+  <code>
+   &lt;div&gt;
+  </code>
+  gives us a way to target everything inside.
+ </p>
+ <ol>
+  <li>
+   Delete the firebrick code we put in before, if you followed along.
+  </li>
+  <li>
+   Using the
+   <code>
+    &lt;div&gt;
+   </code>
+   as our target element, get this going in your CSS file:
+   <code-block lang="css">
+    div {
+  background-color: firebrick;
+}
+   </code-block>
+  </li>
+  <li>
+   Head over to your browser and refresh—you should see one big chunk of, you guessed it, firebrick red. Who makes up these names, anyway?
+  </li>
+  <li>
+   If you're not seeing it, check to make sure that
+   <em>
+    both
+   </em>
+   your HTML and CSS files have been saved, and that your
+   <code>
+    &lt;div&gt;
+   </code>
+   is set up correctly in your HTML file. Then triple check your syntax.
+  </li>
+ </ol>
+ <!--<media-group class="layout horizontal around-justified">
+				<zooming-image src="/imagelib/uploads/3-red-css.png" full-src="/imagelib/uploads/3-red-css.png"></zooming-image>
+			</media-group>-->
+ <!--<media-group class="layout horizontal around-justified">
+				<zooming-image src="/imagelib/uploads/3-red-html.png" full-src="/imagelib/uploads/3-red-html.png"></zooming-image>
+			</media-group>-->
+</step-block>
+<lesson-block header="Back to HTML for a sec ...">
+ <p>
+  So far in our CSS, when we've been targeting HTML elements, it's affected
+  <em>
+   all
+  </em>
+  the elements with that name. So if you target
+  <code>
+   p
+  </code>
+  in CSS, it's going to target every single graf on the page. That's great for making sure your paragraphs all look the same, but what about special-use cases? What if you want to style your bylines differently from your other grafs?
+ </p>
+ <p>
+  Part of getting good at CSS is understanding the relationship 💞 between HTML and CSS. In order to target specific items or groups of items, we've got to identify what those are in HTML. In other words, we've got to give CSS something to hook onto, other than the element names.
+ </p>
+ <h3>
+  Enter:
+  <glossary-term lemma="class">
+   classes
+  </glossary-term>
+  and
+  <glossary-term lemma="ID">
+   IDs
+  </glossary-term>
+  .
+ </h3>
+ <p>
+  These are
+  <glossary-term lemma="attribute">
+   attributes
+  </glossary-term>
+  you attach to HTML elements. A
+  <glossary-term>
+   class
+  </glossary-term>
+  is typically used to collect multiple things—several bylines, for example. An
+  <glossary-term>
+   ID
+  </glossary-term>
+  is a unique identifier—so you only use these if there's only one. Here's how it looks:
+ </p>
+ <code-block>
+  &lt;h1 id='featured-headline'&gt;By Walter S. Gates III, Esq.&lt;/h1&gt;
+   &lt;p class='byline'&gt;By Walter S. Gates III, Esq.&lt;/p&gt;
+   &lt;p&gt;Amazing lede goes here!&lt;/p&gt;
+   &lt;p&gt;Followed by an incredible nut graf.&lt;/p&gt;
+   &lt;p&gt;Because we're news hounds.&lt;/p&gt;
+   &lt;p&gt;By Walter S. Gates III, Esq.&lt;/p&gt;
+ </code-block>
+</lesson-block>
+<step-block header="Using classes: Applying style more efficiently">
+ <h3>
+  What we do
+ </h3>
+ <p>
+  In our sample code, we're going to change color of our text in a couple of different places.
+ </p>
+ <h3>
+  Why we do
+ </h3>
+ <p>
+  We need some way of labeling the elements we want to change, and then applying rules to those specific elements. We don't want to change
+  <em>
+   all
+  </em>
+  our text uniformly.
+ </p>
+ <h3>
+  How we do
+ </h3>
+ <ol>
+  <li>
+   Back in your HTML document, add a class to your header and
+  paragraph and call it "white-text," like this:
+   <code-block>
+    &lt;h1 class='white-text'&gt;
+  // your text
+&lt;/h1&gt;
+
+&lt;p class='white-text'&gt;
+  // your text
+&lt;/p&gt;
+   </code-block>
+  </li>
+  <li>
+   Then add an ID to your ordered list and call it
+  "gray-text."
+   <code-block>
+    &lt;ol id='gray-text'&gt;
+  // list items
+&lt;/ol&gt;
+   </code-block>
+  </li>
+  <li>
+   Now let's target our
+   <code>
+    white-text
+   </code>
+   class instead of our vanilla HTML elements. To modify an element based
+  on its class, you add a period before the class name in
+  the CSS file.
+   <code-block lang="css">
+    .white-text {
+  color: white;
+}
+   </code-block>
+  </li>
+  <li>
+   To target an ID, simply use a pound sign instead of a
+  period.
+   <code-block lang="css">
+    #gray-text {
+  color: gray;
+}
+   </code-block>
+  </li>
+  <li>
+   Remember to save both your HTML and CSS, and head over to the browser to take a look. If things look funky, double check to make sure your spelling is the same in both places. CSS is case sensitive!
+  </li>
+ </ol>
+ <!--<media-group class="layout horizontal around-justified">
+				<zooming-image src="/imagelib/uploads/4-white-text.png" full-src="/imagelib/uploads/4-white-text.png"></zooming-image>
+			</media-group>-->
+ <!--<media-group class="layout horizontal around-justified">
+				<zooming-image src="/imagelib/uploads/4-white-text2.png" full-src="/imagelib/uploads/4-white-text2.png"></zooming-image>
+			</media-group>-->
+ <info-block emoji="✨" header="Be descriptive when naming names">
+  <p>
+   Classes and IDs not only make it easier to style your code,
+    but also present a good opportunity to help with organization and
+    readability. They allow people (including you!)
+    to understand the purpose of each HTML element at a glance.
+    Give your classes and IDs descriptive names so you can come
+    back to them more easily when you need to modify them
+    again. Remember, classes and IDs are case-sensitive–#header-text is different from #Header-Text.
+  </p>
+ </info-block>
+</step-block>
+<!--
+<step-block header="Positions, everyone!">
+  <p>Play around with the display and positioning of your
+  site&#39;s elements. The Box Model is a useful tool in
+  visualizing where things go.</p>
+
+  <lesson-ref ref="box-model"></lesson-ref>
+</step-block>
+-->
+<step-block header="Making a nav bar">
+ <p>
+  What we’ve done so far is nice and dandy, but your
+    website still doesn’t look like a website. Let’s change that.
+ </p>
+ <h3>
+  What we do
+ </h3>
+ <p>
+  You know what a navigation bar is, right? That thing at the top or
+  side of a website that gives you quick links to key pages on a
+  website. Let’s make one of those.  Let’s turn our unordered list of social media links into a navbar.
+ </p>
+ <h3>
+  Why we do
+ </h3>
+ <p>
+  Navbars might seem complicated, but they’re really just styled
+  lists. If you think about it, this makes sense—a nav bar is really just a bunch of links. Or a
+  <em>
+   list
+  </em>
+  of links.
+ </p>
+ <h3>
+  How we do
+ </h3>
+ <ol>
+  <li>
+   First, let’s make this easier on our future selves by applying
+  a descriptive ID to our unordered list. Let’s call it
+  "navbar."
+   <code-block>
+    &lt;ul id='navbar'&gt;
+      &lt;li&gt;&lt;a href='http://www.twitter.com'&gt;Twitter&lt;/a&gt;&lt;/li&gt;
+      &lt;li&gt;&lt;a href='http://www.facebook.com'&gt;Facebook&lt;/a&gt;&lt;/li&gt;
+      &lt;li&gt;&lt;a href='http://www.linkedin.com'&gt;LinkedIn&lt;/a&gt;&lt;/li&gt;
+      &lt;li&gt;&lt;a href='http://www.tumblr.com'&gt;Tumblr&lt;/a&gt;&lt;/li&gt;
+      &lt;li&gt;&lt;a href='mailto:you@you.com'&gt;Email&lt;/a&gt;&lt;/li&gt;
+&lt;/ul&gt;
+   </code-block>
+  </li>
+  <li>
+   Now let’s get rid of those ugly little bullets. In your CSS
+  document, target the
+   <code>
+    &lt;li&gt;
+   </code>
+   s nested in your
+  navbar ID and change the
+   <code>
+    list-style-type
+   </code>
+   to
+  none.
+   <code-block lang="css">
+    #navbar li{
+  list-style-type: none;
+}
+   </code-block>
+  </li>
+  <li>
+   Next, we want our links to all be in a row instead of stacked
+  on top of each other. To change that, we’ll affect the
+   <code>
+    display
+   </code>
+   property.
+   <code-block lang="css">
+    #navbar li{
+  list-style-type: none
+  display: inline-block;
+}
+   </code-block>
+  </li>
+  <li>
+   The links seem a little too close to each other, so let’s
+  adjust the width of their
+   <code>
+    &lt;a&gt;
+   </code>
+   elements. We’re
+  adjusting the
+   <code>
+    &lt;a&gt;
+   </code>
+   tags rather than the
+   <code>
+    &lt;li&gt;
+   </code>
+   because we want the user to be able to
+  click on the link from anywhere inside the box that holds the
+  link. We need the links to have a display value of
+   <code>
+    block
+   </code>
+   in order for the width to apply to them,
+  however.
+   <code-block lang="css">
+    #navbar li a{
+  display: block;
+  width: 120px;
+}
+   </code-block>
+  </li>
+  <li>
+   Great! Now let’s center the text for the links inside their
+  boxes and provide some vertical padding.
+   <code-block lang="css">
+    #navbar li a{
+  text-align: center;
+  padding-top: 10px;
+  padding-bottom: 10px;
+}
+   </code-block>
+  </li>
+  <li>
+   Something’s still a bit off: the placement of our navbar right
+  now just doesn’t make sense. Navbars are supposed to be at the
+  top of the page, but right now our
+   <code>
+    &lt;ul&gt;
+   </code>
+   is
+  buried. In your HTML file, move the
+   <code>
+    &lt;ul&gt;
+   </code>
+   tag
+  and its contents to the top of the body, above the
+   <code>
+    &lt;div&gt;
+   </code>
+   .
+  </li>
+  <li>
+   Now when we refresh the page the position of the navbar makes
+  sense, although it still doesn’t look quite right visually.
+  That’s because of the top margin. The navbar has some top margin
+  by default, which is keeping it from going to the top of the
+  page. To fix that, change the display of the navbar to be
+   <code>
+    inline-block
+   </code>
+   and get rid of the top margin.
+   <code-block lang="css">
+    #navbar {
+  display: inline-block;
+  margin-top: 0;
+}
+   </code-block>
+  </li>
+  <li>
+   We want our navbar to stretch across the whole screen, so we
+  need to set its width to 100%. We also want it to be distinct
+  from the rest of the page, so we need to change its background
+  color as well. I’ll be changing mine to
+   <code>
+    darkslategray
+   </code>
+   , but you can pick whatever value you
+  want (try playing around with RGB or even hex values if you’re
+  feeling adventurous).
+   <code-block lang="css">
+    #navbar {
+  width: 100%;
+  background-color: darkslategray;
+}
+   </code-block>
+  </li>
+  <li>
+   At this point you might also want to change the color of the
+  links inside your navbar if the default blue is hard to see
+  against your background. Experiment with different
+   <code>
+    font-family
+   </code>
+   ,
+   <code>
+    color
+   </code>
+   , and other values
+  and find a combination you like. That’s the fun with styling: you
+  can make it anything you want. Like literally almost
+  anything.
+  </li>
+  <li>
+   Wait a minute. Notice how the contents of your website hovers a few pixels away from the top right corner of the screen? That's the online equivalent of "I'm not touching you!" Luckily, it's an easy fix—all you need to do is to tell your browser to not put a margin or any padding on your website, using this code:
+   <code-block lang="css">
+    body {
+  margin: 0 0 0 0;
+  padding: 0 0 0 0;
+}
+   </code-block>
+  </li>
+  <li>
+   Our navbar is almost complete! But there’s just one more thing
+  that would really seal the deal: user feedback. It would be cool
+  if we could change something on the screen so that whenever a
+  user hovered over a link they could be sure of what they were
+  doing.
+  </li>
+  <li>
+   Guess what? You can do that with CSS. We’ve already covered a
+  few
+   <glossary-term>
+    selectors
+   </glossary-term>
+   , but there are so many more useful selectors that
+  can be applied in a variety of ways. One kind of selector is the
+  a "pseudo-class" which uses a colon (:) to select an
+  element which has a certain property. For example, if we wanted
+  to change the color of links that had already been visited, we
+  would target
+   <code>
+    a:visited
+   </code>
+   in our CSS. For our navbar,
+  we can respond to users by changing the background color of the
+  links they’re hovering over. We’ll use the
+   <code>
+    a:hover
+   </code>
+   selector for that.
+   <code-block>
+    #navbar li a:hover{
+  background-color: black;
+}
+   </code-block>
+  </li>
+  <li>
+   Try it out! There are more useful selectors just like
+   <code>
+    :hover
+   </code>
+   and
+   <code>
+    :visited
+   </code>
+   , and being familiar
+  with them can make your life a whole lot easier and make your
+  website that much more versatile.
+  </li>
+ </ol>
+</step-block>
+<lesson-block header="Useful selectors">
+ <dl class="dl-vertical">
+  <dt>
+   <code>
+    .element {
+   </code>
+  </dt>
+  <dd>
+   The period allows you to select classes, which is very
+        useful for styling multiple elements at once
+  </dd>
+  <dt>
+   <code>
+    #element {
+   </code>
+  </dt>
+  <dd>
+   Like the class selector, a pound sign allows you to
+        select an element based on its unique ID
+  </dd>
+  <dt>
+   <code>
+    element:hover {
+   </code>
+  </dt>
+  <dd>
+   The hover pseudo-class will apply rules to an element
+        once it sees a mouse hovering over it, and is extremely
+        useful in a wide range of applications
+  </dd>
+  <dt>
+   <code>
+    element[attr='val'] {
+   </code>
+  </dt>
+  <dd>
+   This selector will only select instances of the element
+        which have
+   <code>
+    val
+   </code>
+   as the value for a given
+        attribute. For example, if you wanted to target all links
+        on your page that went to twitter.com, you’d simply type
+   <code>
+    a[href=’twitter.com’]
+   </code>
+  </dd>
+  <dt>
+   <code>
+    * {
+   </code>
+  </dt>
+  <dd>
+   The asterisk character by itself will select all
+        elements on the page, which can be useful if you want to
+        apply some common rules like zeroing margins and paddings.
+        The asterisk can also be used to select all children of an
+        element like so:
+   <code>
+    div * {...}
+   </code>
+   , but this isn’t
+        very commonly used
+  </dd>
+  <dt>
+   <code>
+    element-a element-b {
+   </code>
+  </dt>
+  <dd>
+   Putting a space between two elements will select all
+        instances of element-b on the page that are descendants of
+        an element-a
+  </dd>
+  <dt>
+   <code>
+    element-a, element-b {
+   </code>
+  </dt>
+  <dd>
+   Adding a comma to separate elements rather than a space
+        applied the same rules to both elements. It’s basically
+        just shorthand for
+   <code>
+    element-a { … } element-b { …
+        }
+   </code>
+  </dd>
+  <dt>
+   <code>
+    element-a &gt; element-b {
+   </code>
+  </dt>
+  <dd>
+   Putting a greater-than sign between two elements is
+        similar to leaving a space in between, but now will only
+        target instances of element-b that are children, or direct
+        descendants, of element-a
+  </dd>
+  <dt>
+   <code>
+    element-a ~ element-b {
+   </code>
+  </dt>
+  <dd>
+   This selector will target all instances of element-b
+        that are siblings (that is, they share the same parent) of
+        an element-a
+  </dd>
+  <dt>
+   <code>
+    element-a + element-b {
+   </code>
+  </dt>
+  <dd>
+   The plus selector is similar to the tilde in that it
+        also selects siblings, but now will only select instances
+        of element-b that appear immediately after element-a
+  </dd>
+  <dt>
+   <code>
+    element:before { , element:after {
+   </code>
+  </dt>
+  <dd>
+   The
+   <code>
+    :before
+   </code>
+   and
+   <code>
+    :after
+   </code>
+   pseudo
+        selectors can be used to modify the space immediately
+        before or after your element, and have been used in a wide
+        variety of applications, most notably the
+   <a href="http://stackoverflow.com/questions/8554043/what-is-clearfix">
+    clearfix hack
+   </a>
+  </dd>
+ </dl>
+</lesson-block>
+<lesson-block header="Code Summary">
+ <p>
+  That ... was a lot. We hope we’ve demystified the
+  process for you. Creating websites isn’t magic—it’s just
+  combining different CSS properties and values with the structure of your
+  HTML in a specific way. Once you get the hang of it, you’ll be
+  surprised to see the things you can do with pure CSS, like make an
+  entire functioning
+  <a href="http://codepen.io/ziga-miklic/pen/Fagmh" target="_blank">
+   tic-tac-toe
+  game
+  </a>
+  .
+ </p>
+ <code-block lang="css">
+  body {
+  background-color: beige;
+  margin: 0 0 0 0;
+  padding: 0 0 0 0;
+}
+
+div {
+  background-color: firebrick;
+}
+
+.white-text {
+  color: white;
+}
+
+#gray-text {
+  color: gray;
+}
+
+#navbar {
+  margin-top: 0;
+  background-color: darkslategray;
+  display: inline-block;
+  width: 100%;
+}
+
+#navbar li {
+  list-style-type: none;
+  display: inline-block;
+}
+
+#navbar li a {
+  display: block;
+  width: 120px;
+  text-align: center;
+  padding-top: 10px;
+  padding-bottom: 10px;
+  color: white;
+  font-family: sans-serif;
+}
+
+#navbar li a:hover {
+  background-color: black;
+}
+ </code-block>
+</lesson-block>
+
+        </page-item>
+        <help-button></help-button>
+        </page-manager>
+        </glossary-manager>
+
+</body>
+</html>

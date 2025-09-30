@@ -1,0 +1,407 @@
+
+<!DOCTYPE html>
+<html prefix="og: http://ogp.me/ns#">
+<head>
+    <meta charset="utf-8">
+    <title>Intro to Web Hosting - Learn.KnightLab.com</title>
+    <link rel="icon" type="image/png" href="//cdn.knightlab.com/libs/purpleline/latest/img/favicon.ico">
+    <script src="//media.knightlab.com/learncms/webcomponentsjs/webcomponents-lite.min.js"></script>
+    <link rel="import" href="//media.knightlab.com/learncms/webcomponents/webcomponents.html">
+    <link rel="stylesheet" href="//media.knightlab.com/learncms/css/app.css" media="screen" title="no title" charset="utf-8">
+    
+    
+    <meta property="og:type" content="website" />
+    <meta name="twitter:card" content="summary_large_image">
+    
+      <meta property="og:title" content="Intro to Web Hosting" />
+      <meta name="twitter:title" content="Intro to Web Hosting">
+    
+    <meta property="og:url" content="https://learn.knightlab.com/lesson/intro-web-hosting/" />
+    
+    <meta property="og:image" content="https://learn.knightlab.com/imagelib/uploads/banners/learn-illustration-01.png" />
+    <!-- twitter:image: at least 280px in width, and at least 150px in height -->
+    <meta name="twitter:image" content="https://learn.knightlab.com/imagelib/uploads/banners/learn-illustration-01.png">
+    
+    <meta name="twitter:site" content="@KnightLab">
+    
+    <meta name="og:description" content="When your site is ready, you’ll upload your files to your hosting server using a File Transfer Protocol (FTP) client. (We like Cyberduck and FileZilla.) Make sure that your files appear on your server the same way that they do in the site folder on your computer, or else your site may not work properly.">
+    <meta name="twitter:description" content="When your site is ready, you’ll upload your files to your hosting server using a File Transfer Protocol (FTP) client. (We like Cyberduck and FileZilla.) Make sure that your files appear on your server the same way that they do in the site folder on your computer, or else your site may not work properly.">
+    
+    
+    <style media="screen">
+      @font-face {
+        font-family: "EmojiSymbols"; /* http://emojisymbols.com/emojilist.php */
+        src: url('//media.knightlab.com/learncms/css/EmojiSymbols-Regular.woff') format('woff');
+        text-decoration: none;
+        font-style: normal;
+      }
+
+    </style>
+    
+</head>
+<body class="fullbleed">
+<!-- Google Tag Manager -->
+<!-- Copy the code below and paste it onto every page of your website.
+     Place it immediately after the opening <body> tag.     -->
+<noscript><iframe src="//www.googletagmanager.com/ns.html?id=GTM-MF8NL6"
+height="0" width="0" style="display:none;visibility:hidden"></iframe></noscript>
+<script>(function(w,d,s,l,i){w[l]=w[l]||[];w[l].push({'gtm.start':
+new Date().getTime(),event:'gtm.js'});var f=d.getElementsByTagName(s)[0],
+j=d.createElement(s),dl=l!='dataLayer'?'&l='+l:'';j.async=true;j.src=
+'//www.googletagmanager.com/gtm.js?id='+i+dl;f.parentNode.insertBefore(j,f);
+})(window,document,'script','dataLayer','GTM-MF8NL6');</script>
+<!-- End Google Tag Manager -->
+
+
+
+
+        <learn-nav home="/"></learn-nav>
+        <glossary-manager json-url="/glossary.json">
+        <page-manager>
+        <page-item header="Intro to Web Hosting">
+        <lesson-banner image="/imagelib/uploads/banners/learn-illustration-01.png" header="Intro to Web Hosting"></lesson-banner>
+
+        <narrative-text>
+ <p>
+  So you've written some code, and after opening those files
+  in your browser you are able to confirm that those files do
+  indeed make a website. You're super excited to show all your
+  friends and family, but how will other people see it? As of right
+  now, those files are just living in a folder on your computer and it's
+  not very practical to send all your website files to every person
+  who wants to see it.
+ </p>
+ <p>
+  What you need is a
+  <glossary-term>
+   server
+  </glossary-term>
+  , a special computer dedicated to
+  housing your files and making sure that people can get
+  them with a few keystrokes. In this lesson, we'll walk you through getting a URL, finding a hosting server, and publishing your site.
+ </p>
+</narrative-text>
+<lesson-block>
+ <h2>
+  Before we begin, you'll need to download:
+ </h2>
+ <unit-group>
+  <capsule-unit header="FTP Program" image="/imagelib/uploads/capsules/ftp-program.png" ref="ftp-program">
+   <p>
+    An FTP program transfers computer files from one host to another via the Internet, such as CyberDuck, and FileZilla.
+   </p>
+   <unit-group>
+    <link-ref header="CyberDuck (free)" image="/images/learn/text-editor.png" link="https://cyberduck.io/?l=en">
+    </link-ref>
+    <link-ref header="FileZilla (free)" image="/images/learn/notepad.gif" link="https://filezilla-project.org/">
+    </link-ref>
+    <link-ref header="Transmit (paid)" image="/images/learn/text-editor.png" link="https://panic.com/transmit/">
+    </link-ref>
+    <link-ref header="Forklift (paid)" image="/images/learn/notepad.gif" link="http://www.binarynights.com/forklift/">
+    </link-ref>
+   </unit-group>
+  </capsule-unit>
+ </unit-group>
+</lesson-block>
+<step-block header="Purchase a domain name">
+ <h3>
+  What we do
+ </h3>
+ <p>
+  We're getting you the URL of your dreams. Maybe. If it's still available.
+ </p>
+ <h3>
+  Why we do
+ </h3>
+ <p>
+  Every address on the web needs to be unique—that way users are sure they're getting the bona fide content they're looking for, and not a different site every time they request the same URL.
+ </p>
+ <h3>
+  How we do
+ </h3>
+ <ol>
+  <li>
+   First, search for a domain name to see if it's
+  available.
+  Here are five popular services that offer domain
+  names:
+   <ul>
+    <li>
+     <a href="https://www.namecheap.com/" target="_blank">
+      NameCheap
+     </a>
+    </li>
+    <li>
+     <a href="https://www.hover.com/" target="_blank">
+      Hover
+     </a>
+    </li>
+    <li>
+     <a href="https://domains.google.com" target="_blank">
+      Google Domains
+     </a>
+    </li>
+    <li>
+     <a href="http://www.1and1.com/" target="_blank">
+      1&amp;1
+     </a>
+    </li>
+    <li>
+     <a href="https://www.godaddy.com/" target="_blank">
+      GoDaddy
+     </a>
+    </li>
+   </ul>
+  </li>
+  <li>
+   Once you've got something good, pay up. You're purchasing ownership on a monthly or yearly basis. And you're buying the rights to the name—nothing more.
+  </li>
+ </ol>
+</step-block>
+<lesson-block header="Additional services">
+ <p>
+  These sites offer a lot of additional services that you
+    don’t necessarily need. Don’t be tricked into buying anything
+    you don’t need just because they sound fancy—domain
+    registrars are businesses after all, and they’re looking to
+    make money off of you. Here’s a list of common features that
+    registrars often try to bundle with your domain. You can decide
+    for yourself whether it sounds like you need it.
+ </p>
+ <dl>
+  <dt>
+   Hosting
+  </dt>
+  <dd>
+   For a simple website, like a portfolio site or personal
+        webpage, using the domain registrar’s hosting may be the
+        simplest option. As you go on to develop bigger, more
+        complex projects (especially those that require server-side
+        scripts), you’ll probably want to look toward other hosting
+        options.
+  </dd>
+  <dt>
+   Local listing
+  </dt>
+  <dd>
+   Listing a site locally makes it easier to find a website
+        by putting it on search engines such as Yelp, GoogleMaps
+        and FourSquare. If your website is for a business, local
+        listing might be a good idea to attract new customers. It’s
+        probably not your priority for a portfolio or personal
+        site, but that’s up to you.
+  </dd>
+  <dt>
+   Private Email
+  </dt>
+  <dd>
+   Most domain registrars will offer email forwarding for
+        free, which allows you to forward all emails sent to a
+        specified address on your website to a pre-existing email
+        account. This keeps everything centralized, you can
+        continue to use whatever email provider you want, and you
+        don’t have to pay a penny (or you shouldn’t, at least. If
+        your domain registrar tries to make you pay for email
+        forwarding, try looking elsewhere).
+  </dd>
+  <dt>
+   Sub-domains
+  </dt>
+  <dd>
+   Sub-domains come before your main domain name, such as
+        shop.mydomain.com. These label different areas of your
+        website, like an online store or blog. Many domain
+        registrars allow you to register subdomains for free, but
+        you’ll have to point or forward those domains to different
+        websites as well.
+  </dd>
+  <dt>
+   Positive SSL
+  </dt>
+  <dd>
+   SSL, or Secure Sockets Layer, is the difference between
+        http and https in front of a website’s URL. It's a way
+        of encrypting websites so that everything sent between a
+        client and the server your website is hosted on can’t be
+        intercepted. If you’re collecting sensitive information on
+        your website, like credit card information, you should
+        invest in SSL.
+  </dd>
+  <dt>
+   Website forwarding
+  </dt>
+  <dd>
+   When you enter the URL www.newyorktimes.com into your browser, you're rerouted to the actual domain and website,
+        www.nytimes.com. This is website forwarding. Forwarding ensures that commonly mistaken URLs will automatically go to the correct
+        one, rather than giving the user a wrong or nonexistent
+        page. Website forwarding is a good idea as your brand
+        expands, especially if you are known by different names
+        (such as an acronym). The kicker is, of course that you’ll have to
+        purchase those other domains as well.
+  </dd>
+  <dt>
+   WhoisGuard
+  </dt>
+  <dd>
+   When you register a domain, you have to provide certain
+        details about yourself, like your name and email address.
+        This information is public and can easily be accessed by
+        spammers through sites like who.is. WhoisGuard is a company
+        that masks your personal information with their
+        information, protecting you from spam.
+  </dd>
+ </dl>
+</lesson-block>
+<step-block header="Purchase a hosting server">
+ <h3>
+  What we do
+ </h3>
+ <p>
+  A server hosts your website so that it is available and
+  accessible on the Internet.
+ </p>
+ <h3>
+  Why we do
+ </h3>
+ <p>
+  These companies allow you, the client, to lease out space to publish your site onto the web on a monthly basis.
+ </p>
+ <h3>
+  How we do
+ </h3>
+ <p>
+  Servers work by uploading your files using a
+  <glossary-term>
+   File Transfer Protocol (FTP)
+  </glossary-term>
+  client so that all your code, images, and other files are readily accessible to each other.
+ </p>
+ <info-block emoji="👮" header="The host with the most">
+  <p>
+   Depending on the size of your website, you may have to sort
+    through which hosting server is the best option for you. Most
+    free hosting servers have limited services, will put ads on your site, and cannot host complex or large sites. Plus: virtually no customer service, since you're not a paying customer.
+  </p>
+ </info-block>
+ <p>
+  There are also free solutions to web hosting. One popular
+  option is
+  <a href="https://pages.github.com/">
+   GitHub Pages
+  </a>
+  , which is perfect for hosting a one-page,
+  static website like a personal website or a landing page. While
+  you won’t have access to a server and therefore won’t be able to
+  run any sort of server-side processes, it should be enough for a
+  simple website. You can even set up your domain to point to your
+  GitHub Page and mask the
+  <glossary-term>
+   DNS
+  </glossary-term>
+  to show your domain name.
+ </p>
+</step-block>
+<step-block header="Connect your hosting server to your domain">
+ <p>
+  Once you’ve registered your domain name and purchased a
+  hosting server, you will need to link the two in order for the
+  URL to direct to the correct website. Most registrars lay out a
+  clear process in connecting the domain name with the host, but in
+  general you’ll just be pointing your domain name as the address
+  to the IP address of the server where your files will be
+  hosted.
+ </p>
+</step-block>
+<step-block header="Connect to your host server">
+ <p>
+  In these steps, we’ll be assuming here that you’ll be logging
+  into your server using SFTP, but if that’s not the case, you
+  should look up a guide for whatever protocol you have on your
+  server.
+ </p>
+ <p>
+  In FileZilla, open the Site Manager by going to File &gt; Site
+  Manager. This should bring up a window with a bunch of fields for
+  you to fill out. The only things you need to make sure you have
+  are the host (which is the IP address of the server you’re
+  connecting to), the protocol, the logon type (which should be
+  normal), and the user and password fields to your account. After
+  filling out those fields, move over to the “Advanced” tab and in
+  the Default remote directory field enter “/var/www/html.” This
+  will just make it easier for you to get to the directory where
+  you’ll be uploading your files. From here, you should be able to
+  log in.
+ </p>
+ <media-group class="layout horizontal around-justified">
+  <zooming-image full-src="/zimages/Screen_Shot_2015-08-24_at_1.34.21_PM.png" ref="filezilla-login" src="/zimages/Screen_Shot_2015-08-24_at_1.34.21_PM.png">
+  </zooming-image>
+ </media-group>
+ <p>
+  In Cyberduck, when you launch the application for the first
+  time you should see a set of pre-loaded bookmarks. You can go
+  ahead and delete those – you’ll be adding your own bookmarks
+  soon. Right-click on the screen and create a new bookmark, and
+  you’ll be prompted to enter the information necessary to connect
+  with the server. Fill out everything at the top of the screen,
+  making sure not to check “Anonymous Login,” and then click “More
+  Options.” In the “Path” field, enter “/var/www/html.” This will
+  just make it easier for you to get to the directory where you’ll
+  be uploading your files. Once you’ve done that, close out of that
+  window and double-click on the bookmark you just made. Enter your
+  password to connect to your server, and you should be in!
+ </p>
+ <media-group class="layout horizontal around-justified">
+  <zooming-image full-src="/zimages/Screen_Shot_2015-08-24_at_1.39.42_PM.png" ref="cyberduck-login" src="/zimages/Screen_Shot_2015-08-24_at_1.39.42_PM.png">
+  </zooming-image>
+ </media-group>
+</step-block>
+<step-block header="Transfer files to your host server">
+ <p>
+  Once logged into FileZilla, you should have six windows: one
+  on top, four in a two-by-two layout in the middle, and one on the
+  bottom. The top window (1) is where you’ll get status reports on
+  your connections to the server. The middle left windows (2, 4)
+  are your local directory – they’re the files sitting on your
+  computer. Then your middle right windows (3, 5) will have the
+  directory for your server. The bottom window (6) has useful
+  information about any files you have waiting to be uploaded and
+  their status. To upload your files, simply locate them on your
+  computer in the left middle bottom pane and then drag them over
+  to the right middle bottom pane. Make sure that you upload your
+  HTML file as well as any important other files (CSS, images,
+  etc.) into this folder exactly as it appears on your
+  computer.
+ </p>
+ <media-group class="layout horizontal around-justified">
+  <zooming-image full-src="/zimages/Screen_Shot_2015-08-24_at_1.19.47_PM.png" ref="filezilla-windows" src="/zimages/Screen_Shot_2015-08-24_at_1.19.47_PM.png">
+  </zooming-image>
+ </media-group>
+ <p>
+  In Cyberduck, once you’ve connected to your host server it
+  should direct you to a new screen. Make sure that you’re in the
+  /var/www/html directory, and from here you can just drag and drop
+  your files from your computer into Cyberduck. Voila! That’s
+  it!
+ </p>
+ <media-group class="layout horizontal around-justified">
+  <zooming-image full-src="/zimages/Screen_Shot_2015-08-24_at_1.45.53_PM.png" ref="cyberduck-windows" src="/zimages/Screen_Shot_2015-08-24_at_1.45.53_PM.png">
+  </zooming-image>
+ </media-group>
+</step-block>
+<step-block header="Check out your site">
+ <p>
+  Now that your website is live, check it out! Make sure to
+  click on all of the links to make sure that they are directing to
+  the right places and that all the images are showing. If you have
+  to fix anything, be sure to re-upload the edited file onto your
+  hosting server.
+ </p>
+</step-block>
+
+        </page-item>
+        <help-button></help-button>
+        </page-manager>
+        </glossary-manager>
+
+</body>
+</html>
