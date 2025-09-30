@@ -1,162 +1,203 @@
 #!/usr/bin/env python3
 """
-Static Site Generator for learncms Django Application
+New Static Site Generator for learncms
 
-This script crawls the running Django application and generates static HTML files
-that can be served by nginx or any other static web server.
+This script crawls https://learn.knightlab.com/ and generates static HTML files
+that are fully portable with no external dependencies on S3 or other off-site media.
 """
 
 import os
 import sys
-import urllib.parse
-import urllib.request
 import json
 import time
+import re
 from pathlib import Path
 import argparse
+from urllib.parse import urljoin, urlparse, urlunparse
+from urllib.request import urlopen, Request
 from urllib.error import HTTPError, URLError
+from bs4 import BeautifulSoup
 
 
 class StaticSiteGenerator:
-    def __init__(self, base_url, output_dir):
+    def __init__(self, base_url, output_dir, static_dir='static'):
         self.base_url = base_url.rstrip('/')
+        self.domain = urlparse(base_url).netloc
         self.output_dir = Path(output_dir)
         self.output_dir.mkdir(exist_ok=True)
+        self.static_dir = Path(static_dir)
+
         self.crawled_urls = set()
         self.failed_urls = []
+        self.off_site_dependencies = []
+        self.media_files = set()
+        self.missing_local_assets = []
 
     def fetch_url(self, url, timeout=30):
         """Fetch a URL and return the content"""
         try:
             print(f"Fetching: {url}")
-            with urllib.request.urlopen(url, timeout=timeout) as response:
+            headers = {
+                'User-Agent': 'Mozilla/5.0 (Macintosh; Intel Mac OS X 10_15_7) AppleWebKit/537.36'
+            }
+            request = Request(url, headers=headers)
+
+            with urlopen(request, timeout=timeout) as response:
                 if response.status == 200:
-                    return response.read()
+                    content_type = response.headers.get('content-type', '').lower()
+                    return response.read(), content_type
                 else:
                     print(f"Warning: {url} returned status {response.status}")
-                    return None
+                    return None, None
+
         except HTTPError as e:
             print(f"HTTP Error {e.code} for {url}: {e.reason}")
             self.failed_urls.append((url, f"HTTP {e.code}: {e.reason}"))
-            return None
+            return None, None
         except URLError as e:
             print(f"URL Error for {url}: {e.reason}")
             self.failed_urls.append((url, f"URL Error: {e.reason}"))
-            return None
+            return None, None
         except Exception as e:
             print(f"Unexpected error for {url}: {e}")
             self.failed_urls.append((url, f"Error: {e}"))
-            return None
-
+            return None, None
 
     def get_lessons_from_api(self):
         """Get all lesson slugs from the JSON API"""
         lessons_url = f"{self.base_url}/lesson.json"
-        content = self.fetch_url(lessons_url)
+        content, _ = self.fetch_url(lessons_url)
         if content:
             try:
                 lessons_data = json.loads(content.decode('utf-8'))
-                # lessons_data is {title: {"slug": slug, "status": status}}
                 return [data["slug"] for title, data in lessons_data.items()
                        if data.get("status") == "published"]
             except json.JSONDecodeError as e:
                 print(f"Error parsing lessons JSON: {e}")
         return []
 
-    def crawl_static_pages(self):
-        """Crawl static template pages"""
-        static_pages = [
-            '/',           # homepage
-            '/ask/',       # ask page
-            '/404.html',   # 404 page
-            '/500.html',   # 500 page
-        ]
+    def validate_media_dependencies(self, html_content, page_url):
+        """
+        Validate that all media dependencies are on-site.
+        Fail loudly if any off-site dependencies are found.
+        """
+        soup = BeautifulSoup(html_content, 'html.parser')
 
-        for page in static_pages:
-            if page not in self.crawled_urls:
-                url = f"{self.base_url}{page}"
-                content = self.fetch_url(url)
-                if content:
-                    self.save_content(page, content)
-                    self.crawled_urls.add(page)
+        # Tags and attributes that can reference media
+        media_tags = {
+            'img': ['src', 'data-src'],
+            'script': ['src'],
+            'link': ['href'],
+            'source': ['src'],
+            'video': ['src', 'poster'],
+            'audio': ['src'],
+            'object': ['data'],
+            'embed': ['src'],
+            'iframe': ['src']
+        }
 
-    def crawl_lesson_pages(self):
-        """Crawl all published lesson pages"""
-        lesson_slugs = self.get_lessons_from_api()
-        print(f"Found {len(lesson_slugs)} published lessons")
+        for tag_name, attrs in media_tags.items():
+            for tag in soup.find_all(tag_name):
+                for attr in attrs:
+                    url = tag.get(attr)
+                    if url:
+                        self._check_media_url(url, page_url)
 
-        for slug in lesson_slugs:
-            lesson_path = f"/lesson/{slug}/"
-            if lesson_path not in self.crawled_urls:
-                url = f"{self.base_url}{lesson_path}"
-                content = self.fetch_url(url)
-                if content:
-                    self.save_content(lesson_path, content)
-                    self.crawled_urls.add(lesson_path)
+    def _check_media_url(self, url, page_url):
+        """Check if a media URL is on-site or off-site"""
+        if not url or url.startswith('#') or url.startswith('javascript:') or url.startswith('mailto:'):
+            return
 
-    def crawl_json_apis(self):
-        """Crawl JSON API endpoints"""
-        json_endpoints = [
-            '/glossary.json',
-            '/lesson.json',
-            '/capsule.json'
-        ]
+        # Handle protocol-relative URLs
+        if url.startswith('//'):
+            url = 'https:' + url
 
-        for endpoint in json_endpoints:
-            if endpoint not in self.crawled_urls:
-                url = f"{self.base_url}{endpoint}"
-                content = self.fetch_url(url)
-                if content:
-                    self.save_content(endpoint, content, 'application/json')
-                    self.crawled_urls.add(endpoint)
+        # Handle relative URLs
+        if not url.startswith(('http://', 'https://')):
+            url = urljoin(page_url, url)
 
-    def fix_web_component_paths(self, content):
-        """Fix relative paths in HTML content for static site"""
+        parsed_url = urlparse(url)
+
+        # Check if this is an off-site dependency
+        if parsed_url.netloc and parsed_url.netloc != self.domain:
+            # Special handling for media.knightlab.com - should be served locally
+            if parsed_url.netloc == 'media.knightlab.com':
+                return self._check_knightlab_media(url, parsed_url.path, page_url)
+
+            # Allow certain CDNs that are acceptable
+            allowed_cdns = [
+                'cdn.knightlab.com',
+                'fonts.googleapis.com',
+                'fonts.gstatic.com',
+                'ajax.googleapis.com',
+                'code.jquery.com',
+                'maxcdn.bootstrapcdn.com',
+                'cdnjs.cloudflare.com',
+                'www.googletagmanager.com'  # Allow Google Tag Manager
+            ]
+
+            if not any(cdn in parsed_url.netloc for cdn in allowed_cdns):
+                dependency = f"Off-site media dependency found: {url} (referenced from {page_url})"
+                print(f"ERROR: {dependency}")
+                self.off_site_dependencies.append(dependency)
+        else:
+            # This is an on-site media file
+            self.media_files.add(url)
+
+    def _check_knightlab_media(self, full_url, path, page_url):
+        """Check if media.knightlab.com asset exists locally and return local path"""
+        # Remove /learncms/ prefix if present
+        if path.startswith('/learncms/'):
+            local_path = path[len('/learncms/'):]
+        else:
+            local_path = path.lstrip('/')
+
+        # Check if file exists in static directory
+        local_file = self.static_dir / local_path
+        if local_file.exists():
+            print(f"Found local asset: {local_file} for {full_url}")
+            return f"/{local_path}"  # Return local path for URL rewriting
+        else:
+            missing = f"Missing local asset: {local_file} for {full_url} (referenced from {page_url})"
+            print(f"ERROR: {missing}")
+            self.missing_local_assets.append(missing)
+            return None
+
+    def process_html_content(self, content, page_url):
+        """Process HTML content and validate dependencies"""
         if isinstance(content, bytes):
             content = content.decode('utf-8', errors='replace')
 
-        # Only fix Django template tags and broken references, keep working CDN URLs
-        replacements = [
-            # Fix Django template tag leftovers (if any)
-            ('src="{% static \'webcomponentsjs/webcomponents-lite.min.js\' %}"', 'src="//media.knightlab.com/learncms/webcomponentsjs/webcomponents-lite.min.js"'),
-            ('href="{% static \'webcomponents/webcomponents.html\' %}"', 'href="//media.knightlab.com/learncms/webcomponents/webcomponents.html"'),
-            ('{% static \'css/EmojiSymbols-Regular.woff\' %}', '//media.knightlab.com/learncms/css/EmojiSymbols-Regular.woff'),
-        ]
+        # Rewrite media.knightlab.com URLs to local paths
+        content = self._rewrite_knightlab_urls(content, page_url)
 
-        for old, new in replacements:
-            content = content.replace(old, new)
-
-        # Fix broken zooming-image references
-        content = self.fix_broken_image_references(content)
+        # Validate media dependencies after rewriting
+        self.validate_media_dependencies(content, page_url)
 
         return content
 
-    def fix_broken_image_references(self, content):
-        """Fix broken zooming-image ref attributes"""
+    def _rewrite_knightlab_urls(self, content, page_url):
+        """Rewrite media.knightlab.com URLs to local static paths"""
         import re
 
-        # Pattern to match broken zooming-image elements with unresolved references
-        pattern = r'<zooming-image ref="([^"]+)"[^>]*>.*?<!--Reference could not be resolved-->.*?</zooming-image>'
+        # Pattern to match media.knightlab.com URLs
+        pattern = r'https?://media\.knightlab\.com/learncms/([^"\'\s>]+)'
 
-        def replace_broken_ref(match):
-            ref_name = match.group(1)
-            # Use CDN placeholder or actual image paths - keep protocol-relative
-            placeholder_path = f"//media.knightlab.com/learncms/img/{ref_name}.png"
-            return f'<zooming-image src="{placeholder_path}" full-src="{placeholder_path}"></zooming-image>'
+        def replace_url(match):
+            path = match.group(1)
+            local_file = self.static_dir / path
+            if local_file.exists():
+                return f"/{path}"
+            else:
+                # Keep original URL if file doesn't exist locally (will be caught by validation)
+                return match.group(0)
 
-        # Apply the replacement
-        content = re.sub(pattern, replace_broken_ref, content, flags=re.DOTALL)
-
-        return content
+        return re.sub(pattern, replace_url, content)
 
     def save_content(self, relative_path, content, content_type='text/html'):
         """Save content to the output directory"""
         if isinstance(content, bytes):
             content = content.decode('utf-8', errors='replace')
-
-        # Fix web component paths for static site
-        if content_type == 'text/html':
-            content = self.fix_web_component_paths(content)
 
         # Create the full path
         if relative_path == '' or relative_path == '/':
@@ -172,75 +213,67 @@ class StaticSiteGenerator:
             file_path.parent.mkdir(parents=True, exist_ok=True)
 
         print(f"Saving: {file_path}")
+
+        if 'html' in content_type:
+            # Process HTML content
+            page_url = urljoin(self.base_url, relative_path)
+            content = self.process_html_content(content, page_url)
+
         with open(file_path, 'w', encoding='utf-8') as f:
             f.write(content)
 
-    def download_static_files(self):
-        """Download static files (CSS, JS, images)"""
-        print("Note: Static files (CSS, JS, images) should be collected using Django's collectstatic command")
-        print("Run: python manage.py collectstatic --noinput")
-        print("Then copy the collected static files to your nginx static directory")
-        print("")
-        print("IMPORTANT: For web components to work properly, you need to download static files:")
-        print("")
-        print("Required files from https://media.knightlab.com/learncms/:")
-        print("- webcomponentsjs/webcomponents-lite.min.js")
-        print("- webcomponents/webcomponents.html")
-        print("- css/EmojiSymbols-Regular.woff (for emoji callout blocks)")
-        print("- css/app.css (main stylesheet)")
-        print("- All other static assets")
-        print("")
-        print("Download these to your static directory or run 'python manage.py collectstatic'")
-        print("The generated HTML now points to /static/ instead of the CDN")
+    def crawl_static_pages(self):
+        """Crawl static template pages"""
+        static_pages = [
+            '/',           # homepage
+            '/ask/',       # ask page
+            '/404.html',   # 404 page
+            '/500.html',   # 500 page
+        ]
 
-    def generate_nginx_config(self):
-        """Generate a basic nginx configuration"""
-        nginx_config = f"""# Basic nginx configuration for learncms static site
-server {{
-    listen 80;
-    server_name your-domain.com;
-    root {self.output_dir.absolute()};
-    index index.html;
+        for page in static_pages:
+            if page not in self.crawled_urls:
+                url = f"{self.base_url}{page}"
+                content, content_type = self.fetch_url(url)
+                if content:
+                    self.save_content(page, content, content_type)
+                    self.crawled_urls.add(page)
 
-    # Handle lesson URLs with trailing slashes
-    location ~* ^/lesson/([a-z-]+)/?$ {{
-        try_files /lesson/$1/index.html =404;
-    }}
+    def crawl_lesson_pages(self):
+        """Crawl all published lesson pages"""
+        lesson_slugs = self.get_lessons_from_api()
+        print(f"Found {len(lesson_slugs)} published lessons")
 
-    # Handle static files (update paths as needed)
-    location /static/ {{
-        # Update this path to where you copy your collected static files
-        alias /path/to/static/files/;
-        expires 1y;
-        add_header Cache-Control "public, immutable";
-    }}
+        for slug in lesson_slugs:
+            lesson_path = f"/lesson/{slug}/"
+            if lesson_path not in self.crawled_urls:
+                url = f"{self.base_url}{lesson_path}"
+                content, content_type = self.fetch_url(url)
+                if content:
+                    self.save_content(lesson_path, content, content_type)
+                    self.crawled_urls.add(lesson_path)
 
-    location /media/ {{
-        # Update this path to where you copy your media files
-        alias /path/to/media/files/;
-        expires 1y;
-        add_header Cache-Control "public, immutable";
-    }}
+    def crawl_json_apis(self):
+        """Crawl JSON API endpoints"""
+        json_endpoints = [
+            '/glossary.json',
+            '/lesson.json',
+            '/capsule.json'
+        ]
 
-    # Handle other paths
-    location / {{
-        try_files $uri $uri/ $uri.html =404;
-    }}
-
-    # Custom error pages
-    error_page 404 /404.html;
-    error_page 500 502 503 504 /500.html;
-}}"""
-
-        nginx_config_path = self.output_dir / 'nginx.conf.example'
-        with open(nginx_config_path, 'w') as f:
-            f.write(nginx_config)
-        print(f"Nginx configuration example saved to: {nginx_config_path}")
+        for endpoint in json_endpoints:
+            if endpoint not in self.crawled_urls:
+                url = f"{self.base_url}{endpoint}"
+                content, content_type = self.fetch_url(url)
+                if content:
+                    self.save_content(endpoint, content, content_type)
+                    self.crawled_urls.add(endpoint)
 
     def generate_site(self):
         """Generate the complete static site"""
         print(f"Generating static site from {self.base_url}")
         print(f"Output directory: {self.output_dir.absolute()}")
+        print(f"Target domain: {self.domain}")
 
         start_time = time.time()
 
@@ -249,50 +282,58 @@ server {{
         self.crawl_lesson_pages()
         self.crawl_json_apis()
 
-        # Generate additional files
-        self.generate_nginx_config()
-        self.download_static_files()
-
         # Report results
         end_time = time.time()
-        print(f"\n--- Generation Complete ---")
+        print(f"\n--- Generation Results ---")
         print(f"Total pages crawled: {len(self.crawled_urls)}")
         print(f"Time taken: {end_time - start_time:.2f} seconds")
+        print(f"Media files found: {len(self.media_files)}")
 
         if self.failed_urls:
             print(f"\nFailed URLs ({len(self.failed_urls)}):")
             for url, error in self.failed_urls:
                 print(f"  - {url}: {error}")
 
+        # Check for off-site dependencies and missing local assets
+        has_errors = False
+
+        if self.off_site_dependencies:
+            print(f"\n❌ Off-site dependencies found ({len(self.off_site_dependencies)}):")
+            for dependency in self.off_site_dependencies:
+                print(f"  - {dependency}")
+            has_errors = True
+
+        if self.missing_local_assets:
+            print(f"\n❌ Missing local assets ({len(self.missing_local_assets)}):")
+            for missing in self.missing_local_assets:
+                print(f"  - {missing}")
+            has_errors = True
+
+        if has_errors:
+            print(f"\n❌ GENERATION FAILED ❌")
+            print("The static site cannot be fully portable with these issues.")
+            print("Please fix these dependencies before generating a static site.")
+            sys.exit(1)
+        else:
+            print(f"\n✅ SUCCESS: No off-site dependencies found!")
+            print(f"Static site is fully portable and ready for deployment.")
+
         print(f"\nStatic site generated in: {self.output_dir.absolute()}")
-        print("\nNext steps:")
-        print("1. Run 'python manage.py collectstatic --noinput' to collect static files")
-        print("2. Copy collected static files to your web server")
-        print("3. Copy media files to your web server")
-        print("4. Configure nginx using the example config file generated")
 
 
 def main():
-    parser = argparse.ArgumentParser(description='Generate static site from learncms Django app')
+    parser = argparse.ArgumentParser(description='Generate portable static site from learncms')
     parser.add_argument('--url', '-u',
-                       default='http://localhost:8000',
-                       help='Base URL of the running Django app (default: http://localhost:8000)')
+                       default='https://learn.knightlab.com',
+                       help='Base URL of the live site (default: https://learn.knightlab.com)')
     parser.add_argument('--output', '-o',
                        default='./static_site',
-                       help='Output directory for static files (default: ./static_site)')
+                       help='Output directory for static files (default: ./portable_static_site)')
     parser.add_argument('--timeout', '-t',
                        type=int, default=30,
                        help='Request timeout in seconds (default: 30)')
 
     args = parser.parse_args()
-
-    # Validate that the Django server is running
-    try:
-        urllib.request.urlopen(args.url, timeout=5)
-    except Exception as e:
-        print(f"Error: Cannot connect to Django server at {args.url}")
-        print(f"Make sure your Django development server is running with: python manage.py runserver")
-        sys.exit(1)
 
     # Generate the static site
     generator = StaticSiteGenerator(args.url, args.output)
