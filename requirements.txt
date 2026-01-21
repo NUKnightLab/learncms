@@ -1,4 +1,4 @@
-Django==1.8.3
+Django==2.2.24
 gunicorn==19.3.0
 
 # Must be < 2.9 for Django 1.8 timezone compatibility
